@@ -1,15 +1,16 @@
 import SectionContainer from "@/components/ui/SectionContainer";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-export default function Home() {
+export default function CaseStudiesPage() {
   return (
     <main>
       <section className="section-padding">
         <SectionContainer>
           <SectionHeading
-            eyebrow="AI Agents for Business"
-            heading="We build AI agents that solve real business problems."
-            description="Aygency designs, builds, and deploys custom AI agent systems. Operators, not consultants. Weeks, not months. ROI-obsessed."
+            eyebrow="Case Studies"
+            heading="Proven results."
+            description="See how our AI agents deliver measurable business impact."
+            align="center"
           />
         </SectionContainer>
       </section>
