@@ -1,17 +1,12 @@
-import SectionContainer from "@/components/ui/SectionContainer";
-import SectionHeading from "@/components/ui/SectionHeading";
+import type { Metadata } from "next";
+import ContactClient from "./ContactClient";
+
+export const metadata: Metadata = {
+  title: "Contact — Aygency",
+  description:
+    "Book a free 30-minute discovery call with Aygency. We'll diagnose your highest-impact AI opportunity.",
+};
 
 export default function ContactPage() {
-  return (
-    <section className="section-padding">
-      <SectionContainer>
-        <SectionHeading
-          eyebrow="Contact"
-          heading="Let's Build Something"
-          description="Tell us about your business challenge. We'll show you what AI agents can do."
-          align="center"
-        />
-      </SectionContainer>
-    </section>
-  );
+  return <ContactClient />;
 }
