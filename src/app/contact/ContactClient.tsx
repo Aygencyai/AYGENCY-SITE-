@@ -87,9 +87,8 @@ export default function ContactClient() {
                   Pick a time
                 </h2>
                 <div className="min-h-[500px] rounded-2xl border border-border overflow-hidden bg-secondary relative">
-                  {/* TODO: Replace with actual Cal.com URL */}
                   <iframe
-                    src="https://cal.com"
+                    src={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com"}
                     className="w-full h-full min-h-[500px] border-0"
                     title="Schedule a discovery call"
                     loading="lazy"

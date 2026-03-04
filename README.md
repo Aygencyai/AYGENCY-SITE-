@@ -66,8 +66,15 @@ npm start
 
 Deploy to Vercel:
 
+1. Push to GitHub
+2. Import project at [vercel.com/new](https://vercel.com/new)
+3. Set environment variables (`NEXT_PUBLIC_CAL_URL`, `RESEND_API_KEY`, `CONTACT_EMAIL`)
+4. Deploy — Vercel auto-detects Next.js
+
+Or via CLI:
+
 ```bash
-npx vercel
+npx vercel --prod
 ```
 
 ## License

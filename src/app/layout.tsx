@@ -47,7 +47,7 @@ export const metadata: Metadata = {
       "Aygency designs, builds, and deploys custom AI agent systems for businesses. Weeks, not months. Measurable ROI from day one.",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
 };
 
