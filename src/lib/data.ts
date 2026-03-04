@@ -3,9 +3,9 @@ import type { Service, CaseStudy, ProcessStep, Metric } from "@/types";
 export const services: Service[] = [
   {
     slug: "agent-design",
-    title: "AI Agent Design & Development",
-    shortTitle: "AI Agent Design",
-    description: "Custom AI agents built for your specific workflows and business logic.",
+    title: "AI Agent Design & Deployment",
+    shortTitle: "Agent Design",
+    description: "Custom-built AI agents tailored to your workflows, data, and business logic.",
     longDescription: "",
     icon: "agent",
     useCases: [],
@@ -15,9 +15,9 @@ export const services: Service[] = [
   },
   {
     slug: "ai-marketing",
-    title: "AI-Powered Marketing Systems",
+    title: "AI-Powered Marketing",
     shortTitle: "AI Marketing",
-    description: "Automate campaigns, personalise at scale, and maximise ROI with AI.",
+    description: "Intelligent ad management, content generation, and pipeline automation.",
     longDescription: "",
     icon: "marketing",
     useCases: [],
@@ -28,8 +28,8 @@ export const services: Service[] = [
   {
     slug: "automation",
     title: "Process Automation",
-    shortTitle: "Process Automation",
-    description: "Eliminate manual bottlenecks with intelligent automation pipelines.",
+    shortTitle: "Automation",
+    description: "From lead conversion to inventory management — AI that runs your operations.",
     longDescription: "",
     icon: "automation",
     useCases: [],
@@ -39,9 +39,9 @@ export const services: Service[] = [
   },
   {
     slug: "consulting",
-    title: "AI Strategy & Consulting",
+    title: "Strategic AI Consulting",
     shortTitle: "AI Consulting",
-    description: "Strategic guidance to identify high-impact AI opportunities in your business.",
+    description: "We audit your business and identify exactly where AI delivers the highest ROI.",
     longDescription: "",
     icon: "consulting",
     useCases: [],
