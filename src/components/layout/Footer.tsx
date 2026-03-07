@@ -1,21 +1,22 @@
 import Link from "next/link";
-import SectionContainer from "@/components/ui/SectionContainer";
 import { services } from "@/lib/data";
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary border-t border-border">
-      <SectionContainer className="py-16 md:py-20">
+    <footer className="bg-navy">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         {/* Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Col 1 — Brand */}
           <div>
-            <Link href="/" className="font-heading font-semibold text-xl tracking-tight">
-              <span className="text-accent">a</span>
-              <span className="text-text-primary">ygency</span>
+            <Link
+              href="/"
+              className="font-sans font-semibold text-sm text-white uppercase tracking-[0.15em]"
+            >
+              AYGENCY
             </Link>
-            <p className="text-sm text-text-tertiary mt-4">
-              AI agents that solve real business problems.
+            <p className="text-sm text-muted mt-4">
+              AI agent systems for businesses.
             </p>
             {/* Social icons */}
             <div className="flex gap-4 mt-6">
@@ -23,7 +24,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-tertiary hover:text-accent transition-colors"
+                className="text-muted hover:text-white transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -34,7 +35,7 @@ export default function Footer() {
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-tertiary hover:text-accent transition-colors"
+                className="text-muted hover:text-white transition-colors"
                 aria-label="X (Twitter)"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -46,7 +47,7 @@ export default function Footer() {
 
           {/* Col 2 — Services */}
           <div>
-            <h3 className="uppercase tracking-wider text-sm font-heading font-medium text-text-primary mb-4">
+            <h3 className="uppercase tracking-[0.12em] text-sm font-sans font-medium text-white mb-4">
               Services
             </h3>
             <div className="flex flex-col gap-3">
@@ -54,7 +55,7 @@ export default function Footer() {
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className="text-sm text-text-secondary hover:text-accent transition-colors"
+                  className="text-sm text-muted hover:text-white transition-colors"
                 >
                   {service.shortTitle}
                 </Link>
@@ -64,19 +65,19 @@ export default function Footer() {
 
           {/* Col 3 — Company */}
           <div>
-            <h3 className="uppercase tracking-wider text-sm font-heading font-medium text-text-primary mb-4">
+            <h3 className="uppercase tracking-[0.12em] text-sm font-sans font-medium text-white mb-4">
               Company
             </h3>
             <div className="flex flex-col gap-3">
               <Link
                 href="/case-studies"
-                className="text-sm text-text-secondary hover:text-accent transition-colors"
+                className="text-sm text-muted hover:text-white transition-colors"
               >
                 Case Studies
               </Link>
               <Link
                 href="/contact"
-                className="text-sm text-text-secondary hover:text-accent transition-colors"
+                className="text-sm text-muted hover:text-white transition-colors"
               >
                 Contact
               </Link>
@@ -85,36 +86,36 @@ export default function Footer() {
 
           {/* Col 4 — Get in Touch */}
           <div>
-            <h3 className="uppercase tracking-wider text-sm font-heading font-medium text-text-primary mb-4">
+            <h3 className="uppercase tracking-[0.12em] text-sm font-sans font-medium text-white mb-4">
               Get in Touch
             </h3>
             <a
               href="mailto:hello@aygency.ai"
-              className="text-sm text-text-secondary hover:text-accent transition-colors"
+              className="text-sm text-muted hover:text-white transition-colors"
             >
               hello@aygency.ai
             </a>
-            <p className="text-sm text-text-tertiary mt-4">
-              Based in London, working globally.
+            <p className="text-sm text-muted mt-4">
+              Based in London. Operating globally.
             </p>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-text-tertiary">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted">
             &copy; 2026 Aygency. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-text-tertiary hover:text-accent transition-colors">
+            <a href="#" className="text-xs text-muted hover:text-white transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-xs text-text-tertiary hover:text-accent transition-colors">
+            <a href="#" className="text-xs text-muted hover:text-white transition-colors">
               Terms
             </a>
           </div>
         </div>
-      </SectionContainer>
+      </div>
     </footer>
   );
 }

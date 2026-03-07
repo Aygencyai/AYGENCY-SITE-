@@ -4,8 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import SectionContainer from "@/components/ui/SectionContainer";
-import Button from "@/components/ui/Button";
 import { services } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -67,20 +65,22 @@ export default function Nav() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-[rgba(250,249,247,0.92)] backdrop-blur-xl shadow-nav"
-            : "bg-transparent"
+            ? "bg-ivory/95 backdrop-blur-xl shadow-nav"
+            : "bg-ivory"
         )}
       >
-        <SectionContainer>
-          <div className="flex items-center justify-between h-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between py-4">
             {/* Logo */}
-            <Link href="/" className="font-heading font-semibold text-xl tracking-tight">
-              <span className="text-accent">a</span>
-              <span className="text-text-primary">ygency</span>
+            <Link
+              href="/"
+              className="font-sans font-semibold text-sm text-green uppercase tracking-[0.15em]"
+            >
+              AYGENCY
             </Link>
 
             {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) =>
                 link.label === "Services" ? (
                   <div
@@ -92,10 +92,10 @@ export default function Nav() {
                     <Link
                       href={link.href}
                       className={cn(
-                        "px-4 py-2 rounded-full font-heading font-medium text-[15px] transition-all duration-200",
+                        "font-sans font-medium text-[13px] uppercase tracking-[0.12em] transition-colors duration-200",
                         isActive(link.href)
-                          ? "bg-secondary text-text-primary"
-                          : "text-text-secondary hover:text-text-primary hover:bg-secondary"
+                          ? "text-green"
+                          : "text-green/70 hover:text-green"
                       )}
                     >
                       {link.label}
@@ -109,18 +109,18 @@ export default function Nav() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-primary rounded-xl shadow-card-hover border border-border-light p-2 min-w-[260px] z-50"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-ivory rounded-xl shadow-card-hover border border-ivory-dark p-2 min-w-[260px] z-50"
                         >
                           {services.map((service) => (
                             <Link
                               key={service.slug}
                               href={`/services/${service.slug}`}
-                              className="block px-4 py-3 rounded-lg hover:bg-secondary transition-colors"
+                              className="block px-4 py-3 rounded-lg hover:bg-ivory-dark transition-colors"
                             >
-                              <span className="block font-heading font-medium text-sm text-text-primary">
+                              <span className="block font-sans font-medium text-sm text-green">
                                 {service.shortTitle}
                               </span>
-                              <span className="block text-xs text-text-tertiary mt-0.5">
+                              <span className="block text-xs text-muted mt-0.5">
                                 {service.description}
                               </span>
                             </Link>
@@ -134,52 +134,56 @@ export default function Nav() {
                     key={link.label}
                     href={link.href}
                     className={cn(
-                      "px-4 py-2 rounded-full font-heading font-medium text-[15px] transition-all duration-200",
+                      "font-sans font-medium text-[13px] uppercase tracking-[0.12em] transition-colors duration-200",
                       isActive(link.href)
-                        ? "bg-secondary text-text-primary"
-                        : "text-text-secondary hover:text-text-primary hover:bg-secondary"
+                        ? "text-green"
+                        : "text-green/70 hover:text-green"
                     )}
                   >
                     {link.label}
                   </Link>
                 )
               )}
-            </div>
 
-            {/* Desktop CTA */}
-            <div className="hidden lg:block">
-              <Button variant="primary" href="/contact">
+              {/* Desktop CTA */}
+              <Link
+                href="/contact"
+                className="bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-3 hover:bg-green-light hover:translate-y-[-1px] active:scale-[0.98] transition-all duration-200"
+              >
                 Book a Call
-              </Button>
+              </Link>
             </div>
 
             {/* Mobile hamburger */}
             <button
-              className="lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[6px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2 rounded-lg"
+              className="lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[6px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:ring-offset-2 rounded-lg"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
               <span
                 className={cn(
-                  "block w-6 h-[2px] bg-text-primary transition-all duration-300 origin-center",
+                  "block w-6 h-[2px] bg-green transition-all duration-300 origin-center",
                   mobileOpen && "translate-y-[4px] rotate-45"
                 )}
               />
               <span
                 className={cn(
-                  "block w-6 h-[2px] bg-text-primary transition-all duration-300",
+                  "block w-6 h-[2px] bg-green transition-all duration-300",
                   mobileOpen && "opacity-0"
                 )}
               />
               <span
                 className={cn(
-                  "block w-6 h-[2px] bg-text-primary transition-all duration-300 origin-center",
+                  "block w-6 h-[2px] bg-green transition-all duration-300 origin-center",
                   mobileOpen && "-translate-y-[4px] -rotate-45"
                 )}
               />
             </button>
           </div>
-        </SectionContainer>
+        </div>
+
+        {/* Bottom border line */}
+        <div className="h-px w-full bg-ivory-dark" />
       </nav>
 
       {/* Mobile overlay */}
@@ -190,30 +194,30 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-primary z-50 flex flex-col"
+            className="fixed inset-0 bg-ivory z-50 flex flex-col"
           >
             {/* Mobile header with logo + close */}
-            <SectionContainer>
-              <div className="flex items-center justify-between h-20">
+            <div className="px-6">
+              <div className="flex items-center justify-between py-4">
                 <Link
                   href="/"
-                  className="font-heading font-semibold text-xl tracking-tight"
+                  className="font-sans font-semibold text-sm text-green uppercase tracking-[0.15em]"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span className="text-accent">a</span>
-                  <span className="text-text-primary">ygency</span>
+                  AYGENCY
                 </Link>
                 <button
                   className="relative w-8 h-8 flex flex-col items-center justify-center gap-[6px]"
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close menu"
                 >
-                  <span className="block w-6 h-[2px] bg-text-primary translate-y-[4px] rotate-45 transition-all duration-300 origin-center" />
-                  <span className="block w-6 h-[2px] bg-text-primary opacity-0 transition-all duration-300" />
-                  <span className="block w-6 h-[2px] bg-text-primary -translate-y-[4px] -rotate-45 transition-all duration-300 origin-center" />
+                  <span className="block w-6 h-[2px] bg-green translate-y-[4px] rotate-45 transition-all duration-300 origin-center" />
+                  <span className="block w-6 h-[2px] bg-green opacity-0 transition-all duration-300" />
+                  <span className="block w-6 h-[2px] bg-green -translate-y-[4px] -rotate-45 transition-all duration-300 origin-center" />
                 </button>
               </div>
-            </SectionContainer>
+              <div className="h-px w-full bg-ivory-dark" />
+            </div>
 
             {/* Mobile links */}
             <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
@@ -227,7 +231,7 @@ export default function Nav() {
                 >
                   <Link
                     href={link.href}
-                    className="font-heading text-3xl font-semibold text-text-primary"
+                    className="font-serif text-3xl text-green uppercase"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -239,7 +243,7 @@ export default function Nav() {
                         <Link
                           key={service.slug}
                           href={`/services/${service.slug}`}
-                          className="text-lg text-text-secondary hover:text-text-primary transition-colors"
+                          className="text-lg text-green-muted hover:text-green transition-colors"
                           onClick={() => setMobileOpen(false)}
                         >
                           {service.shortTitle}
@@ -255,14 +259,12 @@ export default function Nav() {
                 transition={{ duration: 0.4, delay: navLinks.length * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="mt-4 w-full max-w-xs"
               >
-                <Button
-                  variant="primary"
-                  size="lg"
+                <Link
                   href="/contact"
-                  className="w-full text-center block"
+                  className="block w-full text-center bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-4 hover:bg-green-light active:scale-[0.98] transition-all duration-200"
                 >
                   Book a Call
-                </Button>
+                </Link>
               </motion.div>
             </div>
           </motion.div>

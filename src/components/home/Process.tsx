@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import SectionContainer from "@/components/ui/SectionContainer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
@@ -10,42 +9,29 @@ import { processSteps } from "@/lib/data";
 
 export default function Process() {
   const timelineRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      if (lineRef.current) lineRef.current.style.transform = "scaleY(1)";
-      return;
-    }
-    if (!timelineRef.current || !lineRef.current) return;
-    const trigger = ScrollTrigger.create({
-      trigger: timelineRef.current,
-      start: "top 60%",
-      end: "bottom 60%",
-      scrub: true,
-      animation: gsap.to(lineRef.current, {
-        scaleY: 1,
-        ease: "none",
-      }),
-    });
-    return () => trigger.kill();
-  }, []);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 60%", "end 60%"],
+  });
+
+  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section className="bg-primary section-padding">
       <SectionContainer>
         <SectionHeading
           eyebrow="How We Work"
-          heading="From pain point to production"
+          heading="How every engagement works"
           align="center"
         />
 
         <div ref={timelineRef} className="relative mt-16 max-w-2xl mx-auto">
           {/* Centre line — animated */}
-          <div
-            ref={lineRef}
-            className="absolute left-[24px] md:left-1/2 md:-translate-x-1/2 w-px bg-accent/40 top-0 bottom-0 origin-top"
-            style={{ transform: "scaleY(0)" }}
+          <motion.div
+            className="absolute left-[24px] md:left-1/2 md:-translate-x-1/2 w-px bg-green-light/40 top-0 bottom-0 origin-top"
+            style={{ scaleY: prefersReducedMotion ? 1 : lineScaleY }}
           />
           {/* Static background line */}
           <div className="absolute left-[24px] md:left-1/2 md:-translate-x-1/2 w-px bg-border top-0 bottom-0" />

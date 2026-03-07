@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import SectionContainer from "@/components/ui/SectionContainer";
 
 const painLines = [
-  "Your team is drowning in repetitive tasks.",
-  "Your leads are slipping through cracks.",
-  "Your data sits in silos nobody can read.",
-  "You\u2019ve been told AI can help \u2014 but every conversation ends with a proposal, not a product.",
+  "Ten hours a week on procurement that could be automated.",
+  "Leads sitting in a CRM that nobody follows up on time.",
+  "Reports compiled by hand from three different spreadsheets.",
+  "You know AI should be handling this. You just haven\u2019t found someone who actually builds it.",
 ];
 
 const lineVariants = {
@@ -47,7 +47,7 @@ export default function PainPoint() {
               transition={{ delay: 0.6 }}
               className="font-heading font-semibold text-3xl md:text-4xl text-text-primary"
             >
-              We&rsquo;re different.
+              That&rsquo;s where we come in.
             </motion.p>
           </div>
 

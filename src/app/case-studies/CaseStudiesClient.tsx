@@ -12,13 +12,13 @@ export default function CaseStudiesClient() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="bg-secondary pt-32 pb-20">
+      <section className="bg-ivory pt-32 pb-20">
         <SectionContainer>
           <Reveal>
             <SectionHeading
               eyebrow="Case Studies"
               heading="Systems we've shipped"
-              description="Real AI agents, deployed in real businesses, delivering real results."
+              description="Every engagement here started the same way — with a specific problem and a conversation about how to solve it."
               display
             />
           </Reveal>
@@ -26,56 +26,56 @@ export default function CaseStudiesClient() {
       </section>
 
       {/* Grid */}
-      <section className="bg-primary section-padding">
+      <section className="bg-ivory py-20 md:py-24">
         <SectionContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {caseStudies.map((study, i) => (
               <Reveal key={study.slug} delay={i * 0.1}>
                 <Link
                   href={`/case-studies/${study.slug}`}
-                  className="group block bg-primary border border-border rounded-2xl overflow-hidden hover:shadow-card-hover hover:translate-y-[-2px] transition-all duration-300 h-full"
+                  className="group block bg-ivory border border-ivory-dark rounded-lg overflow-hidden hover:shadow-card-hover hover:translate-y-[-2px] transition-all duration-300 h-full"
                 >
                   {/* Accent strip */}
-                  <div className="h-1 bg-accent" />
+                  <div className="h-[3px] bg-green" />
 
                   <div className="p-8">
                     {/* Industry tag */}
-                    <p className="text-accent font-heading font-medium text-xs tracking-widest uppercase">
+                    <p className="text-green font-sans font-medium text-xs tracking-widest uppercase">
                       {study.industry}
                     </p>
 
                     {/* Title */}
-                    <h3 className="font-heading font-semibold text-2xl text-text-primary mt-3">
+                    <h3 className="font-serif text-2xl text-green mt-3">
                       {study.title}
                     </h3>
 
                     {/* Client */}
-                    <p className="text-sm text-text-tertiary mt-1">
+                    <p className="text-sm text-muted mt-1">
                       {study.client}
                     </p>
 
                     {/* Challenge excerpt */}
-                    <p className="font-body text-text-secondary mt-4 leading-relaxed text-sm">
+                    <p className="font-sans text-green-muted mt-4 leading-relaxed text-sm">
                       {study.challenge.length > 140
                         ? study.challenge.slice(0, 140) + "..."
                         : study.challenge}
                     </p>
 
                     {/* Divider */}
-                    <div className="border-t border-border my-6" />
+                    <div className="border-t border-ivory-dark my-6" />
 
                     {/* Key result */}
                     <div>
-                      <span className="text-3xl font-heading font-bold text-accent">
+                      <span className="text-3xl font-serif font-bold text-green">
                         {study.keyMetric.value}
                       </span>
-                      <p className="text-sm text-text-secondary mt-1">
+                      <p className="text-sm text-green-muted mt-1">
                         {study.keyMetric.label}
                       </p>
                     </div>
 
                     {/* Link */}
-                    <div className="inline-flex items-center gap-2 mt-6 text-accent font-heading font-medium text-sm">
+                    <div className="inline-flex items-center gap-2 mt-6 text-green font-sans font-medium text-sm">
                       <span>Read case study</span>
                       <ArrowRight
                         size={16}

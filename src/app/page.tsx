@@ -1,24 +1,20 @@
 import Hero from "@/components/home/Hero";
-import PainPoint from "@/components/home/PainPoint";
-import BrandPillars from "@/components/home/BrandPillars";
-import ServicesGrid from "@/components/home/ServicesGrid";
-import CaseStudies from "@/components/home/CaseStudies";
-import Process from "@/components/home/Process";
-import Metrics from "@/components/home/Metrics";
-import FinalCTA from "@/components/home/FinalCTA";
+import OrbSceneLoader from "@/components/home/OrbSceneLoader";
+import Services from "@/components/home/Services";
+import Stats from "@/components/home/Stats";
+import HowItWorks from "@/components/home/HowItWorks";
+import CTABanner from "@/components/home/CTABanner";
 import PageTransition from "@/components/ui/PageTransition";
 
 export default function HomePage() {
   return (
     <PageTransition>
       <Hero />
-      <PainPoint />
-      <BrandPillars />
-      <ServicesGrid />
-      <CaseStudies />
-      <Process />
-      <Metrics />
-      <FinalCTA />
+      <OrbSceneLoader />
+      <Services />
+      <Stats />
+      <HowItWorks />
+      <CTABanner />
     </PageTransition>
   );
 }

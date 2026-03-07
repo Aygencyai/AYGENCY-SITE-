@@ -1,50 +1,49 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Inter, Playfair_Display } from "next/font/google";
+import { DM_Serif_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/ui/MotionProvider";
 import "./globals.css";
 
-const instrumentSans = Instrument_Sans({
+const dmSerifDisplay = DM_Serif_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-heading",
+  weight: ["400"],
+  variable: "--font-serif",
   display: "swap",
 });
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-body",
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
   display: "swap",
 });
 
-const playfairDisplay = Playfair_Display({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
+  weight: ["400"],
+  variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aygency.ai"),
-  title: "Aygency — AI Agents That Solve Real Business Problems",
+  title: "Aygency — AI Agent Systems for Business",
   description:
-    "Aygency designs, builds, and deploys custom AI agent systems for businesses. Weeks, not months. Measurable ROI from day one.",
+    "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
   openGraph: {
-    title: "Aygency — AI Agents That Solve Real Business Problems",
+    title: "Aygency — AI Agent Systems for Business",
     description:
-      "Aygency designs, builds, and deploys custom AI agent systems for businesses. Weeks, not months. Measurable ROI from day one.",
+      "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
     type: "website",
     url: "https://aygency.ai",
     siteName: "Aygency",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency — AI Agents That Solve Real Business Problems",
+    title: "Aygency — AI Agent Systems for Business",
     description:
-      "Aygency designs, builds, and deploys custom AI agent systems for businesses. Weeks, not months. Measurable ROI from day one.",
+      "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
   },
   icons: {
     icon: "/favicon.png",
@@ -59,9 +58,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSans.variable} ${inter.variable} ${playfairDisplay.variable}`}
+      className={`${dmSerifDisplay.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-body antialiased">
+      <body className="font-sans antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -71,7 +70,7 @@ export default function RootLayout({
               name: "Aygency",
               url: "https://aygency.ai",
               description:
-                "Aygency designs, builds, and deploys custom AI agent systems for businesses.",
+                "Aygency designs, builds, and deploys autonomous AI agent systems that run business operations.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "London",

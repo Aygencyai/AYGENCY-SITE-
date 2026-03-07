@@ -9,21 +9,21 @@ import TiltCard from "@/components/ui/TiltCard";
 const pillars = [
   {
     icon: Hammer,
-    title: "Operators, Not Consultants",
+    title: "We Build and Run It",
     description:
-      "We write the code. We deploy the agents. We own the outcome until it\u2019s delivering results.",
+      "This isn\u2019t consulting. We write the code, deploy the system, and stay on until it\u2019s operating on its own.",
   },
   {
     icon: Zap,
-    title: "Weeks, Not Months",
+    title: "Live in Weeks",
     description:
-      "Our first deployable system ships in weeks. Because your competition isn\u2019t waiting for your vendor to finish scoping.",
+      "Your first system ships in weeks, not quarters. We scope tight and move fast.",
   },
   {
     icon: TrendingUp,
-    title: "ROI-Obsessed",
+    title: "Gets Better Over Time",
     description:
-      "Every agent we build has a measurable impact on your bottom line. If it doesn\u2019t move your numbers, we don\u2019t build it.",
+      "Most things a business buys depreciate. Our systems go the other direction \u2014 they learn, adapt, and find value you didn\u2019t brief them on.",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function BrandPillars() {
       <SectionContainer>
         <SectionHeading
           eyebrow="Why Aygency"
-          heading="Built to deliver, not to advise"
+          heading="Why clients work with us"
           align="center"
         />
 

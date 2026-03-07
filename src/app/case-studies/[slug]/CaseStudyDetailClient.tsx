@@ -18,22 +18,22 @@ export default function CaseStudyDetailClient({
   return (
     <>
       {/* A. Hero */}
-      <section className="bg-secondary pt-32 pb-20">
+      <section className="bg-ivory pt-32 pb-20">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
               <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-accent-light text-accent font-heading text-xs font-medium tracking-widest uppercase px-3 py-1.5 rounded-full">
+                <span className="bg-green/10 text-green font-sans text-xs font-medium tracking-widest uppercase px-3 py-1.5 rounded-full">
                   {study.industry}
                 </span>
-                <span className="bg-accent-light text-accent font-heading text-xs font-medium tracking-widest uppercase px-3 py-1.5 rounded-full">
+                <span className="bg-green/10 text-green font-sans text-xs font-medium tracking-widest uppercase px-3 py-1.5 rounded-full">
                   {study.service}
                 </span>
               </div>
-              <h1 className="font-display italic text-text-primary text-4xl md:text-5xl lg:text-6xl leading-tight">
+              <h1 className="font-serif text-green text-4xl md:text-5xl lg:text-6xl leading-tight uppercase">
                 {study.title}
               </h1>
-              <p className="text-text-tertiary text-lg mt-4">
+              <p className="text-muted text-lg mt-4">
                 {study.client}
               </p>
             </Reveal>
@@ -42,17 +42,17 @@ export default function CaseStudyDetailClient({
       </section>
 
       {/* B. Challenge */}
-      <section className="bg-primary section-padding">
+      <section className="bg-ivory-dark py-20 md:py-24">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
               <SectionHeading
-                eyebrow="The Challenge"
-                heading="What they were facing"
+                eyebrow="The Problem"
+                heading="What they were dealing with"
               />
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="font-body text-text-secondary text-lg leading-relaxed">
+              <p className="font-sans text-green-muted text-lg leading-relaxed">
                 {study.challenge}
               </p>
             </Reveal>
@@ -61,7 +61,7 @@ export default function CaseStudyDetailClient({
       </section>
 
       {/* C. Solution */}
-      <section className="bg-secondary section-padding">
+      <section className="bg-ivory py-20 md:py-24">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -71,7 +71,7 @@ export default function CaseStudyDetailClient({
               />
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="font-body text-text-secondary text-lg leading-relaxed">
+              <p className="font-sans text-green-muted text-lg leading-relaxed">
                 {study.solution}
               </p>
             </Reveal>
@@ -80,7 +80,7 @@ export default function CaseStudyDetailClient({
                 {study.tech.map((tag) => (
                   <span
                     key={tag}
-                    className="bg-primary border border-border rounded-full px-3 py-1.5 text-xs font-heading text-text-secondary"
+                    className="bg-ivory border border-ivory-dark rounded-full px-3 py-1.5 text-xs font-sans text-green-muted"
                   >
                     {tag}
                   </span>
@@ -92,7 +92,7 @@ export default function CaseStudyDetailClient({
       </section>
 
       {/* D. Results */}
-      <section className="bg-primary section-padding">
+      <section className="bg-ivory-dark py-20 md:py-24">
         <SectionContainer>
           <Reveal>
             <SectionHeading
@@ -105,13 +105,13 @@ export default function CaseStudyDetailClient({
           <div className="grid sm:grid-cols-2 gap-6 mt-16 max-w-3xl mx-auto">
             {study.results.map((result, i) => (
               <Reveal key={result} delay={i * 0.1}>
-                <div className="bg-secondary rounded-xl p-6">
+                <div className="bg-ivory border border-ivory-dark rounded-lg p-6">
                   <div className="flex items-start gap-3">
                     <Check
                       size={20}
-                      className="text-accent mt-0.5 flex-shrink-0"
+                      className="text-green mt-0.5 flex-shrink-0"
                     />
-                    <span className="font-heading font-medium text-lg text-text-primary">
+                    <span className="font-sans font-medium text-lg text-green">
                       {result}
                     </span>
                   </div>
@@ -125,7 +125,7 @@ export default function CaseStudyDetailClient({
             <div className="text-center mt-12">
               <Link
                 href={`/case-studies/${nextStudy.slug}`}
-                className="group inline-flex items-center gap-2 text-accent font-heading font-medium text-sm"
+                className="group inline-flex items-center gap-2 text-green font-sans font-medium text-sm"
               >
                 <span>Next Case Study: {nextStudy.title}</span>
                 <ArrowRight
@@ -139,17 +139,17 @@ export default function CaseStudyDetailClient({
       </section>
 
       {/* E. Quote */}
-      <section className="bg-dark py-16 md:py-20">
+      <section className="bg-navy py-16 md:py-20">
         <SectionContainer>
           <div className="text-center max-w-3xl mx-auto">
             <Reveal>
-              <p className="text-6xl text-white/30 font-display leading-none mb-4">
+              <p className="text-6xl text-white/30 font-serif leading-none mb-4">
                 &ldquo;
               </p>
-              <blockquote className="text-2xl md:text-3xl text-white font-display italic leading-snug">
+              <blockquote className="text-2xl md:text-3xl text-white font-serif italic leading-snug">
                 {study.quote}
               </blockquote>
-              <p className="text-white/70 font-heading text-sm mt-6">
+              <p className="text-white/70 font-sans text-sm mt-6">
                 &mdash; {study.quoteAttribution}
               </p>
             </Reveal>
@@ -158,28 +158,28 @@ export default function CaseStudyDetailClient({
       </section>
 
       {/* F. CTA */}
-      <section className="bg-secondary section-padding">
+      <section className="bg-ivory py-20 md:py-24">
         <SectionContainer>
           <div className="text-center max-w-2xl mx-auto">
             <Reveal>
-              <h2 className="font-heading font-semibold text-3xl md:text-4xl text-text-primary">
-                Have a similar challenge?
+              <h2 className="font-serif text-3xl md:text-4xl text-green uppercase">
+                Dealing with something similar?
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="font-body text-lg text-text-secondary mt-4">
-                Book a free discovery call. We&rsquo;ll diagnose your
-                highest-impact opportunity in 30 minutes.
+              <p className="font-sans text-lg text-green-muted mt-4">
+                Let&rsquo;s talk about it. 30 minutes, no commitment —
+                we&rsquo;ll tell you what we&rsquo;d build.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button variant="primary" size="lg" href="/contact">
-                  Book a Discovery Call
+                  Book a Call
                 </Button>
                 <Link
                   href="/services"
-                  className="group inline-flex items-center gap-2 text-accent font-heading font-medium text-sm"
+                  className="group inline-flex items-center gap-2 text-green font-sans font-medium text-sm"
                 >
                   <span>Or explore our services</span>
                   <ArrowRight

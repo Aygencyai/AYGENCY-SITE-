@@ -55,21 +55,21 @@ export default function ContactClient() {
   };
 
   const inputClasses =
-    "w-full px-4 py-3 rounded-lg border border-border bg-primary text-text-primary font-body placeholder:text-text-tertiary focus:ring-2 focus:ring-accent/20 focus:border-accent focus:outline-none transition-colors duration-200";
+    "w-full px-4 py-3 rounded-lg border border-ivory-dark bg-ivory text-near-black font-sans placeholder:text-muted focus:ring-2 focus:ring-green/20 focus:border-green focus:outline-none transition-colors duration-200";
 
   return (
     <>
       {/* Hero */}
-      <section className="bg-secondary pt-32 pb-16">
+      <section className="bg-ivory pt-32 pb-16">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
-              <h1 className="font-display italic text-text-primary text-4xl md:text-5xl leading-tight">
+              <h1 className="font-serif text-green text-4xl md:text-5xl leading-tight uppercase">
                 Let&rsquo;s talk
               </h1>
-              <p className="text-text-secondary text-lg md:text-xl leading-relaxed mt-4 max-w-2xl">
-                Book a free 30-minute discovery call. We&rsquo;ll diagnose your
-                highest-impact AI opportunity and show you a clear path forward.
+              <p className="text-green-muted font-sans text-lg md:text-xl leading-relaxed mt-4 max-w-2xl">
+                Book a 30-minute call. We&rsquo;ll learn about your operation
+                and tell you where AI agents would make the biggest difference.
               </p>
             </Reveal>
           </div>
@@ -77,43 +77,43 @@ export default function ContactClient() {
       </section>
 
       {/* Main */}
-      <section className="bg-primary section-padding">
+      <section className="bg-ivory py-20 md:py-24">
         <SectionContainer>
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 lg:gap-16">
             {/* Left — Cal.com embed */}
             <div>
               <Reveal>
-                <h2 className="font-heading font-medium text-lg text-text-primary mb-6">
+                <h2 className="font-sans font-medium text-lg text-green mb-6">
                   Pick a time
                 </h2>
-                <div className="min-h-[500px] rounded-2xl border border-border overflow-hidden bg-secondary relative">
+                <div className="min-h-[500px] rounded-lg border border-ivory-dark overflow-hidden bg-ivory-dark relative">
                   <iframe
                     src={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com"}
                     className="w-full h-full min-h-[500px] border-0"
-                    title="Schedule a discovery call"
+                    title="Schedule a consultation"
                     loading="lazy"
                     onLoad={() => setCalLoaded(true)}
                   />
                   {/* Skeleton loading state */}
-                  <div className={`absolute inset-0 bg-secondary flex flex-col items-center justify-center gap-4 pointer-events-none animate-pulse transition-opacity duration-500 ${calLoaded ? "opacity-0" : "opacity-100"}`}>
-                    <div className="w-48 h-4 bg-border rounded" />
-                    <div className="w-64 h-4 bg-border rounded" />
-                    <div className="w-40 h-4 bg-border rounded" />
+                  <div className={`absolute inset-0 bg-ivory-dark flex flex-col items-center justify-center gap-4 pointer-events-none animate-pulse transition-opacity duration-500 ${calLoaded ? "opacity-0" : "opacity-100"}`}>
+                    <div className="w-48 h-4 bg-ivory-dark rounded" />
+                    <div className="w-64 h-4 bg-ivory-dark rounded" />
+                    <div className="w-40 h-4 bg-ivory-dark rounded" />
                     <div className="grid grid-cols-7 gap-2 mt-6">
                       {Array.from({ length: 35 }).map((_, i) => (
                         <div
                           key={i}
-                          className="w-8 h-8 bg-border rounded"
+                          className="w-8 h-8 bg-ivory rounded"
                         />
                       ))}
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-text-tertiary mt-3">
+                <p className="text-xs text-muted mt-3">
                   Calendar not loading?{" "}
                   <a
                     href="mailto:hello@aygency.ai"
-                    className="text-accent hover:underline"
+                    className="text-green hover:underline"
                   >
                     Email us at hello@aygency.ai
                   </a>
@@ -125,36 +125,36 @@ export default function ContactClient() {
             <div>
               {/* Info card */}
               <Reveal delay={0.1}>
-                <div className="bg-secondary rounded-2xl p-8">
-                  <h3 className="font-heading font-semibold text-lg text-text-primary">
+                <div className="bg-ivory-dark rounded-lg p-8">
+                  <h3 className="font-serif text-lg text-green">
                     Get in touch
                   </h3>
 
                   <div className="space-y-4 mt-6">
                     <a
                       href="mailto:hello@aygency.ai"
-                      className="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors duration-200"
+                      className="flex items-center gap-3 text-green-muted hover:text-green transition-colors duration-200"
                     >
-                      <Mail size={18} className="text-accent flex-shrink-0" />
-                      <span className="font-body text-sm">
+                      <Mail size={18} className="text-green flex-shrink-0" />
+                      <span className="font-sans text-sm">
                         hello@aygency.ai
                       </span>
                     </a>
-                    <div className="flex items-center gap-3 text-text-secondary">
+                    <div className="flex items-center gap-3 text-green-muted">
                       <MapPin
                         size={18}
-                        className="text-accent flex-shrink-0"
+                        className="text-green flex-shrink-0"
                       />
-                      <span className="font-body text-sm">
+                      <span className="font-sans text-sm">
                         London, United Kingdom
                       </span>
                     </div>
-                    <div className="flex items-center gap-3 text-text-secondary">
+                    <div className="flex items-center gap-3 text-green-muted">
                       <Clock
                         size={18}
-                        className="text-accent flex-shrink-0"
+                        className="text-green flex-shrink-0"
                       />
-                      <span className="font-body text-sm">
+                      <span className="font-sans text-sm">
                         Mon–Fri, 9am–6pm GMT
                       </span>
                     </div>
@@ -166,19 +166,19 @@ export default function ContactClient() {
                       href="https://linkedin.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-lg bg-primary border border-border hover:border-accent flex items-center justify-center transition-colors duration-200"
+                      className="w-10 h-10 rounded-lg bg-ivory border border-ivory-dark hover:border-green flex items-center justify-center transition-colors duration-200"
                       aria-label="LinkedIn"
                     >
-                      <Linkedin size={18} className="text-text-secondary" />
+                      <Linkedin size={18} className="text-green-muted" />
                     </a>
                     <a
                       href="https://x.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-lg bg-primary border border-border hover:border-accent flex items-center justify-center transition-colors duration-200"
+                      className="w-10 h-10 rounded-lg bg-ivory border border-ivory-dark hover:border-green flex items-center justify-center transition-colors duration-200"
                       aria-label="X (Twitter)"
                     >
-                      <Twitter size={18} className="text-text-secondary" />
+                      <Twitter size={18} className="text-green-muted" />
                     </a>
                   </div>
                 </div>
@@ -186,29 +186,29 @@ export default function ContactClient() {
 
               {/* Form */}
               <Reveal delay={0.2}>
-                <div className="bg-secondary rounded-2xl p-8 mt-6">
+                <div className="bg-ivory-dark rounded-lg p-8 mt-6">
                   {submitted ? (
                     <div className="text-center py-8">
                       <CheckCircle2
                         size={48}
-                        className="text-accent mx-auto"
+                        className="text-green mx-auto"
                       />
-                      <h3 className="font-heading font-semibold text-xl text-text-primary mt-4">
+                      <h3 className="font-serif text-xl text-green mt-4">
                         Message sent!
                       </h3>
-                      <p className="font-body text-text-secondary text-sm mt-2">
+                      <p className="font-sans text-green-muted text-sm mt-2">
                         We&rsquo;ll get back within 24 hours.
                       </p>
                       <button
                         onClick={handleReset}
-                        className="text-accent font-heading font-medium text-sm mt-6 hover:underline"
+                        className="text-green font-sans font-medium text-sm mt-6 hover:underline"
                       >
                         Send another message
                       </button>
                     </div>
                   ) : (
                     <>
-                      <h3 className="font-heading font-semibold text-lg text-text-primary mb-6">
+                      <h3 className="font-serif text-lg text-green mb-6">
                         Or send us a message
                       </h3>
                       <form
@@ -219,7 +219,7 @@ export default function ContactClient() {
                         <div>
                           <label
                             htmlFor="name"
-                            className="block font-heading text-sm font-medium text-text-primary mb-1.5"
+                            className="block font-sans text-sm font-medium text-green mb-1.5"
                           >
                             Name
                           </label>
@@ -241,7 +241,7 @@ export default function ContactClient() {
                         <div>
                           <label
                             htmlFor="email"
-                            className="block font-heading text-sm font-medium text-text-primary mb-1.5"
+                            className="block font-sans text-sm font-medium text-green mb-1.5"
                           >
                             Email
                           </label>
@@ -263,10 +263,10 @@ export default function ContactClient() {
                         <div>
                           <label
                             htmlFor="company"
-                            className="block font-heading text-sm font-medium text-text-primary mb-1.5"
+                            className="block font-sans text-sm font-medium text-green mb-1.5"
                           >
                             Company{" "}
-                            <span className="text-text-tertiary font-normal">
+                            <span className="text-muted font-normal">
                               (optional)
                             </span>
                           </label>
@@ -283,14 +283,14 @@ export default function ContactClient() {
                         <div>
                           <label
                             htmlFor="message"
-                            className="block font-heading text-sm font-medium text-text-primary mb-1.5"
+                            className="block font-sans text-sm font-medium text-green mb-1.5"
                           >
-                            Tell us your pain point
+                            What can we help with?
                           </label>
                           <textarea
                             id="message"
                             rows={4}
-                            placeholder="What challenge are you facing?"
+                            placeholder="Tell us about the process or workflow you're looking to improve."
                             className={inputClasses + " resize-none"}
                             {...register("message")}
                           />

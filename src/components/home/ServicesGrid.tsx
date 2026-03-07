@@ -19,28 +19,28 @@ const serviceCards = [
     number: "01",
     title: "AI Agent Design & Deployment",
     description:
-      "Custom-built AI agents tailored to your workflows, data, and business logic.",
+      "Custom agents designed for your specific workflows, data, and decision-making.",
   },
   {
     slug: "ai-marketing",
     number: "02",
     title: "AI-Powered Marketing",
     description:
-      "Intelligent ad management, content generation, and pipeline automation.",
+      "Full-stack marketing operations run by coordinated AI agents.",
   },
   {
     slug: "automation",
     number: "03",
     title: "Process Automation",
     description:
-      "From lead conversion to inventory management \u2014 AI that runs your operations.",
+      "Inventory, lead routing, energy, documents \u2014 the operational work that bleeds time and money.",
   },
   {
     slug: "consulting",
     number: "04",
     title: "Strategic AI Consulting",
     description:
-      "We audit your business and identify exactly where AI delivers the highest ROI.",
+      "A clear-eyed audit of where AI fits in your business \u2014 and where it doesn\u2019t.",
   },
 ];
 
@@ -49,9 +49,9 @@ export default function ServicesGrid() {
     <section className="bg-primary section-padding">
       <SectionContainer>
         <SectionHeading
-          eyebrow="What We Build"
-          heading="Four pillars. One outcome."
-          description="Every engagement starts with your pain point and ends with a deployed, measurable AI system."
+          eyebrow="What We Do"
+          heading="Four ways we work with businesses"
+          description="Every engagement starts with understanding your operation and ends with a system that runs it."
           align="center"
         />
 

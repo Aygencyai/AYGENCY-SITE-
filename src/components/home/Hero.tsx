@@ -1,220 +1,94 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
-import SectionContainer from "@/components/ui/SectionContainer";
-import Button from "@/components/ui/Button";
+import Link from "next/link";
 
-const smoothEase = [0.16, 1, 0.3, 1] as const;
+const headingWords = ["YOUR", "NEXT", "DEPARTMENT", "RUNS", "ITSELF"];
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.2, ease: "easeOut" as const },
+  }),
+};
 
 export default function Hero() {
-  const [scrollIndicatorVisible, setScrollIndicatorVisible] = useState(true);
-  const heroRef = useRef<HTMLElement>(null);
-  const ringsRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setScrollIndicatorVisible(window.scrollY < 100);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Parallax on orbital rings
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    if (!ringsRef.current || !heroRef.current) return;
-    const tl = gsap.to(ringsRef.current, {
-      y: "-20%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-    return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
-  }, []);
-
-  // Content fade-out on scroll
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    if (!contentRef.current || !heroRef.current) return;
-    const tl = gsap.to(contentRef.current, {
-      opacity: 0,
-      y: -50,
-      ease: "none",
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "60% top",
-        scrub: true,
-      },
-    });
-    return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
-  }, []);
-
-  const handleScrollDown = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-  };
+  const headingAnimDuration = headingWords.length * 0.2 + 0.6;
 
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-[100svh] overflow-hidden bg-primary"
-    >
-      {/* Background visual layer */}
-      <div className="absolute inset-0">
-        {/* Warm radial gradient */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(69,121,144,0.08) 0%, transparent 70%)",
-          }}
-        />
-        {/* Subtle grain texture */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-            backgroundSize: "256px 256px",
-          }}
-        />
-      </div>
+    <section className="relative min-h-screen bg-ivory overflow-hidden">
+      {/* Main content — vertically centred */}
+      <div className="relative z-10 flex min-h-screen items-center">
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
+          {/* Desktop: side-by-side | Mobile: stacked */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-16">
+            {/* Heading */}
+            <h1 className="font-serif text-[36px] sm:text-[48px] lg:text-[80px] uppercase leading-[0.95] text-green">
+              {headingWords.map((word, i) => (
+                <motion.span
+                  key={word + i}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={wordVariants}
+                  className="inline-block mr-[0.3em]"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </h1>
 
-      {/* Abstract orbital element — right side, desktop only */}
-      <div
-        ref={ringsRef}
-        className="absolute -right-[5%] bottom-[10%] w-[500px] h-[500px] md:w-[600px] md:h-[600px] lg:w-[700px] lg:h-[700px] opacity-0 md:opacity-60 pointer-events-none"
-      >
-        {/* Outer ring — slow rotation */}
-        <div className="absolute inset-0 rounded-full border border-border/30 animate-[spin_60s_linear_infinite]">
-          {/* Middle ring — offset */}
-          <div className="absolute inset-[12%] rounded-full border border-accent/20">
-            {/* Inner glow */}
-            <div
-              className="absolute inset-[15%] rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(69,121,144,0.05) 0%, transparent 70%)",
-              }}
-            />
+            {/* Body text */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: headingAnimDuration + 0.4, ease: "easeOut" }}
+              className="max-w-[350px] font-sans text-base font-normal leading-[1.6] text-green-muted"
+            >
+              We build agent systems that operate inside your business —
+              handling the work that currently takes an entire team. They
+              run 24/7, learn from your data, and get better every month.
+            </motion.p>
           </div>
+
+          {/* CTA Buttons — below heading + body, centred */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: headingAnimDuration + 0.6, ease: "easeOut" }}
+            className="mt-12 flex flex-col items-center gap-4 min-[480px]:flex-row min-[480px]:justify-center"
+          >
+            <Link
+              href="/contact"
+              className="inline-block rounded-full bg-green px-8 py-3 font-sans text-[13px] font-semibold uppercase tracking-[0.15em] text-white transition-colors duration-200 hover:bg-green-light"
+            >
+              Book a Call
+            </Link>
+            <Link
+              href="/services"
+              className="inline-block rounded-full border border-green bg-transparent px-8 py-3 font-sans text-[13px] font-semibold uppercase tracking-[0.15em] text-green transition-colors duration-200 hover:bg-ivory-dark"
+            >
+              What We Build
+            </Link>
+          </motion.div>
         </div>
       </div>
 
-      {/* Content */}
-      <div ref={contentRef} className="relative z-10">
-        <SectionContainer className="pt-40 md:pt-48 pb-32 md:pb-40">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-16 lg:gap-24 items-end">
-            {/* Left column — main content */}
-            <div>
-              {/* Pagination label */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: smoothEase }}
-                className="font-heading text-xs tracking-[0.2em] uppercase text-text-tertiary mb-8"
-              >
-                AI Agent Systems / 001
-              </motion.p>
+      {/* Slide counter — bottom left */}
+      <span className="absolute bottom-8 left-8 font-mono text-xs text-muted">
+        001 / 005
+      </span>
 
-              {/* Headline */}
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: smoothEase }}
-                className="font-display italic text-5xl sm:text-6xl md:text-7xl lg:text-[80px] xl:text-[88px] text-text-primary leading-[1.05] tracking-tight"
-              >
-                We don&rsquo;t advise.
-                <br />
-                We build.
-              </motion.h1>
-
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease: smoothEase }}
-                className="flex flex-col sm:flex-row gap-4 mt-10"
-              >
-                <Button
-                  variant="primary"
-                  size="lg"
-                  href="/contact"
-                  className="w-full sm:w-auto text-center"
-                >
-                  Get in Touch
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  href="/services"
-                  className="w-full sm:w-auto text-center"
-                >
-                  Our Services
-                </Button>
-              </motion.div>
-
-              {/* Mobile description fallback (below lg) */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8, ease: smoothEase }}
-                className="lg:hidden text-lg text-text-secondary leading-relaxed mt-8 text-center sm:text-left max-w-lg"
-              >
-                We specialise in workflow automation and personalised AI
-                solutions for progressive organisations.
-              </motion.p>
-            </div>
-
-            {/* Right column — supporting text (desktop only) */}
-            <div className="hidden lg:block">
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: smoothEase }}
-                className="text-lg text-text-secondary leading-relaxed max-w-sm"
-              >
-                We specialise in workflow automation and personalised AI
-                solutions for progressive organisations.
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7, ease: smoothEase }}
-                className="text-sm text-text-tertiary leading-relaxed max-w-xs mt-8"
-              >
-                Helping forward-looking companies thrive with custom AI
-                solutions and automated workflows.
-              </motion.p>
-            </div>
-          </div>
-        </SectionContainer>
-      </div>
-
-      {/* Scroll indicator */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: scrollIndicatorVisible ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        onClick={handleScrollDown}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-text-tertiary cursor-pointer"
-        aria-label="Scroll down"
+      {/* Scroll indicator — bottom centre */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <ChevronDown size={24} className="animate-bounce" />
-      </motion.button>
+        <div className="mx-auto h-10 w-px bg-muted" />
+      </motion.div>
     </section>
   );
 }

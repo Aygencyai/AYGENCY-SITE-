@@ -7,7 +7,7 @@ import { CountUp } from "@/components/ui/CountUp";
 const metricsData = [
   { target: 12, suffix: "+", label: "Agents Deployed" },
   { target: 3, suffix: "wk", label: "Avg. Deployment Time" },
-  { target: 40, suffix: "%+", label: "Average Client ROI Increase" },
+  { target: 80, suffix: "%", label: "Reduction in Procurement Time" },
   { target: 5, suffix: "+", label: "Industries Served" },
 ];
 

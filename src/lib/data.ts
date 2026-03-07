@@ -6,85 +6,85 @@ export const services: Service[] = [
     title: "AI Agent Design & Deployment",
     shortTitle: "Agent Design",
     description:
-      "Custom-built AI agents tailored to your workflows, data, and business logic.",
+      "Custom agents designed for your specific workflows, data, and decision-making.",
     longDescription:
-      "We design, build, and deploy custom AI agents that integrate directly into your business workflows. Not chatbots. Not demos. Production-grade autonomous systems that handle real decisions with real data.",
+      "We build autonomous systems that sit inside your business and handle real work \u2014 routing decisions, processing data, coordinating across platforms. Not prototypes. Production systems that go live in weeks and keep improving the longer they run.",
     icon: "agent",
     useCases: [
-      "Custom chatbots and virtual assistants trained on your business data",
-      "Multi-agent workflows that coordinate across departments",
-      "Autonomous agents that monitor, decide, and act without human intervention",
-      "Integration with existing tools — Slack, CRM, ERP, email, databases",
+      "Agents that process your data, make decisions, and act without manual oversight",
+      "Multi-agent systems that coordinate across departments",
+      "Always-on monitoring agents that flag issues before your team notices",
+      "Deep integration with your existing stack \u2014 Slack, CRM, ERP, email, databases",
     ],
     problem:
-      "Your business is drowning in manual processes, tribal knowledge, and siloed data. You\u2019ve seen what AI can do but every \u2018solution\u2019 you\u2019ve been offered is either a generic chatbot or a 6-month consulting engagement that ends with a report, not a product.",
+      "Your operation runs on manual processes, tribal knowledge, and siloed data. You\u2019ve seen what AI can do but every conversation you\u2019ve had ends with a proposal and a timeline measured in quarters. You don\u2019t need another strategy deck. You need a system that\u2019s live and working.",
     approach: [
       {
-        title: "Discovery & Mapping",
-        desc: "We map your workflows, data sources, and decision points to identify exactly where agents add value.",
+        title: "Diagnose",
+        desc: "We map your workflows, data sources, and decision points to find exactly where agents will have the biggest impact.",
       },
       {
-        title: "Agent Architecture",
-        desc: "We design the system \u2014 which agents, what they do, how they communicate, what data they need.",
+        title: "Design",
+        desc: "We architect the system \u2014 which agents, what each one handles, how they talk to each other, and what data they need.",
       },
       {
-        title: "Build & Integrate",
-        desc: "We build the agents using the best models for the task and integrate them with your existing tools.",
+        title: "Build & Deploy",
+        desc: "We build the agents, connect them to your platforms, and put them live in your environment with full monitoring.",
       },
       {
-        title: "Deploy & Monitor",
-        desc: "We deploy into your environment with monitoring, alerting, and continuous improvement built in.",
+        title: "Improve",
+        desc: "The system learns from every cycle. We tune, expand, and optimise as it surfaces patterns you didn\u2019t know to look for.",
       },
     ],
     relatedCaseStudy: "stockpilot",
-    ctaHeading: "Ready to deploy your first AI agent?",
+    ctaHeading: "Let\u2019s scope your first agent system",
   },
   {
     slug: "ai-marketing",
     title: "AI-Powered Marketing",
     shortTitle: "AI Marketing",
     description:
-      "Intelligent ad management, content generation, and pipeline automation.",
+      "Full-stack marketing operations run by coordinated AI agents.",
     longDescription:
-      "We replace the traditional agency model with AI-native marketing systems. Automated ad creation, intelligent targeting, real-time optimisation, and reporting \u2014 all running autonomously.",
+      "Ad creation, audience targeting, campaign management, performance reporting \u2014 all handled by a system of specialised agents. They run your campaigns around the clock and optimise based on real performance data.",
     icon: "marketing",
     useCases: [
-      "AI-generated ad creatives and copy tailored to your brand voice",
+      "Ad creatives and copy generated to match your brand voice and audience",
       "Automated audience targeting and budget optimisation across platforms",
-      "Content calendar management with AI-driven scheduling",
+      "Content scheduling and calendar management on autopilot",
       "Real-time performance dashboards with automated reporting",
     ],
     problem:
-      "Traditional marketing agencies burn budget on headcount \u2014 strategists, copywriters, designers, media buyers \u2014 and still can\u2019t personalise at scale. Campaign turnaround takes weeks. Reporting is manual. Optimisation is reactive, not predictive.",
+      "Marketing at scale requires strategists, copywriters, designers, media buyers, and analysts. Even with a full team, campaign turnaround takes weeks. Reporting is manual. Optimisation is reactive. The model is expensive and slow.",
     approach: [
       {
-        title: "Audit & Strategy",
-        desc: "We analyse your current marketing stack, spend, and performance to identify the highest-impact automation opportunities.",
+        title: "Audit",
+        desc: "We analyse your current marketing stack, spend, and performance to find where automation will move the needle fastest.",
       },
       {
-        title: "Agent Design",
-        desc: "We architect the AI agents \u2014 creative generation, targeting, buying, reporting \u2014 each specialised for its role.",
+        title: "Design",
+        desc: "We architect the agent system \u2014 creative generation, targeting, buying, reporting \u2014 each agent specialised for its role.",
       },
       {
-        title: "Platform Integration",
-        desc: "We connect to your ad platforms (Meta, Google, TikTok, LinkedIn) and existing marketing tools.",
+        title: "Build & Deploy",
+        desc: "We connect to your ad platforms (Meta, Google, TikTok, LinkedIn), build the agents, and put the system live.",
       },
       {
-        title: "Launch & Optimise",
-        desc: "We launch the system, monitor performance, and continuously refine the agents based on real results.",
+        title: "Optimise",
+        desc: "The agents refine targeting, creative, and spend allocation continuously. Performance improves week over week.",
       },
     ],
     relatedCaseStudy: "smma-pipeline",
-    ctaHeading: "Ready to automate your marketing?",
+    ctaHeading: "Ready to put your marketing on autopilot?",
   },
   {
     slug: "automation",
     title: "Process Automation",
     shortTitle: "Automation",
     description:
-      "From lead conversion to inventory management \u2014 AI that runs your operations.",
+      "Inventory, lead routing, energy, documents \u2014 the operational work that bleeds time and money.",
     longDescription:
-      "We automate operational processes that are bleeding time and money \u2014 inventory, lead routing, energy management, document handling. AI agents that monitor, decide, and act in real time.",
+      "We take the processes your team spends hours on \u2014 inventory checks, lead follow-ups, energy monitoring, document processing \u2014 and build agent systems that handle them faster, cheaper, and around the clock.",
     icon: "automation",
     useCases: [
       "Lead scoring and conversion automation for sales teams",
@@ -93,64 +93,64 @@ export const services: Service[] = [
       "Document processing and data extraction from unstructured sources",
     ],
     problem:
-      "Operational processes \u2014 inventory, lead routing, energy management, document handling \u2014 are still run on spreadsheets, gut feel, and manual checks. Errors compound. Opportunities slip. The data exists but nobody\u2019s reading it in real time.",
+      "Inventory, lead routing, energy management, document handling \u2014 these processes are still run on spreadsheets, gut feel, and manual checks. Errors stack up. Revenue leaks out. The data to fix it exists, but nobody\u2019s reading it in real time.",
     approach: [
       {
-        title: "Process Mapping",
-        desc: "We document every step of the process \u2014 inputs, decisions, outputs, exceptions \u2014 to understand exactly what to automate.",
+        title: "Map",
+        desc: "We document every step \u2014 inputs, decisions, outputs, exceptions \u2014 to understand exactly what needs to be automated.",
       },
       {
-        title: "Data Pipeline",
-        desc: "We build the data connections \u2014 APIs, webhooks, scrapers \u2014 to feed real-time information to the agents.",
+        title: "Connect",
+        desc: "We build the data layer \u2014 APIs, webhooks, scrapers \u2014 so agents can read and act on live information.",
       },
       {
-        title: "Agent Deployment",
-        desc: "We deploy agents that monitor data streams, make decisions based on your rules, and take action automatically.",
+        title: "Build & Deploy",
+        desc: "We deploy agents that monitor your data, make decisions based on your rules, and take action automatically.",
       },
       {
-        title: "Continuous Improvement",
-        desc: "We track performance, identify edge cases, and refine the agents to handle increasingly complex scenarios.",
+        title: "Expand",
+        desc: "We track performance, handle edge cases, and expand the system as it proves itself on your operation.",
       },
     ],
     relatedCaseStudy: "energy-management",
-    ctaHeading: "Ready to automate your operations?",
+    ctaHeading: "Let\u2019s automate what\u2019s costing you",
   },
   {
     slug: "consulting",
     title: "Strategic AI Consulting",
     shortTitle: "AI Consulting",
     description:
-      "We audit your business and identify exactly where AI delivers the highest ROI.",
+      "A clear-eyed audit of where AI fits in your business \u2014 and where it doesn\u2019t.",
     longDescription:
-      "We audit your business and tell you exactly where AI will \u2014 and won\u2019t \u2014 make a difference. No vendor pitches. No tool recommendations. Just honest analysis of your highest-ROI opportunities.",
+      "We look at your actual workflows and tell you honestly which ones are worth automating. No vendor bias. No generic playbook. Just a ranked list of your highest-value opportunities with a roadmap to build them.",
     icon: "consulting",
     useCases: [
-      "Full AI readiness audit \u2014 where are the opportunities in your business?",
-      "Build vs buy analysis for AI tools and platforms",
-      "AI strategy roadmap aligned to your business goals and budget",
+      "Full audit of your operation \u2014 which processes cost the most and where agents would hit hardest",
+      "Build vs buy analysis for agent systems and platforms",
+      "A prioritised roadmap: what to build first, what to skip, and what it costs",
       "Team training and upskilling for AI adoption",
     ],
     problem:
-      "Most businesses know AI matters but don\u2019t know where to start. They\u2019ve sat through vendor pitches for tools that solve problems they don\u2019t have. They need someone who\u2019ll look at their actual workflows and tell them where AI will \u2014 and won\u2019t \u2014 make a difference.",
+      "Most businesses know AI matters but don\u2019t know where to start. They\u2019ve sat through vendor pitches for products that solve problems they don\u2019t have. What they actually need is someone who\u2019ll look at their real workflows and give them a straight answer.",
     approach: [
       {
-        title: "Business Immersion",
-        desc: "We spend time with your teams understanding workflows, pain points, data, and decision-making processes.",
+        title: "Immerse",
+        desc: "We spend time with your teams understanding how work actually gets done \u2014 the processes, the bottlenecks, the data.",
       },
       {
-        title: "Opportunity Mapping",
-        desc: "We identify every potential AI application, score them by impact and feasibility, and rank them.",
+        title: "Rank",
+        desc: "We identify every potential AI application, score each one by impact and feasibility, and rank them.",
       },
       {
-        title: "Strategy & Roadmap",
-        desc: "We deliver a clear roadmap \u2014 what to build first, what to wait on, what to skip \u2014 with timelines and budgets.",
+        title: "Roadmap",
+        desc: "We hand you a clear plan \u2014 what to build first, what to wait on, what to skip \u2014 with timelines and costs.",
       },
       {
-        title: "Execution Support",
-        desc: "If you want us to build it, we build it. If you want to build internally, we help you hire and onboard.",
+        title: "Execute",
+        desc: "If you want us to build it, we build it. If you want to build in-house, we help you hire and structure the team.",
       },
     ],
-    ctaHeading: "Ready to find your AI opportunity?",
+    ctaHeading: "Not sure where to start? We\u2019ll map it out.",
   },
 ];
 export const caseStudies: CaseStudy[] = [
@@ -219,7 +219,7 @@ export const caseStudies: CaseStudy[] = [
     solution:
       "Aygency architected an eight-agent AI system that replaces the core functions of a traditional SMMA. Agents handle ad creative generation, audience targeting, media buying optimisation, performance analytics, client communication, content scheduling, A/B testing orchestration, and pipeline management.",
     results: [
-      "8 AI agents replacing traditional agency headcount",
+      "8 specialised agents operating across the full marketing pipeline",
       "Ad creative turnaround reduced from days to minutes",
       "Real-time performance optimisation with no manual intervention",
       "Scalable to 20+ concurrent client accounts",
@@ -240,27 +240,33 @@ export const caseStudies: CaseStudy[] = [
 export const processSteps: ProcessStep[] = [
   {
     number: 1,
-    title: "Discovery",
+    title: "Diagnose",
     description:
-      "You tell us the pain point. We diagnose the opportunity, map your workflows, and identify where AI will have the biggest impact.",
+      "We learn your operation inside out \u2014 the workflows, the bottlenecks, the data. We need to understand the problem before we propose anything.",
   },
   {
     number: 2,
-    title: "Architecture",
+    title: "Design",
     description:
-      "We design the agent system — models, data flows, integrations, and deployment strategy. You approve before we write a line of code.",
+      "We architect the system: which agents, what each one handles, how they coordinate, and what integrations they need. You approve the blueprint before we start building.",
   },
   {
     number: 3,
-    title: "Build & Deploy",
+    title: "Build",
     description:
-      "We build it, test it, and deploy it into your environment. Live agents, working with your real data, in your real workflows.",
+      "We develop the agents, connect them to your platforms, and test everything against your real data and edge cases.",
   },
   {
     number: 4,
-    title: "Measure & Iterate",
+    title: "Go Live",
     description:
-      "We track ROI, gather feedback, and refine. Every agent gets smarter over time. You see the numbers move.",
+      "The system starts operating in your environment. We monitor closely, catch issues early, and tune performance in the first weeks.",
+  },
+  {
+    number: 5,
+    title: "Get Smarter",
+    description:
+      "This is what sets agent systems apart. They learn from every cycle. By month three, the system is outperforming the original spec.",
   },
 ];
 
@@ -268,9 +274,9 @@ export const metrics: Metric[] = [
   { value: "12+", label: "Agents Deployed", numericValue: 12 },
   { value: "3", label: "Avg. Deployment Time", suffix: "wk", numericValue: 3 },
   {
-    value: "40%+",
-    label: "Average Client ROI Increase",
-    numericValue: 40,
+    value: "80%",
+    label: "Reduction in procurement time",
+    numericValue: 80,
   },
   { value: "5+", label: "Industries Served", numericValue: 5 },
 ];

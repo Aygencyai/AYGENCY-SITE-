@@ -9,28 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "var(--bg-primary)",
-        secondary: "var(--bg-secondary)",
-        tertiary: "var(--bg-tertiary)",
-        dark: "var(--bg-dark)",
-        "text-primary": "var(--text-primary)",
-        "text-secondary": "var(--text-secondary)",
-        "text-tertiary": "var(--text-tertiary)",
-        accent: {
-          DEFAULT: "var(--accent)",
-          hover: "var(--accent-hover)",
-          light: "var(--accent-light)",
-          subtle: "var(--accent-subtle)",
+        ivory: '#F5F1EB',
+        'ivory-dark': '#EBE5DB',
+        green: {
+          DEFAULT: '#1B3A2D',
+          light: '#2D5E45',
+          muted: '#4A7A62',
         },
-        border: {
-          DEFAULT: "var(--border)",
-          light: "var(--border-light)",
+        navy: '#1A2744',
+        blue: {
+          DEFAULT: '#5BA4C9',
+          light: '#8DC4DE',
         },
+        'near-black': '#141C15',
+        white: '#FAFAF8',
+        muted: '#8A8A80',
       },
       fontFamily: {
-        heading: ["var(--font-heading)", "sans-serif"],
-        body: ["var(--font-body)", "sans-serif"],
-        display: ["var(--font-display)", "serif"],
+        serif: ['var(--font-serif)', 'serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       boxShadow: {
         card: "0 2px 8px rgba(26,26,26,0.04), 0 1px 2px rgba(26,26,26,0.06)",
