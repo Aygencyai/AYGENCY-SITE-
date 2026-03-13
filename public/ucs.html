@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYGENCY.AI — Universal Control System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ——— RESET & BASE ——— */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #050505;
+    --text: #EBEBEB;
+    --accent: #00FF41;
+    --hairline: 0.5px;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 300vh; /* scrollable content */
+  }
+
+  /* ——— SVG NOISE FILTER ——— */
+  .noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+  }
+
+  /* ——— SCANLINES ——— */
+  .scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.015) 2px,
+      rgba(255, 255, 255, 0.015) 4px
+    );
+  }
+
+  .scanline-sweep {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9997;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 100%
+    );
+    background-size: 100% 30%;
+    background-repeat: no-repeat;
+    animation: scanSweep 8s linear infinite;
+  }
+
+  @keyframes scanSweep {
+    0%   { background-position: 0 -30%; }
+    100% { background-position: 0 130%; }
+  }
+
+  /* ——— HEADER ——— */
+  .ucs-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(16px, 3vw, 48px);
+    height: 56px;
+    border-bottom: var(--hairline) solid rgba(235, 235, 235, 0.1);
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transform: translateZ(0);
+  }
+
+  /* LEFT — Logo */
+  .logo {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.8em;
+    text-transform: uppercase;
+    cursor: default;
+    transition: letter-spacing 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+    white-space: nowrap;
+    transform: translateZ(0);
+  }
+
+  .logo:hover {
+    letter-spacing: 1em;
+  }
+
+  .logo .bracket {
+    opacity: 0.3;
+    font-weight: 200;
+  }
+
+  .logo .dot-ai {
+    opacity: 0.4;
+  }
+
+  .logo-text {
+    display: inline-block;
+    min-width: 7ch;
+  }
+
+  /* CENTER — Coordinates */
+  .coords {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+    text-transform: uppercase;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateZ(0);
+    white-space: nowrap;
+  }
+
+  /* RIGHT — Status */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 4px var(--accent);
+    animation: heartbeat 2s ease-in-out infinite;
+    transform: translateZ(0);
+  }
+
+  @keyframes heartbeat {
+    0%, 100% {
+      box-shadow: 0 0 4px var(--accent), 0 0 8px rgba(0, 255, 65, 0.2);
+      transform: scale(1);
+    }
+    15% {
+      box-shadow: 0 0 8px var(--accent), 0 0 20px rgba(0, 255, 65, 0.4);
+      transform: scale(1.3);
+    }
+    30% {
+      box-shadow: 0 0 4px var(--accent), 0 0 8px rgba(0, 255, 65, 0.2);
+      transform: scale(1);
+    }
+    45% {
+      box-shadow: 0 0 6px var(--accent), 0 0 14px rgba(0, 255, 65, 0.3);
+      transform: scale(1.15);
+    }
+    60% {
+      box-shadow: 0 0 4px var(--accent), 0 0 8px rgba(0, 255, 65, 0.2);
+      transform: scale(1);
+    }
+  }
+
+  /* ——— HERO ——— */
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 120px 24px 80px;
+    overflow: hidden;
+  }
+
+  /* 12-column grid background */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .grid-overlay .col {
+    border-left: var(--hairline) solid rgba(235, 235, 235, 0.04);
+    transform: translateZ(0);
+  }
+
+  .grid-overlay .col:last-child {
+    border-right: var(--hairline) solid rgba(235, 235, 235, 0.04);
+  }
+
+  /* Hero Content */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    margin-bottom: 48px;
+    transform: translateZ(0);
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 72px);
+    font-weight: 200;
+    letter-spacing: 0.12em;
+    line-height: 1.15;
+    text-transform: uppercase;
+    margin-bottom: 64px;
+    transform: translateZ(0);
+  }
+
+  .hero h1 .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .hero h1 .word.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* CTA Button */
+  .cta-btn {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: transparent;
+    border: var(--hairline) solid rgba(235, 235, 235, 0.25);
+    padding: 18px 48px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s ease, color 0.4s ease;
+    text-decoration: none;
+    transform: translateZ(0);
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 1.8s;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(235, 235, 235, 0.12) 0%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    transform: translateZ(0);
+  }
+
+  .cta-btn:hover {
+    border-color: rgba(235, 235, 235, 0.5);
+  }
+
+  .cta-btn:hover::before {
+    opacity: 1;
+  }
+
+  .cta-bracket {
+    opacity: 0.3;
+    font-weight: 200;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ——— SECTION: CAPABILITIES ——— */
+  .section {
+    position: relative;
+    padding: 160px clamp(24px, 5vw, 80px);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 80px;
+    border-bottom: var(--hairline) solid rgba(235, 235, 235, 0.08);
+    padding-bottom: 24px;
+    transform: translateZ(0);
+  }
+
+  .section-index {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    opacity: 0.3;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(235, 235, 235, 0.06);
+    border: var(--hairline) solid rgba(235, 235, 235, 0.06);
+    transform: translateZ(0);
+  }
+
+  .capability-card {
+    background: var(--bg);
+    padding: 48px 36px;
+    transition: background 0.4s ease;
+    cursor: default;
+  }
+
+  .capability-card:hover {
+    background: rgba(235, 235, 235, 0.02);
+  }
+
+  .cap-index {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    opacity: 0.25;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .cap-title {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .cap-desc {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0.45;
+  }
+
+  /* ——— SECTION: METRICS ——— */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-top: var(--hairline) solid rgba(235, 235, 235, 0.08);
+    border-bottom: var(--hairline) solid rgba(235, 235, 235, 0.08);
+    transform: translateZ(0);
+  }
+
+  .metric {
+    padding: 56px 36px;
+    border-right: var(--hairline) solid rgba(235, 235, 235, 0.08);
+    text-align: center;
+  }
+
+  .metric:last-child {
+    border-right: none;
+  }
+
+  .metric-value {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 200;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.35;
+  }
+
+  /* ——— FOOTER ——— */
+  .ucs-footer {
+    padding: 32px clamp(16px, 3vw, 48px);
+    border-top: var(--hairline) solid rgba(235, 235, 235, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    opacity: 0.3;
+    text-transform: uppercase;
+    transform: translateZ(0);
+  }
+
+  /* ——— MOBILE ——— */
+  @media (max-width: 768px) {
+    .logo {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+    }
+
+    .logo:hover {
+      letter-spacing: 0.45em;
+    }
+
+    .coords {
+      display: none;
+    }
+
+    .status {
+      font-size: 10px;
+    }
+
+    .hero h1 {
+      letter-spacing: 0.06em;
+    }
+
+    .cta-btn {
+      padding: 14px 32px;
+      font-size: 11px;
+    }
+
+    .metric {
+      border-right: none;
+      border-bottom: var(--hairline) solid rgba(235, 235, 235, 0.08);
+      padding: 40px 24px;
+    }
+
+    .metric:last-child {
+      border-bottom: none;
+    }
+
+    .ucs-footer {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG Noise Filter -->
+<svg class="noise" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <filter id="noiseFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+</svg>
+
+<!-- Scanlines -->
+<div class="scanlines"></div>
+<div class="scanline-sweep"></div>
+
+<!-- Header -->
+<header class="ucs-header">
+  <div class="logo">
+    <span class="bracket">[&nbsp;</span><span class="logo-text" id="logoText">AYGENCY</span><span class="dot-ai">.&thinsp;A&thinsp;I</span><span class="bracket">&nbsp;]</span>
+  </div>
+  <div class="coords">LOC: 51.5074° N / 0.1278° W</div>
+  <div class="status">
+    <span>STATUS: ACTIVE</span>
+    <div class="status-dot"></div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="grid-overlay">
+    <div class="col"></div><div class="col"></div><div class="col"></div>
+    <div class="col"></div><div class="col"></div><div class="col"></div>
+    <div class="col"></div><div class="col"></div><div class="col"></div>
+    <div class="col"></div><div class="col"></div><div class="col"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-label">UNIVERSAL CONTROL SYSTEM v2.1</div>
+    <h1 id="heroHeadline"></h1>
+    <a href="#" class="cta-btn">
+      <span class="cta-bracket">[&nbsp;</span>INITIALIZE_PROJECT<span class="cta-bracket">&nbsp;]</span>
+    </a>
+  </div>
+</section>
+
+<!-- Capabilities -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-index">01</span>
+    <span class="section-title">Capabilities</span>
+  </div>
+  <div class="capabilities-grid">
+    <div class="capability-card">
+      <div class="cap-index">001</div>
+      <div class="cap-title">Agent Architecture</div>
+      <div class="cap-desc">Custom multi-agent systems designed for your specific operational topology. Built from first principles, not templates.</div>
+    </div>
+    <div class="capability-card">
+      <div class="cap-index">002</div>
+      <div class="cap-title">Workflow Automation</div>
+      <div class="cap-desc">End-to-end process automation that eliminates manual bottlenecks and scales without adding headcount.</div>
+    </div>
+    <div class="capability-card">
+      <div class="cap-index">003</div>
+      <div class="cap-title">AI Departments</div>
+      <div class="cap-desc">Full AI-led business functions — marketing, ops, support — running autonomously with human oversight where it matters.</div>
+    </div>
+    <div class="capability-card">
+      <div class="cap-index">004</div>
+      <div class="cap-title">Revenue Systems</div>
+      <div class="cap-desc">Agent-driven pipelines that generate, qualify, and convert — transforming AI from a cost centre into a profit engine.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-index">02</span>
+    <span class="section-title">Operational Metrics</span>
+  </div>
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="metric-value">97%</div>
+      <div class="metric-label">Automation Rate</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">4.2x</div>
+      <div class="metric-label">ROI Average</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">48h</div>
+      <div class="metric-label">Deploy Time</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">∞</div>
+      <div class="metric-label">Scale Ceiling</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="ucs-footer">
+  <span>© 2026 AYGENCY.AI</span>
+  <span>SYSTEM NOMINAL</span>
+  <span>BUILD 2.1.0</span>
+</footer>
+
+<script>
+  // ——— CHARACTER SCRAMBLE (The Decipher) ———
+  (function scrambleLogo() {
+    const el = document.getElementById('logoText');
+    const target = 'AYGENCY';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?<>{}[]';
+    const duration = 600;
+    const interval = 30;
+    const steps = duration / interval;
+    let step = 0;
+
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      let result = '';
+
+      for (let i = 0; i < target.length; i++) {
+        // Characters "lock in" progressively from left to right
+        const lockThreshold = (i / target.length) * 0.7;
+        if (progress > lockThreshold + 0.3) {
+          result += target[i];
+        } else {
+          result += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+
+      el.textContent = result;
+
+      if (step >= steps) {
+        clearInterval(timer);
+        el.textContent = target;
+      }
+    }, interval);
+  })();
+
+  // ——— HERO HEADLINE WORD-BY-WORD REVEAL ———
+  (function revealHeadline() {
+    const container = document.getElementById('heroHeadline');
+    const words = ['STRATEGIC', 'AI', 'FOR', 'MODERN', 'BRANDS.'];
+
+    words.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = word + (i < words.length - 1 ? '\u00A0' : '');
+      container.appendChild(span);
+
+      setTimeout(() => {
+        span.classList.add('visible');
+      }, 800 + i * 200);
+    });
+  })();
+
+  // ——— SMOOTH SCROLL (Lenis-style) ———
+  (function smoothScroll() {
+    let current = 0;
+    let target = 0;
+    const ease = 0.08;
+
+    window.addEventListener('scroll', () => {
+      target = window.scrollY;
+    }, { passive: true });
+
+    // Override default scroll
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+
+    const scrollContainer = document.createElement('div');
+    scrollContainer.style.width = '100%';
+    scrollContainer.style.position = 'fixed';
+    scrollContainer.style.top = '0';
+    scrollContainer.style.left = '0';
+    scrollContainer.style.willChange = 'transform';
+
+    // Move all body children into scroll container
+    while (document.body.firstChild) {
+      scrollContainer.appendChild(document.body.firstChild);
+    }
+    document.body.appendChild(scrollContainer);
+
+    // Create a spacer to enable native scrollbar
+    const spacer = document.createElement('div');
+    spacer.style.height = scrollContainer.scrollHeight + 'px';
+    spacer.style.position = 'relative';
+    spacer.style.zIndex = '-1';
+    document.body.appendChild(spacer);
+
+    // Unlock scroll
+    document.body.style.position = '';
+    document.body.style.overflow = '';
+
+    function updateScroll() {
+      target = window.scrollY;
+      current += (target - current) * ease;
+
+      // Snap when close enough
+      if (Math.abs(target - current) < 0.5) {
+        current = target;
+      }
+
+      scrollContainer.style.transform = `translate3d(0, ${-current}px, 0)`;
+      requestAnimationFrame(updateScroll);
+    }
+
+    requestAnimationFrame(updateScroll);
+
+    // Recalculate spacer on resize
+    window.addEventListener('resize', () => {
+      spacer.style.height = scrollContainer.scrollHeight + 'px';
+    });
+  })();
+</script>
+
+</body>
+</html>
