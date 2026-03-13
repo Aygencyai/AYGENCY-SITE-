@@ -6,151 +6,151 @@ export const services: Service[] = [
     title: "AI Agent Design & Deployment",
     shortTitle: "Agent Design",
     description:
-      "Custom agents designed for your specific workflows, data, and decision-making.",
+      "Purpose-built agent systems that sit inside your operation, make decisions, and act \u2014 without waiting for a human in the loop.",
     longDescription:
-      "We build autonomous systems that sit inside your business and handle real work \u2014 routing decisions, processing data, coordinating across platforms. Not prototypes. Production systems that go live in weeks and keep improving the longer they run.",
+      "We build production AI systems that operate inside your business \u2014 routing decisions, processing data, coordinating across departments, and learning as they go. Not proof-of-concepts. Not chatbots. Real systems, live in weeks, getting smarter every cycle.",
     icon: "agent",
     useCases: [
-      "Agents that process your data, make decisions, and act without manual oversight",
-      "Multi-agent systems that coordinate across departments",
-      "Always-on monitoring agents that flag issues before your team notices",
-      "Deep integration with your existing stack \u2014 Slack, CRM, ERP, email, databases",
+      "Agents that read your data, make decisions, and execute \u2014 no manual oversight needed",
+      "Multi-agent systems where each agent owns a specific function and they coordinate with each other",
+      "Monitoring agents that catch problems before your team even knows to look",
+      "Plugs directly into what you already use \u2014 Slack, CRM, ERP, email, databases, spreadsheets",
     ],
     problem:
-      "Your operation runs on manual processes, tribal knowledge, and siloed data. You\u2019ve seen what AI can do but every conversation you\u2019ve had ends with a proposal and a timeline measured in quarters. You don\u2019t need another strategy deck. You need a system that\u2019s live and working.",
+      "Your operation still runs on manual handoffs, tribal knowledge, and data sitting in silos that no one reads in real time. You\u2019ve had the AI conversations. You\u2019ve seen the demos. But every engagement you\u2019ve explored ends with a proposal, a six-month timeline, and a price that makes you question everything. You don\u2019t need another strategy deck. You need a system that works \u2014 running, learning, delivering value within weeks.",
     approach: [
       {
-        title: "Diagnose",
-        desc: "We map your workflows, data sources, and decision points to find exactly where agents will have the biggest impact.",
+        title: "Map",
+        desc: "We sit inside your operation and document the real workflows \u2014 not the org chart version. Data sources, decision points, handoffs, bottlenecks. We find exactly where agents will have the sharpest impact.",
       },
       {
-        title: "Design",
-        desc: "We architect the system \u2014 which agents, what each one handles, how they talk to each other, and what data they need.",
+        title: "Architect",
+        desc: "We design the full agent system \u2014 which agents, what each one owns, how they communicate, what data they need, and what happens when something unexpected hits.",
       },
       {
-        title: "Build & Deploy",
-        desc: "We build the agents, connect them to your platforms, and put them live in your environment with full monitoring.",
+        title: "Build & Ship",
+        desc: "We build every agent, connect them to your live platforms, and deploy into your environment with full monitoring and alerting from day one.",
       },
       {
-        title: "Improve",
-        desc: "The system learns from every cycle. We tune, expand, and optimise as it surfaces patterns you didn\u2019t know to look for.",
+        title: "Compound",
+        desc: "The system improves itself. We tune performance, expand coverage to adjacent workflows, and optimise as it surfaces patterns your team didn\u2019t know to look for.",
       },
     ],
     relatedCaseStudy: "stockpilot",
-    ctaHeading: "Let\u2019s scope your first agent system",
+    ctaHeading: "Let\u2019s scope your first system",
   },
   {
     slug: "ai-marketing",
     title: "AI-Powered Marketing",
     shortTitle: "AI Marketing",
     description:
-      "Full-stack marketing operations run by coordinated AI agents.",
+      "An entire marketing operation \u2014 creative, targeting, buying, reporting \u2014 run by a coordinated team of AI agents.",
     longDescription:
-      "Ad creation, audience targeting, campaign management, performance reporting \u2014 all handled by a system of specialised agents. They run your campaigns around the clock and optimise based on real performance data.",
+      "Ad creative, audience targeting, media buying, campaign management, performance reporting \u2014 all run by a coordinated system of specialised agents. They don\u2019t clock out. They optimise based on real performance data, not guesswork, and they get better with every campaign cycle.",
     icon: "marketing",
     useCases: [
-      "Ad creatives and copy generated to match your brand voice and audience",
-      "Automated audience targeting and budget optimisation across platforms",
-      "Content scheduling and calendar management on autopilot",
-      "Real-time performance dashboards with automated reporting",
+      "Ad creatives and copy generated in your brand voice, tested and iterated automatically",
+      "Audience targeting and budget allocation that optimises itself across Meta, Google, TikTok, LinkedIn",
+      "Content scheduling, posting, and calendar management \u2014 fully autonomous",
+      "Live performance dashboards that update in real time with zero manual reporting",
     ],
     problem:
-      "Marketing at scale requires strategists, copywriters, designers, media buyers, and analysts. Even with a full team, campaign turnaround takes weeks. Reporting is manual. Optimisation is reactive. The model is expensive and slow.",
+      "Scaling marketing the traditional way means hiring strategists, copywriters, designers, media buyers, and analysts. Even fully staffed, campaign turnaround takes weeks. Reporting is manual. Optimisation is reactive \u2014 by the time you\u2019ve read the numbers, the spend is already gone. The model is expensive, slow, and breaks the moment you try to add more clients or more channels.",
     approach: [
       {
         title: "Audit",
-        desc: "We analyse your current marketing stack, spend, and performance to find where automation will move the needle fastest.",
+        desc: "We break down your current stack, spend, creative process, and performance data to find the exact points where agents will move the needle fastest.",
       },
       {
-        title: "Design",
-        desc: "We architect the agent system \u2014 creative generation, targeting, buying, reporting \u2014 each agent specialised for its role.",
+        title: "Architect",
+        desc: "We design the agent system \u2014 one agent for creative generation, one for targeting, one for buying, one for reporting, and so on. Each one specialised. All of them coordinated.",
       },
       {
-        title: "Build & Deploy",
-        desc: "We connect to your ad platforms (Meta, Google, TikTok, LinkedIn), build the agents, and put the system live.",
+        title: "Build & Ship",
+        desc: "We plug into your ad platforms \u2014 Meta, Google, TikTok, LinkedIn \u2014 build every agent, and put the full system live in your environment.",
       },
       {
-        title: "Optimise",
-        desc: "The agents refine targeting, creative, and spend allocation continuously. Performance improves week over week.",
+        title: "Compound",
+        desc: "The agents refine targeting, rotate creative, reallocate budget, and learn from every campaign. Performance improves week over week \u2014 without anyone telling them to.",
       },
     ],
     relatedCaseStudy: "smma-pipeline",
-    ctaHeading: "Ready to put your marketing on autopilot?",
+    ctaHeading: "What would your marketing look like if it never stopped optimising?",
   },
   {
     slug: "automation",
     title: "Process Automation",
     shortTitle: "Automation",
     description:
-      "Inventory, lead routing, energy, documents \u2014 the operational work that bleeds time and money.",
+      "The operational work your team shouldn\u2019t still be doing manually \u2014 inventory, lead routing, energy management, document processing \u2014 handled by agents that never drop a step.",
     longDescription:
-      "We take the processes your team spends hours on \u2014 inventory checks, lead follow-ups, energy monitoring, document processing \u2014 and build agent systems that handle them faster, cheaper, and around the clock.",
+      "The tasks your team spends hours on every week \u2014 inventory management, lead follow-up, energy monitoring, document processing, data entry \u2014 handled by agent systems that run faster, cost less, and never miss a step.",
     icon: "automation",
     useCases: [
-      "Lead scoring and conversion automation for sales teams",
-      "Inventory and supply chain optimisation for retail and hospitality",
-      "Energy monitoring and cost reduction for property portfolios",
-      "Document processing and data extraction from unstructured sources",
+      "Lead scoring, follow-up sequencing, and conversion tracking that runs without your sales team touching it",
+      "Inventory and procurement agents that eliminate waste, over-ordering, and stockouts",
+      "Energy monitoring across sites \u2014 anomalies flagged, costs attributed, savings surfaced automatically",
+      "Document intake, data extraction, and routing from unstructured sources at any volume",
     ],
     problem:
-      "Inventory, lead routing, energy management, document handling \u2014 these processes are still run on spreadsheets, gut feel, and manual checks. Errors stack up. Revenue leaks out. The data to fix it exists, but nobody\u2019s reading it in real time.",
+      "These processes still run on spreadsheets, gut calls, and manual checks done by people who have better things to do. Errors compound. Revenue leaks. The data you need to fix it already exists inside your systems \u2014 but nobody\u2019s reading it in real time, and nobody has the bandwidth to act on it fast enough.",
     approach: [
       {
         title: "Map",
-        desc: "We document every step \u2014 inputs, decisions, outputs, exceptions \u2014 to understand exactly what needs to be automated.",
+        desc: "We document every step of the process as it actually happens \u2014 inputs, decisions, handoffs, outputs, exceptions, and the workarounds nobody talks about.",
       },
       {
         title: "Connect",
-        desc: "We build the data layer \u2014 APIs, webhooks, scrapers \u2014 so agents can read and act on live information.",
+        desc: "We build the data layer \u2014 APIs, webhooks, scrapers, database connections \u2014 so agents can read live information and act on it in real time.",
       },
       {
-        title: "Build & Deploy",
-        desc: "We deploy agents that monitor your data, make decisions based on your rules, and take action automatically.",
+        title: "Build & Ship",
+        desc: "We deploy agents that monitor your live data, make decisions based on your rules and thresholds, and take action automatically \u2014 flagging, routing, ordering, alerting, reporting.",
       },
       {
         title: "Expand",
-        desc: "We track performance, handle edge cases, and expand the system as it proves itself on your operation.",
+        desc: "As the system proves itself, we expand. New workflows, new edge cases handled, new integrations. The system grows with your operation.",
       },
     ],
     relatedCaseStudy: "energy-management",
-    ctaHeading: "Let\u2019s automate what\u2019s costing you",
+    ctaHeading: "Every manual process is a cost you\u2019ve just stopped noticing",
   },
   {
     slug: "consulting",
     title: "Strategic AI Consulting",
     shortTitle: "AI Consulting",
     description:
-      "A clear-eyed audit of where AI fits in your business \u2014 and where it doesn\u2019t.",
+      "A no-nonsense audit of your operation. We tell you exactly where agents will hit hardest, what to build first, and what isn\u2019t worth automating.",
     longDescription:
-      "We look at your actual workflows and tell you honestly which ones are worth automating. No vendor bias. No generic playbook. Just a ranked list of your highest-value opportunities with a roadmap to build them.",
+      "We audit your real workflows and give you a straight answer on which ones are worth automating, which ones aren\u2019t, and what it would cost to build. No vendor bias. No generic playbook. Just a ranked list of your highest-value opportunities and a clear roadmap to execute.",
     icon: "consulting",
     useCases: [
-      "Full audit of your operation \u2014 which processes cost the most and where agents would hit hardest",
-      "Build vs buy analysis for agent systems and platforms",
-      "A prioritised roadmap: what to build first, what to skip, and what it costs",
-      "Team training and upskilling for AI adoption",
+      "Complete audit \u2014 which processes cost you the most, where agents would deliver the highest ROI",
+      "Build vs buy analysis so you know when custom agents beat off-the-shelf tools",
+      "A ranked roadmap: what to build now, what to revisit later, what to skip entirely \u2014 with costs attached",
+      "Internal training so your team understands the systems and can work alongside them",
     ],
     problem:
-      "Most businesses know AI matters but don\u2019t know where to start. They\u2019ve sat through vendor pitches for products that solve problems they don\u2019t have. What they actually need is someone who\u2019ll look at their real workflows and give them a straight answer.",
+      "Most businesses know AI matters. Most also have no idea where to start. They\u2019ve sat through vendor pitches for products that solve problems they don\u2019t have, sat through demos that look nothing like their actual operation, and walked away more confused than when they started. What they need is someone who\u2019ll look at the real workflows, ignore the noise, and give them a straight answer.",
     approach: [
       {
         title: "Immerse",
-        desc: "We spend time with your teams understanding how work actually gets done \u2014 the processes, the bottlenecks, the data.",
+        desc: "We spend time with your teams \u2014 not just leadership. We watch how work actually gets done on the ground. The processes, the bottlenecks, the manual steps nobody\u2019s questioned.",
       },
       {
         title: "Rank",
-        desc: "We identify every potential AI application, score each one by impact and feasibility, and rank them.",
+        desc: "We identify every opportunity for automation, score each one by financial impact and implementation feasibility, and rank them. You\u2019ll see exactly where the money is.",
       },
       {
         title: "Roadmap",
-        desc: "We hand you a clear plan \u2014 what to build first, what to wait on, what to skip \u2014 with timelines and costs.",
+        desc: "You get a clear, prioritised plan \u2014 what to build first, what to phase in later, what to skip entirely \u2014 with realistic timelines and honest costs.",
       },
       {
         title: "Execute",
-        desc: "If you want us to build it, we build it. If you want to build in-house, we help you hire and structure the team.",
+        desc: "If you want us to build it, we\u2019ll build it. If you want to build in-house, we\u2019ll help you hire and structure the right team. Either way, you leave with a plan that actually works.",
       },
     ],
-    ctaHeading: "Not sure where to start? We\u2019ll map it out.",
+    ctaHeading: "The most expensive AI mistake is building the wrong thing first",
   },
 ];
 export const caseStudies: CaseStudy[] = [

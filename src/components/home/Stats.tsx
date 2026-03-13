@@ -58,19 +58,19 @@ const stats = [
     target: 500,
     prefix: "\u00A3",
     suffix: "K+",
-    label: "Modelled annual savings for a single client",
+    label: "Annual cost reductions identified across client engagements",
   },
   {
     type: "animated" as const,
     target: 8,
     prefix: "",
     suffix: "",
-    label: "Coordinated agents running a full marketing operation",
+    label: "AI agents running an entire marketing operation end-to-end",
   },
   {
     type: "static" as const,
-    display: "24/7",
-    label: "Autonomous operation. No shifts. No handoffs.",
+    display: "< 3 Weeks",
+    label: "Average time from first call to live system",
   },
 ];
 

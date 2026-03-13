@@ -15,6 +15,17 @@ const numberMap: Record<string, string> = {
   consulting: "04",
 };
 
+const ctaBodyMap: Record<string, string> = {
+  "agent-design":
+    "30 minutes. We\u2019ll look at your operation, identify the highest-value automation, and tell you exactly what we\u2019d build, how long it takes, and what it costs.",
+  "ai-marketing":
+    "30 minutes. We\u2019ll audit your current setup and show you exactly where an agent system would outperform what you\u2019re running today.",
+  automation:
+    "30 minutes. We\u2019ll find the workflows that are bleeding time and money, and tell you exactly what a system would look like to fix them.",
+  consulting:
+    "30 minutes. We\u2019ll look at your operation and help you figure out where AI actually belongs \u2014 before you spend a penny on development.",
+};
+
 export default function ServiceDetailClient({
   service,
   relatedStudy,
@@ -164,8 +175,8 @@ export default function ServiceDetailClient({
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-lg text-green-muted mt-4">
-                30 minutes. We&rsquo;ll look at your operation and tell you
-                exactly what a system would look like.
+                {ctaBodyMap[service.slug] ??
+                  "30 minutes. We\u2019ll look at your operation and tell you exactly what a system would look like."}
               </p>
             </Reveal>
             <Reveal delay={0.2}>

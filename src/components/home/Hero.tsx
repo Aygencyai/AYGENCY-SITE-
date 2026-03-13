@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-
-const headingWords = ["YOUR", "NEXT", "DEPARTMENT", "RUNS", "ITSELF"];
+import HeroBackground from "./HeroBackground";
+const headingWords = ["YOU'RE", "OVERPAYING", "FOR", "WORK", "THAT", "SHOULD", "RUN", "ITSELF"];
 
 const wordVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -19,6 +19,8 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen bg-ivory overflow-hidden">
+      <HeroBackground />
+
       {/* Main content — vertically centred */}
       <div className="relative z-10 flex min-h-screen items-center">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
@@ -40,17 +42,27 @@ export default function Hero() {
               ))}
             </h1>
 
-            {/* Body text */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: headingAnimDuration + 0.4, ease: "easeOut" }}
-              className="max-w-[350px] font-sans text-base font-normal leading-[1.6] text-green-muted"
-            >
-              We build agent systems that operate inside your business —
-              handling the work that currently takes an entire team. They
-              run 24/7, learn from your data, and get better every month.
-            </motion.p>
+            {/* Bridge line + Body text */}
+            <div className="max-w-[400px]">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: headingAnimDuration + 0.3, ease: "easeOut" }}
+                className="font-serif text-2xl leading-[1.2] text-green"
+              >
+                Increase your revenue by decreasing your costs
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: headingAnimDuration + 0.5, ease: "easeOut" }}
+                className="font-sans text-base font-normal leading-[1.6] text-green-muted mt-4"
+              >
+                We exist to make AI agents the operating standard for businesses that
+                refuse to stay manual. Every system we ship is custom-built,
+                production-ready, and designed to compound in value the longer it runs.
+              </motion.p>
+            </div>
           </div>
 
           {/* CTA Buttons — below heading + body, centred */}
@@ -75,11 +87,6 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
-
-      {/* Slide counter — bottom left */}
-      <span className="absolute bottom-8 left-8 font-mono text-xs text-muted">
-        001 / 005
-      </span>
 
       {/* Scroll indicator — bottom centre */}
       <motion.div

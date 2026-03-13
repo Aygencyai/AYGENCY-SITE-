@@ -65,11 +65,13 @@ export default function ContactClient() {
           <div className="max-w-3xl">
             <Reveal>
               <h1 className="font-serif text-green text-4xl md:text-5xl leading-tight uppercase">
-                Let&rsquo;s talk
+                Let&rsquo;s Find What You Should Build First
               </h1>
               <p className="text-green-muted font-sans text-lg md:text-xl leading-relaxed mt-4 max-w-2xl">
-                Book a 30-minute call. We&rsquo;ll learn about your operation
-                and tell you where AI agents would make the biggest difference.
+                Book a 30-minute call. We&rsquo;ll get into your operation,
+                understand what&rsquo;s costing you, and tell you exactly where an
+                agent system would hit hardest &mdash; and how quickly we could
+                have it live.
               </p>
             </Reveal>
           </div>
@@ -158,6 +160,9 @@ export default function ContactClient() {
                         Mon–Fri, 9am–6pm GMT
                       </span>
                     </div>
+                    <p className="font-sans text-xs text-muted mt-2 ml-[30px]">
+                      We typically respond within one working day.
+                    </p>
                   </div>
 
                   {/* Social icons */}
@@ -290,7 +295,7 @@ export default function ContactClient() {
                           <textarea
                             id="message"
                             rows={4}
-                            placeholder="Tell us about the process or workflow you're looking to improve."
+                            placeholder="Tell us what's taking too long, costing too much, or breaking when you try to scale."
                             className={inputClasses + " resize-none"}
                             {...register("message")}
                           />
@@ -317,7 +322,7 @@ export default function ContactClient() {
                               Sending...
                             </>
                           ) : (
-                            "Send Message"
+                            "Send It Over"
                           )}
                         </Button>
                       </form>

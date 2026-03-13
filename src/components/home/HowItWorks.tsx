@@ -6,32 +6,33 @@ import { motion, useInView } from "framer-motion";
 const steps = [
   {
     number: "01",
-    title: "Diagnose",
+    title: "Uncover",
     description:
-      "We get inside your operation and find what\u2019s costing you.",
+      "We sit inside your operation and surface what\u2019s actually costing you \u2014 the workflows nobody\u2019s measured, the manual processes everyone\u2019s accepted.",
   },
   {
     number: "02",
-    title: "Design",
+    title: "Architect",
     description:
-      "We architect the system — agents, data flows, integrations.",
+      "We design the agent system \u2014 which agents, what each handles, how they coordinate, what data feeds them, and what decisions they make autonomously.",
   },
   {
     number: "03",
     title: "Build",
-    description: "Full development, testing, and platform integration.",
+    description:
+      "Full development. Full integration with your platforms. Full testing against your real data.",
   },
   {
     number: "04",
     title: "Go Live",
     description:
-      "Agents operating in your environment, on your real data.",
+      "Agents deployed into your environment, operating on live data, making real decisions. You\u2019ll see results in the first week.",
   },
   {
     number: "05",
-    title: "Get Smarter",
+    title: "Compound",
     description:
-      "The system learns from every cycle. Month three beats month one.",
+      "The system learns from every cycle, flags its own gaps, and improves without being told to. This is the part most companies never reach. We build it in from day one.",
   },
 ];
 

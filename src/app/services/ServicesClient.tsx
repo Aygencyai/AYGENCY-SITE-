@@ -25,8 +25,8 @@ export default function ServicesClient() {
           <Reveal>
             <SectionHeading
               eyebrow="Our Services"
-              heading="What We Build"
-              description="Every business we work with has a different problem. These are the four ways we typically engage — but the build always starts with understanding yours."
+              heading="Systems That Take Over the Work"
+              description="We don't sell tools. We build complete agent systems that handle the real operational work inside your business. These are the four ways we engage — but every build starts with your specific problem."
               display
             />
           </Reveal>
@@ -104,12 +104,12 @@ export default function ServicesClient() {
           <div className="text-center">
             <Reveal>
               <h2 className="font-serif text-2xl md:text-3xl text-white uppercase">
-                Don&rsquo;t see your use case?
+                Don&rsquo;t See Your Problem Here?
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-white/70 text-lg mt-4">
-                We work across industries. If you&rsquo;ve got a process that&rsquo;s manual, expensive, or doesn&rsquo;t scale — we&rsquo;ve probably built something like it.
+                We work across every sector. If there&rsquo;s a process in your business that&rsquo;s manual, expensive, error-prone, or doesn&rsquo;t scale &mdash; tell us about it. Chances are we&rsquo;ve built a system that solves something very close to it.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

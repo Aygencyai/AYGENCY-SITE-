@@ -63,7 +63,9 @@ export default function CTABanner() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="font-serif text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase"
         >
-          Let&rsquo;s Find What&rsquo;s Costing You
+          You&rsquo;re Going to Build This.
+          <br />
+          How Much More Will You Spend Before You Do?
         </motion.h2>
 
         <motion.p
@@ -72,9 +74,8 @@ export default function CTABanner() {
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="font-sans text-base text-white/70 mt-6 max-w-lg mx-auto"
         >
-          Every engagement starts with a 30-minute call where we map
-          your operation and identify the highest-value automation. No fee,
-          no slide deck.
+          Book 30 minutes. We&rsquo;ll map your operation, find the workflows
+          bleeding time and money, and tell you exactly what we&rsquo;d build.
         </motion.p>
 
         <motion.div

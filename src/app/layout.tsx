@@ -28,11 +28,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aygency.ai"),
-  title: "Aygency — AI Agent Systems for Business",
+  title: "Aygency — AI Agent Systems That Run Your Business Operations",
   description:
     "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
   openGraph: {
-    title: "Aygency — AI Agent Systems for Business",
+    title: "Aygency — AI Agent Systems That Run Your Business Operations",
     description:
       "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
     type: "website",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency — AI Agent Systems for Business",
+    title: "Aygency — AI Agent Systems That Run Your Business Operations",
     description:
       "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
   },

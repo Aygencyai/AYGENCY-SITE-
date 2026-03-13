@@ -6,19 +6,19 @@ import { useRef } from "react";
 
 const serviceCards = [
   {
-    title: "Design",
+    title: "Diagnose & Design",
     description:
-      "We study your operation and architect a system of coordinated agents, each one built for a specific role in your workflow.",
+      "We go inside your operation. We map the real workflows, find the highest-cost bottlenecks, and architect a system of agents purpose-built for your specific problems.",
   },
   {
-    title: "Build & Deploy",
+    title: "Build & Ship",
     description:
-      "We develop the system end-to-end and put it live in your environment \u2014 connected to your data, your platforms, and your team.",
+      "We build the full system and put it live in your environment \u2014 connected to your platforms, reading your data, and making decisions from day one. A fully working production system.",
   },
   {
-    title: "Operate & Improve",
+    title: "Run & Compound",
     description:
-      "We don\u2019t hand off and disappear. We monitor, tune, and expand the system. Performance gets better month over month.",
+      "We don\u2019t hand you a system and walk away. We monitor performance, handle edge cases, and expand coverage. Month three outperforms month one. Month six makes month three look like a trial run.",
   },
 ];
 

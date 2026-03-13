@@ -16,7 +16,7 @@ export default function Footer() {
               AYGENCY
             </Link>
             <p className="text-sm text-muted mt-4">
-              AI agent systems for businesses.
+              Custom AI agent systems. Built for your operation. Running 24/7.
             </p>
             {/* Social icons */}
             <div className="flex gap-4 mt-6">
