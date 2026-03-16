@@ -12,19 +12,17 @@ export interface Service {
   ctaBody: string;
 }
 
-export interface CaseStudy {
+export interface UseCase {
   slug: string;
   title: string;
-  client: string;
-  industry: string;
-  service: string;
-  challenge: string;
-  solution: string;
-  results: string[];
-  quote: string;
-  quoteAttribution: string;
-  tech: string[];
-  keyMetric: { value: string; label: string };
+  sector: string;
+  systemType: string;
+  subtext: string;
+  problem: string;
+  agents: { name: string; description: string }[];
+  estimatedImpact: string;
+  ctaHeading: string;
+  ctaBody: string;
 }
 
 export interface ProcessStep {

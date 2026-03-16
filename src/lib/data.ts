@@ -1,4 +1,4 @@
-import type { Service, CaseStudy, ProcessStep, Metric } from "@/types";
+import type { Service, UseCase, ProcessStep, Metric } from "@/types";
 
 export const services: Service[] = [
   {
@@ -167,87 +167,165 @@ export const services: Service[] = [
       "30 minutes. We\u2019ll look at the function you\u2019re trying to scale and tell you exactly what a system would look like to run it.",
   },
 ];
-export const caseStudies: CaseStudy[] = [
+export const useCases: UseCase[] = [
   {
-    slug: "stockpilot",
-    title: "StockPilot",
-    client: "Premium London Restaurant & Members Club",
-    industry: "Hospitality",
-    service: "Process Automation & Operational AI",
-    challenge:
-      "Manual inventory management across a high-volume, multi-outlet venue was creating waste, over-ordering, and stockouts during peak service. Staff were spending 10+ hours per week on procurement tasks that could be systematised.",
-    solution:
-      "Aygency designed and deployed StockPilot — a two-agent AI system. Agent 1 monitors real-time inventory levels, consumption patterns, and waste data. Agent 2 handles automated procurement recommendations, supplier communication, and reorder triggers. The system integrates directly with the venue's existing POS and supplier platforms.",
-    results: [
-      "Procurement time reduced by 80%",
-      "Food waste reduced by 25% in first month",
-      "Stockout incidents reduced to near-zero",
-      "System live within 3 weeks of engagement",
+    slug: "hospitality-operations",
+    title: "Multi-Site Restaurant Operations",
+    sector: "Hospitality",
+    systemType: "Cost Reduction",
+    subtext:
+      "A hospitality group spending \u00a3180K+ annually on manual inventory, staff scheduling, and energy monitoring across 6 locations.",
+    problem:
+      "Six locations. Each one managing its own inventory by hand, building staff rotas on spreadsheets, and getting energy bills with no visibility into what\u2019s driving the cost. Head office gets reports weekly \u2014 by which point the waste has already happened. The data to fix all of this exists inside their POS systems, booking platforms, and utility accounts. Nobody\u2019s reading it in real time.",
+    agents: [
+      {
+        name: "Procurement Agent",
+        description:
+          "Monitors stock levels across all sites, auto-generates purchase orders based on booking forecasts and historical consumption, eliminates over-ordering and waste.",
+      },
+      {
+        name: "Energy Agent",
+        description:
+          "Reads smart meter data across all 6 locations, flags anomalies within hours (not months), attributes costs by site and time period, surfaces reduction opportunities.",
+      },
+      {
+        name: "Scheduling Agent",
+        description:
+          "Builds staff rotas from booking data, historical covers, and labour cost targets. Balances demand coverage with budget constraints automatically.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Sits above all three, identifies which locations are underperforming and why, spots patterns across sites, and surfaces strategic recommendations weekly.",
+      },
     ],
-    quote:
-      "We went from guessing to knowing. The system paid for itself in the first month.",
-    quoteAttribution: "Operations Director",
-    tech: [
-      "Custom AI agents",
-      "POS integration",
-      "Supplier API connections",
-      "Real-time monitoring dashboard",
-    ],
-    keyMetric: { value: "80%", label: "Reduction in procurement time" },
+    estimatedImpact:
+      "\u00a3180K+ annual cost reduction. System live within 3 weeks.",
+    ctaHeading: "Running multiple sites with manual processes?",
+    ctaBody:
+      "30 minutes. We\u2019ll look at your operation and show you where an agent system would cut costs across every location.",
   },
   {
-    slug: "energy-management",
-    title: "Energy & Utilities Agent",
-    client: "Multi-Site UK Property Operator",
-    industry: "Real Estate",
-    service: "Process Automation & Operational AI",
-    challenge:
-      "A property operator managing multiple sites across the UK had no centralised visibility into energy consumption. Utility costs were rising with no clear attribution to specific buildings, systems, or usage patterns.",
-    solution:
-      "Aygency built an AI-powered energy monitoring agent that aggregates consumption data across all sites, identifies anomalies and waste patterns, benchmarks buildings against each other, and generates actionable recommendations for cost reduction.",
-    results: [
-      "Full energy visibility across all sites within 2 weeks",
-      "Identified 15-20% potential cost savings in first audit",
-      "Anomaly detection flagged faulty HVAC systems within days",
-      "Automated reporting eliminated 8+ hours of manual work per month",
+    slug: "professional-services-revenue",
+    title: "Consultancy Pipeline Automation",
+    sector: "Professional Services",
+    systemType: "Revenue Operations",
+    subtext:
+      "A 40-person consultancy generating leads through manual LinkedIn outreach and referrals. Pipeline unpredictable. Growth bottlenecked by partner capacity.",
+    problem:
+      "The firm\u2019s pipeline depends on three partners doing their own outreach. When they\u2019re busy on client work, pipeline dries up. When they focus on business development, delivery suffers. They\u2019ve tried hiring BDRs but the sales cycle is too consultative \u2014 junior hires can\u2019t qualify properly. The firm has a clear ICP but no system to find, engage, and qualify prospects consistently.",
+    agents: [
+      {
+        name: "Prospecting Agent",
+        description:
+          "Identifies ideal clients from market signals, company news, hiring patterns, and LinkedIn activity. Builds a qualified pipeline without human research.",
+      },
+      {
+        name: "Outreach Agent",
+        description:
+          "Runs personalised multi-channel sequences (email + LinkedIn) tailored to each prospect\u2019s situation. Not templates \u2014 genuinely contextual messaging.",
+      },
+      {
+        name: "Qualification Agent",
+        description:
+          "Scores inbound and outbound leads based on the firm\u2019s actual conversion patterns. Routes high-intent leads to partners, nurtures the rest automatically.",
+      },
+      {
+        name: "Proposal Agent",
+        description:
+          "Drafts scoped responses using the firm\u2019s methodology, case studies, and pricing framework. Partners review and refine rather than write from scratch.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Monitors pipeline health, flags when conversion rates drop, identifies which sectors and service lines are generating the most traction, and recommends where to focus.",
+      },
     ],
-    quote:
-      "For the first time, we could see exactly where every pound was going — and where it was being wasted.",
-    quoteAttribution: "Head of Operations",
-    tech: [
-      "Energy data aggregation",
-      "Anomaly detection AI",
-      "Automated reporting",
-      "Multi-site benchmarking",
-    ],
-    keyMetric: { value: "15-20%", label: "Potential cost savings identified" },
+    estimatedImpact:
+      "3x pipeline volume. Partners freed from 15+ hours/week of manual outreach. System live within 3 weeks.",
+    ctaHeading:
+      "What would your revenue look like if your pipeline never stopped moving?",
+    ctaBody:
+      "30 minutes. We\u2019ll audit your current operation and show you exactly where an agent system would outperform what you\u2019re running today.",
   },
   {
-    slug: "smma-pipeline",
-    title: "AI-Native SMMA Pipeline",
-    client: "Internal Capability / White-Label",
-    industry: "Digital Marketing",
-    service: "AI-Powered Marketing & Ads",
-    challenge:
-      "Traditional social media marketing agencies run on headcount — account managers, creatives, media buyers, analysts. This model doesn't scale and margins compress as client rosters grow.",
-    solution:
-      "Aygency architected an eight-agent AI system that replaces the core functions of a traditional SMMA. Agents handle ad creative generation, audience targeting, media buying optimisation, performance analytics, client communication, content scheduling, A/B testing orchestration, and pipeline management.",
-    results: [
-      "8 specialised agents operating across the full marketing pipeline",
-      "Ad creative turnaround reduced from days to minutes",
-      "Real-time performance optimisation with no manual intervention",
-      "Scalable to 20+ concurrent client accounts",
+    slug: "ecommerce-marketing",
+    title: "DTC Brand Marketing Department",
+    sector: "E-Commerce",
+    systemType: "Full Department",
+    subtext:
+      "A direct-to-consumer brand spending \u00a325K/month on an in-house marketing team plus \u00a315K/month on agency fees. Results plateauing.",
+    problem:
+      "The brand is spending \u00a340K/month on marketing between team salaries and agency fees. Campaign turnaround takes two weeks. Creative testing is slow \u2014 they run 3\u20134 ad variations when they should be running 30. Reporting is manual and always a week behind. By the time they see what\u2019s working, budget has already been spent on what isn\u2019t. They can\u2019t scale spend because the team can\u2019t move faster.",
+    agents: [
+      {
+        name: "Creative Agent",
+        description:
+          "Generates ad variations in the brand\u2019s voice and visual style. Produces 20\u201330 variations where the team currently makes 3\u20134. Tests headlines, hooks, formats, and angles automatically.",
+      },
+      {
+        name: "Targeting Agent",
+        description:
+          "Optimises audience segments across Meta, Google, and TikTok. Identifies which audiences are fatiguing, which new segments are emerging, and reallocates budget in real time.",
+      },
+      {
+        name: "Budget Agent",
+        description:
+          "Manages spend allocation across channels and campaigns. Shifts budget toward highest-performing combinations daily, not weekly.",
+      },
+      {
+        name: "Reporting Agent",
+        description:
+          "Produces daily performance summaries with actionable insights. No manual spreadsheet work. Surfaces what changed, why, and what to do about it.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Connects marketing performance with business metrics. Identifies which products are trending, which customer segments have the highest LTV, which campaigns should be killed early, and where the next growth opportunity sits.",
+      },
     ],
-    quote:
-      "This isn't an agency with AI tools. It's an AI system that happens to be an agency.",
-    quoteAttribution: "Founder",
-    tech: [
-      "Multi-agent orchestration",
-      "Ad platform API integration",
-      "Generative AI for creatives",
-      "Automated reporting pipelines",
+    estimatedImpact:
+      "\u00a330K+/month in team and agency cost reduction. 2\u20133x creative testing velocity. Real-time optimisation replacing weekly reporting cycles. System live within 4 weeks.",
+    ctaHeading: "Spending more on marketing but seeing diminishing returns?",
+    ctaBody:
+      "30 minutes. We\u2019ll audit your current setup and show you what a full marketing department system would look like.",
+  },
+  {
+    slug: "property-cost-reduction",
+    title: "Commercial Property Portfolio",
+    sector: "Real Estate",
+    systemType: "Cost Reduction",
+    subtext:
+      "A property manager running 12 commercial buildings with manual energy monitoring, tenant communication, and maintenance scheduling.",
+    problem:
+      "Twelve buildings, each with its own utility accounts, maintenance contractors, and tenant communication channels. Energy costs are the biggest controllable expense but nobody\u2019s monitoring consumption in real time \u2014 bills arrive monthly with no granularity. Maintenance requests come in by email and phone, get triaged manually, and contractors are scheduled by one overwhelmed operations manager. Tenant queries about access, billing, and services are handled by a small team that\u2019s always behind.",
+    agents: [
+      {
+        name: "Energy Agent",
+        description:
+          "Monitors consumption across all 12 buildings in real time. Flags anomalies within hours \u2014 a unit left heating overnight, a system running inefficiently, usage patterns that don\u2019t match occupancy. Attributes costs by building, floor, and tenant.",
+      },
+      {
+        name: "Maintenance Agent",
+        description:
+          "Receives requests from any channel (email, portal, phone transcript), categorises by urgency and type, schedules contractors based on availability and proximity, and follows up until completion. Escalates only what needs human judgement.",
+      },
+      {
+        name: "Tenant Communication Agent",
+        description:
+          "Handles routine queries about access, billing, policies, and services. Responds within minutes, not days. Escalates complex issues with full context attached.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Looks across all 12 buildings to identify portfolio-wide patterns. Which buildings are most cost-efficient? Where is maintenance spend trending upward? Which tenants are at risk of churn based on complaint patterns? Surfaces strategic recommendations monthly.",
+      },
     ],
-    keyMetric: { value: "8", label: "AI agents deployed" },
+    estimatedImpact:
+      "15\u201325% energy cost reduction across the portfolio. Maintenance response time from days to hours. Tenant query resolution from 48 hours to under 30 minutes. System live within 3 weeks.",
+    ctaHeading: "Managing multiple properties with manual processes?",
+    ctaBody:
+      "30 minutes. We\u2019ll look at your portfolio and show you what a system would surface across every building.",
   },
 ];
 

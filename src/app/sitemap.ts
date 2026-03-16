@@ -1,4 +1,4 @@
-import { services, caseStudies } from "@/lib/data";
+import { services, useCases } from "@/lib/data";
 
 const BASE_URL = "https://aygency.ai";
 
@@ -6,7 +6,7 @@ export default function sitemap() {
   const staticPages = [
     { url: BASE_URL, lastModified: new Date() },
     { url: `${BASE_URL}/services`, lastModified: new Date() },
-    { url: `${BASE_URL}/case-studies`, lastModified: new Date() },
+    { url: `${BASE_URL}/use-cases`, lastModified: new Date() },
     { url: `${BASE_URL}/contact`, lastModified: new Date() },
   ];
 
@@ -15,10 +15,10 @@ export default function sitemap() {
     lastModified: new Date(),
   }));
 
-  const caseStudyPages = caseStudies.map((cs) => ({
-    url: `${BASE_URL}/case-studies/${cs.slug}`,
+  const useCasePages = useCases.map((uc) => ({
+    url: `${BASE_URL}/use-cases/${uc.slug}`,
     lastModified: new Date(),
   }));
 
-  return [...staticPages, ...servicePages, ...caseStudyPages];
+  return [...staticPages, ...servicePages, ...useCasePages];
 }

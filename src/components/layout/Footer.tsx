@@ -51,10 +51,10 @@ export default function Footer() {
             </h3>
             <div className="flex flex-col gap-3">
               <Link
-                href="/case-studies"
+                href="/use-cases"
                 className="text-sm text-white/60 hover:text-white transition-colors"
               >
-                Case Studies
+                Use Cases
               </Link>
               <Link
                 href="/contact"
