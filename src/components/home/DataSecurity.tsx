@@ -10,7 +10,7 @@ export default function DataSecurity() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="font-serif text-[3rem] leading-[1.1] text-green uppercase"
         >
           Your Data Stays Yours
@@ -20,7 +20,7 @@ export default function DataSecurity() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
           className="font-sans text-base leading-relaxed text-green-muted mt-6"
         >
           Every system we build operates inside your infrastructure. Your data

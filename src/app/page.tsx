@@ -3,7 +3,6 @@ import SocialProofStrip from "@/components/home/SocialProofStrip";
 import OrbSceneLoader from "@/components/home/OrbSceneLoader";
 import Services from "@/components/home/Services";
 import CEOAgent from "@/components/home/CEOAgent";
-import Stats from "@/components/home/Stats";
 import HowItWorks from "@/components/home/HowItWorks";
 import WhyAygency from "@/components/home/WhyAygency";
 import DataSecurity from "@/components/home/DataSecurity";
@@ -18,7 +17,6 @@ export default function HomePage() {
       <OrbSceneLoader />
       <Services />
       <CEOAgent />
-      <Stats />
       <HowItWorks />
       <WhyAygency />
       <DataSecurity />

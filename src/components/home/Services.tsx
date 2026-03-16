@@ -51,7 +51,7 @@ export default function Services() {
                 ease: "easeOut",
               }}
               whileHover={{ y: -4 }}
-              className="bg-ivory border border-ivory-dark rounded-lg p-8 pt-0 overflow-hidden transition-shadow duration-300 hover:shadow-card-hover"
+              className="bg-ivory border border-ivory-dark rounded-lg p-8 pt-0 overflow-hidden transition-all duration-300 hover:shadow-card-hover"
             >
               <div className="h-[3px] bg-green -mx-8 mb-8" />
               <h3 className="font-serif text-2xl text-green">{card.title}</h3>

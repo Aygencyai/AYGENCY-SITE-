@@ -60,7 +60,7 @@ export default function CTABanner() {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           className="font-serif text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase"
         >
           You&rsquo;re Going to Build This.
@@ -71,7 +71,7 @@ export default function CTABanner() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           className="font-sans text-base text-white/70 mt-6 max-w-lg mx-auto"
         >
           Book 30 minutes. We&rsquo;ll map your operation, find the workflows
@@ -81,7 +81,7 @@ export default function CTABanner() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           className="mt-10"
         >
           <Link

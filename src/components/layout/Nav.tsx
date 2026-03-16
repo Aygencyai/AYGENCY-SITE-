@@ -148,7 +148,7 @@ export default function Nav() {
               {/* Desktop CTA */}
               <Link
                 href="/contact"
-                className="bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-3 hover:bg-green-light hover:translate-y-[-1px] active:scale-[0.98] transition-all duration-200"
+                className="bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-3 hover:bg-green-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
                 Book a Call
               </Link>
@@ -261,7 +261,7 @@ export default function Nav() {
               >
                 <Link
                   href="/contact"
-                  className="block w-full text-center bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-4 hover:bg-green-light active:scale-[0.98] transition-all duration-200"
+                  className="block w-full text-center bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-4 hover:bg-green-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                 >
                   Book a Call
                 </Link>

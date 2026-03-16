@@ -8,8 +8,8 @@ export default function CEOAgent() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-ivory py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-8">
+    <section className="bg-ivory-dark py-24 md:py-32">
+      <div className="max-w-3xl mx-auto px-6 md:px-8 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -17,14 +17,27 @@ export default function CEOAgent() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="font-serif text-[3rem] leading-[1.1] text-green uppercase"
         >
-          Every System Comes With a CEO
+          Every System Comes With a{" "}
+          <span className="block text-center md:inline">CEO</span>
         </motion.h2>
 
-        <div ref={ref} className="max-w-3xl mt-12 space-y-5">
+        <div ref={ref} className="mt-12 space-y-5">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="font-sans text-base leading-relaxed text-green-muted"
+          >
+            This isn&rsquo;t a dashboard. It&rsquo;s not a report you read on
+            Monday morning. It&rsquo;s an agent that thinks about your business
+            the way you do &mdash; except it never stops, it sees everything,
+            and it doesn&rsquo;t have blind spots.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className="font-sans text-base leading-relaxed text-green-muted"
           >
             Every agent system we build includes something most companies
@@ -38,7 +51,7 @@ export default function CEOAgent() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
             className="font-sans text-base leading-relaxed text-green-muted"
           >
             Your workflow agents reduce costs. Your CEO agent finds revenue. It
@@ -46,18 +59,6 @@ export default function CEOAgent() {
             operational changes would unlock capacity, which pricing adjustments
             would land, and which processes are creating bottlenecks that ripple
             across your whole business.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="font-sans text-base leading-relaxed text-green-muted"
-          >
-            This isn&rsquo;t a dashboard. It&rsquo;s not a report you read on
-            Monday morning. It&rsquo;s an agent that thinks about your business
-            the way you do &mdash; except it never stops, it sees everything,
-            and it doesn&rsquo;t have blind spots.
           </motion.p>
 
           <motion.p

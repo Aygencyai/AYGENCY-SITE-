@@ -3,7 +3,7 @@ import { services } from "@/lib/data";
 
 export default function Footer() {
   return (
-    <footer className="bg-navy">
+    <footer className="bg-green">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         {/* Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -15,7 +15,7 @@ export default function Footer() {
             >
               AYGENCY
             </Link>
-            <p className="text-sm text-muted mt-4">
+            <p className="text-sm text-white/60 mt-4">
               Custom AI agent systems. Built for your operation. Running 24/7.
             </p>
             {/* Social icons */}
@@ -24,7 +24,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted hover:text-white transition-colors"
+                className="text-white/60 hover:text-white transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -35,7 +35,7 @@ export default function Footer() {
                 href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted hover:text-white transition-colors"
+                className="text-white/60 hover:text-white transition-colors"
                 aria-label="X (Twitter)"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -55,7 +55,7 @@ export default function Footer() {
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className="text-sm text-muted hover:text-white transition-colors"
+                  className="text-sm text-white/60 hover:text-white transition-colors"
                 >
                   {service.shortTitle}
                 </Link>
@@ -71,13 +71,13 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <Link
                 href="/case-studies"
-                className="text-sm text-muted hover:text-white transition-colors"
+                className="text-sm text-white/60 hover:text-white transition-colors"
               >
                 Case Studies
               </Link>
               <Link
                 href="/contact"
-                className="text-sm text-muted hover:text-white transition-colors"
+                className="text-sm text-white/60 hover:text-white transition-colors"
               >
                 Contact
               </Link>
@@ -91,11 +91,11 @@ export default function Footer() {
             </h3>
             <a
               href="mailto:hello@aygency.ai"
-              className="text-sm text-muted hover:text-white transition-colors"
+              className="text-sm text-white/60 hover:text-white transition-colors"
             >
               hello@aygency.ai
             </a>
-            <p className="text-sm text-muted mt-4">
+            <p className="text-sm text-white/60 mt-4">
               Based in London. Operating globally.
             </p>
           </div>
@@ -103,14 +103,14 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-muted">
+          <p className="text-xs text-white/60">
             &copy; 2026 Aygency. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-muted hover:text-white transition-colors">
+            <a href="#" className="text-xs text-white/60 hover:text-white transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-xs text-muted hover:text-white transition-colors">
+            <a href="#" className="text-xs text-white/60 hover:text-white transition-colors">
               Terms
             </a>
           </div>

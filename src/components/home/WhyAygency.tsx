@@ -43,10 +43,11 @@ export default function WhyAygency() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
                 duration: 0.6,
-                delay: i * 0.1,
+                delay: i * 0.15,
                 ease: "easeOut",
               }}
-              className="bg-ivory border border-ivory-dark rounded-lg p-8 pt-0 overflow-hidden"
+              whileHover={{ y: -4 }}
+              className="bg-ivory border border-ivory-dark rounded-lg p-8 pt-0 overflow-hidden transition-all duration-300 hover:shadow-card-hover"
             >
               <div className="h-[3px] bg-green -mx-8 mb-8" />
               <h3 className="font-serif text-2xl text-green">{item.title}</h3>

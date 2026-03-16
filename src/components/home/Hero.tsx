@@ -27,7 +27,7 @@ export default function Hero() {
           {/* Desktop: side-by-side | Mobile: stacked */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-16">
             {/* Heading */}
-            <h1 className="font-serif text-[36px] sm:text-[48px] lg:text-[80px] uppercase leading-[0.95] text-green">
+            <h1 className="font-serif text-[36px] sm:text-[48px] lg:text-[68px] uppercase leading-[0.95] text-green lg:max-w-[680px]">
               {headingWords.map((word, i) => (
                 <motion.span
                   key={word + i}
@@ -74,7 +74,7 @@ export default function Hero() {
           >
             <Link
               href="/contact"
-              className="inline-block rounded-full bg-green px-8 py-3 font-sans text-[13px] font-semibold uppercase tracking-[0.15em] text-white transition-colors duration-200 hover:bg-green-light"
+              className="inline-block rounded-full bg-green px-8 py-3 font-sans text-[13px] font-semibold uppercase tracking-[0.15em] text-white transition-all duration-200 hover:bg-green-light hover:scale-[1.02]"
             >
               Book a Call
             </Link>
