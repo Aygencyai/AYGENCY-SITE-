@@ -39,10 +39,20 @@ export default function ContactClient() {
     resolver: zodResolver(contactSchema),
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const onSubmit = async (data: ContactFormData) => {
-    // TODO: Connect to Resend/SendGrid API
-    console.log("Form submitted:", data);
-    await new Promise((r) => setTimeout(r, 1000));
+    setError(null);
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => null);
+      setError(body?.error ?? "Something went wrong. Please try again.");
+      return;
+    }
     setSubmitted(true);
   };
 
@@ -242,6 +252,11 @@ export default function ContactClient() {
                             </p>
                           )}
                         </div>
+
+                        {/* Error */}
+                        {error && (
+                          <p className="text-red-500 text-sm">{error}</p>
+                        )}
 
                         {/* Submit */}
                         <Button
