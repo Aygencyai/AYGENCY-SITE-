@@ -8,8 +8,6 @@ import {
   Mail,
   MapPin,
   Clock,
-  Linkedin,
-  Twitter,
   Loader2,
   CheckCircle2,
 } from "lucide-react";
@@ -31,7 +29,6 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function ContactClient() {
   const [submitted, setSubmitted] = useState(false);
-  const [calLoaded, setCalLoaded] = useState(false);
 
   const {
     register,
@@ -68,10 +65,10 @@ export default function ContactClient() {
                 Let&rsquo;s Find What You Should Build First
               </h1>
               <p className="text-green-muted font-sans text-lg md:text-xl leading-relaxed mt-4 max-w-2xl">
-                Book a 30-minute call. We&rsquo;ll get into your operation,
-                understand what&rsquo;s costing you, and tell you exactly where an
-                agent system would hit hardest &mdash; and how quickly we could
-                have it live.
+                Tell us what&rsquo;s slowing your operation down. We&rsquo;ll
+                get back to you within one working day with a straight answer
+                on where an agent system would hit hardest &mdash; and how
+                quickly we could have it live.
               </p>
             </Reveal>
           </div>
@@ -82,51 +79,9 @@ export default function ContactClient() {
       <section className="bg-ivory py-20 md:py-24">
         <SectionContainer>
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 lg:gap-16">
-            {/* Left — Cal.com embed */}
+            {/* Left — Info card */}
             <div>
               <Reveal>
-                <h2 className="font-sans font-medium text-lg text-green mb-6">
-                  Pick a time
-                </h2>
-                <div className="min-h-[500px] rounded-lg border border-ivory-dark overflow-hidden bg-ivory-dark relative">
-                  <iframe
-                    src={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com"}
-                    className="w-full h-full min-h-[500px] border-0"
-                    title="Schedule a consultation"
-                    loading="lazy"
-                    onLoad={() => setCalLoaded(true)}
-                  />
-                  {/* Skeleton loading state */}
-                  <div className={`absolute inset-0 bg-ivory-dark flex flex-col items-center justify-center gap-4 pointer-events-none animate-pulse transition-opacity duration-500 ${calLoaded ? "opacity-0" : "opacity-100"}`}>
-                    <div className="w-48 h-4 bg-ivory-dark rounded" />
-                    <div className="w-64 h-4 bg-ivory-dark rounded" />
-                    <div className="w-40 h-4 bg-ivory-dark rounded" />
-                    <div className="grid grid-cols-7 gap-2 mt-6">
-                      {Array.from({ length: 35 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="w-8 h-8 bg-ivory rounded"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xs text-muted mt-3">
-                  Calendar not loading?{" "}
-                  <a
-                    href="mailto:hello@aygency.ai"
-                    className="text-green hover:underline"
-                  >
-                    Email us at hello@aygency.ai
-                  </a>
-                </p>
-              </Reveal>
-            </div>
-
-            {/* Right — Info card + Form */}
-            <div>
-              {/* Info card */}
-              <Reveal delay={0.1}>
                 <div className="bg-ivory-dark rounded-lg p-8">
                   <h3 className="font-serif text-lg text-green">
                     Get in touch
@@ -134,12 +89,12 @@ export default function ContactClient() {
 
                   <div className="space-y-4 mt-6">
                     <a
-                      href="mailto:hello@aygency.ai"
+                      href="mailto:louis@aygency.ai"
                       className="flex items-center gap-3 text-green-muted hover:text-green transition-colors duration-200"
                     >
                       <Mail size={18} className="text-green flex-shrink-0" />
                       <span className="font-sans text-sm">
-                        hello@aygency.ai
+                        louis@aygency.ai
                       </span>
                     </a>
                     <div className="flex items-center gap-3 text-green-muted">
@@ -164,30 +119,12 @@ export default function ContactClient() {
                       We typically respond within one working day.
                     </p>
                   </div>
-
-                  {/* Social icons */}
-                  <div className="flex items-center gap-3 mt-6">
-                    <a
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-lg bg-ivory border border-ivory-dark hover:border-green flex items-center justify-center transition-colors duration-200"
-                      aria-label="LinkedIn"
-                    >
-                      <Linkedin size={18} className="text-green-muted" />
-                    </a>
-                    <a
-                      href="https://x.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-lg bg-ivory border border-ivory-dark hover:border-green flex items-center justify-center transition-colors duration-200"
-                      aria-label="X (Twitter)"
-                    >
-                      <Twitter size={18} className="text-green-muted" />
-                    </a>
-                  </div>
                 </div>
               </Reveal>
+            </div>
+
+            {/* Right — Form */}
+            <div>
 
               {/* Form */}
               <Reveal delay={0.2}>
@@ -214,7 +151,7 @@ export default function ContactClient() {
                   ) : (
                     <>
                       <h3 className="font-serif text-lg text-green mb-6">
-                        Or send us a message
+                        Send us a message
                       </h3>
                       <form
                         onSubmit={handleSubmit(onSubmit)}
