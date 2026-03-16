@@ -174,7 +174,7 @@ export const useCases: UseCase[] = [
     sector: "Hospitality",
     systemType: "Cost Reduction",
     subtext:
-      "A hospitality group spending \u00a3180K+ annually on manual inventory, staff scheduling, and energy monitoring across 6 locations.",
+      "A hospitality group losing money on manual inventory, staff scheduling, and energy monitoring across multiple locations.",
     problem:
       "Six locations. Each one managing its own inventory by hand, building staff rotas on spreadsheets, and getting energy bills with no visibility into what\u2019s driving the cost. Head office gets reports weekly \u2014 by which point the waste has already happened. The data to fix all of this exists inside their POS systems, booking platforms, and utility accounts. Nobody\u2019s reading it in real time.",
     agents: [
@@ -200,7 +200,7 @@ export const useCases: UseCase[] = [
       },
     ],
     estimatedImpact:
-      "\u00a3180K+ annual cost reduction. System live within 3 weeks.",
+      "Significant annual cost reduction across inventory, scheduling, and energy. System live within weeks.",
     ctaHeading: "Running multiple sites with manual processes?",
     ctaBody:
       "30 minutes. We\u2019ll look at your operation and show you where an agent system would cut costs across every location.",
@@ -242,7 +242,7 @@ export const useCases: UseCase[] = [
       },
     ],
     estimatedImpact:
-      "3x pipeline volume. Partners freed from 15+ hours/week of manual outreach. System live within 3 weeks.",
+      "Consistent pipeline independent of partner availability. Partners freed from manual outreach. System live within weeks.",
     ctaHeading:
       "What would your revenue look like if your pipeline never stopped moving?",
     ctaBody:
@@ -254,9 +254,9 @@ export const useCases: UseCase[] = [
     sector: "E-Commerce",
     systemType: "Full Department",
     subtext:
-      "A direct-to-consumer brand spending \u00a325K/month on an in-house marketing team plus \u00a315K/month on agency fees. Results plateauing.",
+      "A direct-to-consumer brand spending heavily on an in-house marketing team plus agency fees. Results plateauing.",
     problem:
-      "The brand is spending \u00a340K/month on marketing between team salaries and agency fees. Campaign turnaround takes two weeks. Creative testing is slow \u2014 they run 3\u20134 ad variations when they should be running 30. Reporting is manual and always a week behind. By the time they see what\u2019s working, budget has already been spent on what isn\u2019t. They can\u2019t scale spend because the team can\u2019t move faster.",
+      "The brand is spending tens of thousands per month on marketing between team salaries and agency fees. Campaign turnaround takes two weeks. Creative testing is slow \u2014 they run a handful of ad variations when they should be running dozens. Reporting is manual and always a week behind. By the time they see what\u2019s working, budget has already been spent on what isn\u2019t. They can\u2019t scale spend because the team can\u2019t move faster.",
     agents: [
       {
         name: "Creative Agent",
@@ -285,7 +285,7 @@ export const useCases: UseCase[] = [
       },
     ],
     estimatedImpact:
-      "\u00a330K+/month in team and agency cost reduction. 2\u20133x creative testing velocity. Real-time optimisation replacing weekly reporting cycles. System live within 4 weeks.",
+      "Dramatically reduced team and agency costs. Faster creative testing. Real-time optimisation replacing weekly reporting cycles. System live within weeks.",
     ctaHeading: "Spending more on marketing but seeing diminishing returns?",
     ctaBody:
       "30 minutes. We\u2019ll audit your current setup and show you what a full marketing department system would look like.",
@@ -322,7 +322,7 @@ export const useCases: UseCase[] = [
       },
     ],
     estimatedImpact:
-      "15\u201325% energy cost reduction across the portfolio. Maintenance response time from days to hours. Tenant query resolution from 48 hours to under 30 minutes. System live within 3 weeks.",
+      "Measurable energy cost reduction across the portfolio. Maintenance response time from days to hours. Tenant query resolution from days to minutes. System live within weeks.",
     ctaHeading: "Managing multiple properties with manual processes?",
     ctaBody:
       "30 minutes. We\u2019ll look at your portfolio and show you what a system would surface across every building.",
