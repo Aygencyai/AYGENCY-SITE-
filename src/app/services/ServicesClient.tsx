@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bot, Megaphone, Cog, Search, Check, ArrowRight } from "lucide-react";
+import { DollarSign, TrendingUp, Eye, Building2, Check, ArrowRight } from "lucide-react";
 import SectionContainer from "@/components/ui/SectionContainer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
@@ -10,10 +10,10 @@ import PageTransition from "@/components/ui/PageTransition";
 import { services } from "@/lib/data";
 
 const iconMap = {
-  "agent-design": Bot,
-  "ai-marketing": Megaphone,
-  automation: Cog,
-  consulting: Search,
+  "cost-reduction": DollarSign,
+  "revenue-operations": TrendingUp,
+  intelligence: Eye,
+  "full-department": Building2,
 } as const;
 
 export default function ServicesClient() {
@@ -25,8 +25,8 @@ export default function ServicesClient() {
           <Reveal>
             <SectionHeading
               eyebrow="Our Services"
-              heading="Systems That Take Over the Work"
-              description="We don't sell tools. We build complete agent systems that handle the real operational work inside your business. These are the four ways we engage — but every build starts with your specific problem."
+              heading="Systems Built Around Your Problem"
+              description="We don&rsquo;t sell packages. We build custom agent systems designed around the way your business actually operates. These are the four types of systems we build &mdash; but every engagement starts with your specific pain point."
               display
             />
           </Reveal>
@@ -104,18 +104,18 @@ export default function ServicesClient() {
           <div className="text-center">
             <Reveal>
               <h2 className="font-serif text-2xl md:text-3xl text-white uppercase">
-                Don&rsquo;t See Your Problem Here?
+                Not Sure Which System You Need?
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-white/70 text-lg mt-4">
-                We work across every sector. If there&rsquo;s a process in your business that&rsquo;s manual, expensive, error-prone, or doesn&rsquo;t scale &mdash; tell us about it. Chances are we&rsquo;ve built a system that solves something very close to it.
+                Most clients start with a conversation. Tell us the problem and we&rsquo;ll tell you which system fits &mdash; or if you need something we haven&rsquo;t listed. Every engagement starts with understanding your operation.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-8">
                 <Button variant="white" size="lg" href="/contact">
-                  Get in Touch
+                  Book a Call
                 </Button>
               </div>
             </Reveal>

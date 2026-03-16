@@ -2,155 +2,169 @@ import type { Service, CaseStudy, ProcessStep, Metric } from "@/types";
 
 export const services: Service[] = [
   {
-    slug: "agent-design",
-    title: "AI Agent Design & Deployment",
-    shortTitle: "Agent Design",
+    slug: "cost-reduction",
+    title: "Cost Reduction Systems",
+    shortTitle: "Cost Reduction",
     description:
-      "Purpose-built agent systems that sit inside your operation, make decisions, and act \u2014 without waiting for a human in the loop.",
+      "Agent systems that replace the expensive manual processes bleeding your operation. The cost is fixed. The savings compound.",
     longDescription:
-      "We build production AI systems that operate inside your business \u2014 routing decisions, processing data, coordinating across departments, and learning as they go. Not proof-of-concepts. Not chatbots. Real systems, live in weeks, getting smarter every cycle.",
-    icon: "agent",
+      "Every business has processes that cost too much because they depend on people doing repetitive, manual work. We build agent systems that take over those workflows \u2014 permanently, at a fraction of the cost, running around the clock.",
+    icon: "cost-reduction",
     useCases: [
-      "Agents that read your data, make decisions, and execute \u2014 no manual oversight needed",
-      "Multi-agent systems where each agent owns a specific function and they coordinate with each other",
-      "Monitoring agents that catch problems before your team even knows to look",
-      "Plugs directly into what you already use \u2014 Slack, CRM, ERP, email, databases, spreadsheets",
+      "Document processing, data extraction, and routing at any volume",
+      "Inventory monitoring, procurement automation, and waste elimination",
+      "Energy monitoring across sites with anomaly detection and cost attribution",
+      "Reporting and analytics generated automatically from live data",
+      "Scheduling and resource allocation based on real demand signals",
+      "Invoice processing, reconciliation, and financial data entry",
     ],
     problem:
-      "Your operation still runs on manual handoffs, tribal knowledge, and data sitting in silos that no one reads in real time. You\u2019ve had the AI conversations. You\u2019ve seen the demos. But every engagement you\u2019ve explored ends with a proposal, a six-month timeline, and a price that makes you question everything. You don\u2019t need another strategy deck. You need a system that works \u2014 running, learning, delivering value within weeks.",
+      "You already know which processes are expensive. Inventory checks done by hand. Reports compiled from spreadsheets. Data entered twice because systems don\u2019t talk to each other. Invoices processed manually. Schedules built on gut feel. You\u2019ve accepted these costs because the alternative \u2014 building software or hiring more people \u2014 felt even more expensive. It isn\u2019t anymore.",
     approach: [
       {
         title: "Map",
-        desc: "We sit inside your operation and document the real workflows \u2014 not the org chart version. Data sources, decision points, handoffs, bottlenecks. We find exactly where agents will have the sharpest impact.",
+        desc: "We document the process as it actually runs. Every input, decision, handoff, exception, and workaround. We find exactly where the cost lives.",
       },
       {
         title: "Architect",
-        desc: "We design the full agent system \u2014 which agents, what each one owns, how they communicate, what data they need, and what happens when something unexpected hits.",
+        desc: "We design the agent system \u2014 which agents own which steps, what data they need, how they coordinate, and what happens at the edges.",
       },
       {
         title: "Build & Ship",
-        desc: "We build every agent, connect them to your live platforms, and deploy into your environment with full monitoring and alerting from day one.",
+        desc: "We build every agent, connect them to your live systems, and deploy into your environment with full monitoring from day one.",
       },
       {
         title: "Compound",
-        desc: "The system improves itself. We tune performance, expand coverage to adjacent workflows, and optimise as it surfaces patterns your team didn\u2019t know to look for.",
+        desc: "The system gets more efficient over time. It learns your patterns, catches exceptions faster, and surfaces cost reductions you didn\u2019t know existed.",
       },
     ],
-    relatedCaseStudy: "stockpilot",
-    ctaHeading: "Let\u2019s scope your first system",
+    ctaHeading: "Every manual process is a cost you\u2019ve stopped noticing",
+    ctaBody:
+      "30 minutes. We\u2019ll find the workflows bleeding time and money and tell you exactly what a system would look like.",
   },
   {
-    slug: "ai-marketing",
-    title: "AI-Powered Marketing",
-    shortTitle: "AI Marketing",
+    slug: "revenue-operations",
+    title: "Revenue Operations Systems",
+    shortTitle: "Revenue Ops",
     description:
-      "An entire marketing operation \u2014 creative, targeting, buying, reporting \u2014 run by a coordinated team of AI agents.",
+      "Agent systems that don\u2019t just save money \u2014 they actively find and generate revenue. Pipeline, outreach, qualification, conversion \u2014 handled by agents that never stop.",
     longDescription:
-      "Ad creative, audience targeting, media buying, campaign management, performance reporting \u2014 all run by a coordinated system of specialised agents. They don\u2019t clock out. They optimise based on real performance data, not guesswork, and they get better with every campaign cycle.",
-    icon: "marketing",
+      "Agent systems that identify, qualify, and convert revenue opportunities across your business \u2014 running outreach, managing pipeline, optimising pricing, and scaling campaigns without adding headcount.",
+    icon: "revenue-operations",
     useCases: [
-      "Ad creatives and copy generated in your brand voice, tested and iterated automatically",
-      "Audience targeting and budget allocation that optimises itself across Meta, Google, TikTok, LinkedIn",
-      "Content scheduling, posting, and calendar management \u2014 fully autonomous",
-      "Live performance dashboards that update in real time with zero manual reporting",
+      "Lead prospecting and enrichment from market signals, social data, and intent data",
+      "Multi-channel outreach \u2014 email, LinkedIn, calls \u2014 personalised and sequenced automatically",
+      "Lead qualification and scoring based on your actual conversion patterns",
+      "Sales pipeline management, follow-up automation, and deal tracking",
+      "Dynamic pricing systems that adjust to demand, competition, and margin targets",
+      "Marketing campaign execution across Meta, Google, TikTok, LinkedIn \u2014 creative, targeting, budget allocation, and reporting",
     ],
     problem:
-      "Scaling marketing the traditional way means hiring strategists, copywriters, designers, media buyers, and analysts. Even fully staffed, campaign turnaround takes weeks. Reporting is manual. Optimisation is reactive \u2014 by the time you\u2019ve read the numbers, the spend is already gone. The model is expensive, slow, and breaks the moment you try to add more clients or more channels.",
+      "Your revenue engine depends on people. People who take holidays, miss follow-ups, forget to update the CRM, and can only work so many hours. Meanwhile your competitors are scaling their outreach, their qualification, their conversion \u2014 and they\u2019re doing it with systems, not headcount. The businesses growing fastest right now aren\u2019t hiring more salespeople. They\u2019re deploying agents.",
     approach: [
       {
         title: "Audit",
-        desc: "We break down your current stack, spend, creative process, and performance data to find the exact points where agents will move the needle fastest.",
+        desc: "We break down your current revenue operation \u2014 where leads come from, how they\u2019re qualified, what converts, and where deals die.",
       },
       {
         title: "Architect",
-        desc: "We design the agent system \u2014 one agent for creative generation, one for targeting, one for buying, one for reporting, and so on. Each one specialised. All of them coordinated.",
+        desc: "We design the agent system \u2014 one agent for prospecting, one for outreach, one for qualification, one for pipeline management, and so on. Each one specialised. All coordinated.",
       },
       {
         title: "Build & Ship",
-        desc: "We plug into your ad platforms \u2014 Meta, Google, TikTok, LinkedIn \u2014 build every agent, and put the full system live in your environment.",
+        desc: "We plug into your platforms, build every agent, and deploy the full system into your environment.",
       },
       {
         title: "Compound",
-        desc: "The agents refine targeting, rotate creative, reallocate budget, and learn from every campaign. Performance improves week over week \u2014 without anyone telling them to.",
+        desc: "The agents learn from every campaign, every deal, every conversion. They refine targeting, rotate messaging, and reallocate resources to what\u2019s working \u2014 automatically.",
       },
     ],
-    relatedCaseStudy: "smma-pipeline",
-    ctaHeading: "What would your marketing look like if it never stopped optimising?",
+    ctaHeading:
+      "What would your revenue look like if your pipeline never stopped moving?",
+    ctaBody:
+      "30 minutes. We\u2019ll audit your current operation and show you exactly where an agent system would outperform what you\u2019re running today.",
   },
   {
-    slug: "automation",
-    title: "Process Automation",
-    shortTitle: "Automation",
+    slug: "intelligence",
+    title: "Intelligence & Oversight Systems",
+    shortTitle: "Intelligence",
     description:
-      "The operational work your team shouldn\u2019t still be doing manually \u2014 inventory, lead routing, energy management, document processing \u2014 handled by agents that never drop a step.",
+      "A system that sits above your entire operation, sees every data point, and finds the opportunities nobody\u2019s looking for. This is where the CEO Agent lives.",
     longDescription:
-      "The tasks your team spends hours on every week \u2014 inventory management, lead follow-up, energy monitoring, document processing, data entry \u2014 handled by agent systems that run faster, cost less, and never miss a step.",
-    icon: "automation",
+      "Most businesses have the data to make better decisions. The problem isn\u2019t access \u2014 it\u2019s that nobody has time to look at all of it, connect the dots, and act fast enough. These systems do exactly that.",
+    icon: "intelligence",
     useCases: [
-      "Lead scoring, follow-up sequencing, and conversion tracking that runs without your sales team touching it",
-      "Inventory and procurement agents that eliminate waste, over-ordering, and stockouts",
-      "Energy monitoring across sites \u2014 anomalies flagged, costs attributed, savings surfaced automatically",
-      "Document intake, data extraction, and routing from unstructured sources at any volume",
+      "Cross-department data aggregation and pattern detection",
+      "Revenue opportunity identification from operational data",
+      "Anomaly detection across financial, operational, and customer data",
+      "Competitive intelligence monitoring and market signal tracking",
+      "Automated strategic reporting with actionable recommendations",
+      "The CEO Agent \u2014 a dedicated agent that thinks at the business level, identifies what\u2019s working, what\u2019s breaking, and what to do next",
     ],
     problem:
-      "These processes still run on spreadsheets, gut calls, and manual checks done by people who have better things to do. Errors compound. Revenue leaks. The data you need to fix it already exists inside your systems \u2014 but nobody\u2019s reading it in real time, and nobody has the bandwidth to act on it fast enough.",
-    approach: [
-      {
-        title: "Map",
-        desc: "We document every step of the process as it actually happens \u2014 inputs, decisions, handoffs, outputs, exceptions, and the workarounds nobody talks about.",
-      },
-      {
-        title: "Connect",
-        desc: "We build the data layer \u2014 APIs, webhooks, scrapers, database connections \u2014 so agents can read live information and act on it in real time.",
-      },
-      {
-        title: "Build & Ship",
-        desc: "We deploy agents that monitor your live data, make decisions based on your rules and thresholds, and take action automatically \u2014 flagging, routing, ordering, alerting, reporting.",
-      },
-      {
-        title: "Expand",
-        desc: "As the system proves itself, we expand. New workflows, new edge cases handled, new integrations. The system grows with your operation.",
-      },
-    ],
-    relatedCaseStudy: "energy-management",
-    ctaHeading: "Every manual process is a cost you\u2019ve just stopped noticing",
-  },
-  {
-    slug: "consulting",
-    title: "Strategic AI Consulting",
-    shortTitle: "AI Consulting",
-    description:
-      "A no-nonsense audit of your operation. We tell you exactly where agents will hit hardest, what to build first, and what isn\u2019t worth automating.",
-    longDescription:
-      "We audit your real workflows and give you a straight answer on which ones are worth automating, which ones aren\u2019t, and what it would cost to build. No vendor bias. No generic playbook. Just a ranked list of your highest-value opportunities and a clear roadmap to execute.",
-    icon: "consulting",
-    useCases: [
-      "Complete audit \u2014 which processes cost you the most, where agents would deliver the highest ROI",
-      "Build vs buy analysis so you know when custom agents beat off-the-shelf tools",
-      "A ranked roadmap: what to build now, what to revisit later, what to skip entirely \u2014 with costs attached",
-      "Internal training so your team understands the systems and can work alongside them",
-    ],
-    problem:
-      "Most businesses know AI matters. Most also have no idea where to start. They\u2019ve sat through vendor pitches for products that solve problems they don\u2019t have, sat through demos that look nothing like their actual operation, and walked away more confused than when they started. What they need is someone who\u2019ll look at the real workflows, ignore the noise, and give them a straight answer.",
+      "Your data sits in silos. Sales knows their numbers. Marketing knows their metrics. Operations knows their costs. But nobody sees all of it at once. Nobody\u2019s connecting the spike in customer complaints with the supplier change last month and the margin drop this quarter. That\u2019s not a people problem \u2014 there\u2019s too much data moving too fast for any human to track. An agent system built for oversight sees everything, in real time, and surfaces what matters.",
     approach: [
       {
         title: "Immerse",
-        desc: "We spend time with your teams \u2014 not just leadership. We watch how work actually gets done on the ground. The processes, the bottlenecks, the manual steps nobody\u2019s questioned.",
+        desc: "We spend time understanding your full operation \u2014 not one department, all of them. How data flows, where it gets stuck, and what decisions depend on it.",
       },
       {
-        title: "Rank",
-        desc: "We identify every opportunity for automation, score each one by financial impact and implementation feasibility, and rank them. You\u2019ll see exactly where the money is.",
+        title: "Architect",
+        desc: "We design the intelligence layer \u2014 which data sources feed in, what patterns to monitor, what thresholds trigger alerts, and how insights get surfaced to the right people.",
       },
       {
-        title: "Roadmap",
-        desc: "You get a clear, prioritised plan \u2014 what to build first, what to phase in later, what to skip entirely \u2014 with realistic timelines and honest costs.",
+        title: "Build & Ship",
+        desc: "We build the system, connect every data source, and deploy with real-time dashboards and alerting.",
       },
       {
-        title: "Execute",
-        desc: "If you want us to build it, we\u2019ll build it. If you want to build in-house, we\u2019ll help you hire and structure the right team. Either way, you leave with a plan that actually works.",
+        title: "Compound",
+        desc: "The system learns what matters to your business. It stops flagging noise and starts surfacing the signals that actually move the needle. Month six sees things month one couldn\u2019t.",
       },
     ],
-    ctaHeading: "The most expensive AI mistake is building the wrong thing first",
+    ctaHeading:
+      "What would you do if you could see your entire operation in real time?",
+    ctaBody:
+      "30 minutes. We\u2019ll look at your data landscape and show you what an intelligence system would surface.",
+  },
+  {
+    slug: "full-department",
+    title: "Full Department Systems",
+    shortTitle: "Full Departments",
+    description:
+      "A complete function \u2014 marketing, operations, support \u2014 run by a coordinated team of AI agents with human oversight only where it matters.",
+    longDescription:
+      "For businesses that don\u2019t want to automate one workflow. They want an entire department\u2019s manual work replaced by a system that runs autonomously, scales infinitely, and improves the longer it operates.",
+    icon: "full-department",
+    useCases: [
+      "Full marketing departments \u2014 creative, targeting, buying, reporting, optimisation",
+      "Operations departments \u2014 procurement, scheduling, monitoring, compliance",
+      "Customer support \u2014 triage, response, escalation, knowledge management",
+      "Back-office functions \u2014 finance processing, HR admin, regulatory compliance",
+      "Any function that currently depends on a team doing repeatable, structured work",
+    ],
+    problem:
+      "Building a department is slow and expensive. You\u2019re looking at 6+ months to recruit, \u00a3150K+ per head for senior hires, another 3 months for onboarding, and then the ongoing cost of management, tools, and turnover. And even fully staffed, the department is limited by headcount \u2014 it doesn\u2019t scale without more hiring. A full department system runs the same functions with a coordinated team of agents. Each agent owns a specific role. They communicate, hand off work, escalate edge cases, and improve without being told to. Human oversight where it matters. Autonomous execution everywhere else.",
+    approach: [
+      {
+        title: "Diagnose",
+        desc: "We audit the entire function. Every role, every process, every handoff, every tool. We identify which parts can be handled by agents and which genuinely need humans.",
+      },
+      {
+        title: "Architect",
+        desc: "We design the full agent team \u2014 who does what, how they coordinate, what the escalation paths are, and where human oversight plugs in.",
+      },
+      {
+        title: "Build & Ship",
+        desc: "We build and deploy the complete system in phases. Core agents first, expanding as the system proves itself on live operations.",
+      },
+      {
+        title: "Compound",
+        desc: "The department gets better every month. Agents learn from every cycle, coverage expands to adjacent processes, and the CEO Agent monitors the whole thing from above.",
+      },
+    ],
+    ctaHeading: "You know that department you\u2019ve been meaning to build?",
+    ctaBody:
+      "30 minutes. We\u2019ll look at the function you\u2019re trying to scale and tell you exactly what a system would look like to run it.",
   },
 ];
 export const caseStudies: CaseStudy[] = [

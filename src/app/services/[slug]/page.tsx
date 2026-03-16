@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { services, caseStudies } from "@/lib/data";
+import { services } from "@/lib/data";
 import ServiceDetailClient from "./ServiceDetailClient";
 import PageTransition from "@/components/ui/PageTransition";
 
@@ -41,13 +41,9 @@ export default async function ServiceDetailPage({
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
-  const relatedStudy = service.relatedCaseStudy
-    ? caseStudies.find((cs) => cs.slug === service.relatedCaseStudy)
-    : undefined;
-
   return (
     <PageTransition>
-      <ServiceDetailClient service={service} relatedStudy={relatedStudy} />
+      <ServiceDetailClient service={service} />
     </PageTransition>
   );
 }

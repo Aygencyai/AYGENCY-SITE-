@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import ServicesClient from "./ServicesClient";
 
 export const metadata: Metadata = {
-  title: "What We Build — Aygency",
+  title: "Our Services — Aygency",
   description:
-    "Custom AI agent systems for marketing, operations, and business automation. Designed around your workflows, deployed in weeks.",
+    "Custom agent systems built around your problem. Cost reduction, revenue operations, intelligence, and full department systems.",
   openGraph: {
-    title: "What We Build — Aygency",
+    title: "Our Services — Aygency",
     description:
-      "Custom AI agent systems for marketing, operations, and business automation. Designed around your workflows, deployed in weeks.",
+      "Custom agent systems built around your problem. Cost reduction, revenue operations, intelligence, and full department systems.",
     url: "https://aygency.ai/services",
   },
   twitter: {
     card: "summary_large_image",
-    title: "What We Build — Aygency",
+    title: "Our Services — Aygency",
     description:
-      "Custom AI agent systems for marketing, operations, and business automation. Designed around your workflows, deployed in weeks.",
+      "Custom agent systems built around your problem. Cost reduction, revenue operations, intelligence, and full department systems.",
   },
 };
 

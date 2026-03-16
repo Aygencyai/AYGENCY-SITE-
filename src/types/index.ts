@@ -8,8 +8,8 @@ export interface Service {
   useCases: string[];
   problem: string;
   approach: { title: string; desc: string }[];
-  relatedCaseStudy?: string;
   ctaHeading: string;
+  ctaBody: string;
 }
 
 export interface CaseStudy {

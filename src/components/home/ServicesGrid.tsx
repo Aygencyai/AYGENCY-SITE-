@@ -1,46 +1,46 @@
 "use client";
 
 import Link from "next/link";
-import { Bot, Megaphone, Cog, Search, ArrowRight } from "lucide-react";
+import { DollarSign, TrendingUp, Eye, Building2, ArrowRight } from "lucide-react";
 import SectionContainer from "@/components/ui/SectionContainer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 
 const iconMap = {
-  "agent-design": Bot,
-  "ai-marketing": Megaphone,
-  automation: Cog,
-  consulting: Search,
+  "cost-reduction": DollarSign,
+  "revenue-operations": TrendingUp,
+  intelligence: Eye,
+  "full-department": Building2,
 } as const;
 
 const serviceCards = [
   {
-    slug: "agent-design",
+    slug: "cost-reduction",
     number: "01",
-    title: "AI Agent Design & Deployment",
+    title: "Cost Reduction Systems",
     description:
-      "Custom agents designed for your specific workflows, data, and decision-making.",
+      "Agent systems that replace the expensive manual processes bleeding your operation.",
   },
   {
-    slug: "ai-marketing",
+    slug: "revenue-operations",
     number: "02",
-    title: "AI-Powered Marketing",
+    title: "Revenue Operations Systems",
     description:
-      "Full-stack marketing operations run by coordinated AI agents.",
+      "Agent systems that actively find and generate revenue. Pipeline, outreach, qualification, conversion.",
   },
   {
-    slug: "automation",
+    slug: "intelligence",
     number: "03",
-    title: "Process Automation",
+    title: "Intelligence & Oversight",
     description:
-      "Inventory, lead routing, energy, documents \u2014 the operational work that bleeds time and money.",
+      "A system that sits above your entire operation, sees every data point, and finds the opportunities nobody\u2019s looking for.",
   },
   {
-    slug: "consulting",
+    slug: "full-department",
     number: "04",
-    title: "Strategic AI Consulting",
+    title: "Full Department Systems",
     description:
-      "A clear-eyed audit of where AI fits in your business \u2014 and where it doesn\u2019t.",
+      "A complete function run by a coordinated team of AI agents with human oversight only where it matters.",
   },
 ];
 
