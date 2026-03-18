@@ -39,9 +39,9 @@ export default function LetterScene() {
   }, []);
 
   return (
-    <div className="w-full h-full min-h-[350px]">
+    <div className="w-full h-full min-h-[280px] sm:min-h-[350px]">
       <Canvas
-        camera={{ position: [0, 0, 12], fov: 40 }}
+        camera={{ position: [0, 0, isMobile ? 14 : 12], fov: 40 }}
         gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
         style={{ background: "transparent" }}

@@ -1,9 +1,9 @@
 /**
- * Block positions for "A" and "Y" letters on a 5-column × 7-row grid.
+ * Block positions for "A" and "Y" letters on a 5-column × 6-row grid.
  * Each block maps between its A-position and Y-position.
  * Blocks unique to one letter scale in/out during transitions.
  *
- * Grid: col 0–4 (x), row 0–6 (y), depth 0–1 (z)
+ * Grid: col 0–4 (x), row 1–6 (y), depth 0–1 (z)
  */
 
 export interface BlockDef {
@@ -17,10 +17,10 @@ export interface BlockDef {
 const SPACING = 1.15; // gap between block centers
 
 function gridToWorld(col: number, row: number, z: number): [number, number, number] {
-  // Center the grid: cols 0-4 → x from -2 to +2, rows 0-6 → y from -3 to +3
+  // Center the grid: cols 0-4 → x from -2 to +2, rows 1-6 → y from -2.5 to +2.5
   return [
     (col - 2) * SPACING,
-    (row - 3) * SPACING,
+    (row - 3.5) * SPACING,
     (z - 0.5) * SPACING,
   ];
 }
@@ -29,21 +29,20 @@ function gridToWorld(col: number, row: number, z: number): [number, number, numb
 function parkPos(col: number, row: number): [number, number, number] {
   return [
     (col - 2) * SPACING,
-    (row - 3) * SPACING,
+    (row - 3.5) * SPACING,
     -2.5,
   ];
 }
 
 /**
- * Letter A layout (5×7):
+ * Letter A layout (5×6):
  *
  * Row 6:      [2]           peak
  * Row 5:    [1] [3]         upper diagonals
  * Row 4:  [0]     [4]       mid diagonals
  * Row 3:  [0][1][2][3][4]   crossbar
  * Row 2:  [0]     [4]       legs
- * Row 1:  [0]     [4]       legs
- * Row 0:  [0]     [4]       base
+ * Row 1:  [0]     [4]       base
  */
 const letterA: Array<[number, number]> = [
   // peak
@@ -57,19 +56,17 @@ const letterA: Array<[number, number]> = [
   // legs
   [0, 2], [4, 2],
   [0, 1], [4, 1],
-  [0, 0], [4, 0],
 ];
 
 /**
- * Letter Y layout (5×7):
+ * Letter Y layout (5×6):
  *
  * Row 6:  [0]     [4]       upper arms
  * Row 5:    [1] [3]         inner arms
  * Row 4:      [2]           junction
  * Row 3:      [2]           stem
  * Row 2:      [2]           stem
- * Row 1:      [2]           stem
- * Row 0:      [2]           base
+ * Row 1:      [2]           base
  */
 const letterY: Array<[number, number]> = [
   // upper arms
@@ -81,7 +78,6 @@ const letterY: Array<[number, number]> = [
   [2, 3],
   [2, 2],
   [2, 1],
-  [2, 0],
 ];
 
 // Build a set of string keys for quick lookup

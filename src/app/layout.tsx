@@ -46,7 +46,7 @@ export const metadata: Metadata = {
       "We design, build, and deploy autonomous agent systems that run business operations — 24/7, learning and improving over time.",
   },
   icons: {
-    icon: "/favicon.png",
+    icon: "/icon.svg",
   },
 };
 
