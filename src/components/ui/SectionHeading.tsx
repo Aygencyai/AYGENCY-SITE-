@@ -20,7 +20,7 @@ export default function SectionHeading({
   return (
     <div className={cn(isCenter && "text-center")}>
       {eyebrow && (
-        <p className="text-green font-sans font-medium text-sm tracking-widest uppercase mb-4">
+        <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
           {eyebrow}
         </p>
       )}
@@ -28,8 +28,8 @@ export default function SectionHeading({
         className={cn(
           "leading-tight mb-6",
           display
-            ? "font-serif text-green text-4xl md:text-5xl lg:text-6xl uppercase"
-            : "font-serif text-green text-4xl md:text-5xl uppercase"
+            ? "font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold"
+            : "font-heading text-ghost text-4xl md:text-5xl uppercase font-semibold"
         )}
       >
         {heading}
@@ -37,7 +37,7 @@ export default function SectionHeading({
       {description && (
         <p
           className={cn(
-            "text-green-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans",
+            "text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans",
             isCenter && "mx-auto"
           )}
         >

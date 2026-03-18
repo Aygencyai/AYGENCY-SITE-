@@ -3,11 +3,14 @@
 import { useRef, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import AnimatedGrid from "@/components/effects/AnimatedGrid";
+import GlowOrb from "@/components/effects/GlowOrb";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 function Particles() {
   const dots = useMemo(
     () =>
-      Array.from({ length: 24 }, (_, i) => ({
+      Array.from({ length: 36 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -29,12 +32,12 @@ function Particles() {
             top: `${dot.y}%`,
             width: dot.size,
             height: dot.size,
-            backgroundColor: "#5BA4C9",
+            backgroundColor: "#00E5FF",
             opacity: 0,
           }}
           animate={{
             y: [0, -30, 0],
-            opacity: [0, 0.18, 0],
+            opacity: [0, 0.2, 0],
           }}
           transition={{
             duration: dot.duration,
@@ -53,15 +56,22 @@ export default function CTABanner() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="relative bg-green py-24 px-8 overflow-hidden">
+    <section ref={ref} className="relative bg-surface section-padding overflow-hidden">
+      <AnimatedGrid />
+      <GlowOrb
+        size={500}
+        opacity={0.12}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        parallaxStrength={25}
+      />
       <Particles />
 
-      <div className="relative z-10 max-w-3xl mx-auto text-center">
+      <div className="relative z-10 max-w-3xl mx-auto text-center px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.15, ease: "easeOut" }}
-          className="font-serif text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase font-semibold"
         >
           You&rsquo;re Going to Build This.
           <br />
@@ -71,8 +81,8 @@ export default function CTABanner() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.15, ease: "easeOut" }}
-          className="font-sans text-base text-white/70 mt-6 max-w-lg mx-auto"
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
           Book 30 minutes. We&rsquo;ll map your operation, find the workflows
           bleeding time and money, and tell you exactly what we&rsquo;d build.
@@ -81,15 +91,17 @@ export default function CTABanner() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.15, ease: "easeOut" }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mt-10"
         >
-          <Link
-            href="/contact"
-            className="inline-block rounded-full bg-white px-8 py-3 font-sans text-[13px] font-semibold uppercase tracking-[0.15em] text-green transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
-          >
-            Book a Call
-          </Link>
+          <MagneticButton>
+            <Link
+              href="/contact"
+              className="inline-block rounded-lg bg-cyan px-10 py-4 font-heading text-sm font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
+            >
+              Book a Call
+            </Link>
+          </MagneticButton>
         </motion.div>
       </div>
     </section>

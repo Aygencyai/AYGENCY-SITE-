@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYGENCY.AI — Futuristic Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #06060A;
+    --surface: rgba(255, 255, 255, 0.03);
+    --surface-hover: rgba(255, 255, 255, 0.06);
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text: #E8E8EC;
+    --text-dim: rgba(232, 232, 236, 0.5);
+    --text-muted: rgba(232, 232, 236, 0.3);
+    --accent: #6C63FF;
+    --accent-cyan: #00D4FF;
+    --accent-glow: rgba(108, 99, 255, 0.15);
+    --gradient-1: linear-gradient(135deg, #6C63FF 0%, #00D4FF 100%);
+    --gradient-2: linear-gradient(135deg, rgba(108, 99, 255, 0.12) 0%, rgba(0, 212, 255, 0.08) 100%);
+    --heading: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 400;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ——— AMBIENT BACKGROUND ——— */
+  .ambient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.4;
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+
+  .ambient-orb.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(108, 99, 255, 0.3) 0%, transparent 70%);
+    top: -10%;
+    right: -5%;
+    animation-delay: 0s;
+  }
+
+  .ambient-orb.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+    bottom: 20%;
+    left: -10%;
+    animation-delay: -7s;
+    animation-duration: 25s;
+  }
+
+  .ambient-orb.orb-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(108, 99, 255, 0.15) 0%, transparent 70%);
+    top: 50%;
+    right: 20%;
+    animation-delay: -14s;
+    animation-duration: 30s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(40px, -30px) scale(1.05); }
+    50% { transform: translate(-20px, 20px) scale(0.95); }
+    75% { transform: translate(30px, 40px) scale(1.02); }
+  }
+
+  /* Dot grid overlay */
+  .dot-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ——— NAV ——— */
+  .nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 14px 32px;
+    background: rgba(6, 6, 10, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+  }
+
+  .nav-logo {
+    font-family: var(--heading);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links a:hover {
+    color: var(--text);
+  }
+
+  .nav-cta {
+    font-family: var(--heading);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 100px;
+    background: var(--gradient-1);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* ——— HERO ——— */
+  .hero {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 160px 24px 120px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  .hero-badge .pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 8px var(--accent-cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: var(--heading);
+    font-size: clamp(40px, 7vw, 88px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: wordReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero h1 .gradient-text {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes wordReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 1.4s;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 1.6s;
+  }
+
+  .btn-primary {
+    font-family: var(--heading);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 16px 36px;
+    border-radius: 100px;
+    background: var(--gradient-1);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 100px;
+    background: var(--gradient-1);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:hover::after {
+    opacity: 0.5;
+  }
+
+  .btn-secondary {
+    font-family: var(--heading);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 16px 36px;
+    border-radius: 100px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    background: var(--surface-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ——— METRICS STRIP ——— */
+  .metrics-strip {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1100px;
+    margin: -40px auto 0;
+    padding: 40px;
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+  }
+
+  .metric-item {
+    text-align: center;
+    padding: 8px 16px;
+    position: relative;
+  }
+
+  .metric-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: var(--glass-border);
+  }
+
+  .metric-value {
+    font-family: var(--heading);
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ——— SECTION SHARED ——— */
+  .section {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 160px 24px;
+  }
+
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-heading {
+    font-family: var(--heading);
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    max-width: 700px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 64px;
+  }
+
+  /* ——— SERVICES GRID ——— */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .service-card {
+    position: relative;
+    padding: 40px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
+    cursor: default;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(108, 99, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background: var(--gradient-2);
+    border: 1px solid rgba(108, 99, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 20px;
+  }
+
+  .service-title {
+    font-family: var(--heading);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .service-tag {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: var(--accent-glow);
+  }
+
+  /* ——— PROCESS SECTION ——— */
+  .process-track {
+    display: flex;
+    gap: 0;
+    position: relative;
+  }
+
+  .process-track::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: 36px;
+    right: 36px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
+    opacity: 0.2;
+  }
+
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .step-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+    margin: 26px auto 24px;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .process-step:hover .step-dot {
+    background: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+
+  .step-number {
+    font-family: var(--heading);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .step-title {
+    font-family: var(--heading);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ——— CASE STUDIES ——— */
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .case-card {
+    padding: 36px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 212, 255, 0.2);
+  }
+
+  .case-industry {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    margin-bottom: 16px;
+  }
+
+  .case-title {
+    font-family: var(--heading);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .case-challenge {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .case-metric {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .case-metric-value {
+    font-family: var(--heading);
+    font-size: 32px;
+    font-weight: 700;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .case-metric-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+
+  /* ——— CTA SECTION ——— */
+  .cta-section {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 120px 24px 160px;
+  }
+
+  .cta-glass {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 60px;
+    background: var(--gradient-2);
+    border: 1px solid rgba(108, 99, 255, 0.15);
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glass::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(0, 212, 255, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .cta-heading {
+    font-family: var(--heading);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-section .btn-primary {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ——— FOOTER ——— */
+  .footer {
+    position: relative;
+    z-index: 2;
+    padding: 40px clamp(24px, 5vw, 80px);
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .footer-logo {
+    font-family: var(--heading);
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ——— SCROLL ANIMATIONS ——— */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ——— RESPONSIVE ——— */
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cases-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-track {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .process-track::before {
+      display: none;
+    }
+
+    .process-step {
+      text-align: left;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 0 16px;
+    }
+
+    .step-dot {
+      grid-row: 1 / 4;
+      margin: 4px 0 0;
+    }
+
+    .metrics-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .metric-item:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+
+    .hero h1 {
+      font-size: clamp(32px, 9vw, 52px);
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .btn-primary, .btn-secondary {
+      width: 100%;
+      text-align: center;
+    }
+
+    .metrics-strip {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 0;
+      padding: 32px 24px;
+    }
+
+    .service-card { padding: 28px; }
+
+    .cta-glass { padding: 48px 28px; }
+
+    .footer {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient background -->
+<div class="ambient">
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+</div>
+<div class="dot-grid"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-logo">Aygency</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#work">Work</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="pulse"></span>
+    AI Agent Systems — Live & Compounding
+  </div>
+  <h1 id="heroHeadline"></h1>
+  <p class="hero-sub">We design, build, and deploy autonomous agent systems that run your business operations — 24/7, learning and improving over time.</p>
+  <div class="hero-buttons">
+    <a href="#cta" class="btn-primary">Start a Project</a>
+    <a href="#work" class="btn-secondary">See Our Work</a>
+  </div>
+</section>
+
+<!-- Metrics Strip -->
+<div class="metrics-strip reveal">
+  <div class="metric-item">
+    <div class="metric-value">12+</div>
+    <div class="metric-label">Agents Deployed</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">3 wk</div>
+    <div class="metric-label">Avg. Deploy Time</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">80%</div>
+    <div class="metric-label">Process Time Saved</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">5+</div>
+    <div class="metric-label">Industries Served</div>
+  </div>
+</div>
+
+<!-- Services -->
+<section class="section" id="services">
+  <div class="section-eyebrow reveal">What We Build</div>
+  <h2 class="section-heading reveal">Agent systems that run entire business functions.</h2>
+  <p class="section-desc reveal">Not chatbots. Not copilots. Autonomous systems that own a workflow end-to-end — making decisions, taking action, and getting smarter every cycle.</p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">⚡</div>
+      <div class="service-title">AI Agent Design & Deployment</div>
+      <div class="service-desc">Purpose-built agent systems that sit inside your operation, make decisions, and act — without waiting for a human in the loop.</div>
+      <span class="service-tag">Live in weeks</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📡</div>
+      <div class="service-title">AI-Powered Marketing</div>
+      <div class="service-desc">An entire marketing operation — creative, targeting, buying, reporting — run by a coordinated team of AI agents.</div>
+      <span class="service-tag">Full pipeline</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔄</div>
+      <div class="service-title">Process Automation</div>
+      <div class="service-desc">The operational work your team shouldn't still be doing manually — inventory, lead routing, energy management, document processing — handled by agents that never drop a step.</div>
+      <span class="service-tag">Zero manual steps</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🧭</div>
+      <div class="service-title">Strategic AI Consulting</div>
+      <div class="service-desc">A no-nonsense audit of your operation. We tell you exactly where agents will hit hardest, what to build first, and what isn't worth automating.</div>
+      <span class="service-tag">Clarity first</span>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section" id="process">
+  <div class="section-eyebrow reveal">How It Works</div>
+  <h2 class="section-heading reveal">From pain point to production in five steps.</h2>
+  <p class="section-desc reveal">Every engagement follows the same pattern. We learn your operation, architect the system, build it, ship it, and watch it compound.</p>
+
+  <div class="process-track reveal">
+    <div class="process-step">
+      <span class="step-number">Step 01</span>
+      <div class="step-dot"></div>
+      <div class="step-title">Diagnose</div>
+      <div class="step-desc">We learn your operation inside out — the workflows, the bottlenecks, the data.</div>
+    </div>
+    <div class="process-step">
+      <span class="step-number">Step 02</span>
+      <div class="step-dot"></div>
+      <div class="step-title">Design</div>
+      <div class="step-desc">We architect the system: which agents, what each one handles, how they coordinate.</div>
+    </div>
+    <div class="process-step">
+      <span class="step-number">Step 03</span>
+      <div class="step-dot"></div>
+      <div class="step-title">Build</div>
+      <div class="step-desc">We develop the agents, connect them to your platforms, and test against real data.</div>
+    </div>
+    <div class="process-step">
+      <span class="step-number">Step 04</span>
+      <div class="step-dot"></div>
+      <div class="step-title">Go Live</div>
+      <div class="step-desc">The system starts operating. We monitor closely and tune performance in the first weeks.</div>
+    </div>
+    <div class="process-step">
+      <span class="step-number">Step 05</span>
+      <div class="step-dot"></div>
+      <div class="step-title">Get Smarter</div>
+      <div class="step-desc">The system learns from every cycle. By month three, it outperforms the original spec.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies -->
+<section class="section" id="work">
+  <div class="section-eyebrow reveal">Selected Work</div>
+  <h2 class="section-heading reveal">Systems we've built. Results they've delivered.</h2>
+  <p class="section-desc reveal">Real deployments. Real clients. Real numbers.</p>
+
+  <div class="cases-grid">
+    <div class="case-card reveal">
+      <div class="case-industry">Hospitality</div>
+      <div class="case-title">StockPilot</div>
+      <div class="case-challenge">A two-agent AI system for a premium London restaurant — monitoring inventory, automating procurement, and eliminating stockouts.</div>
+      <div class="case-metric">
+        <span class="case-metric-value">80%</span>
+        <span class="case-metric-label">Reduction in procurement time</span>
+      </div>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-industry">Real Estate</div>
+      <div class="case-title">Energy Agent</div>
+      <div class="case-challenge">AI-powered energy monitoring across multiple UK sites — identifying anomalies, attributing costs, and surfacing savings automatically.</div>
+      <div class="case-metric">
+        <span class="case-metric-value">15-20%</span>
+        <span class="case-metric-label">Potential cost savings identified</span>
+      </div>
+    </div>
+    <div class="case-card reveal">
+      <div class="case-industry">Digital Marketing</div>
+      <div class="case-title">AI-Native SMMA</div>
+      <div class="case-challenge">An eight-agent system replacing the core functions of a traditional marketing agency — creative, targeting, buying, and reporting.</div>
+      <div class="case-metric">
+        <span class="case-metric-value">8</span>
+        <span class="case-metric-label">Specialised agents deployed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-glass reveal">
+    <h2 class="cta-heading">Ready to put agents to work?</h2>
+    <p class="cta-sub">Tell us what's slowing your operation down. We'll tell you exactly where AI hits hardest.</p>
+    <a href="#" class="btn-primary">Book a Discovery Call</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <span class="footer-logo">Aygency.ai</span>
+  <span>© 2026 Aygency. London, UK.</span>
+  <span>AI Agent Systems</span>
+</footer>
+
+<script>
+  // ——— HERO WORD-BY-WORD REVEAL ———
+  (function revealHeadline() {
+    const container = document.getElementById('heroHeadline');
+    const words = [
+      { text: 'AI\u00A0agents', gradient: false },
+      { text: 'that\u00A0run', gradient: false },
+      { text: 'your', gradient: false },
+      { text: 'business', gradient: true },
+      { text: 'operations.', gradient: true },
+    ];
+
+    words.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'word' + (word.gradient ? ' gradient-text' : '');
+      span.textContent = word.text + (i < words.length - 1 ? ' ' : '');
+      span.style.animationDelay = (0.4 + i * 0.12) + 's';
+      container.appendChild(span);
+    });
+  })();
+
+  // ——— SCROLL REVEAL ———
+  (function scrollReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '-40px' });
+
+    reveals.forEach(el => observer.observe(el));
+  })();
+
+  // ——— STAGGER CHILDREN ———
+  (function staggerCards() {
+    const grids = document.querySelectorAll('.services-grid, .cases-grid');
+    grids.forEach(grid => {
+      const cards = grid.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = Array.from(cards).indexOf(entry.target);
+            entry.target.style.transitionDelay = (index * 0.1) + 's';
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05 });
+
+      cards.forEach(card => observer.observe(card));
+    });
+  })();
+</script>
+
+</body>
+</html>

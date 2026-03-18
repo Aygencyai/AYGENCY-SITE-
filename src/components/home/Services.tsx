@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import GlassCard from "@/components/ui/GlassCard";
 
 const serviceCards = [
   {
@@ -27,37 +27,42 @@ export default function Services() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-ivory py-24 md:py-32">
+    <section className="bg-void section-padding">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="font-serif text-[3rem] leading-[1.1] text-green uppercase"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          What We Build
-        </motion.h2>
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-4">
+            {`// Our Process`}
+          </p>
+          <h2 className="font-heading text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+            What We Build
+          </h2>
+        </motion.div>
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           {serviceCards.map((card, i) => (
             <motion.div
               key={card.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              initial={{ opacity: 0, y: 30, scale: 0.97 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: "easeOut",
+                duration: 0.7,
+                delay: i * 0.12,
+                ease: [0.16, 1, 0.3, 1],
               }}
-              whileHover={{ y: -4 }}
-              className="bg-ivory border border-ivory-dark rounded-lg p-8 pt-0 overflow-hidden transition-all duration-300 hover:shadow-card-hover"
             >
-              <div className="h-[3px] bg-green -mx-8 mb-8" />
-              <h3 className="font-serif text-2xl text-green">{card.title}</h3>
-              <p className="font-sans text-base leading-relaxed text-green-muted mt-3">
-                {card.description}
-              </p>
+              <GlassCard>
+                <h3 className="font-heading text-xl font-semibold text-white">
+                  {card.title}
+                </h3>
+                <p className="font-sans text-base leading-relaxed text-ghost-muted mt-3">
+                  {card.description}
+                </p>
+              </GlassCard>
             </motion.div>
           ))}
         </div>

@@ -6,6 +6,8 @@ import SectionContainer from "@/components/ui/SectionContainer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
+import GlassCard from "@/components/ui/GlassCard";
+import MagneticButton from "@/components/ui/MagneticButton";
 import type { UseCase } from "@/types";
 
 export default function UseCaseDetailClient({
@@ -23,22 +25,22 @@ export default function UseCaseDetailClient({
   return (
     <>
       {/* A. Hero */}
-      <section className="bg-ivory pt-32 pb-20">
+      <section className="bg-void pt-32 pb-20">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
               <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-green/10 text-green font-sans text-xs font-medium tracking-widest uppercase px-3 py-1.5 rounded-full">
+                <span className="bg-cyan/[0.08] text-cyan font-mono text-xs tracking-wider uppercase px-3 py-1.5 rounded-md border border-cyan/20">
                   {useCase.sector}
                 </span>
-                <span className="bg-green/10 text-green font-sans text-xs font-medium tracking-widest uppercase px-3 py-1.5 rounded-full">
+                <span className="bg-cyan/[0.08] text-cyan font-mono text-xs tracking-wider uppercase px-3 py-1.5 rounded-md border border-cyan/20">
                   {useCase.systemType}
                 </span>
               </div>
-              <h1 className="font-serif text-green text-4xl md:text-5xl lg:text-6xl leading-tight uppercase">
+              <h1 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl leading-tight uppercase font-semibold">
                 {useCase.title}
               </h1>
-              <p className="text-green-muted font-sans text-lg md:text-xl leading-relaxed mt-6">
+              <p className="text-ghost-muted font-sans text-lg md:text-xl leading-relaxed mt-6">
                 {useCase.subtext}
               </p>
             </Reveal>
@@ -47,7 +49,7 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* B. The Problem */}
-      <section className="bg-ivory-dark py-20 md:py-24">
+      <section className="bg-surface section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -57,7 +59,7 @@ export default function UseCaseDetailClient({
               />
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="font-sans text-green-muted text-lg leading-relaxed">
+              <p className="font-sans text-ghost-muted text-lg leading-relaxed">
                 {useCase.problem}
               </p>
             </Reveal>
@@ -66,7 +68,7 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* C. The System — Agent Architecture */}
-      <section className="bg-ivory py-20 md:py-24">
+      <section className="bg-void section-padding">
         <SectionContainer>
           <Reveal>
             <SectionHeading
@@ -81,16 +83,16 @@ export default function UseCaseDetailClient({
             {/* CEO Agent at top */}
             {ceoAgent && (
               <Reveal delay={0.1}>
-                <div className="bg-green text-white rounded-lg p-6 md:p-8 mb-4">
+                <div className="bg-cyan/[0.08] border border-cyan/20 rounded-xl p-6 md:p-8 mb-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Bot size={20} className="text-white" />
+                    <div className="w-10 h-10 bg-cyan/[0.15] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Bot size={20} className="text-cyan" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-lg text-white">
+                      <h3 className="font-heading text-lg font-semibold text-white">
                         {ceoAgent.name}
                       </h3>
-                      <p className="font-sans text-white/70 mt-2 leading-relaxed text-sm">
+                      <p className="font-sans text-ghost-muted mt-2 leading-relaxed text-sm">
                         {ceoAgent.description}
                       </p>
                     </div>
@@ -99,10 +101,10 @@ export default function UseCaseDetailClient({
               </Reveal>
             )}
 
-            {/* Connection lines */}
+            {/* Connection line */}
             {ceoAgent && (
               <div className="flex justify-center py-2">
-                <div className="w-px h-6 bg-ivory-dark" />
+                <div className="w-px h-6 border-l border-dashed border-cyan/30" />
               </div>
             )}
 
@@ -110,21 +112,21 @@ export default function UseCaseDetailClient({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {operationalAgents.map((agent, i) => (
                 <Reveal key={agent.name} delay={0.15 + i * 0.1}>
-                  <div className="bg-ivory border border-ivory-dark rounded-lg p-6 h-full hover:shadow-card-hover transition-shadow duration-300">
+                  <GlassCard>
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-green/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Bot size={20} className="text-green" />
+                      <div className="w-10 h-10 bg-cyan/[0.08] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Bot size={20} className="text-cyan" />
                       </div>
                       <div>
-                        <h3 className="font-serif text-lg text-green">
+                        <h3 className="font-heading text-lg font-semibold text-white">
                           {agent.name}
                         </h3>
-                        <p className="font-sans text-green-muted mt-2 leading-relaxed text-sm">
+                        <p className="font-sans text-ghost-muted mt-2 leading-relaxed text-sm">
                           {agent.description}
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </GlassCard>
                 </Reveal>
               ))}
             </div>
@@ -133,7 +135,7 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* D. Estimated Impact */}
-      <section className="bg-ivory-dark py-20 md:py-24">
+      <section className="bg-surface section-padding">
         <SectionContainer>
           <div className="text-center max-w-3xl mx-auto">
             <Reveal>
@@ -144,7 +146,7 @@ export default function UseCaseDetailClient({
               />
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="font-sans text-green text-xl md:text-2xl font-medium leading-relaxed">
+              <p className="font-sans text-ghost text-xl md:text-2xl font-medium leading-relaxed">
                 {useCase.estimatedImpact}
               </p>
             </Reveal>
@@ -154,7 +156,7 @@ export default function UseCaseDetailClient({
               <div className="mt-12">
                 <Link
                   href={`/use-cases/${nextUseCase.slug}`}
-                  className="group inline-flex items-center gap-2 text-green font-sans font-medium text-sm"
+                  className="group inline-flex items-center gap-2 text-cyan font-sans font-medium text-sm"
                 >
                   <span>Next: {nextUseCase.title}</span>
                   <ArrowRight
@@ -169,27 +171,29 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* E. CTA */}
-      <section className="bg-ivory py-20 md:py-24">
+      <section className="bg-void section-padding">
         <SectionContainer>
           <div className="text-center max-w-2xl mx-auto">
             <Reveal>
-              <h2 className="font-serif text-3xl md:text-4xl text-green uppercase">
+              <h2 className="font-heading text-3xl md:text-4xl text-ghost uppercase font-semibold">
                 {useCase.ctaHeading}
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="font-sans text-lg text-green-muted mt-4">
+              <p className="font-sans text-lg text-ghost-muted mt-4">
                 {useCase.ctaBody}
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button variant="primary" size="lg" href="/contact">
-                  Book a Call
-                </Button>
+                <MagneticButton className="inline-block">
+                  <Button variant="primary" size="lg" href="/contact">
+                    Book a Call
+                  </Button>
+                </MagneticButton>
                 <Link
                   href="/use-cases"
-                  className="group inline-flex items-center gap-2 text-green font-sans font-medium text-sm"
+                  className="group inline-flex items-center gap-2 text-cyan font-sans font-medium text-sm"
                 >
                   <span>Or view all use cases</span>
                   <ArrowRight

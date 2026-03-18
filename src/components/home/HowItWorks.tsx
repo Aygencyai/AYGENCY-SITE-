@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-
 const steps = [
   {
     number: "01",
@@ -41,41 +40,45 @@ export default function HowItWorks() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-ivory py-24 md:py-32">
+    <section className="bg-void section-padding">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="font-serif text-[3rem] leading-[1.1] text-green uppercase"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          How It Works
-        </motion.h2>
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-4">
+            {`// Engagement Model`}
+          </p>
+          <h2 className="font-heading text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+            How It Works
+          </h2>
+        </motion.div>
 
         {/* Desktop: horizontal layout */}
         <div ref={ref} className="hidden md:flex items-start mt-16 justify-between">
           {steps.map((step, i) => (
             <div key={step.number} className="flex items-start flex-1">
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{
-                  duration: 0.6,
-                  delay: i * 0.15,
-                  ease: "easeOut",
+                  duration: 0.7,
+                  delay: i * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
                 }}
                 className="flex flex-col items-center text-center max-w-[200px] mx-auto"
               >
-                <div className="w-12 h-12 rounded-full bg-green flex items-center justify-center mb-4">
-                  <span className="font-sans text-sm font-semibold text-white">
+                <div className="w-12 h-12 rounded-full bg-void-light/60 backdrop-blur-sm border border-cyan/20 flex items-center justify-center mb-4">
+                  <span className="font-mono text-sm font-medium text-cyan">
                     {step.number}
                   </span>
                 </div>
-                <h3 className="font-sans text-lg font-semibold text-green">
+                <h3 className="font-heading text-lg font-semibold text-white">
                   {step.title}
                 </h3>
-                <p className="font-sans text-sm text-green-muted mt-2 leading-relaxed">
+                <p className="font-sans text-sm text-ghost-muted mt-2 leading-relaxed">
                   {step.description}
                 </p>
               </motion.div>
@@ -86,20 +89,23 @@ export default function HowItWorks() {
                   initial={{ scaleX: 0 }}
                   animate={isInView ? { scaleX: 1 } : {}}
                   transition={{
-                    duration: 0.4,
-                    delay: i * 0.15 + 0.3,
-                    ease: "easeOut",
+                    duration: 0.6,
+                    delay: i * 0.12 + 0.3,
+                    ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="h-px bg-ivory-dark flex-1 mt-6 origin-left mx-[-8px]"
-                  style={{ minWidth: "24px" }}
+                  className="h-px flex-1 mt-6 origin-left mx-[-8px]"
+                  style={{
+                    minWidth: "24px",
+                    background: "linear-gradient(90deg, rgba(0,229,255,0.3), rgba(0,229,255,0.05))",
+                  }}
                 />
               )}
             </div>
           ))}
         </div>
 
-        {/* Mobile: vertical layout */}
-        <div className="md:hidden mt-12 space-y-8">
+        {/* Mobile: vertical timeline */}
+        <div className="md:hidden mt-12 space-y-0">
           {steps.map((step, i) => (
             <motion.div
               key={step.number}
@@ -107,22 +113,26 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: "easeOut",
+                duration: 0.7,
+                delay: i * 0.08,
+                ease: [0.16, 1, 0.3, 1],
               }}
-              className="flex items-start gap-4"
+              className="flex items-start gap-4 relative pl-8 pb-8"
             >
-              <div className="w-12 h-12 rounded-full bg-green flex-shrink-0 flex items-center justify-center">
-                <span className="font-sans text-sm font-semibold text-white">
+              {/* Vertical dashed line */}
+              {i < steps.length - 1 && (
+                <div className="absolute left-[23px] top-12 bottom-0 border-l border-dashed border-cyan/20" />
+              )}
+              <div className="w-12 h-12 rounded-full bg-void-light/60 backdrop-blur-sm border border-cyan/20 flex-shrink-0 flex items-center justify-center relative z-10">
+                <span className="font-mono text-sm font-medium text-cyan">
                   {step.number}
                 </span>
               </div>
               <div>
-                <h3 className="font-sans text-lg font-semibold text-green">
+                <h3 className="font-heading text-lg font-semibold text-white">
                   {step.title}
                 </h3>
-                <p className="font-sans text-sm text-green-muted mt-1 leading-relaxed">
+                <p className="font-sans text-sm text-ghost-muted mt-1 leading-relaxed">
                   {step.description}
                 </p>
               </div>

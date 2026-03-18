@@ -20,7 +20,6 @@ export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Scroll listener
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY >= 50);
     onScroll();
@@ -28,12 +27,10 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -65,8 +62,8 @@ export default function Nav() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-ivory/95 backdrop-blur-xl shadow-nav"
-            : "bg-ivory"
+            ? "bg-void-light/80 backdrop-blur-xl shadow-nav border-b border-ghost/[0.06]"
+            : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -74,7 +71,7 @@ export default function Nav() {
             {/* Logo */}
             <Link
               href="/"
-              className="font-sans font-semibold text-sm text-green uppercase tracking-[0.15em]"
+              className="font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
             >
               AYGENCY
             </Link>
@@ -92,13 +89,16 @@ export default function Nav() {
                     <Link
                       href={link.href}
                       className={cn(
-                        "font-sans font-medium text-[13px] uppercase tracking-[0.12em] transition-colors duration-200",
+                        "relative font-sans font-medium text-[13px] uppercase tracking-[0.12em] transition-colors duration-200",
                         isActive(link.href)
-                          ? "text-green"
-                          : "text-green/70 hover:text-green"
+                          ? "text-white"
+                          : "text-ghost-muted hover:text-white"
                       )}
                     >
                       {link.label}
+                      {isActive(link.href) && (
+                        <span className="absolute -bottom-1 left-0 right-0 h-px bg-cyan" />
+                      )}
                     </Link>
 
                     {/* Services dropdown */}
@@ -109,18 +109,18 @@ export default function Nav() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-ivory rounded-xl shadow-card-hover border border-ivory-dark p-2 min-w-[260px] z-50"
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-4 glass-strong rounded-xl p-2 min-w-[280px] z-50"
                         >
                           {services.map((service) => (
                             <Link
                               key={service.slug}
                               href={`/services/${service.slug}`}
-                              className="block px-4 py-3 rounded-lg hover:bg-ivory-dark transition-colors"
+                              className="block px-4 py-3 rounded-lg hover:bg-surface-light/50 transition-colors group"
                             >
-                              <span className="block font-sans font-medium text-sm text-green">
+                              <span className="block font-sans font-medium text-sm text-ghost group-hover:text-white transition-colors">
                                 {service.shortTitle}
                               </span>
-                              <span className="block text-xs text-muted mt-0.5">
+                              <span className="block text-xs text-ghost-dim mt-0.5 line-clamp-1">
                                 {service.description}
                               </span>
                             </Link>
@@ -134,13 +134,16 @@ export default function Nav() {
                     key={link.label}
                     href={link.href}
                     className={cn(
-                      "font-sans font-medium text-[13px] uppercase tracking-[0.12em] transition-colors duration-200",
+                      "relative font-sans font-medium text-[13px] uppercase tracking-[0.12em] transition-colors duration-200",
                       isActive(link.href)
-                        ? "text-green"
-                        : "text-green/70 hover:text-green"
+                        ? "text-white"
+                        : "text-ghost-muted hover:text-white"
                     )}
                   >
                     {link.label}
+                    {isActive(link.href) && (
+                      <span className="absolute -bottom-1 left-0 right-0 h-px bg-cyan" />
+                    )}
                   </Link>
                 )
               )}
@@ -148,7 +151,7 @@ export default function Nav() {
               {/* Desktop CTA */}
               <Link
                 href="/contact"
-                className="bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-3 hover:bg-green-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg px-8 py-3 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200"
               >
                 Book a Call
               </Link>
@@ -156,25 +159,25 @@ export default function Nav() {
 
             {/* Mobile hamburger */}
             <button
-              className="lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[6px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:ring-offset-2 rounded-lg"
+              className="lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[6px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/30 focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-lg"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
               <span
                 className={cn(
-                  "block w-6 h-[2px] bg-green transition-all duration-300 origin-center",
+                  "block w-6 h-[2px] bg-ghost transition-all duration-300 origin-center",
                   mobileOpen && "translate-y-[4px] rotate-45"
                 )}
               />
               <span
                 className={cn(
-                  "block w-6 h-[2px] bg-green transition-all duration-300",
+                  "block w-6 h-[2px] bg-ghost transition-all duration-300",
                   mobileOpen && "opacity-0"
                 )}
               />
               <span
                 className={cn(
-                  "block w-6 h-[2px] bg-green transition-all duration-300 origin-center",
+                  "block w-6 h-[2px] bg-ghost transition-all duration-300 origin-center",
                   mobileOpen && "-translate-y-[4px] -rotate-45"
                 )}
               />
@@ -182,8 +185,8 @@ export default function Nav() {
           </div>
         </div>
 
-        {/* Bottom border line */}
-        <div className="h-px w-full bg-ivory-dark" />
+        {/* Bottom border line (only when not scrolled, since scrolled state has its own border) */}
+        {!scrolled && <div className="h-px w-full bg-ghost/[0.06]" />}
       </nav>
 
       {/* Mobile overlay */}
@@ -194,14 +197,14 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-ivory z-50 flex flex-col"
+            className="fixed inset-0 bg-void z-50 flex flex-col"
           >
             {/* Mobile header with logo + close */}
             <div className="px-6">
               <div className="flex items-center justify-between py-4">
                 <Link
                   href="/"
-                  className="font-sans font-semibold text-sm text-green uppercase tracking-[0.15em]"
+                  className="font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
                   onClick={() => setMobileOpen(false)}
                 >
                   AYGENCY
@@ -211,12 +214,12 @@ export default function Nav() {
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close menu"
                 >
-                  <span className="block w-6 h-[2px] bg-green translate-y-[4px] rotate-45 transition-all duration-300 origin-center" />
-                  <span className="block w-6 h-[2px] bg-green opacity-0 transition-all duration-300" />
-                  <span className="block w-6 h-[2px] bg-green -translate-y-[4px] -rotate-45 transition-all duration-300 origin-center" />
+                  <span className="block w-6 h-[2px] bg-ghost translate-y-[4px] rotate-45 transition-all duration-300 origin-center" />
+                  <span className="block w-6 h-[2px] bg-ghost opacity-0 transition-all duration-300" />
+                  <span className="block w-6 h-[2px] bg-ghost -translate-y-[4px] -rotate-45 transition-all duration-300 origin-center" />
                 </button>
               </div>
-              <div className="h-px w-full bg-ivory-dark" />
+              <div className="h-px w-full bg-ghost/[0.06]" />
             </div>
 
             {/* Mobile links */}
@@ -231,7 +234,7 @@ export default function Nav() {
                 >
                   <Link
                     href={link.href}
-                    className="font-serif text-3xl text-green uppercase"
+                    className="font-heading text-3xl text-ghost font-semibold uppercase"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -243,7 +246,7 @@ export default function Nav() {
                         <Link
                           key={service.slug}
                           href={`/services/${service.slug}`}
-                          className="text-lg text-green-muted hover:text-green transition-colors"
+                          className="text-lg text-ghost-muted hover:text-cyan transition-colors"
                           onClick={() => setMobileOpen(false)}
                         >
                           {service.shortTitle}
@@ -261,7 +264,7 @@ export default function Nav() {
               >
                 <Link
                   href="/contact"
-                  className="block w-full text-center bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-4 hover:bg-green-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                  className="block w-full text-center bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg px-8 py-4 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200"
                 >
                   Book a Call
                 </Link>

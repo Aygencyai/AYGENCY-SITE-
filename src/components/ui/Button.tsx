@@ -16,13 +16,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-green text-white font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full hover:bg-green-light hover:scale-[1.02] active:scale-[0.98] transition-all duration-200",
+    "bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200",
   secondary:
-    "border border-green text-green font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full hover:bg-green/5 hover:translate-y-[-1px] active:scale-[0.98] transition-all duration-200",
+    "border border-cyan/30 text-cyan font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg hover:bg-cyan/[0.05] hover:border-cyan/50 active:scale-[0.97] transition-all duration-200",
   ghost:
-    "text-green-muted font-sans hover:text-green active:scale-[0.98] transition-all duration-200",
+    "text-ghost-muted font-sans hover:text-cyan active:scale-[0.97] transition-all duration-200",
   white:
-    "bg-white text-green font-sans font-semibold text-[13px] uppercase tracking-[0.15em] rounded-full hover:bg-white/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200",
+    "bg-white text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg hover:bg-white/90 hover:scale-[1.02] active:scale-[0.97] transition-all duration-200",
 };
 
 const sizeStyles: Record<ButtonSize, Record<string, string>> = {
@@ -33,10 +33,10 @@ const sizeStyles: Record<ButtonSize, Record<string, string>> = {
     white: "px-8 py-3",
   },
   lg: {
-    primary: "px-9 py-4 text-sm",
-    secondary: "px-9 py-4 text-sm",
+    primary: "px-10 py-4 text-sm",
+    secondary: "px-10 py-4 text-sm",
     ghost: "px-0 py-0 text-lg",
-    white: "px-9 py-4 text-sm",
+    white: "px-10 py-4 text-sm",
   },
 };
 
@@ -51,7 +51,7 @@ export default function Button({
   const classes = cn(
     variantStyles[variant],
     sizeStyles[size][variant],
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green/30 focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/30 focus-visible:ring-offset-2 focus-visible:ring-offset-void",
     className
   );
 

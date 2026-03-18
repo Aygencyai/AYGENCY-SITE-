@@ -9,35 +9,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ivory: '#F5F1EB',
-        'ivory-dark': '#EBE5DB',
-        green: {
-          DEFAULT: '#1B3A2D',
-          light: '#2D5E45',
-          muted: '#4A7A62',
+        void: {
+          DEFAULT: '#0A0A0F',
+          light: '#111118',
         },
-        navy: '#1A2744',
-        blue: {
-          DEFAULT: '#5BA4C9',
-          light: '#8DC4DE',
+        surface: {
+          DEFAULT: '#16161F',
+          light: '#1E1E2A',
         },
-        'near-black': '#141C15',
-        white: '#FAFAF8',
-        muted: '#8A8A80',
+        cyan: {
+          DEFAULT: '#00E5FF',
+          muted: '#00B8CC',
+          dim: '#006B7A',
+        },
+        ghost: {
+          DEFAULT: '#EAEAF0',
+          muted: '#9B9BAE',
+          dim: '#5C5C72',
+        },
+        white: '#F8F8FC',
+        error: '#FF4D6A',
       },
       fontFamily: {
-        serif: ['var(--font-serif)', 'serif'],
+        heading: ['var(--font-heading)', 'sans-serif'],
         sans: ['var(--font-sans)', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
       },
       boxShadow: {
-        card: "0 2px 8px rgba(26,26,26,0.04), 0 1px 2px rgba(26,26,26,0.06)",
-        "card-hover":
-          "0 12px 30px rgba(26,26,26,0.08), 0 4px 10px rgba(26,26,26,0.04)",
-        nav: "0 1px 3px rgba(26,26,26,0.05)",
+        card: '0 2px 12px rgba(0,0,0,0.3)',
+        'card-hover': '0 8px 40px rgba(0,0,0,0.4), 0 0 60px rgba(0,229,255,0.08)',
+        nav: '0 1px 2px rgba(0,0,0,0.5)',
+        'glow-sm': '0 0 40px rgba(0,229,255,0.1)',
+        'glow-md': '0 0 80px rgba(0,229,255,0.15)',
+        'glow-lg': '0 0 120px rgba(0,229,255,0.2)',
       },
       borderRadius: {
-        "4xl": "2rem",
+        '4xl': '2rem',
       },
     },
   },
