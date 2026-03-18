@@ -40,11 +40,11 @@ export default function Hero() {
           {/* Desktop: side-by-side | Mobile: stacked */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-16">
             {/* Heading */}
-            <h1 className="font-heading text-[36px] sm:text-[48px] lg:text-[68px] font-bold uppercase leading-[0.95] text-white lg:max-w-[680px]">
+            <h1 className="font-heading text-[28px] min-[400px]:text-[36px] sm:text-[48px] lg:text-[68px] font-bold uppercase leading-[0.95] text-white lg:max-w-[680px]">
               {headingLines.map((line, lineIdx) => {
                 const wordOffset = headingLines.slice(0, lineIdx).reduce((sum, l) => sum + l.length, 0);
                 return (
-                  <span key={lineIdx} className="block whitespace-nowrap">
+                  <span key={lineIdx} className="block sm:whitespace-nowrap">
                     {line.map((word, wi) => (
                       <motion.span
                         key={word + wi}

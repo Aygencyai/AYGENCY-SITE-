@@ -35,7 +35,7 @@ export default function WhyAygency() {
           <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-4">
             {`// The Alternatives`}
           </p>
-          <h2 className="font-heading text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+          <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
             Why Aygency, Not the Alternatives
           </h2>
         </motion.div>

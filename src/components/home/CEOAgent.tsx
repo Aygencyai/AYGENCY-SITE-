@@ -73,7 +73,7 @@ export default function CEOAgent() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="font-heading text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+          <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
             Every System Comes With a CEO
           </h2>
         </motion.div>

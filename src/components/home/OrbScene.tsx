@@ -161,7 +161,7 @@ export default function OrbScene() {
       </div>
 
       {/* Overlay text with glass treatment */}
-      <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 max-w-sm z-10">
+      <div className="absolute bottom-6 left-6 right-6 md:right-auto md:bottom-12 md:left-12 max-w-sm z-10">
         <div className="glass rounded-lg p-4">
           <p className="font-sans text-sm leading-relaxed text-ghost-muted">
             Helping forward-looking companies thrive with custom AI agent systems

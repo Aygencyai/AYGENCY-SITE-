@@ -51,7 +51,7 @@ export default function HowItWorks() {
           <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-4">
             {`// Engagement Model`}
           </p>
-          <h2 className="font-heading text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+          <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
             How It Works
           </h2>
         </motion.div>

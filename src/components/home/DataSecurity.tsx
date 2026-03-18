@@ -30,7 +30,7 @@ export default function DataSecurity() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="font-heading text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
+          className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
         >
           Your Data Stays Yours
         </motion.h2>
