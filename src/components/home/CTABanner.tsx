@@ -81,9 +81,9 @@ export default function CTABanner() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase font-semibold"
         >
-          You&rsquo;re Going to Build This.
+          You Will Build This.
           <br />
-          How Much More Will You Spend Before You Do?
+          How Much More Will You Waste Until You Do?
         </motion.h2>
 
         <motion.p
