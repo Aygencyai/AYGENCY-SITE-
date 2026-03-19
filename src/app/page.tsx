@@ -1,6 +1,5 @@
 import Hero from "@/components/home/Hero";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
-import OrbSceneLoader from "@/components/home/OrbSceneLoader";
 import Services from "@/components/home/Services";
 import CEOAgent from "@/components/home/CEOAgent";
 import HowItWorks from "@/components/home/HowItWorks";
@@ -14,7 +13,6 @@ export default function HomePage() {
     <PageTransition>
       <Hero />
       <SocialProofStrip />
-      <OrbSceneLoader />
       <Services />
       <CEOAgent />
       <HowItWorks />

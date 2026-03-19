@@ -103,6 +103,16 @@ export default function CTABanner() {
             </Link>
           </MagneticButton>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="font-sans text-sm text-ghost-dim mt-8"
+        >
+          Helping forward-looking companies thrive with custom AI agent systems
+          and automated workflows.
+        </motion.p>
       </div>
     </section>
   );
