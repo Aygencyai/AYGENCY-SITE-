@@ -27,7 +27,7 @@ export default function Hero() {
       <HeroBackground />
 
       {/* Main content — split layout: text left, 3D right */}
-      <div className="relative z-10 flex min-h-screen items-center">
+      <div className="relative z-10 flex min-h-screen items-center pt-20 lg:pt-0">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
           <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8">
             {/* Left: text content */}
@@ -94,7 +94,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 3.2, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-10 flex flex-col items-start gap-4 min-[480px]:flex-row"
+                className="mt-10 flex flex-row items-start gap-3 sm:gap-4"
               >
                 <MagneticButton>
                   <Link

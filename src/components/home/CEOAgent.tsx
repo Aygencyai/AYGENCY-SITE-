@@ -6,38 +6,34 @@ import GlowOrb from "@/components/effects/GlowOrb";
 
 function NodeGraph() {
   return (
-    <svg viewBox="0 0 200 80" className="w-48 mx-auto mb-8" fill="none">
+    <motion.svg
+      viewBox="0 0 200 80"
+      className="w-48 mx-auto mb-8"
+      fill="none"
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px 0px" }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+    >
       {/* Central node (CEO) */}
-      <motion.circle
+      <circle
         cx="100" cy="20" r="8"
         stroke="#00E5FF" strokeWidth="1.5" fill="#00E5FF" fillOpacity="0.1"
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
       />
       {/* Child nodes */}
-      {[40, 100, 160].map((x, i) => (
-        <motion.circle
+      {[40, 100, 160].map((x) => (
+        <circle
           key={x}
           cx={x} cy="65" r="5"
           stroke="#9B9BAE" strokeWidth="1" fill="#9B9BAE" fillOpacity="0.1"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
         />
       ))}
       {/* Connecting lines */}
-      {[40, 100, 160].map((x, i) => (
-        <motion.line
+      {[40, 100, 160].map((x) => (
+        <line
           key={`line-${x}`}
           x1="100" y1="28" x2={x} y2="60"
           stroke="#00E5FF" strokeWidth="0.5" strokeOpacity="0.3"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
         />
       ))}
       {/* Pulsing ring on CEO node */}
@@ -47,7 +43,7 @@ function NodeGraph() {
         animate={{ r: [12, 18, 12], opacity: [0.3, 0, 0.3] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       />
-    </svg>
+    </motion.svg>
   );
 }
 

@@ -35,9 +35,6 @@ export default function Services() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-4">
-            {`// Our Process`}
-          </p>
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
             What We Build
           </h2>
