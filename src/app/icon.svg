@@ -1,23 +1,32 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- A letter in block grid style — Aygency favicon -->
-  <!-- Row 6: peak -->
-  <rect x="43" y="0.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <!-- Row 5: upper diagonals -->
-  <rect x="26" y="17.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="60" y="17.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <!-- Row 4: mid diagonals -->
-  <rect x="9" y="34.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="77" y="34.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <!-- Row 3: crossbar -->
-  <rect x="9" y="51.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="26" y="51.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="43" y="51.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="60" y="51.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="77" y="51.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <!-- Row 2: legs -->
-  <rect x="9" y="68.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="77" y="68.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <!-- Row 1: base -->
-  <rect x="9" y="85.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
-  <rect x="77" y="85.5" width="14" height="14" rx="2.5" ry="2.5" fill="#1B3A2D"/>
+  <defs>
+    <filter id="glow">
+      <feDropShadow dx="0" dy="-1" stdDeviation="1.5" flood-color="#00E5FF" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="100" height="100" rx="18" ry="18" fill="#0A0A0F"/>
+  <!-- A letter — block grid with cyan top-glow -->
+  <g filter="url(#glow)">
+    <!-- Row 6: peak -->
+    <rect x="43" y="8" width="14" height="14" rx="2.5" fill="#4a4a4a"/>
+    <!-- Row 5: upper diagonals -->
+    <rect x="28" y="23" width="14" height="14" rx="2.5" fill="#444"/>
+    <rect x="58" y="23" width="14" height="14" rx="2.5" fill="#444"/>
+    <!-- Row 4: mid diagonals -->
+    <rect x="13" y="38" width="14" height="14" rx="2.5" fill="#3e3e3e"/>
+    <rect x="73" y="38" width="14" height="14" rx="2.5" fill="#3e3e3e"/>
+    <!-- Row 3: crossbar -->
+    <rect x="13" y="53" width="14" height="14" rx="2.5" fill="#383838"/>
+    <rect x="28" y="53" width="14" height="14" rx="2.5" fill="#383838"/>
+    <rect x="43" y="53" width="14" height="14" rx="2.5" fill="#383838"/>
+    <rect x="58" y="53" width="14" height="14" rx="2.5" fill="#383838"/>
+    <rect x="73" y="53" width="14" height="14" rx="2.5" fill="#383838"/>
+    <!-- Row 2: legs -->
+    <rect x="13" y="68" width="14" height="14" rx="2.5" fill="#333"/>
+    <rect x="73" y="68" width="14" height="14" rx="2.5" fill="#333"/>
+    <!-- Row 1: base -->
+    <rect x="13" y="83" width="14" height="14" rx="2.5" fill="#2e2e2e"/>
+    <rect x="73" y="83" width="14" height="14" rx="2.5" fill="#2e2e2e"/>
+  </g>
 </svg>

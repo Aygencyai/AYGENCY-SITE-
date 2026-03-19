@@ -1,3 +1,7 @@
+> **STATUS: IMPLEMENTED.** All content changes in this document have been applied. The "3D Sphere / Mission Section" referenced here no longer exists (OrbScene was removed). The mission text now appears in the Hero section. Kept for historical reference.
+
+---
+
 # Aygency Website — Content Update
 
 Read the CLAUDE.md and ~/aygency/docs/aygency-identity.md first. Then apply all the content changes below. Keep all styling, layouts, animations, and component structure exactly as they are — this is content only.

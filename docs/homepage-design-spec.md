@@ -1,3 +1,7 @@
+> **STATUS: SUPERSEDED** — This was the original build prompt for the ivory/green editorial design. The site has since been completely redesigned with a dark void/cyan tech aesthetic, Space Grotesk headings, and a 3D block-letter A↔Y animation replacing the orb. The OrbScene has been deleted. Kept for historical reference only — do not use as a current spec.
+
+---
+
 # Aygency Homepage — Claude Code Build Prompt
 
 You are building a premium homepage for **Aygency**, an AI agent systems agency. This is a Next.js 14+ (App Router) site with TypeScript and Tailwind CSS. The design must feel like a high-end design studio website, NOT a generic AI/SaaS template.

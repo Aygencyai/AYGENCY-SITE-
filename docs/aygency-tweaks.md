@@ -1,3 +1,7 @@
+> **STATUS: IMPLEMENTED.** All tweaks in this document have been applied to the codebase. Kept for historical reference.
+
+---
+
 # Aygency Website — Content & Layout Tweaks
 
 Read the CLAUDE.md and ~/aygency/docs/aygency-identity.md first. Apply all changes below. Keep all colours, fonts, animations, and overall design system intact unless a specific styling change is noted.

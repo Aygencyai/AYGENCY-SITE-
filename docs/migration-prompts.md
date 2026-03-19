@@ -1,3 +1,7 @@
+> **STATUS: SUPERSEDED — Migration Complete.** These prompts guided the initial ivory/green design migration. The site has since undergone a second design overhaul to a dark void/cyan theme with Space Grotesk headings. All sessions here have been completed and the design has moved beyond what these prompts describe. Kept for historical reference only.
+
+---
+
 # Aygency Design Migration — Claude Code Prompts
 
 Exact prompts to feed Claude Code, in order, one session per step. Copy-paste these directly into Claude Code.
