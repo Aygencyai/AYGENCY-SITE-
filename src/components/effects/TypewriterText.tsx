@@ -19,7 +19,7 @@ export default function TypewriterText({
   cursorColor = "text-cyan",
 }: TypewriterTextProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
   const prefersReduced = useReducedMotion();
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);

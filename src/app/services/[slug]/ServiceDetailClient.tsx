@@ -30,7 +30,7 @@ export default function ServiceDetailClient({
               <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
                 {numberMap[service.slug] ?? "01"} — {service.shortTitle}
               </p>
-              <h1 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl leading-tight uppercase font-semibold">
+              <h1 className="font-heading text-ghost text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight uppercase font-semibold break-words">
                 {service.title}
               </h1>
               <p className="text-ghost-muted font-sans text-lg md:text-xl leading-relaxed mt-6">

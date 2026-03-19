@@ -65,7 +65,7 @@ export default function UseCasesClient() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-heading text-2xl font-semibold text-white mt-4">
+                    <h3 className="font-heading text-xl sm:text-2xl font-semibold text-white mt-4">
                       {useCase.title}
                     </h3>
 

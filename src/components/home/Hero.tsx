@@ -72,7 +72,7 @@ export default function Hero() {
                   <p className="font-mono text-lg leading-[1.3] text-cyan whitespace-pre-line">
                     <TypewriterText
                       text={"You're overpaying for work,\nthat should run itself"}
-                      delay={1200}
+                      delay={1800}
                       speed={30}
                     />
                   </p>

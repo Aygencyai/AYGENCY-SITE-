@@ -32,7 +32,7 @@ function Scene({ isMobile }: { isMobile: boolean }) {
 }
 
 export default function LetterScene() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);

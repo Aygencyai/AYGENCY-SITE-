@@ -10,7 +10,7 @@ import MagneticButton from "@/components/ui/MagneticButton";
 function Particles() {
   const dots = useMemo(
     () =>
-      Array.from({ length: 36 }, (_, i) => ({
+      Array.from({ length: 12 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -22,7 +22,12 @@ function Particles() {
   );
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <motion.div
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+    >
       {dots.map((dot) => (
         <motion.div
           key={dot.id}
@@ -35,19 +40,22 @@ function Particles() {
             backgroundColor: "#00E5FF",
             opacity: 0,
           }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0, 0.2, 0],
-          }}
-          transition={{
-            duration: dot.duration,
-            delay: dot.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              y: [0, -30, 0],
+              opacity: [0, 0.2, 0],
+              transition: {
+                duration: dot.duration,
+                delay: dot.delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            },
           }}
         />
       ))}
-    </div>
+    </motion.div>
   );
 }
 
