@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Services", href: "/services" },
   { label: "Use Cases", href: "/use-cases" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export default function Nav() {
@@ -153,7 +152,7 @@ export default function Nav() {
                 href="/contact"
                 className="bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg px-8 py-3 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200"
               >
-                Book a Call
+                Contact
               </Link>
             </div>
 
@@ -266,7 +265,7 @@ export default function Nav() {
                   href="/contact"
                   className="block w-full text-center bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg px-8 py-4 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200"
                 >
-                  Book a Call
+                  Contact
                 </Link>
               </motion.div>
             </div>

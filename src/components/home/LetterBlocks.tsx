@@ -67,7 +67,8 @@ function AnimatedBlock({ block, index, totalBlocks }: AnimatedBlockProps) {
 
       _posA.set(...block.posA);
       mesh.position.lerpVectors(scatter, _posA, easedEntrance);
-      mesh.scale.setScalar(easedEntrance);
+      // Y-only blocks stay invisible during entrance — only appear on first A→Y morph
+      mesh.scale.setScalar(block.inA ? easedEntrance : 0);
       mesh.rotation.x = (1 - easedEntrance) * Math.PI * 2;
       mesh.rotation.y = (1 - easedEntrance) * Math.PI;
       return;

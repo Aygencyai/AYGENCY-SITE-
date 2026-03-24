@@ -2,36 +2,47 @@
 
 import { motion } from "framer-motion";
 
-const industries = [
-  "Hospitality",
-  "Real Estate",
-  "Digital Marketing",
-  "Logistics",
-  "Professional Services",
+const capabilities = [
+  "AI Agent Systems",
+  "Workflow Automation",
+  "Web Design & Development",
+  "Brand Identity",
+  "Data Analytics",
+  "Content Production",
+  "AI Personal Assistants",
+  "Community Management",
+  "Digital Strategy",
 ];
 
-export default function SocialProofStrip() {
-  const marqueeItems = [...industries, ...industries, ...industries, ...industries];
+function MarqueeTrack() {
+  return (
+    <div className="flex shrink-0 gap-8">
+      {capabilities.map((cap) => (
+        <span key={cap} className="flex items-center gap-8">
+          <span className="font-mono text-sm text-ghost-dim tracking-wider uppercase">
+            {cap}
+          </span>
+          <span className="text-cyan/40 text-xs">&#x2022;</span>
+        </span>
+      ))}
+    </div>
+  );
+}
 
+export default function SocialProofStrip() {
   return (
     <section className="bg-surface py-8 md:py-10 border-y border-ghost/[0.06] overflow-hidden">
-      {/* Marquee ticker */}
+      {/* Marquee ticker — two identical tracks for seamless loop */}
       <div className="relative">
         <div
           className="flex gap-8 whitespace-nowrap"
           style={{
-            animation: "marquee 30s linear infinite",
-            width: "fit-content",
+            animation: "marquee 43s linear infinite",
+            willChange: "transform",
           }}
         >
-          {marqueeItems.map((industry, i) => (
-            <span key={`${industry}-${i}`} className="flex items-center gap-8">
-              <span className="font-mono text-sm text-ghost-dim tracking-wider uppercase">
-                {industry}
-              </span>
-              <span className="text-cyan/40 text-xs">&#x2022;</span>
-            </span>
-          ))}
+          <MarqueeTrack />
+          <MarqueeTrack />
         </div>
       </div>
 
