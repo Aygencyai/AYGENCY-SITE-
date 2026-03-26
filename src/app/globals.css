@@ -72,6 +72,23 @@ body {
   100% { transform: translate3d(-100%, 0, 0); }
 }
 
+.marquee-scroll {
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .marquee-scroll {
+    animation-duration: 32s;
+  }
+}
+
+@media (min-width: 1024px) {
+  .marquee-scroll {
+    animation-duration: 38s;
+  }
+}
+
 @layer utilities {
   .section-padding {
     @apply py-16 md:py-32 lg:py-40;

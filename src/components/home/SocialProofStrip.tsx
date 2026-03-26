@@ -34,13 +34,7 @@ export default function SocialProofStrip() {
     <section className="bg-surface py-8 md:py-10 border-y border-ghost/[0.06] overflow-hidden">
       {/* Marquee ticker — two identical tracks for seamless loop */}
       <div className="relative">
-        <div
-          className="flex gap-8 whitespace-nowrap"
-          style={{
-            animation: "marquee 43s linear infinite",
-            willChange: "transform",
-          }}
-        >
+        <div className="flex gap-8 whitespace-nowrap marquee-scroll">
           <MarqueeTrack />
           <MarqueeTrack />
         </div>
