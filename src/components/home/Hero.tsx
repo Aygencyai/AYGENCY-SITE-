@@ -128,19 +128,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator — pulsing cyan dot */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <motion.div
-          animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0.2, 0.6] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-2 h-2 rounded-full bg-cyan"
-        />
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="h-8 w-px bg-ghost/20"
-        />
-      </div>
     </section>
   );
 }
