@@ -104,12 +104,12 @@ export default function ContactClient() {
 
                     <div className="space-y-4 mt-5">
                       <a
-                        href="mailto:louis@aygency.ai"
+                        href="mailto:build@aygency.ai"
                         className="flex items-center gap-3 text-ghost-muted hover:text-cyan transition-colors duration-200"
                       >
                         <Mail size={18} className="text-cyan flex-shrink-0" />
                         <span className="font-sans text-sm">
-                          louis@aygency.ai
+                          build@aygency.ai
                         </span>
                       </a>
                       <div className="flex items-center gap-3 text-ghost-muted">

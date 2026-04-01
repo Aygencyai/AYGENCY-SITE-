@@ -169,41 +169,41 @@ export const services: Service[] = [
 ];
 export const useCases: UseCase[] = [
   {
-    slug: "hospitality-operations",
-    title: "Multi-Site Restaurant Operations",
-    sector: "Hospitality",
+    slug: "property-cost-reduction",
+    title: "Commercial Property Portfolio",
+    sector: "Real Estate",
     systemType: "Cost Reduction",
     subtext:
-      "A hospitality group losing money on manual inventory, staff scheduling, and energy monitoring across multiple locations.",
+      "A property manager running 12 commercial buildings with manual energy monitoring, tenant communication, and maintenance scheduling.",
     problem:
-      "Six locations. Each one managing its own inventory by hand, building staff rotas on spreadsheets, and getting energy bills with no visibility into what\u2019s driving the cost. Head office gets reports weekly \u2014 by which point the waste has already happened. The data to fix all of this exists inside their POS systems, booking platforms, and utility accounts. Nobody\u2019s reading it in real time.",
+      "Twelve buildings, each with its own utility accounts, maintenance contractors, and tenant communication channels. Energy costs are the biggest controllable expense but nobody\u2019s monitoring consumption in real time \u2014 bills arrive monthly with no granularity. Maintenance requests come in by email and phone, get triaged manually, and contractors are scheduled by one overwhelmed operations manager. Tenant queries about access, billing, and services are handled by a small team that\u2019s always behind.",
     agents: [
-      {
-        name: "Procurement Agent",
-        description:
-          "Monitors stock levels across all sites, auto-generates purchase orders based on booking forecasts and historical consumption, eliminates over-ordering and waste.",
-      },
       {
         name: "Energy Agent",
         description:
-          "Reads smart meter data across all 6 locations, flags anomalies within hours (not months), attributes costs by site and time period, surfaces reduction opportunities.",
+          "Monitors consumption across all 12 buildings in real time. Flags anomalies within hours \u2014 a unit left heating overnight, a system running inefficiently, usage patterns that don\u2019t match occupancy. Attributes costs by building, floor, and tenant.",
       },
       {
-        name: "Scheduling Agent",
+        name: "Maintenance Agent",
         description:
-          "Builds staff rotas from booking data, historical covers, and labour cost targets. Balances demand coverage with budget constraints automatically.",
+          "Receives requests from any channel (email, portal, phone transcript), categorises by urgency and type, schedules contractors based on availability and proximity, and follows up until completion. Escalates only what needs human judgement.",
+      },
+      {
+        name: "Tenant Communication Agent",
+        description:
+          "Handles routine queries about access, billing, policies, and services. Responds within minutes, not days. Escalates complex issues with full context attached.",
       },
       {
         name: "CEO Agent",
         description:
-          "Sits above all three, identifies which locations are underperforming and why, spots patterns across sites, and surfaces strategic recommendations weekly.",
+          "Looks across all 12 buildings to identify portfolio-wide patterns. Which buildings are most cost-efficient? Where is maintenance spend trending upward? Which tenants are at risk of churn based on complaint patterns? Surfaces strategic recommendations monthly.",
       },
     ],
     estimatedImpact:
-      "Significant annual cost reduction across inventory, scheduling, and energy. System live within weeks.",
-    ctaHeading: "Running multiple sites with manual processes?",
+      "Measurable energy cost reduction across the portfolio. Maintenance response time from days to hours. Tenant query resolution from days to minutes. System live within weeks.",
+    ctaHeading: "Managing multiple properties with manual processes?",
     ctaBody:
-      "30 minutes. We\u2019ll look at your operation and show you where an agent system would cut costs across every location.",
+      "30 minutes. We\u2019ll look at your portfolio and show you what a system would surface across every building.",
   },
   {
     slug: "professional-services-revenue",
@@ -291,41 +291,41 @@ export const useCases: UseCase[] = [
       "30 minutes. We\u2019ll audit your current setup and show you what a full marketing department system would look like.",
   },
   {
-    slug: "property-cost-reduction",
-    title: "Commercial Property Portfolio",
-    sector: "Real Estate",
+    slug: "hospitality-operations",
+    title: "Multi-Site Restaurant Operations",
+    sector: "Hospitality",
     systemType: "Cost Reduction",
     subtext:
-      "A property manager running 12 commercial buildings with manual energy monitoring, tenant communication, and maintenance scheduling.",
+      "A hospitality group losing money on manual inventory, staff scheduling, and energy monitoring across multiple locations.",
     problem:
-      "Twelve buildings, each with its own utility accounts, maintenance contractors, and tenant communication channels. Energy costs are the biggest controllable expense but nobody\u2019s monitoring consumption in real time \u2014 bills arrive monthly with no granularity. Maintenance requests come in by email and phone, get triaged manually, and contractors are scheduled by one overwhelmed operations manager. Tenant queries about access, billing, and services are handled by a small team that\u2019s always behind.",
+      "Six locations. Each one managing its own inventory by hand, building staff rotas on spreadsheets, and getting energy bills with no visibility into what\u2019s driving the cost. Head office gets reports weekly \u2014 by which point the waste has already happened. The data to fix all of this exists inside their POS systems, booking platforms, and utility accounts. Nobody\u2019s reading it in real time.",
     agents: [
+      {
+        name: "Procurement Agent",
+        description:
+          "Monitors stock levels across all sites, auto-generates purchase orders based on booking forecasts and historical consumption, eliminates over-ordering and waste.",
+      },
       {
         name: "Energy Agent",
         description:
-          "Monitors consumption across all 12 buildings in real time. Flags anomalies within hours \u2014 a unit left heating overnight, a system running inefficiently, usage patterns that don\u2019t match occupancy. Attributes costs by building, floor, and tenant.",
+          "Reads smart meter data across all 6 locations, flags anomalies within hours (not months), attributes costs by site and time period, surfaces reduction opportunities.",
       },
       {
-        name: "Maintenance Agent",
+        name: "Scheduling Agent",
         description:
-          "Receives requests from any channel (email, portal, phone transcript), categorises by urgency and type, schedules contractors based on availability and proximity, and follows up until completion. Escalates only what needs human judgement.",
-      },
-      {
-        name: "Tenant Communication Agent",
-        description:
-          "Handles routine queries about access, billing, policies, and services. Responds within minutes, not days. Escalates complex issues with full context attached.",
+          "Builds staff rotas from booking data, historical covers, and labour cost targets. Balances demand coverage with budget constraints automatically.",
       },
       {
         name: "CEO Agent",
         description:
-          "Looks across all 12 buildings to identify portfolio-wide patterns. Which buildings are most cost-efficient? Where is maintenance spend trending upward? Which tenants are at risk of churn based on complaint patterns? Surfaces strategic recommendations monthly.",
+          "Sits above all three, identifies which locations are underperforming and why, spots patterns across sites, and surfaces strategic recommendations weekly.",
       },
     ],
     estimatedImpact:
-      "Measurable energy cost reduction across the portfolio. Maintenance response time from days to hours. Tenant query resolution from days to minutes. System live within weeks.",
-    ctaHeading: "Managing multiple properties with manual processes?",
+      "Significant annual cost reduction across inventory, scheduling, and energy. System live within weeks.",
+    ctaHeading: "Running multiple sites with manual processes?",
     ctaBody:
-      "30 minutes. We\u2019ll look at your portfolio and show you what a system would surface across every building.",
+      "30 minutes. We\u2019ll look at your operation and show you where an agent system would cut costs across every location.",
   },
 ];
 

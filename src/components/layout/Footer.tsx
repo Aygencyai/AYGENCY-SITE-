@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { services } from "@/lib/data";
 
 export default function Footer() {
@@ -14,18 +15,19 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              className="font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
+              className="flex items-center gap-2 font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
             >
+              <Image src="/icon-mark.png" alt="" width={24} height={24} className="w-6 h-6" />
               AYGENCY
             </Link>
             <p className="text-sm text-ghost-dim mt-4">
               Custom AI agent systems. Built for your operation. Running 24/7.
             </p>
             <a
-              href="mailto:louis@aygency.ai"
+              href="mailto:build@aygency.ai"
               className="text-sm text-cyan hover:text-cyan-muted transition-colors mt-6 inline-block"
             >
-              louis@aygency.ai
+              build@aygency.ai
             </a>
           </div>
 
@@ -74,10 +76,10 @@ export default function Footer() {
               Get in Touch
             </h3>
             <a
-              href="mailto:louis@aygency.ai"
+              href="mailto:build@aygency.ai"
               className="text-sm text-ghost-dim hover:text-cyan transition-colors"
             >
-              louis@aygency.ai
+              build@aygency.ai
             </a>
             <p className="text-sm text-ghost-dim mt-4">
               Based in London. Operating globally.
