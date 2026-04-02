@@ -3,26 +3,24 @@
 import { motion } from "framer-motion";
 
 const capabilities = [
-  "AI Agent Systems",
   "Workflow Automation",
-  "Web Design & Development",
-  "Brand Identity",
-  "Data Analytics",
-  "Content Production",
+  "Revenue Agents",
   "AI Personal Assistants",
-  "Community Management",
-  "Digital Strategy",
+  "Data & Intelligence Agents",
+  "Multi-Agent Orchestration",
+  "Autonomous Departments",
+  "Web Design & Development",
+  "Creative Automation",
+  "System Integration",
+  "CEO Agent Architecture",
 ];
 
 function MarqueeTrack() {
   return (
     <div className="flex shrink-0 gap-8">
       {capabilities.map((cap) => (
-        <span key={cap} className="flex items-center gap-8">
-          <span className="font-mono text-sm text-ghost-dim tracking-wider uppercase">
-            {cap}
-          </span>
-          <span className="text-cyan/40 text-xs">&#x2022;</span>
+        <span key={cap} className="font-mono text-sm text-ghost-dim tracking-wider uppercase">
+          {cap}
         </span>
       ))}
     </div>
