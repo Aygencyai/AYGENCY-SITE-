@@ -15,9 +15,9 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              className="flex items-center gap-2 font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
+              className="flex items-center gap-2.5 font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
             >
-              <Image src="/icon-mark.png" alt="" width={24} height={24} className="w-6 h-6" />
+              <Image src="/aygency-logo.png" alt="" width={48} height={48} className="w-6 h-6 invert" />
               AYGENCY
             </Link>
             <p className="text-sm text-ghost-dim mt-4">
