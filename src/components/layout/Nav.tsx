@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { services } from "@/lib/data";
@@ -70,9 +71,17 @@ export default function Nav() {
             {/* Logo */}
             <Link
               href="/"
-              className="font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
+              aria-label="Aygency — home"
+              className="block transition-opacity duration-200 hover:opacity-80"
             >
-              AYGENCY
+              <Image
+                src="/aygency-logo.png"
+                alt="Aygency"
+                width={56}
+                height={56}
+                priority
+                className="w-7 h-7 invert"
+              />
             </Link>
 
             {/* Desktop nav links */}
@@ -203,10 +212,17 @@ export default function Nav() {
               <div className="flex items-center justify-between py-4">
                 <Link
                   href="/"
-                  className="font-heading font-bold text-sm text-white uppercase tracking-[0.1em]"
+                  aria-label="Aygency — home"
+                  className="block"
                   onClick={() => setMobileOpen(false)}
                 >
-                  AYGENCY
+                  <Image
+                    src="/aygency-logo.png"
+                    alt="Aygency"
+                    width={56}
+                    height={56}
+                    className="w-7 h-7 invert"
+                  />
                 </Link>
                 <button
                   className="relative w-8 h-8 flex flex-col items-center justify-center gap-[6px]"
