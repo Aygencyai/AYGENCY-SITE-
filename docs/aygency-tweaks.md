@@ -4,7 +4,7 @@
 
 # Aygency Website — Content & Layout Tweaks
 
-Read the CLAUDE.md and ~/aygency/docs/aygency-identity.md first. Apply all changes below. Keep all colours, fonts, animations, and overall design system intact unless a specific styling change is noted.
+Read the CLAUDE.md and ~/everything aygency/AYgency/Brain/Aygency/aygency-identity.md first. Apply all changes below. Keep all colours, fonts, animations, and overall design system intact unless a specific styling change is noted.
 
 ---
 

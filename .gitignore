@@ -20,6 +20,9 @@
 .DS_Store
 *.pem
 
+# local docs / partnership PDFs (not for the repo)
+docs/aygency-aqua-partnership copy.pdf
+
 # debug
 npm-debug.log*
 yarn-debug.log*

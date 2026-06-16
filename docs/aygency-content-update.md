@@ -4,7 +4,7 @@
 
 # Aygency Website — Content Update
 
-Read the CLAUDE.md and ~/aygency/docs/aygency-identity.md first. Then apply all the content changes below. Keep all styling, layouts, animations, and component structure exactly as they are — this is content only.
+Read the CLAUDE.md and ~/everything aygency/AYgency/Brain/Aygency/aygency-identity.md first. Then apply all the content changes below. Keep all styling, layouts, animations, and component structure exactly as they are — this is content only.
 
 ---
 

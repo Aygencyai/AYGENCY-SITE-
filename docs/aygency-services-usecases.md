@@ -4,7 +4,7 @@
 
 # Aygency Website — Services & Use Cases Restructure
 
-Read the CLAUDE.md and ~/aygency/docs/aygency-identity.md first. This is a content and structure change across the services pages and case studies pages. Keep all styling, design system, colours, fonts, and animations intact.
+Read the CLAUDE.md and ~/everything aygency/AYgency/Brain/Aygency/aygency-identity.md first. This is a content and structure change across the services pages and case studies pages. Keep all styling, design system, colours, fonts, and animations intact.
 
 ---
 
