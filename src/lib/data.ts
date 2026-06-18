@@ -1,4 +1,4 @@
-import type { Service, UseCase, ProcessStep, Metric } from "@/types";
+import type { Service, UseCase, ProcessStep, Metric, Agent, Tier } from "@/types";
 
 export const services: Service[] = [
   {
@@ -332,43 +332,127 @@ export const useCases: UseCase[] = [
 export const processSteps: ProcessStep[] = [
   {
     number: 1,
-    title: "Diagnose",
+    title: "Prescribe",
     description:
-      "We learn your operation inside out \u2014 the workflows, the bottlenecks, the data. We need to understand the problem before we propose anything.",
+      "We show you what a business like yours runs and prescribe the agents that fit. No blank page, no menu to self-architect.",
   },
   {
     number: 2,
-    title: "Design",
+    title: "Tailor",
     description:
-      "We architect the system: which agents, what each one handles, how they coordinate, and what integrations they need. You approve the blueprint before we start building.",
+      "We configure what each agent does inside your operation: what it reads, what it writes, what it decides. You see the whole system before we build.",
   },
   {
     number: 3,
     title: "Build",
     description:
-      "We develop the agents, connect them to your platforms, and test everything against your real data and edge cases.",
+      "We build every agent and connect it to your live tools and data. You watch it come together.",
   },
   {
     number: 4,
-    title: "Go Live",
+    title: "Deploy",
     description:
-      "The system starts operating in your environment. We monitor closely, catch issues early, and tune performance in the first weeks.",
+      "The system goes live in your environment, on real data, making real decisions. Results in the first weeks.",
   },
   {
     number: 5,
-    title: "Get Smarter",
+    title: "Compound",
     description:
-      "This is what sets agent systems apart. They learn from every cycle. By month three, the system is outperforming the original spec.",
+      "We operate it from here. It learns every cycle, we tune it, and it gets more valuable the longer it runs.",
   },
 ];
 
 export const metrics: Metric[] = [
-  { value: "12+", label: "Agents Deployed", numericValue: 12 },
-  { value: "3", label: "Avg. Deployment Time", suffix: "wk", numericValue: 3 },
+  { value: "24/7", label: "Operated around the clock", numericValue: 24 },
+  { value: "100%", label: "Runs in your environment", numericValue: 100 },
+  { value: "Weeks", label: "From build to live", numericValue: 0 },
+  { value: "Every month", label: "It gets more valuable", numericValue: 0 },
+];
+
+export const agents: Agent[] = [
   {
-    value: "80%",
-    label: "Reduction in procurement time",
-    numericValue: 80,
+    name: "CEO Agent",
+    role: "The synthesis layer",
+    description:
+      "Sits above every agent. Reads across the whole operation, spots the cross-department patterns no single team can see, and answers the questions you’d put to a great operator. Always included.",
+    group: "ceo",
+    icon: "ceo",
   },
-  { value: "5+", label: "Industries Served", numericValue: 5 },
+  {
+    name: "Operations",
+    role: "The doer",
+    description:
+      "Runs the multi-step work across your tools: approvals, onboarding, data syncing, chasing, reminders. The admin between humans and systems.",
+    group: "core",
+    icon: "operations",
+  },
+  {
+    name: "Analyst",
+    role: "The intelligence layer",
+    description:
+      "Reads across your data to find patterns, run reports, and flag what’s off. On schedule or on demand.",
+    group: "core",
+    icon: "analyst",
+  },
+  {
+    name: "Scout",
+    role: "The finder",
+    description:
+      "Scours where your prospects, candidates, or opportunities show up, enriches and scores them, and hands over a clean pipeline.",
+    group: "core",
+    icon: "scout",
+  },
+  {
+    name: "Outreach",
+    role: "The opener",
+    description:
+      "Personalised outbound at scale across email, DM, and SMS. Reads the replies, tailors every touch.",
+    group: "core",
+    icon: "outreach",
+  },
+  {
+    name: "Strategist",
+    role: "The signal-reader",
+    description:
+      "Spots what’s working in your market and your outbound, and turns it into what to say next.",
+    group: "core",
+    icon: "strategist",
+  },
+  {
+    name: "Producer",
+    role: "The maker",
+    description:
+      "Generates the content the operation runs on: copy, posts, reports, briefings. In your voice, on cadence.",
+    group: "core",
+    icon: "producer",
+  },
+  {
+    name: "Front Desk",
+    role: "The front of house",
+    description:
+      "Handles inbound conversations on any channel, chat or voice, and actually completes things: books, answers, resolves. Runs on its own, so it stands alone or bolts onto any system.",
+    group: "frontdesk",
+    icon: "frontdesk",
+  },
+];
+
+export const tiers: Tier[] = [
+  {
+    name: "Start",
+    composition: "CEO Agent + 2 specialists",
+    blurb:
+      "The few agents that move the needle first, with the CEO Agent reading across them from day one.",
+  },
+  {
+    name: "Grow",
+    composition: "CEO Agent + 4 specialists",
+    blurb:
+      "More of the operation handed over to the system as it proves itself.",
+  },
+  {
+    name: "Full operation",
+    composition: "CEO Agent + the full specialist core",
+    blurb:
+      "The whole operation running as one coordinated system. Add Front Desk when you want customer-facing front of house.",
+  },
 ];

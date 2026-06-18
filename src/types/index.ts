@@ -37,3 +37,17 @@ export interface Metric {
   suffix?: string;
   numericValue: number;
 }
+
+export interface Agent {
+  name: string;
+  role: string;
+  description: string;
+  group: "ceo" | "core" | "frontdesk";
+  icon: string;
+}
+
+export interface Tier {
+  name: string;
+  composition: string;
+  blurb: string;
+}
