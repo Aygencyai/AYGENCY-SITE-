@@ -81,9 +81,9 @@ export default function CTABanner() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase font-semibold"
         >
-          You Will Build This.
+          See exactly what
           <br />
-          How Much More Will You Waste Until You Do?
+          we&rsquo;d build for you.
         </motion.h2>
 
         <motion.p
@@ -92,8 +92,8 @@ export default function CTABanner() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
-          Book 30 minutes. We&rsquo;ll map your operation, find the workflows
-          bleeding time and money, and tell you exactly what we&rsquo;d build.
+          30 minutes. A straight answer on where agents would hit hardest &mdash; and
+          how fast it goes live.
         </motion.p>
 
         <motion.div

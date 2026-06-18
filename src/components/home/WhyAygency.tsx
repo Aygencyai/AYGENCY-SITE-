@@ -6,16 +6,16 @@ import GlassCard from "@/components/ui/GlassCard";
 
 const comparisons = [
   {
-    title: "Hiring In-House",
-    body: "Months to recruit. Months to onboard. Expensive hires. And you still need to figure out what to build. By the time your team is assembled, we\u2019ve already shipped and iterated.",
+    title: "We operate it. Forever.",
+    body: "Most builds get handed over and quietly decay. We run every system we build \u2014 monitoring it, tuning it, expanding it. That is the only reason it keeps getting better instead of going stale.",
   },
   {
-    title: "Strategy Firms",
-    body: "You\u2019ll pay a premium for a strategy deck and a timeline that stretches into next year. Then you\u2019ll need to find someone else to actually build it. We do both. You leave with a system, not a recommendation.",
+    title: "A team, not one bot.",
+    body: "Each agent is a specialist with one job, coordinated by the CEO Agent. You get a department that works together, not one stretched bot trying to do everything.",
   },
   {
-    title: "Off-the-Shelf SaaS",
-    body: "Generic tools built for everyone, optimised for no one. They don\u2019t know your data, your workflows, or your edge cases. Our agents are built around yours.",
+    title: "We prescribe. You don\u2019t architect.",
+    body: "You shouldn\u2019t have to design your own AI department. We show you what fits, prescribe the system, and tailor it to how you actually work.",
   },
 ];
 
@@ -24,7 +24,7 @@ export default function WhyAygency() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-surface section-padding">
+    <section className="bg-void section-padding">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -33,7 +33,7 @@ export default function WhyAygency() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            Why Aygency, Not the Alternatives
+            Why Aygency
           </h2>
         </motion.div>
 
@@ -49,7 +49,7 @@ export default function WhyAygency() {
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              <GlassCard accentColor="error">
+              <GlassCard>
                 <h3 className="font-heading text-xl font-semibold text-white">
                   {item.title}
                 </h3>

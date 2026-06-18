@@ -83,9 +83,9 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 2.8, ease: "easeOut" }}
                   className="font-sans text-base font-normal leading-[1.7] text-ghost-muted mt-4"
                 >
-                  We exist to make AI agents the operating standard for businesses that
-                  refuse to stay manual. Every system we ship is custom-built,
-                  production-ready, and designed to compound in value the longer it runs.
+                  We replace the manual work running your operation with agent systems
+                  that work around the clock, never drop a task, and improve the longer
+                  they run.
                 </motion.p>
               </div>
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield } from "lucide-react";
+import Link from "next/link";
+import { Shield, ArrowRight } from "lucide-react";
 import GlowOrb from "@/components/effects/GlowOrb";
 
 export default function DataSecurity() {
@@ -42,11 +43,26 @@ export default function DataSecurity() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base leading-relaxed text-ghost-muted mt-6"
         >
-          Every system we build operates inside your infrastructure. Your data
-          never trains external models, never leaves your environment unless you
-          say so. We build for businesses that take security seriously &mdash;
-          because we do too.
+          Every system runs inside your environment. Your data never trains external
+          models and never leaves unless you say so. High-impact actions route to a
+          human, and the whole system can roll back to a known-good state.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="mt-8"
+        >
+          <Link
+            href="/trust"
+            className="inline-flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:text-cyan-muted"
+          >
+            How we operate responsibly
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

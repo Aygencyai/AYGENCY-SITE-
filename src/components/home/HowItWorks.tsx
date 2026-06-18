@@ -5,33 +5,33 @@ import { motion, useInView } from "framer-motion";
 const steps = [
   {
     number: "01",
-    title: "Uncover",
+    title: "Prescribe",
     description:
-      "We sit inside your operation and surface what\u2019s actually costing you \u2014 the workflows nobody\u2019s measured, the manual processes everyone\u2019s accepted.",
+      "We show you what a business like yours runs and prescribe the agents that fit. No blank page, no menu to self-architect.",
   },
   {
     number: "02",
-    title: "Architect",
+    title: "Tailor",
     description:
-      "We design the agent system \u2014 which agents, what each handles, how they coordinate, what data feeds them, and what decisions they make autonomously.",
+      "We configure what each agent does inside your operation: what it reads, what it writes, what it decides. You see the whole system before we build.",
   },
   {
     number: "03",
     title: "Build",
     description:
-      "Full development. Full integration with your platforms. Full testing against your real data.",
+      "We build every agent and connect it to your live tools and data. You watch it come together.",
   },
   {
     number: "04",
-    title: "Go Live",
+    title: "Deploy",
     description:
-      "Agents deployed into your environment, operating on live data, making real decisions. You\u2019ll see results in the first week.",
+      "The system goes live in your environment, on real data, making real decisions. Results in the first weeks.",
   },
   {
     number: "05",
     title: "Compound",
     description:
-      "The system learns from every cycle, flags its own gaps, and improves without being told to. This is the part most companies never reach. We build it in from day one.",
+      "We operate it from here. It learns every cycle, we tune it, and it gets more valuable the longer it runs.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function HowItWorks() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-void section-padding">
+    <section className="bg-surface section-padding">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -3,16 +3,18 @@
 import { motion } from "framer-motion";
 
 const capabilities = [
-  "Workflow Automation",
-  "Revenue Agents",
-  "AI Personal Assistants",
-  "Data & Intelligence Agents",
+  "Agent Systems",
+  "CEO Agent",
+  "Operations",
+  "Analyst",
+  "Front Desk",
+  "Scout",
+  "Outreach",
+  "Strategist",
+  "Producer",
   "Multi-Agent Orchestration",
-  "Autonomous Departments",
-  "Web Design & Development",
-  "Creative Automation",
-  "System Integration",
-  "CEO Agent Architecture",
+  "Full AI-Led Departments",
+  "Operated 24/7",
 ];
 
 function MarqueeTrack() {

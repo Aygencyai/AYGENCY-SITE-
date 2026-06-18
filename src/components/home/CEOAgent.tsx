@@ -52,7 +52,7 @@ export default function CEOAgent() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-surface section-padding relative overflow-hidden">
+    <section className="bg-void section-padding relative overflow-hidden">
       <GlowOrb
         size={500}
         opacity={0.06}
@@ -81,10 +81,11 @@ export default function CEOAgent() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-base leading-relaxed text-ghost-muted"
           >
-            This isn&rsquo;t a dashboard. It&rsquo;s not a report you read on
-            Monday morning. It&rsquo;s an agent that thinks about your business
-            the way you do &mdash; except it never stops, it sees everything,
-            and it doesn&rsquo;t have blind spots.
+            It&rsquo;s not a dashboard. The CEO Agent sits on top of every agent in
+            your system, reads across the whole operation in real time, and does
+            what a sharp operator does &mdash; spots the patterns no single
+            department can see, and surfaces the opportunities nobody briefed it to
+            find.
           </motion.p>
 
           <motion.p
@@ -93,25 +94,9 @@ export default function CEOAgent() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-base leading-relaxed text-ghost-muted"
           >
-            Every agent system we build includes something most companies
-            don&rsquo;t even know to ask for. We call it the CEO Agent. It sits
-            above every other agent in your system, receives their data in real
-            time, and does what a great CEO does &mdash; looks across the entire
-            operation, spots the patterns no single department can see, and finds
-            the opportunities nobody briefed it to find.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-base leading-relaxed text-ghost-muted"
-          >
-            Your workflow agents reduce costs. Your CEO agent finds revenue. It
-            identifies which customer segments are quietly growing, which
-            operational changes would unlock capacity, which pricing adjustments
-            would land, and which processes are creating bottlenecks that ripple
-            across your whole business.
+            Your specialist agents run the work. The CEO Agent makes sense of all of
+            it &mdash; which segments are quietly growing, which changes would unlock
+            capacity, and where the bottlenecks really are.
           </motion.p>
 
           <motion.p

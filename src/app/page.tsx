@@ -1,9 +1,11 @@
 import Hero from "@/components/home/Hero";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
-import Services from "@/components/home/Services";
+import Problem from "@/components/home/Problem";
+import SystemTeaser from "@/components/home/SystemTeaser";
 import CEOAgent from "@/components/home/CEOAgent";
 import HowItWorks from "@/components/home/HowItWorks";
 import WhyAygency from "@/components/home/WhyAygency";
+import Compounding from "@/components/home/Compounding";
 import DataSecurity from "@/components/home/DataSecurity";
 import CTABanner from "@/components/home/CTABanner";
 import PageTransition from "@/components/ui/PageTransition";
@@ -13,10 +15,12 @@ export default function HomePage() {
     <PageTransition>
       <Hero />
       <SocialProofStrip />
-      <Services />
+      <Problem />
+      <SystemTeaser />
       <CEOAgent />
       <HowItWorks />
       <WhyAygency />
+      <Compounding />
       <DataSecurity />
       <CTABanner />
     </PageTransition>
