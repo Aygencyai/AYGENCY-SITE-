@@ -26,14 +26,14 @@ export default function UseCasesClient() {
             </Reveal>
             <h2 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6">
               <TypewriterText
-                text="Systems We Design"
+                text="System Blueprints by Sector"
                 delay={300}
                 speed={35}
               />
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                Every business has different problems. These are examples of the agent systems we architect &mdash; showing how we&rsquo;d approach real operational challenges across different sectors.
+                How we&rsquo;d architect an agent system for an operation like yours. Real shapes, drawn from the work across different sectors &mdash; blueprints, not case studies.
               </p>
             </Reveal>
           </div>

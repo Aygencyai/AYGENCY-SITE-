@@ -36,6 +36,9 @@ export default function UseCaseDetailClient({
                 <span className="bg-cyan/[0.08] text-cyan font-mono text-xs tracking-wider uppercase px-3 py-1.5 rounded-md border border-cyan/20">
                   {useCase.systemType}
                 </span>
+                <span className="bg-ghost/[0.04] text-ghost-dim font-mono text-xs tracking-wider uppercase px-3 py-1.5 rounded-md border border-ghost/10">
+                  Blueprint
+                </span>
               </div>
               <h1 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl leading-tight uppercase font-semibold">
                 {useCase.title}
@@ -55,7 +58,7 @@ export default function UseCaseDetailClient({
             <Reveal>
               <SectionHeading
                 eyebrow="The Problem"
-                heading="What they were dealing with"
+                heading="What they&rsquo;re dealing with"
               />
             </Reveal>
             <Reveal delay={0.1}>
@@ -140,8 +143,8 @@ export default function UseCaseDetailClient({
           <div className="text-center max-w-3xl mx-auto">
             <Reveal>
               <SectionHeading
-                eyebrow="Estimated Impact"
-                heading="What this system delivers"
+                eyebrow="Expected Impact"
+                heading="What this system would deliver"
                 align="center"
               />
             </Reveal>
