@@ -13,6 +13,13 @@ import AnimatedGrid from "@/components/effects/AnimatedGrid";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { services } from "@/lib/data";
 
+const systemFit: Record<string, string> = {
+  "cost-reduction": "Operations · Analyst · CEO Agent",
+  "revenue-operations": "Scout · Outreach · Strategist · CEO Agent",
+  "intelligence": "Analyst · CEO Agent",
+  "full-department": "the full operation core + Front Desk",
+};
+
 export default function ServicesClient() {
   return (
     <PageTransition>
@@ -27,14 +34,14 @@ export default function ServicesClient() {
             </Reveal>
             <h2 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6 whitespace-pre-line">
               <TypewriterText
-                text={"Increase Your Revenue\nby Decreasing Your Costs"}
+                text={"Cut the Cost.\nCapture the Revenue."}
                 delay={300}
                 speed={35}
               />
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                We don&rsquo;t sell packages. We build custom agent systems designed around the way your business actually operates. These are the four types of systems we build &mdash; but every engagement starts with your specific pain point.
+                Every system is the same eight-agent system, tailored to the job. These are the four places they land hardest &mdash; cut cost, drive revenue, see the whole operation, or run an entire function.
               </p>
             </Reveal>
           </div>
@@ -75,6 +82,12 @@ export default function ServicesClient() {
                           ))}
                         </ul>
 
+                        {systemFit[service.slug] && (
+                          <p className="font-mono text-[11px] text-cyan/80 tracking-wider uppercase mt-6">
+                            Built from {systemFit[service.slug]}
+                          </p>
+                        )}
+
                         <Link
                           href={`/services/${service.slug}`}
                           className="group inline-flex items-center gap-2 mt-6 text-cyan font-sans font-medium text-sm"
@@ -111,7 +124,7 @@ export default function ServicesClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                Most clients start with a conversation. Tell us the problem and we&rsquo;ll tell you which system fits &mdash; or if you need something we haven&rsquo;t listed. Every engagement starts with understanding your operation.
+                Most clients start with a conversation. Tell us where it hurts and we&rsquo;ll prescribe the system that fits &mdash; then tailor it to how you actually work.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
