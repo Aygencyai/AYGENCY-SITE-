@@ -169,163 +169,162 @@ export const services: Service[] = [
 ];
 export const useCases: UseCase[] = [
   {
-    slug: "property-cost-reduction",
-    title: "Commercial Property Portfolio",
-    sector: "Real Estate",
-    systemType: "Cost Reduction",
-    subtext:
-      "A property manager running 12 commercial buildings with manual energy monitoring, tenant communication, and maintenance scheduling.",
-    problem:
-      "Twelve buildings, each with its own utility accounts, maintenance contractors, and tenant communication channels. Energy costs are the biggest controllable expense but nobody\u2019s monitoring consumption in real time \u2014 bills arrive monthly with no granularity. Maintenance requests come in by email and phone, get triaged manually, and contractors are scheduled by one overwhelmed operations manager. Tenant queries about access, billing, and services are handled by a small team that\u2019s always behind.",
-    agents: [
-      {
-        name: "Energy Agent",
-        description:
-          "Monitors consumption across all 12 buildings in real time. Flags anomalies within hours \u2014 a unit left heating overnight, a system running inefficiently, usage patterns that don\u2019t match occupancy. Attributes costs by building, floor, and tenant.",
-      },
-      {
-        name: "Maintenance Agent",
-        description:
-          "Receives requests from any channel (email, portal, phone transcript), categorises by urgency and type, schedules contractors based on availability and proximity, and follows up until completion. Escalates only what needs human judgement.",
-      },
-      {
-        name: "Tenant Communication Agent",
-        description:
-          "Handles routine queries about access, billing, policies, and services. Responds within minutes, not days. Escalates complex issues with full context attached.",
-      },
-      {
-        name: "CEO Agent",
-        description:
-          "Looks across all 12 buildings to identify portfolio-wide patterns. Which buildings are most cost-efficient? Where is maintenance spend trending upward? Which tenants are at risk of churn based on complaint patterns? Surfaces strategic recommendations monthly.",
-      },
-    ],
-    estimatedImpact:
-      "Measurable energy cost reduction across the portfolio. Maintenance response time from days to hours. Tenant query resolution from days to minutes. System live within weeks.",
-    ctaHeading: "Managing multiple properties with manual processes?",
-    ctaBody:
-      "30 minutes. We\u2019ll look at your portfolio and show you what a system would surface across every building.",
-  },
-  {
-    slug: "professional-services-revenue",
-    title: "Consultancy Pipeline Automation",
-    sector: "Professional Services",
+    slug: "recruitment-outbound",
+    title: "Recruitment Outbound Lead Engine",
+    sector: "Recruitment",
     systemType: "Revenue Operations",
     subtext:
-      "A 40-person consultancy generating leads through manual LinkedIn outreach and referrals. Pipeline unpredictable. Growth bottlenecked by partner capacity.",
+      "A founder-led recruitment agency whose pipeline only fills when the partners find time to do outbound themselves.",
     problem:
-      "The firm\u2019s pipeline depends on three partners doing their own outreach. When they\u2019re busy on client work, pipeline dries up. When they focus on business development, delivery suffers. They\u2019ve tried hiring BDRs but the sales cycle is too consultative \u2014 junior hires can\u2019t qualify properly. The firm has a clear ICP but no system to find, engage, and qualify prospects consistently.",
+      "The desk fills when someone does outbound, and the people who do it well are the same people billing. Heads-down on placements, the pipeline dries up; chasing pipeline, delivery slips. Junior BDRs haven\u2019t worked \u2014 the approach is too consultative to hand to someone who doesn\u2019t know the market. And the signals that a company is about to hire \u2014 a funding round, a new office, a director posting that they\u2019re drowning \u2014 are all public, but nobody has the time to watch for them.",
     agents: [
       {
-        name: "Prospecting Agent",
+        name: "Scout",
         description:
-          "Identifies ideal clients from market signals, company news, hiring patterns, and LinkedIn activity. Builds a qualified pipeline without human research.",
+          "Watches for the signals a company is about to hire \u2014 funding, expansion, role posts, hiring-pain posts \u2014 across LinkedIn and the web, identifies the decision-maker, and hands over a scored, ready-to-approach pipeline every day.",
       },
       {
-        name: "Outreach Agent",
+        name: "Outreach",
         description:
-          "Runs personalised multi-channel sequences (email + LinkedIn) tailored to each prospect\u2019s situation. Not templates \u2014 genuinely contextual messaging.",
+          "Runs personalised, signal-tied approaches in the partners\u2019 voice across email and LinkedIn, reads the replies, and passes the team only the warm conversations \u2014 never a list to work through.",
       },
       {
-        name: "Qualification Agent",
+        name: "Strategist",
         description:
-          "Scores inbound and outbound leads based on the firm\u2019s actual conversion patterns. Routes high-intent leads to partners, nurtures the rest automatically.",
+          "Reads which messages, sectors, and triggers are converting and turns that into what to say next week, so the engine sharpens instead of going stale.",
       },
       {
-        name: "Proposal Agent",
+        name: "Producer",
         description:
-          "Drafts scoped responses using the firm\u2019s methodology, case studies, and pricing framework. Partners review and refine rather than write from scratch.",
+          "Keeps a steady flow of sector content and thought-leadership going out, so the firm is already warm in the market before the first message lands.",
       },
       {
         name: "CEO Agent",
         description:
-          "Monitors pipeline health, flags when conversion rates drop, identifies which sectors and service lines are generating the most traction, and recommends where to focus.",
+          "Sits above the engine and tells the founders which roles, sectors, and signals are actually turning into placements \u2014 and where to point it next.",
       },
     ],
     estimatedImpact:
-      "Consistent pipeline independent of partner availability. Partners freed from manual outreach. System live within weeks.",
-    ctaHeading:
-      "What would your revenue look like if your pipeline never stopped moving?",
+      "A pipeline that keeps moving whether or not the partners have a free afternoon, outbound running every day in the firm\u2019s voice, and the founders back on billing instead of prospecting. Live within weeks, sharper every month.",
+    ctaHeading: "Pipeline only when someone finds the time?",
     ctaBody:
-      "30 minutes. We\u2019ll audit your current operation and show you exactly where an agent system would outperform what you\u2019re running today.",
+      "Tell us about your desk and we\u2019ll map the outbound engine that would keep it full \u2014 a plan you can keep whether you build it with us or not.",
   },
   {
-    slug: "ecommerce-marketing",
-    title: "DTC Brand Marketing Department",
-    sector: "E-Commerce",
+    slug: "property-acquisition",
+    title: "Property Acquisition Intelligence",
+    sector: "Property Development",
+    systemType: "Intelligence",
+    subtext:
+      "A small-site developer competing for land where the best deals are gone before they\u2019re ever listed.",
+    problem:
+      "Finding the right sites is a full-time job nobody has the time to do full-time. The good opportunities move through broker networks and relationships before they hit the portals, and by the time a listing appears the margin is gone. Every promising plot still needs hours of work \u2014 comparables, build-cost assumptions, planning history, whether the local authority would even entertain the scheme \u2014 before it\u2019s worth a viewing. So plots get missed, assessed too slowly, or chased when the numbers were never there.",
+    agents: [
+      {
+        name: "Scout",
+        description:
+          "Watches broker feeds, listing portals, and off-market sources for sites that match the buy-box, and surfaces them the day they appear instead of weeks later.",
+      },
+      {
+        name: "Analyst",
+        description:
+          "Models each plot \u2014 comparables, build cost, margin, planning precedent, local-authority appetite \u2014 and tells you which ones are worth your time before you spend any.",
+      },
+      {
+        name: "Operations",
+        description:
+          "Chases the agent, books the viewings, and keeps every live opportunity moving so nothing slips between finding it and acting on it.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Sits above the pipeline and spots which areas, deal types, and sources are actually producing margin \u2014 and where to point the search next.",
+      },
+    ],
+    estimatedImpact:
+      "More of the right sites seen earlier, fewer hours lost on plots that were never going to work, and a clear read on where the margin actually is. Live within weeks, with a sharper buy-box every month.",
+    ctaHeading: "Losing the good sites before they\u2019re listed?",
+    ctaBody:
+      "Tell us your buy-box and we\u2019ll map the acquisition system that would surface and score sites for you \u2014 whether you build it with us or not.",
+  },
+  {
+    slug: "membership-operations",
+    title: "Membership & Community Operations",
+    sector: "Membership & Community",
     systemType: "Full Department",
     subtext:
-      "A direct-to-consumer brand spending heavily on an in-house marketing team plus agency fees. Results plateauing.",
+      "A growing membership community whose admin scales faster than the small team running it.",
     problem:
-      "The brand is spending tens of thousands per month on marketing between team salaries and agency fees. Campaign turnaround takes two weeks. Creative testing is slow \u2014 they run a handful of ad variations when they should be running dozens. Reporting is manual and always a week behind. By the time they see what\u2019s working, budget has already been spent on what isn\u2019t. They can\u2019t scale spend because the team can\u2019t move faster.",
+      "The community is the product, and the work of running it grows with every member added \u2014 answering people across every channel, handling renewals, organising events, managing the waitlist, onboarding new joiners. It\u2019s spread across email, WhatsApp, an app, and a few people\u2019s heads. Members wait hours for answers that should take seconds, renewals slip because nobody chased them, and the founder gets pulled into operational detail instead of growing the thing.",
     agents: [
       {
-        name: "Creative Agent",
+        name: "Front Desk",
         description:
-          "Generates ad variations in the brand\u2019s voice and visual style. Produces 20\u201330 variations where the team currently makes 3\u20134. Tests headlines, hooks, formats, and angles automatically.",
+          "Answers members on whatever channel they use \u2014 access, billing, events, the questions they ask every day \u2014 instantly and around the clock, and only escalates what genuinely needs a person.",
       },
       {
-        name: "Targeting Agent",
+        name: "Operations",
         description:
-          "Optimises audience segments across Meta, Google, and TikTok. Identifies which audiences are fatiguing, which new segments are emerging, and reallocates budget in real time.",
+          "Runs renewals, event logistics, the waitlist, and new-member onboarding end to end, so nothing depends on someone remembering to do it.",
       },
       {
-        name: "Budget Agent",
+        name: "Outreach",
         description:
-          "Manages spend allocation across channels and campaigns. Shifts budget toward highest-performing combinations daily, not weekly.",
+          "Runs new-member and partner acquisition in the brand\u2019s voice, so growth doesn\u2019t stall every time the team is busy operating.",
       },
       {
-        name: "Reporting Agent",
+        name: "Analyst",
         description:
-          "Produces daily performance summaries with actionable insights. No manual spreadsheet work. Surfaces what changed, why, and what to do about it.",
+          "Tracks engagement, churn risk, and what members actually use, and flags who\u2019s about to lapse while there\u2019s still time to act.",
       },
       {
         name: "CEO Agent",
         description:
-          "Connects marketing performance with business metrics. Identifies which products are trending, which customer segments have the highest LTV, which campaigns should be killed early, and where the next growth opportunity sits.",
+          "Sits above the whole operation and tells the founder what\u2019s working, what\u2019s slipping, and where the next bit of growth is hiding.",
       },
     ],
     estimatedImpact:
-      "Dramatically reduced team and agency costs. Faster creative testing. Real-time optimisation replacing weekly reporting cycles. System live within weeks.",
-    ctaHeading: "Spending more on marketing but seeing diminishing returns?",
+      "Members answered in seconds, renewals that chase themselves, events and onboarding that run without the founder in the loop, and an early read on who\u2019s about to lapse. Live within weeks, more capable every month.",
+    ctaHeading: "Admin growing faster than the team?",
     ctaBody:
-      "30 minutes. We\u2019ll audit your current setup and show you what a full marketing department system would look like.",
+      "Tell us how your community runs today and we\u2019ll map the system that would operate it \u2014 whether you build it with us or not.",
   },
   {
-    slug: "hospitality-operations",
-    title: "Multi-Site Restaurant Operations",
-    sector: "Hospitality",
+    slug: "professional-services-backoffice",
+    title: "A Back Office That Runs Itself",
+    sector: "Professional Services",
     systemType: "Cost Reduction",
     subtext:
-      "A hospitality group losing money on manual inventory, staff scheduling, and energy monitoring across multiple locations.",
+      "An accountancy and advisory firm carrying a back office that grows with every client but adds nothing to the top line.",
     problem:
-      "Six locations. Each one managing its own inventory by hand, building staff rotas on spreadsheets, and getting energy bills with no visibility into what\u2019s driving the cost. Head office gets reports weekly \u2014 by which point the waste has already happened. The data to fix all of this exists inside their POS systems, booking platforms, and utility accounts. Nobody\u2019s reading it in real time.",
+      "Every new client adds admin \u2014 onboarding, chasing documents, entering data across systems that don\u2019t talk to each other, following up invoices, answering the same client questions again and again. It\u2019s necessary work that wins no new business, and it\u2019s either eating the team\u2019s billable hours or forcing another back-office hire that\u2019s pure cost. Most of the information needed to handle it already lives in the firm\u2019s systems; nobody has the time to move it around.",
     agents: [
       {
-        name: "Procurement Agent",
+        name: "Operations",
         description:
-          "Monitors stock levels across all sites, auto-generates purchase orders based on booking forecasts and historical consumption, eliminates over-ordering and waste.",
+          "Runs onboarding, document chasing, approvals, data syncing between tools, and invoice follow-up end to end \u2014 the admin that happens between people and systems.",
       },
       {
-        name: "Energy Agent",
+        name: "Analyst",
         description:
-          "Reads smart meter data across all 6 locations, flags anomalies within hours (not months), attributes costs by site and time period, surfaces reduction opportunities.",
+          "Reconciles the numbers, flags what\u2019s overdue or off, and produces the reports the partners used to assemble by hand.",
       },
       {
-        name: "Scheduling Agent",
+        name: "Front Desk",
         description:
-          "Builds staff rotas from booking data, historical covers, and labour cost targets. Balances demand coverage with budget constraints automatically.",
+          "Answers the routine client questions \u2014 status, documents, billing \u2014 instantly, and routes everything else to the right person with full context attached.",
       },
       {
         name: "CEO Agent",
         description:
-          "Sits above all three, identifies which locations are underperforming and why, spots patterns across sites, and surfaces strategic recommendations weekly.",
+          "Sits above it and shows the partners where time and margin are actually going, and which processes are quietly costing the most.",
       },
     ],
     estimatedImpact:
-      "Significant annual cost reduction across inventory, scheduling, and energy. System live within weeks.",
-    ctaHeading: "Running multiple sites with manual processes?",
+      "The repetitive back office handled around the clock, billable hours handed back to the fee-earners, and the next admin hire deferred or avoided. Live within weeks, with more of the work absorbed every month.",
+    ctaHeading: "Paying fee-earners to do admin?",
     ctaBody:
-      "30 minutes. We\u2019ll look at your operation and show you where an agent system would cut costs across every location.",
+      "Tell us where the manual work piles up and we\u2019ll map the system that would absorb it \u2014 and what it would save you, whether you build it with us or not.",
   },
 ];
 
