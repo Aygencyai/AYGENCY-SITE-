@@ -64,7 +64,7 @@ export default function CTABanner() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="relative bg-surface section-padding overflow-hidden">
+    <section ref={ref} className="relative bg-void section-padding overflow-hidden">
       <AnimatedGrid />
       <GlowOrb
         size={500}
@@ -92,8 +92,9 @@ export default function CTABanner() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
-          30 minutes. A straight answer on where agents would hit hardest &mdash; and
-          how fast it goes live.
+          We&rsquo;ll map your operation and show you exactly where agents would save you
+          the most &mdash; a plan you can keep whether you build it with us or not. 30
+          minutes.
         </motion.p>
 
         <motion.div

@@ -7,6 +7,7 @@ import HowItWorks from "@/components/home/HowItWorks";
 import WhyAygency from "@/components/home/WhyAygency";
 import Compounding from "@/components/home/Compounding";
 import DataSecurity from "@/components/home/DataSecurity";
+import SelfProof from "@/components/home/SelfProof";
 import CTABanner from "@/components/home/CTABanner";
 import PageTransition from "@/components/ui/PageTransition";
 
@@ -22,6 +23,7 @@ export default function HomePage() {
       <WhyAygency />
       <Compounding />
       <DataSecurity />
+      <SelfProof />
       <CTABanner />
     </PageTransition>
   );

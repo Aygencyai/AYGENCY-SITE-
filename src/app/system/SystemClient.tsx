@@ -231,8 +231,9 @@ export default function SystemClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                30 minutes. We&rsquo;ll prescribe the system that fits your operation
-                and show you where it would hit hardest.
+                30 minutes. We&rsquo;ll prescribe the system that fits your operation and
+                show you where it would hit hardest &mdash; a plan you can keep whether
+                you build it with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

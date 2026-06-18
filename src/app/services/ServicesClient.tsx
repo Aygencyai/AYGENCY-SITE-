@@ -124,7 +124,7 @@ export default function ServicesClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                Most clients start with a conversation. Tell us where it hurts and we&rsquo;ll prescribe the system that fits &mdash; then tailor it to how you actually work.
+                Most clients start with a conversation. Tell us where it hurts and we&rsquo;ll map the system that fits and where it would save you most &mdash; a plan you can keep whether you build it with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

@@ -85,6 +85,13 @@ export default function AboutClient() {
                 every technical decision we make.
               </p>
             </Reveal>
+            <Reveal delay={0.2}>
+              <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
+                We prove it on ourselves. Aygency runs its own outreach, research, and
+                reporting on these agents &mdash; the systems we&rsquo;d build for you are
+                the ones already running us.
+              </p>
+            </Reveal>
           </div>
         </SectionContainer>
       </section>
