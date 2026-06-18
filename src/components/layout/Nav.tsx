@@ -9,8 +9,11 @@ import { services } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
+  { label: "The System", href: "/system" },
   { label: "Services", href: "/services" },
   { label: "Use Cases", href: "/use-cases" },
+  { label: "Insights", href: "/insights" },
+  { label: "About", href: "/about" },
 ];
 
 export default function Nav() {
@@ -52,8 +55,8 @@ export default function Nav() {
   };
 
   const isActive = (href: string) => {
-    if (href === "/services") return pathname === "/services" || pathname.startsWith("/services/");
-    return pathname === href;
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
   };
 
   return (

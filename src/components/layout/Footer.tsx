@@ -21,7 +21,7 @@ export default function Footer() {
               AYGENCY
             </Link>
             <p className="text-sm text-ghost-dim mt-4">
-              Custom AI agent systems. Built for your operation. Running 24/7.
+              Custom AI agent systems. Built once, compounding forever.
             </p>
             <a
               href="mailto:build@aygency.ai"
@@ -37,6 +37,12 @@ export default function Footer() {
               Services
             </h3>
             <div className="flex flex-col gap-3">
+              <Link
+                href="/system"
+                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              >
+                The System
+              </Link>
               {services.map((service) => (
                 <Link
                   key={service.slug}
@@ -60,6 +66,24 @@ export default function Footer() {
                 className="text-sm text-ghost-dim hover:text-cyan transition-colors"
               >
                 Use Cases
+              </Link>
+              <Link
+                href="/insights"
+                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              >
+                Insights
+              </Link>
+              <Link
+                href="/about"
+                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                href="/trust"
+                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              >
+                Trust
               </Link>
               <Link
                 href="/contact"
