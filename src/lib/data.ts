@@ -211,41 +211,46 @@ export const useCases: UseCase[] = [
       "Tell us about your desk and we\u2019ll map the outbound engine that would keep it full \u2014 a plan you can keep whether you build it with us or not.",
   },
   {
-    slug: "property-acquisition",
-    title: "Property Acquisition Intelligence",
-    sector: "Property Development",
-    systemType: "Intelligence",
+    slug: "estate-agency-growth",
+    title: "Estate Agency Growth Engine",
+    sector: "Estate Agency",
+    systemType: "Revenue Operations",
     subtext:
-      "A small-site developer competing for land where the best deals are gone before they\u2019re ever listed.",
+      "A high-street sales agency that grows only when it wins more instructions \u2014 and quietly loses the buyers it already attracts.",
     problem:
-      "Finding the right sites is a full-time job nobody has the time to do full-time. The good opportunities move through broker networks and relationships before they hit the portals, and by the time a listing appears the margin is gone. Every promising plot still needs hours of work \u2014 comparables, build-cost assumptions, planning history, whether the local authority would even entertain the scheme \u2014 before it\u2019s worth a viewing. So plots get missed, assessed too slowly, or chased when the numbers were never there.",
+      "The agency earns on what it lists, and instructions are the bottleneck \u2014 you can\u2019t sell a home you were never asked to sell. The sellers worth winning are out there: homes that came off the market unsold with another agent, owners trying to sell privately, landlords getting out. But nobody has time to watch for them and be first to the valuation. Meanwhile the buyer enquiries that do come in off the portals go cold \u2014 a lead not called back in minutes is gone, and the viewing never gets booked.",
     agents: [
       {
         name: "Scout",
         description:
-          "Watches broker feeds, listing portals, and off-market sources for sites that match the buy-box, and surfaces them the day they appear instead of weeks later.",
+          "Finds both sides of the market. On supply, the seller signals worth being first to \u2014 homes withdrawn or expired with another agent, owners trying to sell privately without an agent, landlords getting out. On demand, the active buyers in your patch. Surfaces a matched, ready-to-approach pipeline.",
+      },
+      {
+        name: "Outreach",
+        description:
+          "Approaches sellers in the agency\u2019s voice and nurtures the long decision to sell, so you\u2019re the name they call when they\u2019re ready \u2014 and reaches active buyers about the homes that actually fit them.",
       },
       {
         name: "Analyst",
         description:
-          "Models each plot \u2014 comparables, build cost, margin, planning precedent, local-authority appetite \u2014 and tells you which ones are worth your time before you spend any.",
+          "Reads the local market and the pipeline \u2014 which areas and sources produce instructions, what\u2019s selling, and where to point the effort next.",
       },
       {
-        name: "Operations",
+        name: "Producer",
         description:
-          "Chases the agent, books the viewings, and keeps every live opportunity moving so nothing slips between finding it and acting on it.",
+          "Keeps the agency visible as the local expert \u2014 area guides, valuation content, just-listed and just-sold \u2014 so sellers choose you before you\u2019ve even spoken.",
       },
       {
         name: "CEO Agent",
         description:
-          "Sits above the pipeline and spots which areas, deal types, and sources are actually producing margin \u2014 and where to point the search next.",
+          "Sits above it and tells the principal which areas, signals, and price brackets are turning into instructions and completions \u2014 and where the next bit of growth is.",
       },
     ],
     estimatedImpact:
-      "More of the right sites seen earlier, fewer hours lost on plots that were never going to work, and a clear read on where the margin actually is. Live within weeks, with a sharper buy-box every month.",
-    ctaHeading: "Losing the good sites before they\u2019re listed?",
+      "More of the right instructions won earlier, fewer portal buyers lost to a slow callback, and a clear read on where your next listings come from. Add Front Desk and every inbound enquiry gets answered and booked the moment it lands. Live within weeks, sharper every month.",
+    ctaHeading: "Growing only as fast as you win instructions?",
     ctaBody:
-      "Tell us your buy-box and we\u2019ll map the acquisition system that would surface and score sites for you \u2014 whether you build it with us or not.",
+      "Tell us your patch and we\u2019ll map the engine that wins you more sellers and stops the buyers leaking \u2014 a plan you can keep whether you build it with us or not.",
   },
   {
     slug: "membership-operations",
