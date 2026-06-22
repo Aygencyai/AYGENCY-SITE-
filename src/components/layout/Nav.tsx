@@ -84,7 +84,7 @@ export default function Nav() {
                 width={56}
                 height={56}
                 priority
-                className="w-7 h-7 invert"
+                className="w-10 h-10 invert"
               />
             </Link>
 
@@ -225,7 +225,7 @@ export default function Nav() {
                     alt="Aygency"
                     width={56}
                     height={56}
-                    className="w-7 h-7 invert"
+                    className="w-10 h-10 invert"
                   />
                 </Link>
                 <button
