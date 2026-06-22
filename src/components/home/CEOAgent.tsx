@@ -106,7 +106,7 @@ export default function CEOAgent() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-void section-padding relative overflow-hidden">
+    <section className="section-padding relative overflow-hidden">
       <GlowOrb
         size={500}
         opacity={0.06}

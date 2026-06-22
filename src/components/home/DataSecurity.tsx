@@ -7,7 +7,7 @@ import GlowOrb from "@/components/effects/GlowOrb";
 
 export default function DataSecurity() {
   return (
-    <section className="bg-void section-padding relative overflow-hidden">
+    <section className="section-padding relative overflow-hidden">
       <GlowOrb
         size={400}
         opacity={0.06}

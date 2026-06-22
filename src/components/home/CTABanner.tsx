@@ -64,7 +64,7 @@ export default function CTABanner() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="relative bg-void section-padding overflow-hidden">
+    <section ref={ref} className="relative section-padding overflow-hidden">
       <AnimatedGrid />
       <GlowOrb
         size={500}

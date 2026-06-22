@@ -22,7 +22,7 @@ function MarqueeTrack() {
 
 export default function SocialProofStrip() {
   return (
-    <section className="bg-void py-9 md:py-11 border-y border-ghost/[0.06] overflow-hidden">
+    <section className="py-9 md:py-11 border-y border-ghost/[0.06] overflow-hidden">
       {/* Marquee ticker: two identical tracks for a seamless loop */}
       <div className="relative">
         <div className="flex whitespace-nowrap marquee-scroll">
