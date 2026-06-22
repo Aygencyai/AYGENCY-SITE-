@@ -33,7 +33,7 @@ export default function UseCasesClient() {
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                How we&rsquo;d architect an agent system for an operation like yours. Real shapes, drawn from the work across different sectors &mdash; blueprints, not case studies.
+                How we&rsquo;d architect an agent system for an operation like yours. Real shapes, drawn from the work across different sectors. Blueprints, not case studies.
               </p>
             </Reveal>
           </div>

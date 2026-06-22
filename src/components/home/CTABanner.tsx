@@ -92,9 +92,8 @@ export default function CTABanner() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
-          We&rsquo;ll map your operation and show you exactly where agents would save you
-          the most &mdash; a plan you can keep whether you build it with us or not. 30
-          minutes.
+          We&rsquo;ll map your operation and show you where agents would save you the
+          most. You keep the plan whether you build it with us or not. 30 minutes.
         </motion.p>
 
         <motion.div
@@ -119,8 +118,7 @@ export default function CTABanner() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="font-sans text-sm text-ghost-dim mt-8"
         >
-          Helping forward-looking companies thrive with custom AI agent systems
-          and automated workflows.
+          Custom agent systems for businesses that have outgrown doing it by hand.
         </motion.p>
       </div>
     </section>

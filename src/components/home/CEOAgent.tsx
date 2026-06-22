@@ -81,11 +81,10 @@ export default function CEOAgent() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-base leading-relaxed text-ghost-muted"
           >
-            It&rsquo;s not a dashboard. The CEO Agent sits on top of every agent in
-            your system, reads across the whole operation in real time, and does
-            what a sharp operator does &mdash; spots the patterns no single
-            department can see, and surfaces the opportunities nobody briefed it to
-            find.
+            It&rsquo;s not a dashboard. The CEO Agent sits on top of every other
+            agent and reads across the whole operation as it happens. It does what
+            a sharp operator does. It catches the patterns no single department can
+            see, and finds the openings nobody thought to look for.
           </motion.p>
 
           <motion.p
@@ -94,9 +93,10 @@ export default function CEOAgent() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-base leading-relaxed text-ghost-muted"
           >
-            Your specialist agents run the work. The CEO Agent makes sense of all of
-            it &mdash; which segments are quietly growing, which changes would unlock
-            capacity, and where the bottlenecks really are.
+            Your specialist agents do the work. The CEO Agent reads across all of it
+            and surfaces what you&rsquo;d usually only catch months later, like the
+            segment that&rsquo;s quietly growing or the bottleneck that&rsquo;s
+            quietly costing you.
           </motion.p>
 
           <motion.p

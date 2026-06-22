@@ -31,11 +31,12 @@ export default function Problem() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
         >
-          Every operation has work that quietly costs it. The reports built by hand. The
-          follow-ups that slip. The data re-typed between tools. The pipeline that never
-          gets worked because everyone is already at capacity. It isn&rsquo;t anyone
-          failing &mdash; people can only do so much. It runs on people because the
-          alternative used to be worse. It isn&rsquo;t anymore.
+          Every business runs on work that doesn&rsquo;t really need a person doing it.
+          Someone keys the same numbers into two systems that were never built to talk to
+          each other. A follow-up slips because the day ran out. The weekly report gets
+          rebuilt by hand, again. It&rsquo;s quiet, it&rsquo;s constant, and it grows as
+          you do, because a team can only get to so much. You&rsquo;ve lived with it
+          because the alternative used to be worse. It isn&rsquo;t anymore.
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -44,7 +45,7 @@ export default function Problem() {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-xl md:text-2xl text-ghost mt-8"
         >
-          What is a month of that costing you?
+          So what is a month of it costing you?
         </motion.p>
       </div>
     </section>

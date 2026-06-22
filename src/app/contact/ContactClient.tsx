@@ -90,8 +90,8 @@ export default function ContactClient() {
                 <p className="text-ghost-muted font-sans text-lg md:text-xl leading-relaxed max-w-2xl">
                   Tell us what&rsquo;s slowing your operation down. We&rsquo;ll
                   get back to you within one working day with a straight answer
-                  on where an agent system would hit hardest &mdash; and how
-                  quickly we could have it live.
+                  on where an agent system would hit hardest, and how quickly we
+                  could have it live.
                 </p>
               </Reveal>
 

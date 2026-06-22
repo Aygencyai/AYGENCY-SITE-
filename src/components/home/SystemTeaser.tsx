@@ -34,10 +34,10 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          We don&rsquo;t hand you a menu to figure out. We prescribe a system &mdash; a CEO
-          Agent and the specialists your operation needs &mdash; and tailor it to how you
-          actually work. Start with the few that move the needle. Add the rest as it earns
-          its place.
+          We don&rsquo;t hand you a menu and wish you luck. We prescribe a system, a CEO
+          Agent plus the specialists your operation actually needs, and tailor it to how
+          you work. Start with the few that move the needle, and add the rest as they earn
+          it.
         </motion.p>
 
         <motion.div

@@ -17,16 +17,16 @@ export async function generateMetadata({
   const post = insightPosts.find((p) => p.slug === slug);
   if (!post) return {};
   return {
-    title: `${post.title} — Aygency`,
+    title: `${post.title} | Aygency`,
     description: post.excerpt,
     openGraph: {
-      title: `${post.title} — Aygency`,
+      title: `${post.title} | Aygency`,
       description: post.excerpt,
       url: `https://aygency.ai/insights/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,
-      title: `${post.title} — Aygency`,
+      title: `${post.title} | Aygency`,
       description: post.excerpt,
     },
   };

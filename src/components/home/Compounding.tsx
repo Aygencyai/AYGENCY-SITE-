@@ -59,9 +59,10 @@ export default function Compounding() {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base leading-relaxed text-ghost-muted mt-12"
         >
-          The reason it compounds instead of decaying is that we operate it &mdash;
-          monitoring, tuning, and expanding coverage. The cost stays flat. The value
-          climbs.
+          That climb is the system&rsquo;s own doing. An agent learns from every cycle
+          and gets sharper on its own, without being told to. We operate it to keep that
+          learning safe and pointed at the right things, and we keep tuning it as you go.
+          The cost stays flat. The value keeps climbing.
         </motion.p>
       </div>
     </section>

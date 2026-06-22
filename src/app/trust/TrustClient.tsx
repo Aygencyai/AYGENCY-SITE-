@@ -25,7 +25,7 @@ const pillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Activity,
     title: "Operated, not abandoned",
-    body: "We monitor every system, tune it, and catch edge cases as they appear. Reliability isn’t a promise we make once — it’s the work we do every month.",
+    body: "We monitor every system, tune it, and catch edge cases as they appear. Reliability isn’t a promise we make once. It’s the work we do every month.",
   },
 ];
 

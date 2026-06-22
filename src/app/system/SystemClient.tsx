@@ -78,8 +78,8 @@ export default function SystemClient() {
           </h1>
           <Reveal delay={0.1}>
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-              A coordinated team of AI agents that runs your operation &mdash;
-              prescribed to your business, tailored to your work, and operated by us.
+              A coordinated team of AI agents that runs your operation. We prescribe it
+              to your business, tailor it to how you work, and operate it for you.
             </p>
           </Reveal>
         </SectionContainer>
@@ -129,7 +129,7 @@ export default function SystemClient() {
             <div className="mt-14">
               <Reveal>
                 <p className="font-mono text-xs text-ghost-dim tracking-widest uppercase mb-4">
-                  Front Desk &mdash; the +1
+                  Front Desk (the +1)
                 </p>
               </Reveal>
               <Reveal delay={0.05}>
@@ -158,7 +158,7 @@ export default function SystemClient() {
           <Reveal delay={0.1}>
             <p className="font-sans text-ghost-muted text-lg max-w-2xl mt-4 leading-relaxed">
               Every system starts with the CEO Agent and the specialists that fit.
-              Most start with a few and grow &mdash; there&rsquo;s no fixed package.
+              Most start with a few and grow. There&rsquo;s no fixed package.
               You run as much system as your operation needs.
             </p>
           </Reveal>
@@ -188,7 +188,7 @@ export default function SystemClient() {
           <Reveal delay={0.1}>
             <p className="font-sans text-ghost-dim text-sm mt-8">
               Pricing is tailored to your operation. We give you the number on the
-              call &mdash; no gate, no guesswork.
+              call, with no gate and no guesswork.
             </p>
           </Reveal>
         </SectionContainer>
@@ -232,8 +232,8 @@ export default function SystemClient() {
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
                 30 minutes. We&rsquo;ll prescribe the system that fits your operation and
-                show you where it would hit hardest &mdash; a plan you can keep whether
-                you build it with us or not.
+                show you where it would hit hardest. You keep the plan whether you build
+                it with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

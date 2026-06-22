@@ -25,7 +25,7 @@ export default function InsightsClient() {
           <Reveal delay={0.1}>
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
               Notes on building, operating, and getting value out of AI agent
-              systems &mdash; from the team that runs them.
+              systems, from the team that runs them.
             </p>
           </Reveal>
         </SectionContainer>

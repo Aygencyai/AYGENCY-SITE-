@@ -25,9 +25,9 @@ export default function AboutClient() {
           </h1>
           <Reveal delay={0.1}>
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-              Aygency is an AI automation agency. We design, build, deploy, and
-              operate agent systems that run the work a business would otherwise do
-              by hand &mdash; and get better the longer they run.
+              Aygency is an AI automation agency. We design, build, and run agent systems
+              that take over the work a business would otherwise do by hand, and that get
+              sharper the longer they run.
             </p>
           </Reveal>
         </SectionContainer>
@@ -44,52 +44,53 @@ export default function AboutClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                Most things a business buys lose value the moment they&rsquo;re
-                bought. Employees plateau. Software licences stay flat. Equipment
-                depreciates. Agent systems go the other way.
+                Almost everything a business spends money on is worth the most the day it
+                arrives, and a little less every day after. People, software, equipment,
+                all of it. Agent systems run the other way.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                Day one, the system runs the workflow. By month three, it runs it
-                better than any person could. By month six, it&rsquo;s surfacing
-                opportunities no one asked it to find. The cost stays flat. The value
-                climbs.
+                Day one, the system runs the workflow. By month three it runs it better
+                than any person could. By month six it&rsquo;s surfacing opportunities no
+                one asked it to find. The cost you pay stays flat while the thing you own
+                keeps getting more valuable.
               </p>
             </Reveal>
           </div>
         </SectionContainer>
       </section>
 
-      {/* Operated, always */}
+      {/* Stewardship, not the cause */}
       <section className="bg-surface section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
               <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
-                We don&rsquo;t ship and walk away.
+                We don&rsquo;t ship it and walk away.
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                Static automation can be built and abandoned. Agent systems
-                can&rsquo;t &mdash; they need active stewardship to learn, adapt, and
-                find the value that justifies them. So we operate every system we
-                build: monitoring it, tuning it, expanding its coverage.
+                The compounding is the system&rsquo;s own doing. It learns from how your
+                business runs and gets sharper without being asked. What it needs from us
+                is stewardship. We keep it safe, keep it honest, and keep tuning it as the
+                business changes around it.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                That&rsquo;s the difference between a system that compounds and one
-                that quietly decays. It shapes how we price, how we contract, and
-                every technical decision we make.
+                So we don&rsquo;t hand it over and move on. We run it for as long as you
+                do. That&rsquo;s why a system we build keeps earning its place instead of
+                quietly going stale, and it&rsquo;s why we price and contract the way we
+                do.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                We prove it on ourselves. Aygency runs its own outreach, research, and
-                reporting on these agents &mdash; the systems we&rsquo;d build for you are
-                the ones already running us.
+                We prove it on ourselves. The agents behind Aygency&rsquo;s own outreach,
+                research, and reporting are the same ones we&rsquo;d build for you. We use
+                what we sell.
               </p>
             </Reveal>
           </div>
@@ -107,17 +108,17 @@ export default function AboutClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                Every business has work that should run itself, and a list of things
-                it would do if it could hire for them. The old answer was to recruit
-                a department, wait months, and hope. We think that&rsquo;s the wrong
-                trade.
+                Every business has work that should run itself, and a list of things it
+                would do if it could afford to hire for them. The old answer was to
+                recruit a department, wait half a year, and hope it worked out. We think
+                that&rsquo;s the wrong trade.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                Aygency was founded by Louis and Erik to give a business the
-                capability of a department &mdash; built around its operation,
-                running around the clock, and operated by us.
+                Aygency was founded by Louis and Erik to give a business the capability of
+                a department without the department. Built around how it actually works,
+                running around the clock, and looked after by us.
               </p>
             </Reveal>
           </div>
@@ -141,8 +142,8 @@ export default function AboutClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                30 minutes. A straight answer on where agents would hit hardest in
-                your operation.
+                30 minutes. We&rsquo;ll show you where agents would hit hardest in your
+                operation, and you keep the plan either way.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

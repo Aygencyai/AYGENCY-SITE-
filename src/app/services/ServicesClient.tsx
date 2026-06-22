@@ -41,7 +41,7 @@ export default function ServicesClient() {
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                Every system is the same eight-agent system, tailored to the job. These are the four places they land hardest &mdash; cut cost, drive revenue, see the whole operation, or run an entire function.
+                Every system is the same eight-agent system, tailored to the job. These are the four places they land hardest: cut cost, drive revenue, see the whole operation, or run an entire function.
               </p>
             </Reveal>
           </div>
@@ -124,7 +124,7 @@ export default function ServicesClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                Most clients start with a conversation. Tell us where it hurts and we&rsquo;ll map the system that fits and where it would save you most &mdash; a plan you can keep whether you build it with us or not.
+                Most clients start with a conversation. Tell us where it hurts and we&rsquo;ll map the system that fits and where it would save you most. You keep the plan whether you build it with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

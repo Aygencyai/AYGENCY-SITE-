@@ -6,9 +6,9 @@ export const services: Service[] = [
     title: "Cost Reduction Systems",
     shortTitle: "Cost Reduction",
     description:
-      "Agent systems that replace the expensive manual processes bleeding your operation. The cost is fixed. The savings compound.",
+      "Agent systems that take over the expensive manual work draining your operation. The cost is fixed. The savings keep stacking up.",
     longDescription:
-      "Every business has processes that cost too much because they depend on people doing repetitive, manual work. We build agent systems that take over those workflows \u2014 permanently, at a fraction of the cost, running around the clock.",
+      "Every business has work that costs too much because it depends on people doing the same repetitive thing over and over. We build agent systems that take those workflows off your plate for good, at a fraction of the cost, running around the clock.",
     icon: "cost-reduction",
     useCases: [
       "Document processing, data extraction, and routing at any volume",
@@ -19,56 +19,56 @@ export const services: Service[] = [
       "Invoice processing, reconciliation, and financial data entry",
     ],
     problem:
-      "You already know which processes are expensive. Inventory checks done by hand. Reports compiled from spreadsheets. Data entered twice because systems don\u2019t talk to each other. Invoices processed manually. Schedules built on gut feel. You\u2019ve accepted these costs because the alternative \u2014 building software or hiring more people \u2014 felt even more expensive. It isn\u2019t anymore.",
+      "You already know which jobs are expensive. The stock counted by hand, the report stitched together from five spreadsheets, the same figures keyed into two systems that don’t talk, the invoices worked through one by one. You’ve lived with the cost because the alternative, building software or hiring more people, felt worse. It isn’t anymore.",
     approach: [
       {
         title: "Map",
-        desc: "We document the process as it actually runs. Every input, decision, handoff, exception, and workaround. We find exactly where the cost lives.",
+        desc: "We document the process the way it actually runs. Every input, decision, handoff, and the workarounds nobody mentions. That’s how we find where the cost really lives.",
       },
       {
         title: "Architect",
-        desc: "We design the agent system \u2014 which agents own which steps, what data they need, how they coordinate, and what happens at the edges.",
+        desc: "We design the system. Which agents own which steps, what data they need, how they hand off, and what happens at the edges.",
       },
       {
         title: "Build & Ship",
-        desc: "We build every agent, connect them to your live systems, and deploy into your environment with full monitoring from day one.",
+        desc: "We build every agent, connect them to your live systems, and put it into your environment with full monitoring from day one.",
       },
       {
         title: "Compound",
-        desc: "The system gets more efficient over time. It learns your patterns, catches exceptions faster, and surfaces cost reductions you didn\u2019t know existed.",
+        desc: "It gets more efficient on its own. It learns your patterns, catches the exceptions faster, and turns up savings you didn’t know were there.",
       },
     ],
-    ctaHeading: "Every manual process is a cost you\u2019ve stopped noticing",
+    ctaHeading: "Every manual process is a cost you’ve stopped noticing",
     ctaBody:
-      "30 minutes. We\u2019ll find the workflows bleeding time and money and tell you exactly what a system would look like.",
+      "30 minutes. We’ll find the work that’s quietly bleeding time and money, and show you what a system would do about it.",
   },
   {
     slug: "revenue-operations",
     title: "Revenue Operations Systems",
     shortTitle: "Revenue Ops",
     description:
-      "Agent systems that don\u2019t just save money \u2014 they actively find and generate revenue. Pipeline, outreach, qualification, conversion \u2014 handled by agents that never stop.",
+      "Agent systems that don’t just save money, they go and find it. Pipeline, outreach, qualification, conversion, run by agents that never clock off.",
     longDescription:
-      "Agent systems that identify, qualify, and convert revenue opportunities across your business \u2014 running outreach, managing pipeline, optimising pricing, and scaling campaigns without adding headcount.",
+      "Agent systems that find, qualify, and convert revenue across your business. They run the outreach, manage the pipeline, tune the pricing, and scale campaigns without you adding headcount.",
     icon: "revenue-operations",
     useCases: [
       "Lead prospecting and enrichment from market signals, social data, and intent data",
-      "Multi-channel outreach \u2014 email, LinkedIn, calls \u2014 personalised and sequenced automatically",
+      "Multi-channel outreach across email, LinkedIn, and calls, personalised and sequenced automatically",
       "Lead qualification and scoring based on your actual conversion patterns",
       "Sales pipeline management, follow-up automation, and deal tracking",
       "Dynamic pricing systems that adjust to demand, competition, and margin targets",
-      "Marketing campaign execution across Meta, Google, TikTok, LinkedIn \u2014 creative, targeting, budget allocation, and reporting",
+      "Marketing campaigns across Meta, Google, TikTok, and LinkedIn, from creative to targeting to budget and reporting",
     ],
     problem:
-      "Your revenue engine depends on people. People who take holidays, miss follow-ups, forget to update the CRM, and can only work so many hours. Meanwhile your competitors are scaling their outreach, their qualification, their conversion \u2014 and they\u2019re doing it with systems, not headcount. The businesses growing fastest right now aren\u2019t hiring more salespeople. They\u2019re deploying agents.",
+      "Your revenue engine runs on people, and people take holidays, miss follow-ups, forget to update the CRM, and only have so many hours. Your competitors are scaling their outreach and their conversion with systems instead of headcount. The businesses growing fastest right now aren’t hiring more salespeople. They’re deploying agents.",
     approach: [
       {
         title: "Audit",
-        desc: "We break down your current revenue operation \u2014 where leads come from, how they\u2019re qualified, what converts, and where deals die.",
+        desc: "We break down how revenue works for you today. Where leads come from, how they get qualified, what converts, and where deals quietly die.",
       },
       {
         title: "Architect",
-        desc: "We design the agent system \u2014 one agent for prospecting, one for outreach, one for qualification, one for pipeline management, and so on. Each one specialised. All coordinated.",
+        desc: "We design the system. One agent prospects, one runs outreach, one qualifies, one keeps the pipeline moving. Each one specialised, all of them coordinated.",
       },
       {
         title: "Build & Ship",
@@ -76,22 +76,22 @@ export const services: Service[] = [
       },
       {
         title: "Compound",
-        desc: "The agents learn from every campaign, every deal, every conversion. They refine targeting, rotate messaging, and reallocate resources to what\u2019s working \u2014 automatically.",
+        desc: "The agents learn from every campaign, every deal, every reply. They sharpen the targeting, rotate the messaging, and move spend to what’s working, on their own.",
       },
     ],
     ctaHeading:
       "What would your revenue look like if your pipeline never stopped moving?",
     ctaBody:
-      "30 minutes. We\u2019ll audit your current operation and show you exactly where an agent system would outperform what you\u2019re running today.",
+      "30 minutes. We’ll look at how you sell today and show you where an agent system would outwork it.",
   },
   {
     slug: "intelligence",
     title: "Intelligence & Oversight Systems",
     shortTitle: "Intelligence",
     description:
-      "A system that sits above your entire operation, sees every data point, and finds the opportunities nobody\u2019s looking for. This is where the CEO Agent lives.",
+      "A system that sits above the whole operation, sees every number, and finds the openings nobody has time to look for. This is where the CEO Agent lives.",
     longDescription:
-      "Most businesses have the data to make better decisions. The problem isn\u2019t access \u2014 it\u2019s that nobody has time to look at all of it, connect the dots, and act fast enough. These systems do exactly that.",
+      "Most businesses already have the data to make better decisions. The problem isn’t getting at it. It’s that nobody has the time to read all of it, join the dots, and act before the moment’s gone. This is the system that does.",
     icon: "intelligence",
     useCases: [
       "Cross-department data aggregation and pattern detection",
@@ -99,18 +99,18 @@ export const services: Service[] = [
       "Anomaly detection across financial, operational, and customer data",
       "Competitive intelligence monitoring and market signal tracking",
       "Automated strategic reporting with actionable recommendations",
-      "The CEO Agent \u2014 a dedicated agent that thinks at the business level, identifies what\u2019s working, what\u2019s breaking, and what to do next",
+      "The CEO Agent, a dedicated agent that thinks at the business level and tells you what’s working, what’s breaking, and what to do next",
     ],
     problem:
-      "Your data sits in silos. Sales knows their numbers. Marketing knows their metrics. Operations knows their costs. But nobody sees all of it at once. Nobody\u2019s connecting the spike in customer complaints with the supplier change last month and the margin drop this quarter. That\u2019s not a people problem \u2014 there\u2019s too much data moving too fast for any human to track. An agent system built for oversight sees everything, in real time, and surfaces what matters.",
+      "Your data sits in silos. Sales knows its numbers, marketing knows its metrics, operations knows its costs, and nobody sees all of it at once. Nobody’s joining the spike in complaints to the supplier you switched last month to the margin drop this quarter. That isn’t a people problem. There’s simply too much moving too fast for anyone to track by hand. A system built for oversight watches all of it, in real time, and tells you what matters.",
     approach: [
       {
         title: "Immerse",
-        desc: "We spend time understanding your full operation \u2014 not one department, all of them. How data flows, where it gets stuck, and what decisions depend on it.",
+        desc: "We get to know the whole operation, not one department but all of them. How the data flows, where it gets stuck, and which decisions hang on it.",
       },
       {
         title: "Architect",
-        desc: "We design the intelligence layer \u2014 which data sources feed in, what patterns to monitor, what thresholds trigger alerts, and how insights get surfaced to the right people.",
+        desc: "We design the intelligence layer. Which sources feed in, what patterns to watch, what trips an alert, and how the insight reaches the right person.",
       },
       {
         title: "Build & Ship",
@@ -118,55 +118,56 @@ export const services: Service[] = [
       },
       {
         title: "Compound",
-        desc: "The system learns what matters to your business. It stops flagging noise and starts surfacing the signals that actually move the needle. Month six sees things month one couldn\u2019t.",
+        desc: "The system learns what matters to you. It stops flagging noise and starts surfacing the signals that move the needle. By month six it’s seeing things month one couldn’t.",
       },
     ],
     ctaHeading:
       "What would you do if you could see your entire operation in real time?",
     ctaBody:
-      "30 minutes. We\u2019ll look at your data landscape and show you what an intelligence system would surface.",
+      "30 minutes. We’ll look at your data and show you what an intelligence system would surface.",
   },
   {
     slug: "full-department",
     title: "Full Department Systems",
     shortTitle: "Full Departments",
     description:
-      "A complete function \u2014 marketing, operations, support \u2014 run by a coordinated team of AI agents with human oversight only where it matters.",
+      "A whole function, marketing, operations, or support, run by a coordinated team of agents, with people in the loop only where it counts.",
     longDescription:
-      "For businesses that don\u2019t want to automate one workflow. They want an entire department\u2019s manual work replaced by a system that runs autonomously, scales infinitely, and improves the longer it operates.",
+      "For businesses that don’t want to automate one workflow. They want a whole department’s worth of manual work handled by a system that runs on its own, scales without hiring, and gets better the longer it operates.",
     icon: "full-department",
     useCases: [
-      "Full marketing departments \u2014 creative, targeting, buying, reporting, optimisation",
-      "Operations departments \u2014 procurement, scheduling, monitoring, compliance",
-      "Customer support \u2014 triage, response, escalation, knowledge management",
-      "Back-office functions \u2014 finance processing, HR admin, regulatory compliance",
+      "Full marketing departments, from creative to targeting to buying to reporting",
+      "Operations departments: procurement, scheduling, monitoring, compliance",
+      "Customer support: triage, response, escalation, knowledge management",
+      "Back-office functions: finance processing, HR admin, regulatory compliance",
       "Any function that currently depends on a team doing repeatable, structured work",
     ],
     problem:
-      "Building a department is slow and expensive. You\u2019re looking at 6+ months to recruit, \u00a3150K+ per head for senior hires, another 3 months for onboarding, and then the ongoing cost of management, tools, and turnover. And even fully staffed, the department is limited by headcount \u2014 it doesn\u2019t scale without more hiring. A full department system runs the same functions with a coordinated team of agents. Each agent owns a specific role. They communicate, hand off work, escalate edge cases, and improve without being told to. Human oversight where it matters. Autonomous execution everywhere else.",
+      "Building a department is slow and expensive. Six months or more to recruit, £150K and up per senior hire, another three months to onboard, then the running cost of managing, tooling, and turnover. Even fully staffed it’s capped by headcount, so it can’t grow without you hiring again. A full department system runs the same work with a coordinated team of agents. Each one owns a role. They talk to each other, hand off work, escalate the edge cases, and improve as they go. People where it matters, agents everywhere else.",
     approach: [
       {
         title: "Diagnose",
-        desc: "We audit the entire function. Every role, every process, every handoff, every tool. We identify which parts can be handled by agents and which genuinely need humans.",
+        desc: "We audit the whole function. Every role, process, handoff, and tool. Then we work out what agents can own and what genuinely needs a person.",
       },
       {
         title: "Architect",
-        desc: "We design the full agent team \u2014 who does what, how they coordinate, what the escalation paths are, and where human oversight plugs in.",
+        desc: "We design the full team. Who does what, how they coordinate, where work escalates, and where a person plugs in.",
       },
       {
         title: "Build & Ship",
-        desc: "We build and deploy the complete system in phases. Core agents first, expanding as the system proves itself on live operations.",
+        desc: "We build and deploy in phases. Core agents first, then more as the system proves itself on live work.",
       },
       {
         title: "Compound",
-        desc: "The department gets better every month. Agents learn from every cycle, coverage expands to adjacent processes, and the CEO Agent monitors the whole thing from above.",
+        desc: "The department gets better every month. The agents learn from every cycle, take on adjacent work, and the CEO Agent watches the whole thing from above.",
       },
     ],
-    ctaHeading: "You know that department you\u2019ve been meaning to build?",
+    ctaHeading: "You know that department you’ve been meaning to build?",
     ctaBody:
-      "30 minutes. We\u2019ll look at the function you\u2019re trying to scale and tell you exactly what a system would look like to run it.",
+      "30 minutes. We’ll look at the function you’re trying to scale and show you what a system to run it would look like.",
   },
 ];
+
 export const useCases: UseCase[] = [
   {
     slug: "recruitment-outbound",
@@ -176,22 +177,22 @@ export const useCases: UseCase[] = [
     subtext:
       "A founder-led recruitment agency whose pipeline only fills when the partners find time to do outbound themselves.",
     problem:
-      "The desk fills when someone does outbound, and the people who do it well are the same people billing. Heads-down on placements, the pipeline dries up; chasing pipeline, delivery slips. Junior BDRs haven\u2019t worked \u2014 the approach is too consultative to hand to someone who doesn\u2019t know the market. And the signals that a company is about to hire \u2014 a funding round, a new office, a director posting that they\u2019re drowning \u2014 are all public, but nobody has the time to watch for them.",
+      "The desk fills when someone does outbound, and the people who do it well are the same people billing. When they’re heads-down on placements the pipeline dries up. When they chase pipeline, delivery slips. Junior BDRs haven’t fixed it, because the approach is too consultative to hand to someone who doesn’t know the market. Meanwhile the signals that a company is about to hire are all public: a funding round, a new office, a director posting that they’re drowning. Nobody just has the time to watch for them.",
     agents: [
       {
         name: "Scout",
         description:
-          "Watches for the signals a company is about to hire \u2014 funding, expansion, role posts, hiring-pain posts \u2014 across LinkedIn and the web, identifies the decision-maker, and hands over a scored, ready-to-approach pipeline every day.",
+          "Watches for the signals a company is about to hire, like funding, a new office, fresh role posts, or a director posting that they’re drowning. It works across LinkedIn and the open web, finds the decision-maker, and hands over a scored pipeline every day.",
       },
       {
         name: "Outreach",
         description:
-          "Runs personalised, signal-tied approaches in the partners\u2019 voice across email and LinkedIn, reads the replies, and passes the team only the warm conversations \u2014 never a list to work through.",
+          "Approaches each prospect in the partners’ voice across email and LinkedIn, reads what comes back, and passes the team only the warm conversations. No list to work through.",
       },
       {
         name: "Strategist",
         description:
-          "Reads which messages, sectors, and triggers are converting and turns that into what to say next week, so the engine sharpens instead of going stale.",
+          "Reads which messages, sectors, and triggers are converting, and turns that into what to say next week. The engine sharpens instead of going stale.",
       },
       {
         name: "Producer",
@@ -201,14 +202,14 @@ export const useCases: UseCase[] = [
       {
         name: "CEO Agent",
         description:
-          "Sits above the engine and tells the founders which roles, sectors, and signals are actually turning into placements \u2014 and where to point it next.",
+          "Sits above the engine. Tells the founders which roles, sectors, and signals are actually turning into placements, and where to point it next.",
       },
     ],
     estimatedImpact:
-      "A pipeline that keeps moving whether or not the partners have a free afternoon, outbound running every day in the firm\u2019s voice, and the founders back on billing instead of prospecting. Live within weeks, sharper every month.",
+      "A pipeline that keeps moving whether or not the partners have a free afternoon, outbound running every day in the firm’s voice, and the founders back on billing instead of prospecting. Live within weeks, sharper every month.",
     ctaHeading: "Pipeline only when someone finds the time?",
     ctaBody:
-      "Tell us about your desk and we\u2019ll map the outbound engine that would keep it full \u2014 a plan you can keep whether you build it with us or not.",
+      "Tell us about your desk and we’ll map the outbound engine that would keep it full. You keep the plan whether you build it with us or not.",
   },
   {
     slug: "estate-agency-growth",
@@ -216,41 +217,41 @@ export const useCases: UseCase[] = [
     sector: "Estate Agency",
     systemType: "Revenue Operations",
     subtext:
-      "A high-street sales agency that grows only when it wins more instructions \u2014 and quietly loses the buyers it already attracts.",
+      "A high-street sales agency that grows only when it wins more instructions, and quietly loses the buyers it already attracts.",
     problem:
-      "The agency earns on what it lists, and instructions are the bottleneck \u2014 you can\u2019t sell a home you were never asked to sell. The sellers worth winning are out there: homes that came off the market unsold with another agent, owners trying to sell privately, landlords getting out. But nobody has time to watch for them and be first to the valuation. Meanwhile the buyer enquiries that do come in off the portals go cold \u2014 a lead not called back in minutes is gone, and the viewing never gets booked.",
+      "The agency earns on what it lists, and instructions are the bottleneck. You can’t sell a home you were never asked to sell. The sellers worth winning are out there: a house that came off the market unsold with another agent, an owner trying to sell privately, a landlord getting out. Nobody has time to watch for them and be first to the valuation. And the buyer enquiries that do come in off the portals go cold, because a lead that isn’t called back within minutes is usually gone before anyone books the viewing.",
     agents: [
       {
         name: "Scout",
         description:
-          "Finds both sides of the market. On supply, the seller signals worth being first to \u2014 homes withdrawn or expired with another agent, owners trying to sell privately without an agent, landlords getting out. On demand, the active buyers in your patch. Surfaces a matched, ready-to-approach pipeline.",
+          "Finds both sides of the market. On supply, the seller signals worth being first to: homes withdrawn or expired with another agent, owners trying to sell privately, landlords getting out. On demand, the active buyers in your patch. It hands over a matched, ready-to-approach pipeline.",
       },
       {
         name: "Outreach",
         description:
-          "Approaches sellers in the agency\u2019s voice and nurtures the long decision to sell, so you\u2019re the name they call when they\u2019re ready \u2014 and reaches active buyers about the homes that actually fit them.",
+          "Approaches sellers in the agency’s voice and nurtures the long decision to sell, so you’re the name they call when they’re ready. It reaches active buyers too, about the homes that actually fit them.",
       },
       {
         name: "Analyst",
         description:
-          "Reads the local market and the pipeline \u2014 which areas and sources produce instructions, what\u2019s selling, and where to point the effort next.",
+          "Reads the local market and the pipeline. Which areas and sources produce instructions, what’s selling, and where to point the effort next.",
       },
       {
         name: "Producer",
         description:
-          "Keeps the agency visible as the local expert \u2014 area guides, valuation content, just-listed and just-sold \u2014 so sellers choose you before you\u2019ve even spoken.",
+          "Keeps the agency visible as the local expert, with area guides, valuation content, and just-listed and just-sold posts, so sellers choose you before you’ve even spoken.",
       },
       {
         name: "CEO Agent",
         description:
-          "Sits above it and tells the principal which areas, signals, and price brackets are turning into instructions and completions \u2014 and where the next bit of growth is.",
+          "Sits above it. Tells the principal which areas, signals, and price brackets are turning into instructions and completions, and where the next bit of growth is.",
       },
     ],
     estimatedImpact:
       "More of the right instructions won earlier, fewer portal buyers lost to a slow callback, and a clear read on where your next listings come from. Add Front Desk and every inbound enquiry gets answered and booked the moment it lands. Live within weeks, sharper every month.",
     ctaHeading: "Growing only as fast as you win instructions?",
     ctaBody:
-      "Tell us your patch and we\u2019ll map the engine that wins you more sellers and stops the buyers leaking \u2014 a plan you can keep whether you build it with us or not.",
+      "Tell us your patch and we’ll map the engine that wins you more sellers and stops the buyers leaking. You keep the plan whether you build it with us or not.",
   },
   {
     slug: "membership-operations",
@@ -260,12 +261,12 @@ export const useCases: UseCase[] = [
     subtext:
       "A growing membership community whose admin scales faster than the small team running it.",
     problem:
-      "The community is the product, and the work of running it grows with every member added \u2014 answering people across every channel, handling renewals, organising events, managing the waitlist, onboarding new joiners. It\u2019s spread across email, WhatsApp, an app, and a few people\u2019s heads. Members wait hours for answers that should take seconds, renewals slip because nobody chased them, and the founder gets pulled into operational detail instead of growing the thing.",
+      "The community is the product, and the work of running it grows with every member you add. Answering people across every channel, handling renewals, organising events, managing the waitlist, onboarding new joiners. It lives across email, WhatsApp, an app, and a few people’s heads. Members wait hours for answers that should take seconds, renewals slip because nobody chased them, and the founder ends up buried in operational detail instead of growing the thing.",
     agents: [
       {
         name: "Front Desk",
         description:
-          "Answers members on whatever channel they use \u2014 access, billing, events, the questions they ask every day \u2014 instantly and around the clock, and only escalates what genuinely needs a person.",
+          "Answers members on whatever channel they use, about access, billing, events, the things they ask every day. It replies instantly, around the clock, and only escalates what genuinely needs a person.",
       },
       {
         name: "Operations",
@@ -275,24 +276,24 @@ export const useCases: UseCase[] = [
       {
         name: "Outreach",
         description:
-          "Runs new-member and partner acquisition in the brand\u2019s voice, so growth doesn\u2019t stall every time the team is busy operating.",
+          "Runs new-member and partner acquisition in the brand’s voice, so growth doesn’t stall every time the team is busy operating.",
       },
       {
         name: "Analyst",
         description:
-          "Tracks engagement, churn risk, and what members actually use, and flags who\u2019s about to lapse while there\u2019s still time to act.",
+          "Tracks engagement, churn risk, and what members actually use, and flags who’s about to lapse while there’s still time to act.",
       },
       {
         name: "CEO Agent",
         description:
-          "Sits above the whole operation and tells the founder what\u2019s working, what\u2019s slipping, and where the next bit of growth is hiding.",
+          "Sits above the whole operation and tells the founder what’s working, what’s slipping, and where the next bit of growth is hiding.",
       },
     ],
     estimatedImpact:
-      "Members answered in seconds, renewals that chase themselves, events and onboarding that run without the founder in the loop, and an early read on who\u2019s about to lapse. Live within weeks, more capable every month.",
+      "Members answered in seconds, renewals that chase themselves, events and onboarding that run without the founder in the loop, and an early warning on who’s about to lapse. Live within weeks, more capable every month.",
     ctaHeading: "Admin growing faster than the team?",
     ctaBody:
-      "Tell us how your community runs today and we\u2019ll map the system that would operate it \u2014 whether you build it with us or not.",
+      "Tell us how your community runs today and we’ll map the system that would operate it. You keep the plan whether you build it with us or not.",
   },
   {
     slug: "professional-services-backoffice",
@@ -302,22 +303,22 @@ export const useCases: UseCase[] = [
     subtext:
       "An accountancy and advisory firm carrying a back office that grows with every client but adds nothing to the top line.",
     problem:
-      "Every new client adds admin \u2014 onboarding, chasing documents, entering data across systems that don\u2019t talk to each other, following up invoices, answering the same client questions again and again. It\u2019s necessary work that wins no new business, and it\u2019s either eating the team\u2019s billable hours or forcing another back-office hire that\u2019s pure cost. Most of the information needed to handle it already lives in the firm\u2019s systems; nobody has the time to move it around.",
+      "Every new client adds admin. Onboarding, chasing documents, keying data across systems that don’t talk to each other, following up invoices, answering the same questions again and again. It’s necessary work that wins no new business, and it’s either eating the team’s billable hours or forcing another back-office hire that’s pure cost. Most of what’s needed to handle it already lives in the firm’s systems. Nobody has the time to move it around.",
     agents: [
       {
         name: "Operations",
         description:
-          "Runs onboarding, document chasing, approvals, data syncing between tools, and invoice follow-up end to end \u2014 the admin that happens between people and systems.",
+          "Runs onboarding, document chasing, approvals, data syncing between tools, and invoice follow-up end to end. The admin that happens between people and systems.",
       },
       {
         name: "Analyst",
         description:
-          "Reconciles the numbers, flags what\u2019s overdue or off, and produces the reports the partners used to assemble by hand.",
+          "Reconciles the numbers, flags what’s overdue or off, and produces the reports the partners used to put together by hand.",
       },
       {
         name: "Front Desk",
         description:
-          "Answers the routine client questions \u2014 status, documents, billing \u2014 instantly, and routes everything else to the right person with full context attached.",
+          "Answers the routine client questions about status, documents, and billing instantly, and routes everything else to the right person with the full context attached.",
       },
       {
         name: "CEO Agent",
@@ -329,7 +330,7 @@ export const useCases: UseCase[] = [
       "The repetitive back office handled around the clock, billable hours handed back to the fee-earners, and the next admin hire deferred or avoided. Live within weeks, with more of the work absorbed every month.",
     ctaHeading: "Paying fee-earners to do admin?",
     ctaBody:
-      "Tell us where the manual work piles up and we\u2019ll map the system that would absorb it \u2014 and what it would save you, whether you build it with us or not.",
+      "Tell us where the manual work piles up and we’ll map the system that would absorb it, and what it would save you. You keep the plan whether you build it with us or not.",
   },
 ];
 
@@ -362,7 +363,7 @@ export const processSteps: ProcessStep[] = [
     number: 5,
     title: "Compound",
     description:
-      "We operate it from here. It learns every cycle, we tune it, and it gets more valuable the longer it runs.",
+      "We operate it from here. It learns from every cycle on its own, we keep tuning it, and it gets more valuable the longer it runs.",
   },
 ];
 

@@ -28,7 +28,7 @@ export default function ServiceDetailClient({
           <div className="max-w-3xl">
             <Reveal>
               <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
-                {numberMap[service.slug] ?? "01"} — {service.shortTitle}
+                {numberMap[service.slug] ?? "01"} · {service.shortTitle}
               </p>
               <h1 className="font-heading text-ghost text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight uppercase font-semibold break-words">
                 {service.title}
