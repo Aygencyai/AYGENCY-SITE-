@@ -7,7 +7,7 @@ import { agents } from "@/lib/data";
 
 export default function SystemTeaser() {
   return (
-    <section className="section-padding">
+    <section className="blend-void section-padding">
       <div className="max-w-5xl mx-auto px-6 md:px-8 text-center">
         <motion.p
           initial={{ opacity: 0 }}

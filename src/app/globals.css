@@ -35,6 +35,34 @@ body {
   color: var(--void);
 }
 
+/* Section blends — two-tone palette where each section fades into the next
+   colour over its bottom ~200px, so adjacent sections flow seamlessly. */
+.blend-void {
+  background: linear-gradient(
+    to bottom,
+    var(--void) 0%,
+    var(--void) calc(100% - 200px),
+    var(--surface) 100%
+  );
+}
+.blend-surface {
+  background: linear-gradient(
+    to bottom,
+    var(--surface) 0%,
+    var(--surface) calc(100% - 200px),
+    var(--void) 100%
+  );
+}
+/* A short strip that emerges from void into surface and back (e.g. the marquee). */
+.blend-strip {
+  background: linear-gradient(
+    to bottom,
+    var(--void) 0%,
+    var(--surface) 50%,
+    var(--void) 100%
+  );
+}
+
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     margin: 0;

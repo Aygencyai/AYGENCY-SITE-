@@ -7,7 +7,7 @@ import GlowOrb from "@/components/effects/GlowOrb";
 
 export default function BrainTeaser() {
   return (
-    <section className="section-padding relative overflow-hidden">
+    <section className="blend-void section-padding relative overflow-hidden">
       <GlowOrb
         size={500}
         opacity={0.06}

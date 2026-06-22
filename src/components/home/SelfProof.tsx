@@ -28,7 +28,7 @@ export default function SelfProof() {
   const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
 
   return (
-    <section className="section-padding">
+    <section className="blend-void section-padding">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="max-w-3xl mx-auto text-center">
           <motion.h2

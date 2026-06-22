@@ -1,4 +1,3 @@
-import HomeBackground from "@/components/home/HomeBackground";
 import Hero from "@/components/home/Hero";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import SystemTeaser from "@/components/home/SystemTeaser";
@@ -15,22 +14,19 @@ import PageTransition from "@/components/ui/PageTransition";
 
 export default function HomePage() {
   return (
-    <>
-      <HomeBackground />
-      <PageTransition>
-        <Hero />
-        <SocialProofStrip />
-        <SystemTeaser />
-        <LeadGen />
-        <BrainTeaser />
-        <CEOAgent />
-        <SelfProof />
-        <HowItWorks />
-        <WhyAygency />
-        <Compounding />
-        <DataSecurity />
-        <CTABanner />
-      </PageTransition>
-    </>
+    <PageTransition>
+      <Hero />
+      <SocialProofStrip />
+      <SystemTeaser />
+      <LeadGen />
+      <BrainTeaser />
+      <CEOAgent />
+      <SelfProof />
+      <HowItWorks />
+      <WhyAygency />
+      <Compounding />
+      <DataSecurity />
+      <CTABanner />
+    </PageTransition>
   );
 }

@@ -14,7 +14,7 @@ export default function Compounding() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="section-padding">
+    <section className="blend-surface section-padding">
       <div className="max-w-3xl mx-auto px-6 md:px-8 text-center">
         <motion.p
           initial={{ opacity: 0 }}
