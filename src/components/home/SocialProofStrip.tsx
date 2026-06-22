@@ -22,7 +22,7 @@ function MarqueeTrack() {
 
 export default function SocialProofStrip() {
   return (
-    <section className="bg-surface py-9 md:py-11 border-y border-ghost/[0.06] overflow-hidden">
+    <section className="bg-void py-9 md:py-11 border-y border-ghost/[0.06] overflow-hidden">
       {/* Marquee ticker: two identical tracks for a seamless loop */}
       <div className="relative">
         <div className="flex whitespace-nowrap marquee-scroll">
@@ -31,8 +31,8 @@ export default function SocialProofStrip() {
         </div>
 
         {/* Edge fades so names enter and leave cleanly */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-surface to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-void to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-void to-transparent" />
       </div>
 
       <motion.p

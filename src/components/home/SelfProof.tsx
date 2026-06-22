@@ -28,18 +28,9 @@ export default function SelfProof() {
   const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
 
   return (
-    <section className="bg-surface section-padding">
+    <section className="bg-void section-padding">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6"
-          >
-            {`// proof`}
-          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +38,7 @@ export default function SelfProof() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
           >
-            We built it for ourselves first
+            The exact same pipelines run Aygency
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -56,10 +47,9 @@ export default function SelfProof() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            Aygency runs on the same agents we build for clients. Our new business, our
-            outreach, the daily operations behind the company, all of it runs on the
-            system. We built this to run our own business, and we spent a long time getting
-            it right.
+            The lead generation, the outreach, and the operations that keep Aygency
+            running are the same pipelines we build for clients. We built them to run our
+            own company first, and we spent a long time getting them right.
           </motion.p>
         </div>
 
