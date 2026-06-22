@@ -48,8 +48,9 @@ export default function WhyAygency() {
                 delay: i * 0.12,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              className="h-full"
             >
-              <GlassCard>
+              <GlassCard className="h-full">
                 <h3 className="font-heading text-xl font-semibold text-white">
                   {item.title}
                 </h3>

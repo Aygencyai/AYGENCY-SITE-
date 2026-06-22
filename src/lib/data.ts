@@ -339,13 +339,13 @@ export const processSteps: ProcessStep[] = [
     number: 1,
     title: "Prescribe",
     description:
-      "We show you what a business like yours runs and prescribe the agents that fit. No blank page, no menu to self-architect.",
+      "We learn how your operation actually runs and prescribe the agents that fit it.",
   },
   {
     number: 2,
     title: "Tailor",
     description:
-      "We configure what each agent does inside your operation: what it reads, what it writes, what it decides. You see the whole system before we build.",
+      "We tailor each specialist to how you work, shaping its skills to the exact jobs you need it doing.",
   },
   {
     number: 3,

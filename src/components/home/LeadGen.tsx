@@ -3,10 +3,18 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { Radar, Send, ArrowRight } from "lucide-react";
+import { Radar, Send, ArrowRight, ArrowLeftRight, type LucideIcon } from "lucide-react";
 import GlassCard from "@/components/ui/GlassCard";
 
-const stages = [
+type Stage = {
+  step: string;
+  icon: LucideIcon;
+  label: string;
+  title: string;
+  body: string;
+};
+
+const stages: Stage[] = [
   {
     step: "01",
     icon: Radar,
@@ -22,6 +30,38 @@ const stages = [
     body: "Then the Outreach agent goes to work, and not with a blast. Every message is built for the person reading it: who they are, what they care about, why this matters to them now. We pour real work into the psychology of how it opens, how it follows up, how it reads and handles a reply, all so more of those conversations become meetings, and more of those meetings become revenue.",
   },
 ];
+
+function StageCard({ stage, active }: { stage: Stage; active: boolean }) {
+  const Icon = stage.icon;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={active ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full"
+    >
+      <GlassCard tilt={false} className="h-full">
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 rounded-lg bg-cyan/[0.08] border border-cyan/20 flex items-center justify-center flex-shrink-0">
+            <Icon className="w-5 h-5 text-cyan" strokeWidth={1.5} />
+          </div>
+          <div>
+            <p className="font-mono text-xs text-ghost-dim tracking-wider">{stage.step}</p>
+            <p className="font-mono text-base md:text-lg uppercase tracking-[0.18em] text-cyan font-medium mt-0.5">
+              {stage.label}
+            </p>
+          </div>
+        </div>
+        <h3 className="font-heading text-xl font-semibold text-white mt-5">
+          {stage.title}
+        </h3>
+        <p className="font-sans text-base leading-relaxed text-ghost-muted mt-3">
+          {stage.body}
+        </p>
+      </GlassCard>
+    </motion.div>
+  );
+}
 
 export default function LeadGen() {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,44 +96,35 @@ export default function LeadGen() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            Two agents run your new business as one engine. One finds the opportunities,
-            the other turns them into revenue, around the clock and without anyone having
-            to remember to do it.
+            Two agents run your new business as one engine. One finds the opportunities, the
+            other turns them into revenue, and each one makes the other sharper as they go.
           </motion.p>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14">
-          {stages.map((stage, i) => {
-            const Icon = stage.icon;
-            return (
-              <motion.div
-                key={stage.step}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <GlassCard tilt={false} className="h-full">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-cyan/[0.08] border border-cyan/20 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-cyan" strokeWidth={1.5} />
-                    </div>
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-sm text-cyan">{stage.step}</span>
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-ghost-dim">
-                        {stage.label}
-                      </span>
-                    </div>
-                  </div>
-                  <h3 className="font-heading text-xl font-semibold text-white mt-5">
-                    {stage.title}
-                  </h3>
-                  <p className="font-sans text-base leading-relaxed text-ghost-muted mt-3">
-                    {stage.body}
-                  </p>
-                </GlassCard>
-              </motion.div>
-            );
-          })}
+        <div
+          ref={ref}
+          className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-4 mt-14 items-stretch"
+        >
+          <StageCard stage={stages[0]} active={isInView} />
+
+          {/* Connector: the two agents feed each other */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center justify-center"
+          >
+            <div className="flex flex-col items-center gap-2">
+              <span className="w-12 h-12 rounded-full border border-cyan/30 bg-cyan/[0.06] flex items-center justify-center shadow-glow-sm">
+                <ArrowLeftRight className="w-5 h-5 text-cyan rotate-90 md:rotate-0" strokeWidth={1.5} />
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ghost-dim whitespace-nowrap">
+                feed each other
+              </span>
+            </div>
+          </motion.div>
+
+          <StageCard stage={stages[1]} active={isInView} />
         </div>
 
         <motion.div
@@ -104,9 +135,9 @@ export default function LeadGen() {
           className="mt-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
         >
           <p className="font-sans text-lg leading-[1.7] text-ghost max-w-2xl">
-            It runs every day and finds more than a desk of people could. The better it
-            gets at finding and closing, the more revenue it puts on the table. That is
-            where the real value lives.
+            It runs every day and finds more than a desk of people could. The better it gets
+            at finding and closing, the more revenue it puts on the table. That is where the
+            real value lives.
           </p>
           <Link
             href="/services/revenue-operations"

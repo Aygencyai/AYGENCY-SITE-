@@ -84,6 +84,15 @@ These are non-negotiable. Every component must follow these exactly.
 - Hover on cards: scale or translateY with subtle glow
 - 3D letter animation: block-grid A↔Y morph cycle with Three.js RoundedBox meshes
 
+## Content & Copy Rules
+
+These govern all site copy and are as binding as the design system.
+
+- **Say what we do, not what we don't.** State the thing we actually do, in plain terms. Never define our offer by negation or contrast: cut lines like "no blank page", "no menu to architect yourself", "you see the whole system on paper before a line of it is built", "it's not a dashboard", "you're not our experiment". The reader doesn't need to be told what isn't happening; it reads as defensive and adds nothing. If a sentence exists only to say what we are *not*, delete it.
+- **No em dashes** in visible copy or metadata. Use full stops, commas, or colons instead.
+- **Human cadence.** Vary sentence length. Avoid robotic rule-of-three lists and staccato sentence fragments. Read it aloud; if it sounds like AI, rewrite it.
+- **Brand rules still apply** (from the Brain's `aygency-identity.md`): never publish the tech stack, never mention team size, no unproven ROI numbers, CEO Agent is the public name, and "Built once, compound forever" is the hero line.
+
 ## Architecture
 
 ```

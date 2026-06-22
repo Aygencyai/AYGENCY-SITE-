@@ -7,13 +7,13 @@ const steps = [
     number: "01",
     title: "Prescribe",
     description:
-      "It starts with a call. We learn how your operation actually runs, then prescribe the agents that fit. No blank page, no menu to architect yourself.",
+      "It starts with a call. We learn how your operation actually runs, then prescribe the agents that fit it.",
   },
   {
     number: "02",
     title: "Tailor",
     description:
-      "We shape what each agent does inside your business: what it reads, what it writes, what it’s allowed to decide. You see the whole system on paper before a line of it is built.",
+      "We tailor each specialist to how you work, shaping its skills to the exact jobs you need it doing: the leads it chases, the reports it produces, the conversations it handles. Every agent is shaped around your operation.",
   },
   {
     number: "03",
@@ -61,8 +61,7 @@ export default function HowItWorks() {
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl"
         >
           From the first call to a system that runs your operation on its own, here is the
-          path we take you down. Five steps, and you are never the one left holding the
-          build.
+          path we take you down. Five steps, and we carry the build the whole way.
         </motion.p>
 
         {/* Desktop: horizontal layout */}
