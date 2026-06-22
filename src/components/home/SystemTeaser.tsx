@@ -59,16 +59,17 @@ export default function SystemTeaser() {
           className="mt-10 flex flex-wrap justify-center gap-2.5"
         >
           {agents.map((agent) => (
-            <span
+            <Link
               key={agent.name}
-              className={`font-mono text-xs uppercase tracking-wider rounded px-3 py-1.5 border ${
+              href={`/system#${agent.name.toLowerCase().replace(/\s+/g, "-")}`}
+              className={`font-mono text-xs uppercase tracking-wider rounded px-3 py-1.5 border transition-colors ${
                 agent.group === "ceo"
-                  ? "border-cyan/50 text-cyan bg-cyan/[0.06]"
-                  : "border-ghost/15 text-ghost-muted"
+                  ? "border-cyan/50 text-cyan bg-cyan/[0.06] hover:bg-cyan/[0.12]"
+                  : "border-ghost/15 text-ghost-muted hover:border-cyan/40 hover:text-cyan"
               }`}
             >
               {agent.name}
-            </span>
+            </Link>
           ))}
         </motion.div>
 

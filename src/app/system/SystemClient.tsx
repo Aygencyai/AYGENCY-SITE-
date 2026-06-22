@@ -36,7 +36,9 @@ const iconMap: Record<string, LucideIcon> = {
 
 function AgentCard({ agent, highlight }: { agent: Agent; highlight?: boolean }) {
   const Icon = iconMap[agent.icon] ?? Brain;
+  const anchor = agent.name.toLowerCase().replace(/\s+/g, "-");
   return (
+    <div id={anchor} className="scroll-mt-28">
     <GlassCard tilt={false} className={highlight ? "border-cyan/25" : undefined}>
       <div className="flex items-start gap-4">
         <div className="w-10 h-10 rounded-lg bg-cyan/[0.08] border border-cyan/20 flex items-center justify-center flex-shrink-0">
@@ -55,6 +57,7 @@ function AgentCard({ agent, highlight }: { agent: Agent; highlight?: boolean }) 
         {agent.description}
       </p>
     </GlassCard>
+    </div>
   );
 }
 

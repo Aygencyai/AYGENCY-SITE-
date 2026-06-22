@@ -71,7 +71,7 @@ export default function Hero() {
                 >
                   <p className="font-mono text-lg leading-[1.3] text-cyan whitespace-pre-line">
                     <TypewriterText
-                      text={"You're overpaying for work,\nthat should run itself"}
+                      text={"How much could you grow\nif the work ran itself?"}
                       delay={1800}
                       speed={30}
                     />
