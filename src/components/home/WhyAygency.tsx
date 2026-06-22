@@ -14,8 +14,8 @@ const comparisons = [
     body: "We don\u2019t build it and hand you the keys. We run the system for as long as you do, keeping it safe and tuning it as the business changes, so you\u2019re never left holding something that\u2019s quietly gone stale.",
   },
   {
-    title: "A team, not one bot.",
-    body: "Every agent is a specialist with one job, and the CEO Agent runs the room. You get something that behaves like a department, not one stretched bot trying to be good at everything.",
+    title: "A specialist for every job.",
+    body: "One agent stretched across everything does nothing well. Each of ours is built for a single job, with the CEO Agent reading across all of them. You get the depth of a real department, not a single assistant trying to be everywhere at once.",
   },
 ];
 

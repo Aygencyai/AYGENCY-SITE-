@@ -43,6 +43,12 @@ export default function Footer() {
               >
                 The System
               </Link>
+              <Link
+                href="/brain"
+                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              >
+                The Brain
+              </Link>
               {services.map((service) => (
                 <Link
                   key={service.slug}

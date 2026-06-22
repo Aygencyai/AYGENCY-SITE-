@@ -124,19 +124,19 @@ export default function SystemClient() {
             </div>
           </div>
 
-          {/* Front Desk — the +1 */}
+          {/* Front-Desk, the +1 */}
           {frontDesk && (
             <div className="mt-14">
               <Reveal>
                 <p className="font-mono text-xs text-ghost-dim tracking-widest uppercase mb-4">
-                  Front Desk (the +1)
+                  Front-Desk (the +1)
                 </p>
               </Reveal>
               <Reveal delay={0.05}>
                 <div className="max-w-2xl">
                   <AgentCard agent={frontDesk} highlight />
                   <p className="font-sans text-sm text-ghost-dim mt-4 leading-relaxed">
-                    Customer-facing and inbound, Front Desk doesn&rsquo;t depend on
+                    Customer-facing and inbound, Front-Desk doesn&rsquo;t depend on
                     the operation core. It stands alone as its own system, or bolts
                     onto any other.
                   </p>

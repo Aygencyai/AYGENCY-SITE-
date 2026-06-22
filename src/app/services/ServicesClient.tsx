@@ -15,9 +15,9 @@ import { services } from "@/lib/data";
 
 const systemFit: Record<string, string> = {
   "cost-reduction": "Operations · Analyst · CEO Agent",
-  "revenue-operations": "Scout · Outreach · Strategist · CEO Agent",
+  "revenue-operations": "Lead Gen · Outreach · Strategist · CEO Agent",
   "intelligence": "Analyst · CEO Agent",
-  "full-department": "the full operation core + Front Desk",
+  "full-department": "the full operation core + Front-Desk",
 };
 
 export default function ServicesClient() {

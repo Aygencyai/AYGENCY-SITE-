@@ -1,29 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { agents } from "@/lib/data";
 
-const capabilities = [
-  "Agent Systems",
-  "CEO Agent",
-  "Operations",
-  "Analyst",
-  "Front Desk",
-  "Scout",
-  "Outreach",
-  "Strategist",
-  "Producer",
-  "Multi-Agent Orchestration",
-  "Full AI-Led Departments",
-  "Operated 24/7",
-];
+const names = agents.map((a) => a.name);
 
 function MarqueeTrack() {
   return (
-    <div className="flex shrink-0 gap-8">
-      {capabilities.map((cap) => (
-        <span key={cap} className="font-mono text-sm text-ghost-dim tracking-wider uppercase">
-          {cap}
-        </span>
+    <div className="flex shrink-0 items-center" aria-hidden>
+      {names.map((name) => (
+        <div key={name} className="flex items-center">
+          <span className="font-mono text-sm text-ghost-dim tracking-[0.18em] uppercase px-9">
+            {name}
+          </span>
+          <span className="w-1 h-1 rounded-full bg-cyan/40 shrink-0" />
+        </div>
       ))}
     </div>
   );
@@ -31,24 +22,27 @@ function MarqueeTrack() {
 
 export default function SocialProofStrip() {
   return (
-    <section className="bg-surface py-8 md:py-10 border-y border-ghost/[0.06] overflow-hidden">
-      {/* Marquee ticker — two identical tracks for seamless loop */}
+    <section className="bg-surface py-9 md:py-11 border-y border-ghost/[0.06] overflow-hidden">
+      {/* Marquee ticker: two identical tracks for a seamless loop */}
       <div className="relative">
-        <div className="flex gap-8 whitespace-nowrap marquee-scroll">
+        <div className="flex whitespace-nowrap marquee-scroll">
           <MarqueeTrack />
           <MarqueeTrack />
         </div>
+
+        {/* Edge fades so names enter and leave cleanly */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-surface to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface to-transparent" />
       </div>
 
-      {/* Systems live text */}
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="font-mono text-xs text-ghost-dim mt-6 text-center tracking-wider uppercase"
+        className="font-mono text-xs text-ghost-dim mt-7 text-center tracking-[0.18em] uppercase"
       >
-        Systems live in weeks. Running 24/7.
+        The Aygency System. Eight specialist agents, composed around your operation.
       </motion.p>
     </section>
   );

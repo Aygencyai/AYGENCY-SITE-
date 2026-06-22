@@ -180,7 +180,7 @@ export const useCases: UseCase[] = [
       "The desk fills when someone does outbound, and the people who do it well are the same people billing. When they’re heads-down on placements the pipeline dries up. When they chase pipeline, delivery slips. Junior BDRs haven’t fixed it, because the approach is too consultative to hand to someone who doesn’t know the market. Meanwhile the signals that a company is about to hire are all public: a funding round, a new office, a director posting that they’re drowning. Nobody just has the time to watch for them.",
     agents: [
       {
-        name: "Scout",
+        name: "Lead Gen",
         description:
           "Watches for the signals a company is about to hire, like funding, a new office, fresh role posts, or a director posting that they’re drowning. It works across LinkedIn and the open web, finds the decision-maker, and hands over a scored pipeline every day.",
       },
@@ -195,7 +195,7 @@ export const useCases: UseCase[] = [
           "Reads which messages, sectors, and triggers are converting, and turns that into what to say next week. The engine sharpens instead of going stale.",
       },
       {
-        name: "Producer",
+        name: "Content Production",
         description:
           "Keeps a steady flow of sector content and thought-leadership going out, so the firm is already warm in the market before the first message lands.",
       },
@@ -222,7 +222,7 @@ export const useCases: UseCase[] = [
       "The agency earns on what it lists, and instructions are the bottleneck. You can’t sell a home you were never asked to sell. The sellers worth winning are out there: a house that came off the market unsold with another agent, an owner trying to sell privately, a landlord getting out. Nobody has time to watch for them and be first to the valuation. And the buyer enquiries that do come in off the portals go cold, because a lead that isn’t called back within minutes is usually gone before anyone books the viewing.",
     agents: [
       {
-        name: "Scout",
+        name: "Lead Gen",
         description:
           "Finds both sides of the market. On supply, the seller signals worth being first to: homes withdrawn or expired with another agent, owners trying to sell privately, landlords getting out. On demand, the active buyers in your patch. It hands over a matched, ready-to-approach pipeline.",
       },
@@ -237,7 +237,7 @@ export const useCases: UseCase[] = [
           "Reads the local market and the pipeline. Which areas and sources produce instructions, what’s selling, and where to point the effort next.",
       },
       {
-        name: "Producer",
+        name: "Content Production",
         description:
           "Keeps the agency visible as the local expert, with area guides, valuation content, and just-listed and just-sold posts, so sellers choose you before you’ve even spoken.",
       },
@@ -248,7 +248,7 @@ export const useCases: UseCase[] = [
       },
     ],
     estimatedImpact:
-      "More of the right instructions won earlier, fewer portal buyers lost to a slow callback, and a clear read on where your next listings come from. Add Front Desk and every inbound enquiry gets answered and booked the moment it lands. Live within weeks, sharper every month.",
+      "More of the right instructions won earlier, fewer portal buyers lost to a slow callback, and a clear read on where your next listings come from. Add Front-Desk and every inbound enquiry gets answered and booked the moment it lands. Live within weeks, sharper every month.",
     ctaHeading: "Growing only as fast as you win instructions?",
     ctaBody:
       "Tell us your patch and we’ll map the engine that wins you more sellers and stops the buyers leaking. You keep the plan whether you build it with us or not.",
@@ -264,7 +264,7 @@ export const useCases: UseCase[] = [
       "The community is the product, and the work of running it grows with every member you add. Answering people across every channel, handling renewals, organising events, managing the waitlist, onboarding new joiners. It lives across email, WhatsApp, an app, and a few people’s heads. Members wait hours for answers that should take seconds, renewals slip because nobody chased them, and the founder ends up buried in operational detail instead of growing the thing.",
     agents: [
       {
-        name: "Front Desk",
+        name: "Front-Desk",
         description:
           "Answers members on whatever channel they use, about access, billing, events, the things they ask every day. It replies instantly, around the clock, and only escalates what genuinely needs a person.",
       },
@@ -316,7 +316,7 @@ export const useCases: UseCase[] = [
           "Reconciles the numbers, flags what’s overdue or off, and produces the reports the partners used to put together by hand.",
       },
       {
-        name: "Front Desk",
+        name: "Front-Desk",
         description:
           "Answers the routine client questions about status, documents, and billing instantly, and routes everything else to the right person with the full context attached.",
       },
@@ -400,7 +400,7 @@ export const agents: Agent[] = [
     icon: "analyst",
   },
   {
-    name: "Scout",
+    name: "Lead Gen",
     role: "The finder",
     description:
       "Scours where your prospects, candidates, or opportunities show up, enriches and scores them, and hands over a clean pipeline.",
@@ -424,7 +424,7 @@ export const agents: Agent[] = [
     icon: "strategist",
   },
   {
-    name: "Producer",
+    name: "Content Production",
     role: "The maker",
     description:
       "Generates the content the operation runs on: copy, posts, reports, briefings. In your voice, on cadence.",
@@ -432,7 +432,7 @@ export const agents: Agent[] = [
     icon: "producer",
   },
   {
-    name: "Front Desk",
+    name: "Front-Desk",
     role: "The front of house",
     description:
       "Handles inbound conversations on any channel, chat or voice, and actually completes things: books, answers, resolves. Runs on its own, so it stands alone or bolts onto any system.",
@@ -458,6 +458,6 @@ export const tiers: Tier[] = [
     name: "Full operation",
     composition: "CEO Agent + the full specialist core",
     blurb:
-      "The whole operation running as one coordinated system. Add Front Desk when you want customer-facing front of house.",
+      "The whole operation running as one coordinated system. Add Front-Desk when you want customer-facing front of house.",
   },
 ];

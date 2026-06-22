@@ -7,31 +7,31 @@ const steps = [
     number: "01",
     title: "Prescribe",
     description:
-      "We show you what a business like yours runs and prescribe the agents that fit. No blank page, no menu to self-architect.",
+      "It starts with a call. We learn how your operation actually runs, then prescribe the agents that fit. No blank page, no menu to architect yourself.",
   },
   {
     number: "02",
     title: "Tailor",
     description:
-      "We configure what each agent does inside your operation: what it reads, what it writes, what it decides. You see the whole system before we build.",
+      "We shape what each agent does inside your business: what it reads, what it writes, what it’s allowed to decide. You see the whole system on paper before a line of it is built.",
   },
   {
     number: "03",
     title: "Build",
     description:
-      "We build every agent and connect it to your live tools and data. You watch it come together.",
+      "We build every agent and wire it into your live tools and data. You watch the system come together, piece by piece.",
   },
   {
     number: "04",
     title: "Deploy",
     description:
-      "The system goes live in your environment, on real data, making real decisions. Results in the first weeks.",
+      "It goes live in your environment, on real data, doing real work. You start seeing results inside the first few weeks.",
   },
   {
     number: "05",
     title: "Compound",
     description:
-      "We operate it from here. It learns every cycle, we tune it, and it gets more valuable the longer it runs.",
+      "From there we operate it. It sharpens itself every cycle, we keep it tuned, and it’s worth more to you every month it runs.",
   },
 ];
 
@@ -52,6 +52,18 @@ export default function HowItWorks() {
             How It Works
           </h2>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl"
+        >
+          From the first call to a system that runs your operation on its own, here is the
+          path we take you down. Five steps, and you are never the one left holding the
+          build.
+        </motion.p>
 
         {/* Desktop: horizontal layout */}
         <div ref={ref} className="hidden md:flex items-start mt-16 justify-between">
