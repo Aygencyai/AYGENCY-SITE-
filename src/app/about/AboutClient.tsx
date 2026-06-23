@@ -80,7 +80,8 @@ export default function AboutClient() {
                   take that weight off a business entirely, and once I saw it the opportunity
                   was impossible to ignore. I think in openings and a few moves ahead, probably
                   the chess habit showing, and Aygency is that instinct pointed at businesses:
-                  find the move that quietly changes the whole board.
+                  find the move that quietly changes the whole board. AI completely
+                  transformed my life. I want to help it transform yours, too.
                 </p>
               </div>
             </Reveal>
@@ -99,7 +100,11 @@ export default function AboutClient() {
                   of chess, which turns out to be the right kind of obsession for this. You
                   read the whole board, you protect what matters, and you keep improving the
                   position long after the game looks won. That is how we build, and how we
-                  run what we build.
+                  run what we build. AI shouldn&rsquo;t just hand you a pasta recipe. Used
+                  properly it takes the weight off your life, clears the obstacles out of
+                  your business, and accelerates everything you set out to do. That is the
+                  part I want to play: helping people step into this new world of AI, and the
+                  freedom that comes with it.
                 </p>
               </div>
             </Reveal>
