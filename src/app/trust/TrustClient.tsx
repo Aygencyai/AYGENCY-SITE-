@@ -57,7 +57,7 @@ export default function TrustClient() {
       </section>
 
       {/* Pillars */}
-      <section className="bg-void pt-12 pb-24 md:pt-16 md:pb-32">
+      <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-32">
         <SectionContainer>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {pillars.map((pillar, i) => {
@@ -83,7 +83,7 @@ export default function TrustClient() {
       </section>
 
       {/* CTA band */}
-      <section className="bg-surface section-padding relative overflow-hidden">
+      <section className="blend-surface section-padding relative overflow-hidden">
         <AnimatedGrid />
         <GlowOrb
           size={400}

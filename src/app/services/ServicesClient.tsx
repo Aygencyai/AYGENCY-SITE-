@@ -49,7 +49,7 @@ export default function ServicesClient() {
       </section>
 
       {/* Service Cards */}
-      <section className="bg-void pt-12 pb-24 md:pt-16 md:pb-32">
+      <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-32">
         <SectionContainer>
           <div className="flex flex-col gap-8 md:gap-12">
             {services.map((service, i) => (
@@ -108,7 +108,7 @@ export default function ServicesClient() {
       </section>
 
       {/* CTA Band */}
-      <section className="bg-surface section-padding relative overflow-hidden">
+      <section className="blend-surface section-padding relative overflow-hidden">
         <AnimatedGrid />
         <GlowOrb
           size={400}

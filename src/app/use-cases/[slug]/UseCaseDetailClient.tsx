@@ -25,7 +25,7 @@ export default function UseCaseDetailClient({
   return (
     <>
       {/* A. Hero */}
-      <section className="bg-void pt-32 pb-20">
+      <section className="blend-void pt-32 pb-20">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -52,7 +52,7 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* B. The Problem */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -71,7 +71,7 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* C. The System — Agent Architecture */}
-      <section className="bg-void section-padding">
+      <section className="blend-void section-padding">
         <SectionContainer>
           <Reveal>
             <SectionHeading
@@ -138,7 +138,7 @@ export default function UseCaseDetailClient({
       </section>
 
       {/* D. Estimated Impact */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <div className="text-center max-w-3xl mx-auto">
             <Reveal>

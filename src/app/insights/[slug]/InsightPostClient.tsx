@@ -47,7 +47,7 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
       </section>
 
       {/* Body */}
-      <section className="bg-void pb-24 md:pb-32">
+      <section className="blend-void pb-24 md:pb-32">
         <SectionContainer>
           <article className="max-w-3xl space-y-10">
             {post.content.map((section, i) => (
@@ -74,7 +74,7 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
       </section>
 
       {/* CTA */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <div className="text-center max-w-2xl mx-auto">
             <Reveal>

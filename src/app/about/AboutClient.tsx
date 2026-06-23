@@ -34,7 +34,7 @@ export default function AboutClient() {
       </section>
 
       {/* The compounding effect */}
-      <section className="bg-void pt-12 pb-24 md:pt-16 md:pb-28">
+      <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-28">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -62,7 +62,7 @@ export default function AboutClient() {
       </section>
 
       {/* Stewardship, not the cause */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -98,7 +98,7 @@ export default function AboutClient() {
       </section>
 
       {/* Why we exist */}
-      <section className="bg-void section-padding">
+      <section className="blend-void section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -126,7 +126,7 @@ export default function AboutClient() {
       </section>
 
       {/* CTA band */}
-      <section className="bg-surface section-padding relative overflow-hidden">
+      <section className="blend-surface section-padding relative overflow-hidden">
         <AnimatedGrid />
         <GlowOrb
           size={400}

@@ -64,7 +64,7 @@ export default function BrainClient() {
       </section>
 
       {/* What it is */}
-      <section className="bg-void pt-12 pb-20 md:pt-16 md:pb-28">
+      <section className="blend-void pt-12 pb-20 md:pt-16 md:pb-28">
         <SectionContainer>
           <div className="max-w-3xl space-y-6">
             <Reveal>
@@ -102,7 +102,7 @@ export default function BrainClient() {
       </section>
 
       {/* Pillars */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <Reveal>
             <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">

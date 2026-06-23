@@ -41,7 +41,7 @@ export default function UseCasesClient() {
       </section>
 
       {/* Grid */}
-      <section className="bg-void pt-12 pb-24 md:pt-16 md:pb-32">
+      <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-32">
         <SectionContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {useCases.map((useCase, i) => (
@@ -99,7 +99,7 @@ export default function UseCasesClient() {
       </section>
 
       {/* CTA Band */}
-      <section className="bg-surface section-padding relative overflow-hidden">
+      <section className="blend-surface section-padding relative overflow-hidden">
         <AnimatedGrid />
         <GlowOrb
           size={400}

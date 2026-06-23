@@ -23,7 +23,7 @@ export default function ServiceDetailClient({
   return (
     <>
       {/* A. Hero */}
-      <section className="bg-void pt-32 pb-20">
+      <section className="blend-void pt-32 pb-20">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -42,7 +42,7 @@ export default function ServiceDetailClient({
       </section>
 
       {/* B. The Problem */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>

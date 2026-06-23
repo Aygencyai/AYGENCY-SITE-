@@ -46,9 +46,10 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl mx-auto"
         >
-          From those eight we compose your system. Sometimes one, often several, each one
-          tailored to the workflows you actually run. Start with the few that move the
-          needle first and add the rest as they earn their place.
+          From those eight we compose your system: a coordinated team of specialists, each
+          tailored to the workflows you actually run. Every job gets its own expert agent,
+          so each one becomes the best at the single thing it does. We start with the few
+          that move the needle first and add the rest as they earn their place.
         </motion.p>
 
         <motion.div

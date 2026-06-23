@@ -89,7 +89,7 @@ export default function SystemClient() {
       </section>
 
       {/* How the system is built */}
-      <section className="bg-void pt-12 pb-24 md:pt-16 md:pb-32">
+      <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-32">
         <SectionContainer>
           <Reveal>
             <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
@@ -151,7 +151,7 @@ export default function SystemClient() {
       </section>
 
       {/* How much system you need — the spectrum */}
-      <section className="bg-surface section-padding">
+      <section className="blend-surface section-padding">
         <SectionContainer>
           <Reveal>
             <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
@@ -198,7 +198,7 @@ export default function SystemClient() {
       </section>
 
       {/* We prescribe. You don't architect. */}
-      <section className="bg-void section-padding">
+      <section className="blend-void section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
@@ -218,7 +218,7 @@ export default function SystemClient() {
       </section>
 
       {/* CTA band */}
-      <section className="bg-surface section-padding relative overflow-hidden">
+      <section className="blend-surface section-padding relative overflow-hidden">
         <AnimatedGrid />
         <GlowOrb
           size={400}
