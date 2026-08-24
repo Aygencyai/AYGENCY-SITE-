@@ -1,9 +1,9 @@
 import type { FieldPath } from "react-hook-form";
 import type {
   AutonomyPreference,
+  BuyingPriority,
   DataReadiness,
   EdenQuestionnaireValues,
-  InvestmentRange,
   PrimaryGoal,
   SuccessMeasure,
   SystemOption,
@@ -30,7 +30,7 @@ export const edenSteps = [
   { id: "autonomyPreference", fields: ["answers.autonomyPreference"] },
   { id: "successMeasures", fields: ["answers.successMeasures"] },
   { id: "timeline", fields: ["answers.timeline"] },
-  { id: "investmentRange", fields: ["answers.investmentRange"] },
+  { id: "buyingPriority", fields: ["answers.buyingPriority"] },
   { id: "fullName", fields: ["contact.fullName"] },
   { id: "companyName", fields: ["contact.companyName"] },
   { id: "consents", fields: ["consent.inquiry", "consent.marketing"] },
@@ -250,14 +250,26 @@ export const timelineOptionList: ReadonlyArray<EdenOption<Timeline>> = [
   { value: "exploring", label: "I am exploring what Eden could do" },
 ];
 
-export const investmentOptionList: ReadonlyArray<
-  EdenOption<InvestmentRange>
+export const buyingPriorityOptionList: ReadonlyArray<
+  EdenOption<BuyingPriority>
 > = [
-  { value: "under_500_monthly", label: "Under £500 / month" },
-  { value: "500_1k_monthly", label: "£500–£1,000 / month" },
-  { value: "1k_2k_monthly", label: "£1,000–£2,000 / month" },
-  { value: "2k_plus_monthly", label: "£2,000+ / month" },
-  { value: "need_guidance", label: "Help me choose the right level" },
+  {
+    value: "best_result",
+    label: "Getting the strongest fit and result",
+    description:
+      "Quality, reliability, and the right capability for my work come first.",
+  },
+  {
+    value: "balanced_value",
+    label: "Balancing capability and value",
+    description:
+      "I want the right result supported by a clear commercial case.",
+  },
+  {
+    value: "lowest_price",
+    label: "Keeping the monthly price as low as possible",
+    description: "Price will lead my decision when I compare the options.",
+  },
 ];
 
 export const primaryGoalLabels: Record<PrimaryGoal, string> = {
@@ -308,9 +320,9 @@ export const timelineLabels = Object.fromEntries(
   timelineOptionList.map((option) => [option.value, option.label])
 ) as Record<Timeline, string>;
 
-export const investmentLabels = Object.fromEntries(
-  investmentOptionList.map((option) => [option.value, option.label])
-) as Record<InvestmentRange, string>;
+export const buyingPriorityLabels = Object.fromEntries(
+  buyingPriorityOptionList.map((option) => [option.value, option.label])
+) as Record<BuyingPriority, string>;
 
 interface EdenExamplePattern {
   title: string;

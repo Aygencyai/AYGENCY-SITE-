@@ -17,10 +17,10 @@ async function completeQuestionnaire(
   page: Page,
   {
     grantInquiry = true,
-    onInvestmentStep,
+    onBuyingPriorityStep,
   }: {
     grantInquiry?: boolean;
-    onInvestmentStep?: (page: Page) => Promise<void>;
+    onBuyingPriorityStep?: (page: Page) => Promise<void>;
   } = {}
 ) {
   await page
@@ -72,8 +72,8 @@ async function completeQuestionnaire(
   await selectOption(page, "During the next three months");
   await continueQuestion(page);
 
-  await onInvestmentStep?.(page);
-  await selectOption(page, "£1,000–£2,000 / month");
+  await onBuyingPriorityStep?.(page);
+  await selectOption(page, "Getting the strongest fit and result");
   await continueQuestion(page);
 
   await page.getByLabel("Full name").fill("Alex Morgan");
@@ -142,7 +142,7 @@ test.describe("Eden AI Personal Assistant", () => {
 
     await expect(
       page.getByRole("heading", {
-        name: "If Eden were already helping, what would feel different in your week?",
+        name: "What should Eden make reliably true each week?",
       })
     ).toBeFocused();
 
@@ -201,10 +201,10 @@ test.describe("Eden AI Personal Assistant", () => {
     );
     await completeQuestionnaire(page, {
       grantInquiry: false,
-      onInvestmentStep: async (currentPage) => {
+      onBuyingPriorityStep: async (currentPage) => {
         await expect(
           currentPage.getByRole("heading", {
-            name: "What monthly level feels realistic for a managed Eden?",
+            name: "What matters most when choosing your Eden?",
           })
         ).toBeVisible();
 
@@ -225,7 +225,7 @@ test.describe("Eden AI Personal Assistant", () => {
           );
           expect(overflow).toBeLessThanOrEqual(0);
           await currentPage.screenshot({
-            path: testInfo.outputPath(`${viewport.name}-monthly-service.png`),
+            path: testInfo.outputPath(`${viewport.name}-buying-priority.png`),
             fullPage: true,
           });
         }
@@ -276,6 +276,9 @@ test.describe("Eden AI Personal Assistant", () => {
       )
     ).toBeVisible();
     await expect(
+      page.getByText("Getting the strongest fit and result", { exact: true })
+    ).toBeVisible();
+    await expect(
       page.getByRole("link", { name: "Email build@aygency.ai" })
     ).toHaveAttribute(
       "href",
@@ -288,7 +291,7 @@ test.describe("Eden AI Personal Assistant", () => {
     const submitted = submittedBody as {
       consent: { inquiry: boolean; marketing: boolean };
       attribution: Record<string, string>;
-      answers: { desiredOutcome: string; investmentRange: string };
+      answers: { desiredOutcome: string; buyingPriority: string };
       contact: { workEmail: string };
     } | null;
     expect(submitted?.consent).toEqual({ inquiry: true, marketing: false });
@@ -301,7 +304,8 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(submitted?.answers.desiredOutcome).toBe(
       "Every recurring request reaches the right owner with context and a clear next action."
     );
-    expect(submitted?.answers.investmentRange).toBe("1k_2k_monthly");
+    expect(submitted?.answers.buyingPriority).toBe("best_result");
+    expect(submitted?.answers).not.toHaveProperty("investmentRange");
     expect(submitted?.contact.workEmail).toBe("alex@example.com");
 
     for (const viewport of [

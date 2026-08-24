@@ -30,10 +30,10 @@ import {
 import { captureEdenAttribution } from "@/lib/eden/attribution";
 import {
   autonomyOptionList,
+  buyingPriorityOptionList,
   dataReadinessOptionList,
   edenSteps,
   getVolumeQuestion,
-  investmentOptionList,
   primaryGoalOptions,
   successMeasureOptionList,
   systemOptionList,
@@ -469,8 +469,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="If Eden were already helping, what would feel different in your week?"
-            description="Describe the outcome in practical terms. Tell us what Eden would keep moving, prepare, or bring to your attention."
+            title="What should Eden make reliably true each week?"
+            description="Describe the result in practical terms. Tell us what better looks like, who notices, and what no longer depends on you."
           >
             <label htmlFor="desiredOutcome" className="sr-only">
               Desired outcome
@@ -490,8 +490,8 @@ export default function DesignYourEdenClient({
                 id="desiredOutcome-hint"
                 className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
               >
-                Share enough detail for us to picture Eden in your normal
-                working week.
+                A specific outcome gives us a useful first acceptance test for
+                your Eden.
               </p>
               <CharacterCount current={desiredOutcome.length} maximum={800} />
             </div>
@@ -506,8 +506,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What currently takes your attention or gets missed?"
-            description="Tell us what you repeatedly chase, remember, prepare, copy between tools, or pick up after it has slowed down."
+            title="What gets in the way today, and what happens when it slips?"
+            description="Tell us what you repeatedly chase, remember, prepare, or copy between tools, then describe the consequence when it slows down or gets missed."
           >
             <label htmlFor="currentChallenge" className="sr-only">
               Current working challenge
@@ -527,8 +527,8 @@ export default function DesignYourEdenClient({
                 id="currentChallenge-hint"
                 className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
               >
-                Include the tools, people, and recurring moments involved. That
-                context makes your Eden example more useful.
+                Include the people and recurring moments involved. We will ask
+                about the tools separately.
               </p>
               <CharacterCount current={currentChallenge.length} maximum={1200} />
             </div>
@@ -688,8 +688,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What would make Eden valuable each month?"
-            description="Choose up to four outcomes you would genuinely notice in your work or your team's experience."
+            title="How would you know Eden is earning her place?"
+            description="Choose up to four outcomes you would genuinely measure or notice in your work or your team's experience."
           >
             <Controller
               name="answers.successMeasures"
@@ -697,7 +697,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="What would make Eden valuable each month?"
+                  legend="How would you know Eden is earning her place?"
                   options={successMeasureOptionList}
                   value={field.value}
                   multiple
@@ -722,8 +722,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="When would you like Eden working with you?"
-            description="Choose the timing that best reflects your current interest and readiness."
+            title="How ready are you to put Eden to work?"
+            description="Choose the timing that best reflects when you would be ready to begin discovery and onboarding."
           >
             <Controller
               name="answers.timeline"
@@ -731,7 +731,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="When would you like Eden working with you?"
+                  legend="How ready are you to put Eden to work?"
                   options={timelineOptionList}
                   value={field.value}
                   onChange={field.onChange}
@@ -744,21 +744,21 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
-      case "investmentRange":
+      case "buyingPriority":
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What monthly level feels realistic for a managed Eden?"
-            description="This helps us shape the right level of ongoing assistance and support. Any one-off onboarding or tool connections are scoped separately."
+            title="What matters most when choosing your Eden?"
+            description="Choose the trade-off that should lead our recommendation. Pricing is scoped after we understand the Eden you need."
           >
             <Controller
-              name="answers.investmentRange"
+              name="answers.buyingPriority"
               control={control}
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="What monthly level feels realistic for a managed Eden?"
-                  options={investmentOptionList}
+                  legend="What matters most when choosing your Eden?"
+                  options={buyingPriorityOptionList}
                   value={field.value}
                   onChange={field.onChange}
                   onBlur={field.onBlur}

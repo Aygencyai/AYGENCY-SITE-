@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import type { EdenApplication } from "./application-schema";
-import { investmentLabels, primaryGoalLabels } from "./questionnaire";
+import { buyingPriorityLabels, primaryGoalLabels } from "./questionnaire";
 
 interface EmailSender {
   emails: {
@@ -60,7 +60,7 @@ export async function sendEdenApplicationNotification(
         `Applicant: ${singleLine(application.contact.fullName)}`,
         `Company: ${singleLine(application.contact.companyName)}`,
         `First Eden responsibility: ${primaryGoalLabels[application.answers.primaryGoal]}`,
-        `Monthly service range: ${investmentLabels[application.answers.investmentRange]}`,
+        `Decision priority: ${buyingPriorityLabels[application.answers.buyingPriority]}`,
         `Marketing consent: ${application.consent.marketing ? "granted" : "not granted"}`,
         "",
         "Open the CRM record for the complete, authoritative application.",

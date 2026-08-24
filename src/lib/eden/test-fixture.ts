@@ -22,7 +22,7 @@ export function createEdenApplicationFixture(): EdenApplication {
         "operational_visibility",
       ],
       timeline: "this_quarter",
-      investmentRange: "1k_2k_monthly",
+      buyingPriority: "best_result",
     },
     contact: {
       fullName: "Alex Morgan",

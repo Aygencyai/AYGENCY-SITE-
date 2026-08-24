@@ -76,12 +76,10 @@ export const timelineOptions = [
   "exploring",
 ] as const;
 
-export const investmentRanges = [
-  "under_500_monthly",
-  "500_1k_monthly",
-  "1k_2k_monthly",
-  "2k_plus_monthly",
-  "need_guidance",
+export const buyingPriorities = [
+  "best_result",
+  "balanced_value",
+  "lowest_price",
 ] as const;
 
 const requiredText = (field: string, minimum: number, maximum: number) =>
@@ -120,7 +118,7 @@ const answersSchema = z
       .max(4, "Select no more than four measures of success.")
       .refine(uniqueArray, "Select each success measure only once."),
     timeline: z.enum(timelineOptions),
-    investmentRange: z.enum(investmentRanges),
+    buyingPriority: z.enum(buyingPriorities),
   })
   .strict();
 
@@ -219,4 +217,4 @@ export type DataReadiness = EdenAnswers["dataReadiness"];
 export type AutonomyPreference = EdenAnswers["autonomyPreference"];
 export type SuccessMeasure = EdenAnswers["successMeasures"][number];
 export type Timeline = EdenAnswers["timeline"];
-export type InvestmentRange = EdenAnswers["investmentRange"];
+export type BuyingPriority = EdenAnswers["buyingPriority"];

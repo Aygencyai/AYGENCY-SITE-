@@ -36,7 +36,7 @@ describe("Eden application notification", () => {
     );
     expect(payload.text).toContain("authoritative application");
     expect(payload.text).toContain(
-      "Monthly service range: £1,000–£2,000 / month"
+      "Decision priority: Getting the strongest fit and result"
     );
     expect(payload.text).not.toContain(application.answers.currentChallenge);
     expect(payload.text).not.toContain(application.answers.desiredOutcome);

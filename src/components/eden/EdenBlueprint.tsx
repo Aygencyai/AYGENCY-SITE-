@@ -17,10 +17,10 @@ import type { EdenApplication } from "@/lib/eden/application-schema";
 import {
   autonomyLabels,
   blueprintByGoal,
+  buyingPriorityLabels,
   dataReadinessLabels,
   getEdenExample,
   getBlueprintOperatingMode,
-  investmentLabels,
   primaryGoalLabels,
   successMeasureLabels,
   systemLabels,
@@ -350,8 +350,8 @@ export default function EdenBlueprint({
             value={timelineLabels[application.answers.timeline]}
           />
           <AnswerRow
-            label="Monthly service range"
-            value={investmentLabels[application.answers.investmentRange]}
+            label="Decision priority"
+            value={buyingPriorityLabels[application.answers.buyingPriority]}
           />
         </dl>
       </details>

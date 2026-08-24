@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { edenApplicationSchema } from "./application-schema";
+import { buyingPriorities, edenApplicationSchema } from "./application-schema";
 import { createEdenApplicationFixture } from "./test-fixture";
 
 describe("edenApplicationSchema", () => {
@@ -63,19 +63,25 @@ describe("edenApplicationSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("stores Eden's monthly service range and rejects legacy build bands", () => {
-    const monthly = createEdenApplicationFixture();
-    const legacy = {
+  it("stores decision priority and rejects obsolete price bands", () => {
+    for (const buyingPriority of buyingPriorities) {
+      const valueLed = createEdenApplicationFixture();
+      valueLed.answers.buyingPriority = buyingPriority;
+
+      expect(
+        edenApplicationSchema.parse(valueLed).answers.buyingPriority
+      ).toBe(buyingPriority);
+    }
+
+    const obsolete = {
       ...createEdenApplicationFixture(),
       answers: {
         ...createEdenApplicationFixture().answers,
-        investmentRange: "25k_50k",
+        buyingPriority: undefined,
+        investmentRange: "under_500_monthly",
       },
     };
 
-    expect(edenApplicationSchema.parse(monthly).answers.investmentRange).toBe(
-      "1k_2k_monthly"
-    );
-    expect(edenApplicationSchema.safeParse(legacy).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(obsolete).success).toBe(false);
   });
 });
