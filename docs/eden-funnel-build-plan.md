@@ -206,3 +206,37 @@ Set these only in the server deployment environment:
 - `EDEN_NOTIFICATION_FROM` — optional verified Resend sender.
 
 `NEXT_PUBLIC_CAL_URL` remains the only Eden-flow value intentionally available in the browser. Live CRM/Resend smoke submission is outside local verification because it would create a real record; it should be performed once in a controlled deployment using a clearly labelled test application and the same idempotency key on any retry.
+
+## Iteration: email gate and concrete Eden example
+
+This iteration responds to review feedback after the live-site integration.
+
+### Entry decision
+
+- Make work email question 1, immediately after the visitor chooses to explore their Eden.
+- Require a valid email before revealing the operational questions.
+- Keep full name and company name near the end, where they add context to the completed inquiry.
+- Keep inquiry and marketing permissions separate on the final screen.
+- Do not create an early browser-to-CRM write. Until the full application is submitted, the email remains only in React Hook Form state. The approved `EdenApplicationSubmitted.v1` event remains the sole durable CRM write.
+- Treat abandoned-email capture as a future contract decision requiring its own approved event, consent wording, retention policy, and abuse controls.
+
+### Blueprint decision
+
+- Add a prominent `An example of what your Eden can do for you` section before the original-answer record.
+- Build the example deterministically from validated option values such as priority, volume, systems, team size, and authority preference.
+- Use controlled labels and scenario copy for the constructed example. Keep applicant free text in the original-answer record rather than interpolating it into generated operational claims.
+- Show a simple three-part sequence: the work arriving, Eden coordinating the right specialist, and the agreed human decision point.
+
+### Closing decision
+
+- Close with a direct invitation to contact Aygency for more information, scope, and a quote.
+- Display and link `build@aygency.ai` as the principal contact action.
+- Retain the discovery-call CTA as a separate secondary route to satisfy the original conversion requirement.
+
+### Verification gate
+
+- Browser coverage proves email is the first required screen and remains retained through Back navigation.
+- Blueprint coverage proves the concrete example changes with answers and uses controlled mappings.
+- The closing email and discovery-call links are both present and keyboard accessible.
+- Axe scans and horizontal-overflow checks pass at 375, 768, 1024, and 1440 pixels.
+- `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass before the implementation commit.
