@@ -8,6 +8,7 @@ export default function sitemap() {
     { url: `${BASE_URL}/services`, lastModified: new Date() },
     { url: `${BASE_URL}/use-cases`, lastModified: new Date() },
     { url: `${BASE_URL}/contact`, lastModified: new Date() },
+    { url: `${BASE_URL}/design-your-eden`, lastModified: new Date() },
   ];
 
   const servicePages = services.map((s) => ({

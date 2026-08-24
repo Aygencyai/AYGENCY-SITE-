@@ -175,6 +175,15 @@ const attributionSchema = z
   })
   .strict();
 
+export const edenQuestionnaireSchema = z
+  .object({
+    answers: answersSchema,
+    contact: contactSchema,
+    consent: consentSchema,
+    website: z.string().max(200),
+  })
+  .strict();
+
 export const edenApplicationSchema = z
   .object({
     submissionId: z.string().uuid("Submission ID must be a UUID."),
@@ -198,6 +207,7 @@ export const edenApplicationSchema = z
   });
 
 export type EdenApplication = z.infer<typeof edenApplicationSchema>;
+export type EdenQuestionnaireValues = z.infer<typeof edenQuestionnaireSchema>;
 export type EdenAnswers = EdenApplication["answers"];
 export type EdenContact = EdenApplication["contact"];
 export type EdenAttribution = EdenApplication["attribution"];

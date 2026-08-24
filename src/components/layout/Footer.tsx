@@ -68,6 +68,12 @@ export default function Footer() {
             </h3>
             <div className="flex flex-col gap-3">
               <Link
+                href="/design-your-eden"
+                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              >
+                AI Personal Assistant
+              </Link>
+              <Link
                 href="/use-cases"
                 className="text-sm text-ghost-dim hover:text-cyan transition-colors"
               >

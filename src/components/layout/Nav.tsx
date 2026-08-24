@@ -13,6 +13,7 @@ const navLinks = [
   { label: "The Brain", href: "/brain" },
   { label: "Services", href: "/services" },
   { label: "Use Cases", href: "/use-cases" },
+  { label: "AI Personal Assistant", href: "/design-your-eden" },
   { label: "Insights", href: "/insights" },
   { label: "About", href: "/about" },
 ];
@@ -89,7 +90,7 @@ export default function Nav() {
             </Link>
 
             {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden xl:flex items-center gap-5 2xl:gap-8">
               {navLinks.map((link) =>
                 link.label === "Services" ? (
                   <div
@@ -165,13 +166,13 @@ export default function Nav() {
                 href="/contact"
                 className="bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg px-8 py-3 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200"
               >
-                Contact
+                Contact Us
               </Link>
             </div>
 
             {/* Mobile hamburger */}
             <button
-              className="lg:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[6px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/30 focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-lg"
+              className="xl:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-[6px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/30 focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-lg"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
@@ -242,7 +243,7 @@ export default function Nav() {
             </div>
 
             {/* Mobile links */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
+            <div className="flex-1 flex flex-col items-center gap-5 overflow-y-auto px-6 py-8 sm:justify-center sm:gap-6">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.label}
@@ -253,19 +254,19 @@ export default function Nav() {
                 >
                   <Link
                     href={link.href}
-                    className="font-heading text-3xl text-ghost font-semibold uppercase"
+                    className="font-heading text-2xl text-ghost font-semibold uppercase sm:text-3xl"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
                   </Link>
                   {/* Sub-links for Services */}
                   {link.label === "Services" && (
-                    <div className="flex flex-col gap-3 mt-4">
+                    <div className="mt-3 flex flex-col gap-2 sm:mt-4 sm:gap-3">
                       {services.map((service) => (
                         <Link
                           key={service.slug}
                           href={`/services/${service.slug}`}
-                          className="text-lg text-ghost-muted hover:text-cyan transition-colors"
+                          className="text-sm text-ghost-muted transition-colors hover:text-cyan sm:text-lg"
                           onClick={() => setMobileOpen(false)}
                         >
                           {service.shortTitle}
@@ -279,13 +280,13 @@ export default function Nav() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: navLinks.length * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-4 w-full max-w-xs"
+                className="mt-2 w-full max-w-xs"
               >
                 <Link
                   href="/contact"
                   className="block w-full text-center bg-cyan text-void font-heading font-semibold text-[13px] uppercase tracking-[0.15em] rounded-lg px-8 py-4 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] transition-all duration-200"
                 >
-                  Contact
+                  Contact Us
                 </Link>
               </motion.div>
             </div>
