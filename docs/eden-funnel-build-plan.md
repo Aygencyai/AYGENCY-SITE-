@@ -240,3 +240,50 @@ This iteration responds to review feedback after the live-site integration.
 - The closing email and discovery-call links are both present and keyboard accessible.
 - Axe scans and horizontal-overflow checks pass at 375, 768, 1024, and 1440 pixels.
 - `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass before the implementation commit.
+
+## Iteration: reliable local completion and Eden-specific qualification
+
+This iteration responds to hands-on review of the completed questionnaire on 24 August 2026.
+
+### Submission recovery
+
+- Treat the localhost origin rejection as a defect. The development server may bind to `0.0.0.0` while the browser correctly sends `http://localhost:<port>` as its origin.
+- In non-production only, trust explicit HTTP loopback origins using `localhost`, `127.0.0.1`, or `::1`. Keep the production same-origin and configured HTTPS-origin policy unchanged.
+- Add route coverage proving a localhost request is accepted for validation in development and still rejected in production or when it is genuinely cross-site.
+- Keep CRM acceptance as the condition for describing an application as recorded.
+- When storage is unavailable, offer a clearly labelled Blueprint preview and direct contact action without presenting the application as stored. Retrying must continue to use the same frozen submission.
+
+### Eden question model
+
+The questionnaire must qualify a managed AI personal assistant rather than a bespoke multi-agent systems build.
+
+- Ask what Eden should take off the visitor's plate, how that responsibility appears during a normal week, which tools hold the context, who Eden supports, and what authority she should begin with.
+- Keep the validated structure, answer preservation, branching, progress, keyboard behavior, and separate consent model.
+- Rewrite every visitor-facing question and answer label around Eden's day-to-day role.
+- Replace total build-budget language with a monthly managed-service question. Use qualification bands around `under £500`, `£500 to £1,000`, `£1,000 to £2,000`, and `£2,000+` per month, plus guidance. State that any one-off connection or onboarding work is scoped separately.
+- Update the typed answer values so the stored payload preserves the actual monthly choice rather than reusing misleading legacy build-budget keys.
+- Update Blueprint headings, examples, context, notification labels, fixtures, and tests to the same product vocabulary.
+
+### Pricing rationale
+
+Official pricing checked on 24 August 2026 places adjacent self-serve products below a managed Eden engagement: Motion lists $19 and $29 per seat monthly, Lindy lists $29.99 to $199.99 per user monthly, Relevance AI lists its Team tier at $349 monthly, and Sintra lists a $97 monthly workspace with optional usage packs extending to $1,200 monthly. Eden includes Aygency-led configuration, business context, connected workflows, and ongoing support, so the form should test willingness to pay in the managed-service range without publishing a fixed quote.
+
+Primary references:
+
+- https://www.usemotion.com/pricing
+- https://www.lindy.ai/pricing
+- https://relevanceai.com/pricing
+- https://help.sintra.ai/en/articles/12606895-plans-and-pricing
+
+### Conversion recovery
+
+- Keep optional newsletter permission separate and off by default.
+- Show `build@aygency.ai` and discovery-call actions on the recorded Blueprint.
+- Also show a direct `build@aygency.ai` path when CRM delivery is unavailable so a temporary backend problem does not hide every contact route.
+
+### Phase gates
+
+1. Commit this plan after `pnpm lint` and `pnpm build` pass.
+2. Repair local origin handling and add the honest preview/error conversion path. Run unit, browser, lint, type, build, and required breakpoint checks before committing.
+3. Rewrite Eden qualification and monthly commercial bands. Update the complete stored-answer contract and run the full verification suite before committing.
+4. Re-run a local manual submission. Confirm the loopback request reaches CRM delivery, the unconfigured local environment is described accurately, the Blueprint preview remains available, and production storage prerequisites are documented.
