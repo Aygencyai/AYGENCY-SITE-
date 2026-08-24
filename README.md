@@ -35,6 +35,16 @@ Open [http://localhost:3000](http://localhost:3000).
 | `NEXT_PUBLIC_CAL_URL` | Cal.com scheduling link URL |
 | `RESEND_API_KEY` | Resend API key for contact form emails |
 | `CONTACT_EMAIL` | Recipient email for contact form |
+| `EDEN_CRM_ENDPOINT_URL` | Server-only HTTPS endpoint for the approved `EdenApplicationSubmitted.v1` CRM event |
+| `EDEN_CRM_API_TOKEN` | Server-only, write-only bearer token for the CRM endpoint; never use a database service-role credential |
+| `EDEN_ALLOWED_ORIGINS` | Optional comma-separated exact HTTPS origins for controlled previews |
+| `EDEN_NOTIFICATION_EMAIL` | Optional Resend notification recipient; falls back to `CONTACT_EMAIL` |
+| `EDEN_NOTIFICATION_FROM` | Optional verified sender for Eden application notifications |
+
+The Eden AI personal assistant flow posts only to Aygency's same-origin API.
+CRM credentials must never use a `NEXT_PUBLIC_` prefix or be exposed to the
+browser. The CRM is the application system of record; Resend is notification
+only.
 
 ## Project Structure
 
@@ -70,7 +80,7 @@ Deploy to Vercel:
 
 1. Push to GitHub
 2. Import project at [vercel.com/new](https://vercel.com/new)
-3. Set environment variables (`NEXT_PUBLIC_CAL_URL`, `RESEND_API_KEY`, `CONTACT_EMAIL`)
+3. Set the environment variables listed above for the routes being deployed
 4. Deploy — Vercel auto-detects Next.js
 
 ## License
