@@ -19,6 +19,7 @@ export interface EdenOption<T extends string> {
 }
 
 export const edenSteps = [
+  { id: "workEmail", fields: ["contact.workEmail"] },
   { id: "primaryGoal", fields: ["answers.primaryGoal"] },
   { id: "desiredOutcome", fields: ["answers.desiredOutcome"] },
   { id: "currentChallenge", fields: ["answers.currentChallenge"] },
@@ -31,7 +32,6 @@ export const edenSteps = [
   { id: "timeline", fields: ["answers.timeline"] },
   { id: "investmentRange", fields: ["answers.investmentRange"] },
   { id: "fullName", fields: ["contact.fullName"] },
-  { id: "workEmail", fields: ["contact.workEmail"] },
   { id: "companyName", fields: ["contact.companyName"] },
   { id: "consents", fields: ["consent.inquiry", "consent.marketing"] },
 ] as const satisfies ReadonlyArray<{

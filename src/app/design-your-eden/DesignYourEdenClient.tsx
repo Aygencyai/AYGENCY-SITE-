@@ -756,8 +756,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="Where should we send the follow-up?"
-            description="Use the work email you want us to reply to. Inquiry replies and marketing preferences are handled separately."
+            title="Where should we send your Eden Blueprint?"
+            description="Start with your work email. We will use it to respond when you submit your Eden inquiry."
           >
             <label htmlFor="workEmail" className="sr-only">
               Work email
@@ -917,9 +917,9 @@ export default function DesignYourEdenClient({
                   wording stays intact alongside the recommendation.
                 </p>
                 <div className="mt-8 space-y-3">
-                  {["Opportunity", "Constraints", "First release", "Contact"].map(
+                  {["Start", "Opportunity", "Constraints", "First release", "Contact"].map(
                     (label, index) => {
-                      const boundary = [0, 4, 8, 11][index];
+                      const boundary = [0, 1, 5, 9, 12][index];
                       const active = stepIndex >= boundary;
                       return (
                         <div key={label} className="flex items-center gap-3">

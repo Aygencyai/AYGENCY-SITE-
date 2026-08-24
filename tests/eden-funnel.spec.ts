@@ -22,6 +22,9 @@ async function completeQuestionnaire(
     .click();
   await expect(page.getByRole("progressbar")).toBeVisible();
 
+  await page.getByLabel("Work email").fill("alex@example.com");
+  await continueQuestion(page);
+
   await selectOption(page, "Operations that run themselves");
   await continueQuestion(page);
 
@@ -69,9 +72,6 @@ async function completeQuestionnaire(
   await page.getByLabel("Full name").fill("Alex Morgan");
   await continueQuestion(page);
 
-  await page.getByLabel("Work email").fill("alex@example.com");
-  await continueQuestion(page);
-
   await page.getByLabel("Company name").fill("Northstar Operations");
   await continueQuestion(page);
 
@@ -85,7 +85,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
   });
 
-  test("is one-question-at-a-time, keyboard friendly, branched, and retains answers", async ({
+  test("starts with a required email gate, stays keyboard friendly, branches, and retains answers", async ({
     page,
   }) => {
     await page.goto("/design-your-eden");
@@ -108,6 +108,25 @@ test.describe("Eden AI Personal Assistant", () => {
 
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
+
+    await expect(
+      page.getByRole("heading", {
+        name: "Where should we send your Eden Blueprint?",
+      })
+    ).toBeFocused();
+    await page.getByLabel("Work email").fill("not-an-email");
+    await continueQuestion(page);
+    await expect(page.getByText("Enter a valid work email address.")).toBeVisible();
+    await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
+
+    await page.getByLabel("Work email").fill("alex@example.com");
+    await page.getByLabel("Work email").press("Enter");
+    await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
+    await expect(
+      page.getByRole("heading", {
+        name: "Where should your Eden create leverage first?",
+      })
+    ).toBeFocused();
     await page.keyboard.press("3");
     await expect(page.getByLabel("Operations that run themselves")).toBeChecked();
     await page.keyboard.press("Enter");
@@ -131,7 +150,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(
       page.getByRole("heading", { name: "How often does this workflow run?" })
     ).toBeVisible();
-    await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "4");
+    await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "5");
 
     await page.getByRole("button", { name: "Back" }).click();
     await expect(page.getByLabel("Current workflow challenge")).toHaveValue(
@@ -143,6 +162,8 @@ test.describe("Eden AI Personal Assistant", () => {
     );
     await page.getByRole("button", { name: "Back" }).click();
     await expect(page.getByLabel("Operations that run themselves")).toBeChecked();
+    await page.getByRole("button", { name: "Back" }).click();
+    await expect(page.getByLabel("Work email")).toHaveValue("alex@example.com");
   });
 
   test("keeps inquiry and marketing consent separate and renders exact answers in the Blueprint", async ({
@@ -288,6 +309,7 @@ test.describe("Eden AI Personal Assistant", () => {
       });
     });
     await page.goto("/design-your-eden");
+    await page.waitForTimeout(800);
 
     const introductionScan = await new AxeBuilder({ page })
       .include("#main-content")
