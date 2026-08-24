@@ -5,6 +5,7 @@ import {
   CalendarDays,
   CheckCircle2,
   ChevronDown,
+  CircleAlert,
   Compass,
   Layers3,
   Mail,
@@ -31,6 +32,7 @@ import {
 interface EdenBlueprintProps {
   application: EdenApplication;
   discoveryUrl: string;
+  recorded: boolean;
 }
 
 interface AnswerRowProps {
@@ -59,6 +61,7 @@ function AnswerRow({ label, value, preserveWhitespace }: AnswerRowProps) {
 export default function EdenBlueprint({
   application,
   discoveryUrl,
+  recorded,
 }: EdenBlueprintProps) {
   const blueprint = blueprintByGoal[application.answers.primaryGoal];
   const operatingMode = getBlueprintOperatingMode(
@@ -79,11 +82,27 @@ export default function EdenBlueprint({
       <div className="mb-8 flex flex-col gap-5 border-b border-ghost/[0.08] pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="mb-5 flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-cyan/25 bg-cyan/[0.06] text-cyan">
-              <CheckCircle2 size={17} aria-hidden="true" />
+            <span
+              className={`flex h-8 w-8 items-center justify-center rounded-lg border ${
+                recorded
+                  ? "border-cyan/25 bg-cyan/[0.06] text-cyan"
+                  : "border-ghost/15 bg-ghost/[0.04] text-ghost-muted"
+              }`}
+            >
+              {recorded ? (
+                <CheckCircle2 size={17} aria-hidden="true" />
+              ) : (
+                <CircleAlert size={17} aria-hidden="true" />
+              )}
             </span>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan">
-              Application recorded // Blueprint 01
+            <p
+              className={`font-mono text-[11px] uppercase tracking-[0.2em] ${
+                recorded ? "text-cyan" : "text-ghost-muted"
+              }`}
+            >
+              {recorded
+                ? "Application recorded // Blueprint 01"
+                : "Blueprint preview // Submission pending"}
             </p>
           </div>
           <h1
@@ -94,13 +113,16 @@ export default function EdenBlueprint({
             Your Eden Blueprint
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
-            A directional first architecture based on what you told us. It gives
-            us a useful starting point for technical discovery.
+            {recorded
+              ? "A directional first architecture based on what you told us. It gives us a useful starting point for technical discovery."
+              : "This preview is based on answers still held in this browser. Aygency has not received or stored this submission."}
           </p>
         </div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ghost-muted">
-          Ref {application.submissionId.slice(0, 8)}
-        </p>
+        {recorded && (
+          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ghost-muted">
+            Ref {application.submissionId.slice(0, 8)}
+          </p>
+        )}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-12">

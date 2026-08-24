@@ -7,8 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeft,
   ArrowRight,
+  Eye,
   FileText,
   Loader2,
+  Mail,
   RefreshCcw,
   Sparkles,
 } from "lucide-react";
@@ -60,6 +62,35 @@ interface QuestionFrameProps {
 const inputClasses =
   "w-full rounded-xl border border-ghost/[0.1] bg-surface px-4 py-4 font-sans text-base text-ghost placeholder:text-ghost-dim/70 transition-colors duration-200 focus:border-cyan/50 focus:outline-none focus:ring-2 focus:ring-cyan/20";
 const retryableBrowserStatuses = new Set([408, 425, 500, 502, 503, 504]);
+
+class EdenSubmissionError extends Error {
+  readonly code: string;
+
+  constructor(message: string, code: string) {
+    super(message);
+    this.name = "EdenSubmissionError";
+    this.code = code;
+  }
+}
+
+function getSubmissionErrorMessage(code: string | undefined, fallback?: string) {
+  switch (code) {
+    case "origin_denied":
+      return "We could not verify this page as the source of the submission. Refresh the page and try again.";
+    case "crm_unavailable":
+      return "We could not record this submission in the CRM right now.";
+    case "rate_limited":
+      return "This browser has made several recent attempts. Please wait a moment before trying again.";
+    case "timing_rejected":
+    case "invalid_application":
+      return "Please review your answers, then submit them again.";
+    default:
+      return (
+        fallback ??
+        "We could not safely record your application. Please try again."
+      );
+  }
+}
 
 function QuestionFrame({
   number,
@@ -139,7 +170,8 @@ async function fetchWithTimeout(body: string) {
 async function submitFrozenApplication(application: EdenApplication) {
   const frozenBody = JSON.stringify(application);
   let finalMessage =
-    "We could not safely record your application. Your answers are still here. Please try again.";
+    "We could not safely record your application. Please try again.";
+  let finalCode = "submission_unavailable";
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
@@ -151,16 +183,18 @@ async function submitFrozenApplication(application: EdenApplication) {
         await wait(450);
         continue;
       }
-      throw new Error(finalMessage);
+      throw new EdenSubmissionError(finalMessage, finalCode);
     }
 
     const result = (await response.json().catch(() => null)) as {
       success?: boolean;
       error?: string;
+      code?: string;
     } | null;
 
     if (response.ok && result?.success) return;
-    if (result?.error) finalMessage = result.error;
+    finalCode = result?.code ?? `http_${response.status}`;
+    finalMessage = getSubmissionErrorMessage(finalCode, result?.error);
 
     if (attempt === 0 && retryableBrowserStatuses.has(response.status)) {
       const retryAfter = Number(response.headers.get("retry-after"));
@@ -171,10 +205,10 @@ async function submitFrozenApplication(application: EdenApplication) {
       continue;
     }
 
-    throw new Error(finalMessage);
+    throw new EdenSubmissionError(finalMessage, finalCode);
   }
 
-  throw new Error(finalMessage);
+  throw new EdenSubmissionError(finalMessage, finalCode);
 }
 
 export default function DesignYourEdenClient({
@@ -188,6 +222,7 @@ export default function DesignYourEdenClient({
     useState<EdenApplication | null>(null);
   const [completedApplication, setCompletedApplication] =
     useState<EdenApplication | null>(null);
+  const [submissionRecorded, setSubmissionRecorded] = useState(false);
   const startTimeRef = useRef<string | null>(null);
   const attributionRef = useRef<EdenAttribution>({
     landingPath: "/design-your-eden",
@@ -261,6 +296,7 @@ export default function DesignYourEdenClient({
     try {
       await submitFrozenApplication(application);
       setCompletedApplication(application);
+      setSubmissionRecorded(true);
       setPhase("complete");
     } catch (error) {
       setSubmissionError(
@@ -386,8 +422,16 @@ export default function DesignYourEdenClient({
   const handleReviewAnswers = () => {
     setSubmissionSnapshot(null);
     setSubmissionError("");
+    setSubmissionRecorded(false);
     setStepIndex(edenSteps.length - 1);
     setPhase("questions");
+  };
+
+  const handlePreviewBlueprint = () => {
+    if (!submissionSnapshot) return;
+    setCompletedApplication(submissionSnapshot);
+    setSubmissionRecorded(false);
+    setPhase("complete");
   };
 
   const renderQuestion = () => {
@@ -1053,16 +1097,16 @@ export default function DesignYourEdenClient({
                 tabIndex={-1}
                 className="mt-6 font-heading text-2xl font-semibold uppercase text-white outline-none sm:text-3xl"
               >
-                Your answers are still here
+                We could not record this submission
               </h1>
               <p className="mx-auto mt-4 max-w-xl font-sans text-sm leading-relaxed text-ghost-muted">
                 {submissionError}
               </p>
               <p className="mx-auto mt-3 max-w-xl font-sans text-xs leading-relaxed text-ghost-dim">
-                Retry sends the exact same frozen application and submission ID.
-                Reviewing answers creates a fresh submission only when you submit again.
+                Your answers remain available in this browser. You can retry,
+                review them, or preview your Blueprint before contacting us.
               </p>
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -1075,12 +1119,29 @@ export default function DesignYourEdenClient({
                 </button>
                 <button
                   type="button"
-                  onClick={handleReviewAnswers}
+                  onClick={handlePreviewBlueprint}
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-cyan/30 px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:bg-cyan/[0.05]"
                 >
-                  <FileText size={15} aria-hidden="true" />
+                  <Eye size={15} aria-hidden="true" />
+                  Preview my Blueprint
+                </button>
+              </div>
+              <div className="mt-5 flex flex-col items-center justify-center gap-3 text-center sm:flex-row sm:gap-6">
+                <button
+                  type="button"
+                  onClick={handleReviewAnswers}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 font-sans text-sm text-ghost-muted underline decoration-ghost-dim underline-offset-4 transition-colors hover:text-cyan"
+                >
+                  <FileText size={14} aria-hidden="true" />
                   Review answers
                 </button>
+                <a
+                  href="mailto:build@aygency.ai?subject=Eden%20AI%20Personal%20Assistant%20enquiry"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 font-sans text-sm text-ghost-muted underline decoration-ghost-dim underline-offset-4 transition-colors hover:text-cyan"
+                >
+                  <Mail size={14} aria-hidden="true" />
+                  Email build@aygency.ai
+                </a>
               </div>
             </motion.div>
           </div>
@@ -1095,6 +1156,7 @@ export default function DesignYourEdenClient({
             <EdenBlueprint
               application={completedApplication}
               discoveryUrl={discoveryUrl}
+              recorded={submissionRecorded}
             />
           </motion.div>
         )}

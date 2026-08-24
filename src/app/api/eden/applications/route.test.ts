@@ -1,7 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { EdenCrmDeliveryError, createEdenCrmEvent } from "@/lib/eden/crm";
 import { createEdenApplicationFixture } from "@/lib/eden/test-fixture";
-import { createEdenApplicationsPostHandler } from "@/lib/eden/application-handler";
+import {
+  createEdenApplicationsPostHandler,
+  isTrustedEdenOrigin,
+} from "@/lib/eden/application-handler";
 
 const now = Date.parse("2026-08-24T10:02:01.000Z");
 const allowedRate = {
@@ -39,6 +42,7 @@ function createHandler(overrides: Parameters<typeof createEdenApplicationsPostHa
 
 afterEach(() => {
   vi.restoreAllMocks();
+  vi.unstubAllEnvs();
 });
 
 describe("POST /api/eden/applications", () => {
@@ -124,6 +128,38 @@ describe("POST /api/eden/applications", () => {
 
     expect(response.status).toBe(403);
     expect(deliver).not.toHaveBeenCalled();
+  });
+
+  it("accepts an HTTP localhost browser origin when development binds to 0.0.0.0", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    const request = new Request(
+      "http://0.0.0.0:3000/api/eden/applications",
+      {
+        method: "POST",
+        headers: {
+          Origin: "http://localhost:3000",
+          "Sec-Fetch-Site": "same-origin",
+        },
+      }
+    );
+
+    expect(isTrustedEdenOrigin(request)).toBe(true);
+  });
+
+  it("does not trust the localhost exception in production", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    const request = new Request(
+      "http://0.0.0.0:3000/api/eden/applications",
+      {
+        method: "POST",
+        headers: {
+          Origin: "http://localhost:3000",
+          "Sec-Fetch-Site": "same-origin",
+        },
+      }
+    );
+
+    expect(isTrustedEdenOrigin(request)).toBe(false);
   });
 
   it("rejects an oversized body before JSON parsing", async () => {

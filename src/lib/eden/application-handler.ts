@@ -70,6 +70,14 @@ function configuredOrigins() {
     });
 }
 
+function isDevelopmentLoopbackOrigin(origin: URL) {
+  if (process.env.NODE_ENV === "production" || origin.protocol !== "http:") {
+    return false;
+  }
+
+  return ["localhost", "127.0.0.1", "[::1]"].includes(origin.hostname);
+}
+
 export function isTrustedEdenOrigin(request: Request) {
   const fetchSite = request.headers.get("sec-fetch-site");
   if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
@@ -81,8 +89,12 @@ export function isTrustedEdenOrigin(request: Request) {
 
   try {
     const requestOrigin = new URL(request.url).origin;
-    const suppliedOrigin = new URL(origin).origin;
-    return [requestOrigin, ...configuredOrigins()].includes(suppliedOrigin);
+    const suppliedUrl = new URL(origin);
+    const suppliedOrigin = suppliedUrl.origin;
+    return (
+      isDevelopmentLoopbackOrigin(suppliedUrl) ||
+      [requestOrigin, ...configuredOrigins()].includes(suppliedOrigin)
+    );
   } catch {
     return false;
   }

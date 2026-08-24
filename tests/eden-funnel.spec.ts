@@ -292,6 +292,7 @@ test.describe("Eden AI Personal Assistant", () => {
             ? {
                 error:
                   "We could not safely record your application. Your answers are still here. Please try again.",
+                code: "crm_unavailable",
               }
             : {
                 success: true,
@@ -309,7 +310,10 @@ test.describe("Eden AI Personal Assistant", () => {
       .click();
 
     await expect(
-      page.getByRole("heading", { name: "Your answers are still here" })
+      page.getByRole("heading", { name: "We could not record this submission" })
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Email build@aygency.ai" })
     ).toBeVisible();
     expect(bodies).toHaveLength(2);
     expect(bodies[0]).toBe(bodies[1]);
@@ -320,6 +324,47 @@ test.describe("Eden AI Personal Assistant", () => {
     ).toBeVisible();
     expect(bodies).toHaveLength(3);
     expect(new Set(bodies).size).toBe(1);
+  });
+
+  test("offers an honest Blueprint preview when CRM storage is unavailable", async ({
+    page,
+  }) => {
+    await page.route("**/api/eden/applications", async (route) => {
+      await route.fulfill({
+        status: 503,
+        contentType: "application/json",
+        body: JSON.stringify({
+          error: "The CRM is unavailable.",
+          code: "crm_unavailable",
+        }),
+      });
+    });
+
+    await page.goto("/design-your-eden");
+    await completeQuestionnaire(page);
+    await page
+      .getByRole("button", { name: "Show me my Eden Blueprint" })
+      .click();
+
+    await expect(
+      page.getByRole("heading", { name: "We could not record this submission" })
+    ).toBeVisible();
+    await expect(
+      page.getByText("We could not record this submission in the CRM right now.")
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Preview my Blueprint" }).click();
+
+    await expect(
+      page.getByText("Blueprint preview // Submission pending")
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        "This preview is based on answers still held in this browser. Aygency has not received or stored this submission."
+      )
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Email build@aygency.ai" })
+    ).toBeVisible();
   });
 
   test("has no detectable critical accessibility violations in the form and result", async ({
