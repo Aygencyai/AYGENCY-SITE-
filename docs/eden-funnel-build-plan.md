@@ -287,3 +287,46 @@ Primary references:
 2. Repair local origin handling and add the honest preview/error conversion path. Run unit, browser, lint, type, build, and required breakpoint checks before committing.
 3. Rewrite Eden qualification and monthly commercial bands. Update the complete stored-answer contract and run the full verification suite before committing.
 4. Re-run a local manual submission. Confirm the loopback request reaches CRM delivery, the unconfigured local environment is described accurately, the Blueprint preview remains available, and production storage prerequisites are documented.
+
+## Iteration: value-led qualification and implementation discovery
+
+This iteration supersedes the public monthly-price bands above. The form should establish value and fit before a commercial conversation, without suggesting that Eden is available below Aygency's offer.
+
+### Commercial decision
+
+- Remove every visitor-facing Eden price band and do not publish a minimum, maximum, or cheaper service tier in the questionnaire.
+- Replace `investmentRange` with a typed `buyingPriority` answer. Ask what should lead the visitor's decision: the strongest fit and result, a balance of capability and value, or the lowest possible monthly price.
+- Treat the lowest-price response as qualification information, not as a promise that Aygency offers a reduced-price Eden.
+- Show the selected buying priority in the original-answer record and the internal notification so it can guide the discovery conversation.
+- Keep exact pricing for the scoped recommendation and contact conversation at `build@aygency.ai`.
+
+### Question usefulness audit
+
+Operational questions must pass both tests: the answer gives Aygency useful leverage for the next conversation, and it reduces the discovery needed to shape the visitor's Eden. Contact and consent screens remain only where needed to identify, deliver, and lawfully follow up on the inquiry.
+
+| Screen | Visitor question | Conversation leverage | Eden build head start |
+| --- | --- | --- | --- |
+| 1 | Where should we send your Eden Blueprint? | Establishes a reachable lead before the detailed flow. | Provides the Blueprint and inquiry destination; no operational claim is inferred from it. |
+| 2 | What should Eden take off your plate first? | Reveals the strongest value angle in the visitor's own priority order. | Selects the first responsibility and the branch used for later workload wording. |
+| 3 | What should Eden make reliably true each week? | Defines the desired result and language to return to in discovery. | Supplies a practical acceptance criterion for the first workflow. |
+| 4 | What gets in the way today, and what happens when it slips? | Exposes the present cost, urgency, and consequence of inaction. | Captures the current process and failure modes that the design must address. |
+| 5 | How much of this work appears in a normal week? | Makes the opportunity and likely return easier to size. | Establishes frequency, capacity, and trigger volume using goal-specific wording. |
+| 6 | Who should Eden support first? | Reveals rollout scope and the stakeholders affected. | Informs access, permissions, onboarding, and escalation design. |
+| 7 | Where would Eden need to work? | Surfaces integration complexity early. | Identifies the initial tool categories and context sources. |
+| 8 | How ready is the context Eden would need? | Reveals onboarding effort and a likely implementation objection. | Establishes whether to connect, consolidate, document, or create context first. |
+| 9 | How much authority should Eden start with? | Makes trust and risk preferences discussable. | Sets the first approval gates, guardrails, and escalation boundary. |
+| 10 | How would you know Eden is earning her place? | Builds the commercial case around outcomes the visitor chose. | Defines initial measures for evaluation and iteration. |
+| 11 | How ready are you to put Eden to work? | Separates immediate buyers, active evaluators, and early exploration. | Sets a realistic discovery and onboarding horizon. |
+| 12 | What matters most when choosing your Eden? | Reveals whether the sale should lead with result, value, or price sensitivity. | Establishes the trade-off that should guide the scoped recommendation without changing the offered price. |
+| 13 | Who are we designing this with? | Identifies the accountable contact and makes follow-up personal. | Names the initial system owner for discovery purposes. |
+| 14 | Which organisation would Eden be joining? | Gives the conversation an account and operating context. | Establishes the organisational boundary to validate in discovery. |
+| 15 | May Aygency respond, and separately may it send useful updates? | Records the permitted follow-up paths. | Keeps inquiry and marketing consent distinct from operational requirements. |
+
+Free text remains untrusted original input. It may be displayed safely and used by a person in discovery, but it must not be interpolated into executable instructions, email headers, generated claims, or HTML.
+
+### Phase gates
+
+1. Commit this question audit after `pnpm lint` and `pnpm build` pass.
+2. Update the Zod contract, questionnaire copy, Blueprint, notification, fixtures, and tests as one implementation phase. Preserve original answers and keep the event name `EdenApplicationSubmitted.v1` while replacing the obsolete price field with the newly approved buying-priority field.
+3. Run `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build`. Review 375, 768, 1024, and 1440 pixel layouts before the implementation commit.
+4. Reopen the verified local route for review and confirm the browser payload contains no price band.
