@@ -17,7 +17,9 @@ async function completeQuestionnaire(
   page: Page,
   { grantInquiry = true }: { grantInquiry?: boolean } = {}
 ) {
-  await page.getByRole("button", { name: /Begin your Blueprint/i }).click();
+  await page
+    .getByRole("button", { name: /See what Eden could do for you/i })
+    .click();
   await expect(page.getByRole("progressbar")).toBeVisible();
 
   await selectOption(page, "Operations that run themselves");
@@ -78,7 +80,7 @@ async function completeQuestionnaire(
   }
 }
 
-test.describe("Design Your Eden", () => {
+test.describe("Eden AI Personal Assistant", () => {
   test.beforeEach(async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
   });
@@ -87,8 +89,24 @@ test.describe("Design Your Eden", () => {
     page,
   }) => {
     await page.goto("/design-your-eden");
-    await page.getByRole("button", { name: /Begin your Blueprint/i }).click();
+    await expect(
+      page.getByRole("heading", {
+        name: "Meet Eden. Your new AI personal assistant.",
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByText(/Your personal interface to Aygency/i)
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: "One assistant. The right specialist for every job.",
+      })
+    ).toBeVisible();
+    await page
+      .getByRole("button", { name: /See what Eden could do for you/i })
+      .click();
 
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
     await page.keyboard.press("3");
     await expect(page.getByLabel("Operations that run themselves")).toBeChecked();
@@ -150,12 +168,16 @@ test.describe("Design Your Eden", () => {
     await completeQuestionnaire(page, { grantInquiry: false });
 
     await expect(page.getByLabel(/Occasional practical AI systems insights/)).not.toBeChecked();
-    await page.getByRole("button", { name: "Create my Blueprint" }).click();
+    await page
+      .getByRole("button", { name: "Show me my Eden Blueprint" })
+      .click();
     await expect(
       page.getByText("Consent is required so we can respond to your inquiry.")
     ).toBeVisible();
     await selectOption(page, "Respond to this inquiry *");
-    await page.getByRole("button", { name: "Create my Blueprint" }).click();
+    await page
+      .getByRole("button", { name: "Show me my Eden Blueprint" })
+      .click();
 
     await expect(
       page.getByRole("heading", { name: "Your Eden Blueprint" })
@@ -196,6 +218,7 @@ test.describe("Design Your Eden", () => {
       { name: "desktop-1440", width: 1440, height: 1000 },
     ]) {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(100);
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - document.documentElement.clientWidth
@@ -222,7 +245,7 @@ test.describe("Design Your Eden", () => {
           shouldFail
             ? {
                 error:
-                  "We could not safely record your application. Your answers are still here—please try again.",
+                  "We could not safely record your application. Your answers are still here. Please try again.",
               }
             : {
                 success: true,
@@ -235,7 +258,9 @@ test.describe("Design Your Eden", () => {
 
     await page.goto("/design-your-eden");
     await completeQuestionnaire(page);
-    await page.getByRole("button", { name: "Create my Blueprint" }).click();
+    await page
+      .getByRole("button", { name: "Show me my Eden Blueprint" })
+      .click();
 
     await expect(
       page.getByRole("heading", { name: "Your answers are still here" })
@@ -263,7 +288,15 @@ test.describe("Design Your Eden", () => {
       });
     });
     await page.goto("/design-your-eden");
-    await page.getByRole("button", { name: /Begin your Blueprint/i }).click();
+
+    const introductionScan = await new AxeBuilder({ page })
+      .include("#main-content")
+      .analyze();
+    expect(introductionScan.violations).toEqual([]);
+
+    await page
+      .getByRole("button", { name: /See what Eden could do for you/i })
+      .click();
     await page.waitForTimeout(800);
 
     const formScan = await new AxeBuilder({ page })
@@ -273,7 +306,9 @@ test.describe("Design Your Eden", () => {
 
     await page.reload();
     await completeQuestionnaire(page);
-    await page.getByRole("button", { name: "Create my Blueprint" }).click();
+    await page
+      .getByRole("button", { name: "Show me my Eden Blueprint" })
+      .click();
     await expect(page.getByRole("heading", { name: "Your Eden Blueprint" })).toBeVisible();
     await page.waitForTimeout(800);
     await page.getByText("Your original answers").click();
@@ -300,12 +335,34 @@ test.describe("Design Your Eden", () => {
         () => document.documentElement.scrollWidth - document.documentElement.clientWidth
       );
       expect(introOverflow).toBeLessThanOrEqual(0);
+
+      for (const sectionHeading of [
+        "One assistant. The right specialist for every job.",
+        "Proactive by design. Controlled by you.",
+        "See what Eden could do for your operation.",
+      ]) {
+        await page
+          .getByRole("heading", { name: sectionHeading })
+          .scrollIntoViewIfNeeded();
+        await page.waitForTimeout(150);
+      }
+      for (const revealTarget of await page
+        .locator("#eden-capabilities article, [data-eden-operating-step]")
+        .all()) {
+        await revealTarget.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(100);
+      }
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(250);
+
       await page.screenshot({
         path: testInfo.outputPath(`${viewport.name}-intro.png`),
         fullPage: true,
       });
 
-      await page.getByRole("button", { name: /Begin your Blueprint/i }).click();
+      await page
+        .getByRole("button", { name: /See what Eden could do for you/i })
+        .click();
       await expect(page.getByRole("progressbar")).toBeVisible();
       await page.waitForTimeout(800);
       const formOverflow = await page.evaluate(
@@ -318,4 +375,45 @@ test.describe("Design Your Eden", () => {
       });
     });
   }
+});
+
+test.describe("Eden site integration", () => {
+  test("integrates with live navigation and preserves the contact route", async ({
+    page,
+    request,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    const homeResponse = await page.goto("/");
+
+    expect(homeResponse?.ok()).toBe(true);
+    await expect(page.locator('nav a[href="/design-your-eden"]')).toHaveText(
+      "AI Personal Assistant"
+    );
+    await expect(page.locator('footer a[href="/design-your-eden"]')).toHaveText(
+      "AI Personal Assistant"
+    );
+    await expect(page.locator('nav a[href="/contact"]')).toHaveText("Contact Us");
+
+    const contactResponse = await page.goto("/contact");
+    expect(contactResponse?.ok()).toBe(true);
+    await expect(page).toHaveTitle(/Contact \| Aygency/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+    const sitemapResponse = await request.get("/sitemap.xml");
+    expect(sitemapResponse.ok()).toBe(true);
+    expect(await sitemapResponse.text()).toContain(
+      "https://aygency.ai/design-your-eden"
+    );
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/");
+    await page.getByRole("button", { name: "Open menu" }).click();
+    const mobileMenu = page.locator("div.fixed.inset-0");
+    await expect(
+      mobileMenu.locator('a[href="/design-your-eden"]')
+    ).toHaveText("AI Personal Assistant");
+    await expect(mobileMenu.locator('a[href="/contact"]')).toHaveText(
+      "Contact Us"
+    );
+  });
 });

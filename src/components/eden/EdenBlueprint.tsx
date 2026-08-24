@@ -84,8 +84,8 @@ export default function EdenBlueprint({
             Your Eden Blueprint
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
-            A directional first architecture based on what you told us—not a
-            generic automation score or a final technical scope.
+            A directional first architecture based on what you told us. It gives
+            us a useful starting point for technical discovery.
           </p>
         </div>
         <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ghost-muted">

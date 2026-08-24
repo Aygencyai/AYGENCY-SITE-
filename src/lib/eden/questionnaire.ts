@@ -86,7 +86,7 @@ const volumeContext: Record<
   revenue: {
     title: "How much revenue activity moves through this workflow?",
     description:
-      "A directional weekly estimate is enough—think leads, follow-ups, opportunities, or account touches.",
+      "A directional weekly estimate is enough. Think leads, follow-ups, opportunities, or account touches.",
     noun: "revenue touches",
   },
   customer_experience: {
@@ -330,7 +330,7 @@ export const blueprintByGoal: Record<
   finance_admin: {
     title: "Finance and admin operations system",
     thesis:
-      "A controlled agent layer for repetitive records, checks, preparation, and reporting—with human approval wherever financial authority begins.",
+      "A controlled agent layer for repetitive records, checks, preparation, and reporting, with human approval wherever financial authority begins.",
     firstCapability: "Choose one document-heavy process with a measurable error or delay cost.",
   },
   knowledge_people: {
@@ -342,7 +342,7 @@ export const blueprintByGoal: Record<
   leadership_visibility: {
     title: "Leadership intelligence system",
     thesis:
-      "A signal layer that connects operational data, surfaces changes and risks, and prepares evidence-backed decisions without inventing certainty.",
+      "A signal layer that connects operational data, surfaces changes and risks, and prepares evidence-backed decisions grounded in the available facts.",
     firstCapability: "Define the first decision cadence and the signals it genuinely needs.",
   },
   other: {
@@ -364,7 +364,7 @@ export function getBlueprintOperatingMode(
     return {
       title: "Foundation-first pilot",
       description:
-        "Structure the workflow and its evidence trail first, then add agent capability without automating ambiguity.",
+        "Structure the workflow and its evidence trail first, then add agent capability where the work is clear and measurable.",
     };
   }
 

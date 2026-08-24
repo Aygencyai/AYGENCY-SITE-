@@ -1,8 +1,8 @@
-# Design Your Eden Funnel — Build Plan
+# Eden AI Personal Assistant Funnel — Build Plan
 
 ## Outcome
 
-Build a premium, mobile-first questionnaire at `/design-your-eden` that helps a prospective client describe the first AI agent system worth building. The experience will take roughly five to seven minutes, present one question per screen, branch its volume language to the selected opportunity, and finish with a useful Eden Blueprint plus a discovery-call CTA.
+Build a premium, mobile-first product page at `/design-your-eden` that introduces Eden as Aygency's AI personal assistant before helping a prospective client describe the first version worth building. A focused assessment follows the product story, presents one question per screen, branches its volume language to the selected opportunity, and finishes with a useful Eden Blueprint plus a discovery-call CTA.
 
 The funnel is an intake surface, not a database. A same-origin Aygency route will validate and forward the versioned `EdenApplicationSubmitted.v1` event to the approved CRM ingest endpoint. The CRM is the durable system of record. Resend is a best-effort internal notification only.
 
@@ -19,7 +19,7 @@ The funnel is an intake surface, not a database. A same-origin Aygency route wil
 
 ## Experience map
 
-The intro sets the expectation (`~6 minutes`) and explains what not to share. The active questionnaire contains the following one-question screens:
+The introduction sells Eden first: what she can own, how she operates, where human authority remains, and how a custom version adapts to the client's operation. It does not lead with questionnaire length or security boilerplate. A bottom-page “See what Eden could do for you” CTA opens the following one-question assessment:
 
 | Step | Field | Interaction | Purpose |
 | --- | --- | --- | --- |

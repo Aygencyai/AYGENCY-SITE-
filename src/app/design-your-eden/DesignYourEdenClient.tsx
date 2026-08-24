@@ -1,23 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeft,
   ArrowRight,
-  Clock3,
   FileText,
   Loader2,
-  LockKeyhole,
   RefreshCcw,
   Sparkles,
 } from "lucide-react";
 import AnimatedGrid from "@/components/effects/AnimatedGrid";
 import GlowOrb from "@/components/effects/GlowOrb";
 import EdenBlueprint from "@/components/eden/EdenBlueprint";
+import EdenIntroduction from "@/components/eden/EdenIntroduction";
 import EdenOptionGroup from "@/components/eden/EdenOptionGroup";
 import EdenProgress from "@/components/eden/EdenProgress";
 import {
@@ -79,7 +77,7 @@ function QuestionFrame({
       </span>
       <div className="relative">
         <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-muted">
-          Shape the system
+          Personalise Eden
         </p>
         <h1
           id="eden-phase-heading"
@@ -141,7 +139,7 @@ async function fetchWithTimeout(body: string) {
 async function submitFrozenApplication(application: EdenApplication) {
   const frozenBody = JSON.stringify(application);
   let finalMessage =
-    "We could not safely record your application. Your answers are still here—please try again.";
+    "We could not safely record your application. Your answers are still here. Please try again.";
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
@@ -243,6 +241,7 @@ export default function DesignYourEdenClient({
   useEffect(() => {
     if (phase === "intro") return;
     const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "auto" });
       document.getElementById("eden-phase-heading")?.focus({ preventScroll: true });
     });
     return () => window.cancelAnimationFrame(frame);
@@ -425,7 +424,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="What should be reliably true when this is working?"
-            description="Describe the better operating reality—not the technology you think you need."
+            description="Describe the better operating reality. Focus on the result you want to create."
           >
             <label htmlFor="desiredOutcome" className="sr-only">
               Desired outcome
@@ -445,8 +444,8 @@ export default function DesignYourEdenClient({
                 id="desiredOutcome-hint"
                 className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
               >
-                Keep this outcome high-level. Do not include customer data or
-                confidential information.
+                Describe the result in your own words. A clear outcome makes
+                the first recommendation more useful.
               </p>
               <CharacterCount current={desiredOutcome.length} maximum={800} />
             </div>
@@ -482,8 +481,8 @@ export default function DesignYourEdenClient({
                 id="currentChallenge-hint"
                 className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
               >
-                No passwords, credentials, personal records, or sensitive
-                operational details—workflow shape is enough.
+                The more specific you are about what happens, who handles it,
+                and where it slows down, the sharper your Eden Blueprint will be.
               </p>
               <CharacterCount current={currentChallenge.length} maximum={1200} />
             </div>
@@ -549,7 +548,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="Which kinds of systems are already in the workflow?"
-            description="Select up to six categories. We only need the landscape—never credentials, account names, or access."
+            description="Select up to six categories so Eden can be shaped around the tools your team already uses."
           >
             <Controller
               name="answers.systems"
@@ -592,7 +591,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="How ready is the information this workflow depends on?"
-            description="This sets the safest first phase. Fragmented or manual data is normal—it simply changes where we begin."
+            description="This sets the safest first phase. Fragmented or manual data is common, and it helps us choose where to begin."
           >
             <Controller
               name="answers.dataReadiness"
@@ -678,7 +677,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="When would meaningful progress matter?"
-            description="Choose the honest horizon. We use this to shape a realistic first release, not to manufacture urgency."
+            description="Choose the honest horizon. We use this to shape a realistic first release around your priorities."
           >
             <Controller
               name="answers.timeline"
@@ -704,7 +703,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="What level of build investment are you prepared to explore?"
-            description="A range helps us recommend a proportionate first system. This is not a quote or a payment commitment."
+            description="A range helps us recommend a proportionate first system. We will confirm scope and pricing together during discovery."
           >
             <Controller
               name="answers.investmentRange"
@@ -758,7 +757,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="Where should we send the follow-up?"
-            description="Use the work email you want us to reply to. We will not treat inquiry consent as marketing consent."
+            description="Use the work email you want us to reply to. Inquiry replies and marketing preferences are handled separately."
           >
             <label htmlFor="workEmail" className="sr-only">
               Work email
@@ -787,7 +786,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="Which company would this Eden work for?"
-            description="Just the company name—we do not need account access, internal identifiers, or operating data here."
+            description="Share the company name so we can frame your Eden Blueprint around the right operation."
           >
             <label htmlFor="companyName" className="sr-only">
               Company name
@@ -815,7 +814,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="How may we use what you have shared?"
-            description="Inquiry processing and marketing are separate choices. You can submit without joining any marketing list."
+            description="Inquiry processing and marketing are separate choices. Marketing remains optional and off by default."
           >
             <fieldset>
               <legend className="sr-only">Contact permissions</legend>
@@ -837,7 +836,7 @@ export default function DesignYourEdenClient({
                       className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted"
                     >
                       I agree that Aygency may use my answers and contact details
-                      to assess and respond to this Design Your Eden inquiry.
+                      to assess and respond to my Eden inquiry.
                     </span>
                   </span>
                 </label>
@@ -897,82 +896,10 @@ export default function DesignYourEdenClient({
 
       <div className="relative z-10 mx-auto min-h-[calc(100svh-6rem)] max-w-7xl px-6 py-12 md:px-8 md:py-16 lg:px-12">
         {phase === "intro" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="grid min-h-[calc(100svh-13rem)] items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)] lg:gap-20"
-          >
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan">
-                {`// Design your Eden`}
-              </p>
-              <h1
-                id="eden-phase-heading"
-                className="mt-6 max-w-4xl font-heading text-[28px] font-bold uppercase leading-[0.95] text-white sm:text-[48px] lg:text-[68px]"
-              >
-                Give your operation a better default.
-              </h1>
-              <p className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-xl">
-                Answer 15 focused questions. We&rsquo;ll shape your answers into
-                an Eden Blueprint: the first agent system worth exploring, the
-                right starting authority, and the proof it should create.
-              </p>
-              <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-                <button
-                  type="button"
-                  onClick={beginQuestionnaire}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-void"
-                >
-                  {startTimeRef.current ? "Continue your Blueprint" : "Begin your Blueprint"}
-                  <ArrowRight size={16} aria-hidden="true" />
-                </button>
-                <span className="inline-flex items-center gap-2 font-sans text-sm text-ghost-dim">
-                  <Clock3 size={15} className="text-cyan-dim" aria-hidden="true" />
-                  About six minutes
-                </span>
-              </div>
-              <p className="mt-7 flex max-w-xl items-start gap-2 font-sans text-xs leading-relaxed text-ghost-dim">
-                <LockKeyhole size={14} className="mt-0.5 flex-none" aria-hidden="true" />
-                Keep answers high-level. We will never ask for credentials,
-                customer records, or sensitive operational data here.
-              </p>
-            </div>
-
-            <div className="relative rounded-2xl border border-ghost/[0.08] bg-void-light/80 p-6 backdrop-blur-xl sm:p-8">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/40 to-transparent" />
-              <div className="flex items-center justify-between">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ghost-dim">
-                  Blueprint output
-                </p>
-                <Sparkles size={16} className="text-cyan" aria-hidden="true" />
-              </div>
-              <div className="mt-8 space-y-4">
-                {[
-                  ["01", "Your highest-leverage system"],
-                  ["02", "A safe first operating mode"],
-                  ["03", "Evidence the build must create"],
-                  ["04", "Your original answer record"],
-                ].map(([number, label]) => (
-                  <div
-                    key={number}
-                    className="flex items-center gap-4 rounded-xl border border-ghost/[0.06] bg-surface/70 p-4"
-                  >
-                    <span className="font-mono text-xs text-cyan-muted">{number}</span>
-                    <span className="font-sans text-sm text-ghost">{label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-7 border-t border-ghost/[0.06] pt-5">
-                <Link
-                  href="/contact"
-                  className="font-sans text-sm text-ghost-muted underline decoration-ghost/20 underline-offset-4 transition-colors hover:text-cyan"
-                >
-                  Prefer to talk first? Contact us.
-                </Link>
-              </div>
-            </div>
-          </motion.div>
+          <EdenIntroduction
+            isReturning={Boolean(startTimeRef.current)}
+            onStart={beginQuestionnaire}
+          />
         )}
 
         {phase === "questions" && (
@@ -980,13 +907,13 @@ export default function DesignYourEdenClient({
             <aside className="hidden lg:block">
               <div className="sticky top-32 border-l border-ghost/[0.08] pl-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">
-                  Design logic
+                  Personalisation logic
                 </p>
                 <p className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">
                   Intent → workflow → authority → proof
                 </p>
                 <p className="mt-4 font-sans text-xs leading-relaxed text-ghost-dim">
-                  Every answer narrows the first useful system. Your original
+                  Every answer shows where Eden can help first. Your original
                   wording stays intact alongside the recommendation.
                 </p>
                 <div className="mt-8 space-y-3">
@@ -1069,7 +996,7 @@ export default function DesignYourEdenClient({
                         <Sparkles size={15} aria-hidden="true" />
                       ) : null}
                       {stepIndex === edenSteps.length - 1
-                        ? "Create my Blueprint"
+                        ? "Show me my Eden Blueprint"
                         : "Continue"}
                       {!isAdvancing && stepIndex < edenSteps.length - 1 && (
                         <ArrowRight size={15} aria-hidden="true" />

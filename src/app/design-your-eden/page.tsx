@@ -3,20 +3,20 @@ import PageTransition from "@/components/ui/PageTransition";
 import DesignYourEdenClient from "./DesignYourEdenClient";
 
 export const metadata: Metadata = {
-  title: "Design Your Eden — Aygency",
+  title: "Eden: Your AI Personal Assistant | Aygency",
   description:
-    "Shape the first AI agent system worth building for your operation. Complete the focused Design Your Eden questionnaire and receive your Eden Blueprint.",
+    "Meet Eden, your personal interface to Aygency's specialist-agent system. She coordinates work, prepares decisions, and keeps your operation connected.",
   openGraph: {
-    title: "Design Your Eden — Aygency",
+    title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:
-      "Shape the first AI agent system worth building for your operation and receive your Eden Blueprint.",
+      "Meet the AI personal assistant that coordinates the right specialist agents and adapts to how your operation runs.",
     url: "https://aygency.ai/design-your-eden",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Design Your Eden — Aygency",
+    title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:
-      "Shape the first AI agent system worth building for your operation and receive your Eden Blueprint.",
+      "Meet the AI personal assistant that coordinates the right specialist agents and adapts to how your operation runs.",
   },
 };
 
