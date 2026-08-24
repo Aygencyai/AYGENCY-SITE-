@@ -305,6 +305,133 @@ export const investmentLabels = Object.fromEntries(
   investmentOptionList.map((option) => [option.value, option.label])
 ) as Record<InvestmentRange, string>;
 
+interface EdenExamplePattern {
+  title: string;
+  arrivalTitle: string;
+  arrivalDescription: string;
+  coordinationTitle: string;
+  coordinationDescription: string;
+}
+
+const edenExampleByGoal: Record<PrimaryGoal, EdenExamplePattern> = {
+  revenue: {
+    title: "A live opportunity gets the right follow-up.",
+    arrivalTitle: "A commercial signal arrives",
+    arrivalDescription:
+      "A lead replies, an opportunity changes, or an account shows fresh intent across the connected revenue channels.",
+    coordinationTitle: "Eden prepares the next move",
+    coordinationDescription:
+      "Eden brings together Lead Gen, Outreach, and Analyst context, assigns the next action, and keeps the commercial thread current.",
+  },
+  customer_experience: {
+    title: "A customer request moves with its context attached.",
+    arrivalTitle: "A customer needs something",
+    arrivalDescription:
+      "A support question, onboarding task, or account request enters through a connected customer channel.",
+    coordinationTitle: "Eden assembles the response",
+    coordinationDescription:
+      "Eden engages Front-Desk and the relevant specialist, gathers account context, and prepares or routes the next action.",
+  },
+  operations: {
+    title: "A request arrives and leaves with a clear owner.",
+    arrivalTitle: "Operational work enters the queue",
+    arrivalDescription:
+      "A recurring request, hand-off, approval, or exception appears in one of the connected operating tools.",
+    coordinationTitle: "Eden keeps the workflow moving",
+    coordinationDescription:
+      "Eden engages the Operations specialist, carries the context between systems, assigns ownership, and tracks the next action.",
+  },
+  finance_admin: {
+    title: "An admin item is prepared, checked, and ready for approval.",
+    arrivalTitle: "A finance or admin item arrives",
+    arrivalDescription:
+      "An invoice, document, record, reconciliation item, or reporting request enters the agreed workflow.",
+    coordinationTitle: "Eden prepares the controlled work",
+    coordinationDescription:
+      "Eden coordinates Operations and Analyst checks, gathers the supporting evidence, and prepares the item for its decision point.",
+  },
+  knowledge_people: {
+    title: "A team question becomes a grounded next step.",
+    arrivalTitle: "Someone needs trusted context",
+    arrivalDescription:
+      "A question, training need, recruitment task, or people request appears in a connected team channel.",
+    coordinationTitle: "Eden finds and shapes the answer",
+    coordinationDescription:
+      "Eden coordinates Analyst, Strategist, or Content Production work against the approved knowledge sources and prepares the useful response.",
+  },
+  leadership_visibility: {
+    title: "A changing signal becomes a decision-ready brief.",
+    arrivalTitle: "The operation produces a signal",
+    arrivalDescription:
+      "A metric changes, a risk appears, or a recurring leadership review reaches its scheduled point.",
+    coordinationTitle: "Eden builds the decision context",
+    coordinationDescription:
+      "Eden brings Analyst evidence into the CEO Agent view, connects the relevant operating context, and prepares the decision brief.",
+  },
+  other: {
+    title: "A recurring request reaches the right specialist.",
+    arrivalTitle: "The priority workflow begins",
+    arrivalDescription:
+      "A repeatable request or signal enters through the tools and channels selected for the first release.",
+    coordinationTitle: "Eden coordinates the response",
+    coordinationDescription:
+      "Eden carries the context to the specialist best suited to the work, keeps ownership visible, and prepares the next action.",
+  },
+};
+
+const authorityExampleByPreference: Record<AutonomyPreference, string> = {
+  insights_only:
+    "Eden surfaces the pattern and recommended response. Your team chooses and completes the action.",
+  draft_and_review:
+    "Eden prepares the work and supporting context for review. A named person completes the action.",
+  approval_gates:
+    "Eden prepares the action and pauses at an explicit approval gate before execution.",
+  bounded_autonomy:
+    "Eden completes agreed routine actions inside set limits, records the result, and brings exceptions to a named person.",
+  need_guidance:
+    "Aygency uses discovery to set the first decision boundary around risk, reversibility, and evidence.",
+};
+
+function summariseSystems(systems: ReadonlyArray<SystemOption>) {
+  const knownSystems = systems
+    .filter((system) => system !== "not_sure")
+    .map((system) => systemLabels[system]);
+
+  if (knownSystems.length === 0) return "Tool mix shaped during discovery";
+  if (knownSystems.length === 1) return knownSystems[0];
+  if (knownSystems.length === 2) {
+    return `${knownSystems[0]} and ${knownSystems[1]}`;
+  }
+
+  const remaining = knownSystems.length - 2;
+  return `${knownSystems[0]}, ${knownSystems[1]}, and ${remaining} more`;
+}
+
+export function getEdenExample(
+  primaryGoal: PrimaryGoal,
+  workflowVolume: WorkflowVolume,
+  systems: ReadonlyArray<SystemOption>,
+  teamSize: TeamSize,
+  autonomyPreference: AutonomyPreference
+) {
+  const pattern = edenExampleByGoal[primaryGoal];
+  const volume =
+    getVolumeQuestion(primaryGoal).options.find(
+      (option) => option.value === workflowVolume
+    )?.label ?? workflowVolumeLabels[workflowVolume];
+
+  return {
+    ...pattern,
+    context: {
+      volume,
+      people: teamSizeLabels[teamSize],
+      systems: summariseSystems(systems),
+      authority: autonomyLabels[autonomyPreference],
+    },
+    authorityDescription: authorityExampleByPreference[autonomyPreference],
+  };
+}
+
 export const blueprintByGoal: Record<
   PrimaryGoal,
   { title: string; thesis: string; firstCapability: string }

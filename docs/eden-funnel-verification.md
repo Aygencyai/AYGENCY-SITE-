@@ -14,7 +14,10 @@ Live-site source: `origin/main@0b2ca36`
 | --- | --- | --- |
 | Live-site provenance and plan | `95c9b3f` | Identified the stale local base, preserved the first implementation, started from current `origin/main`, and defined the live-site integration gates before porting code. |
 | Trusted submission pipeline | `008c2f8` | Added strict shared and server validation, idempotent CRM delivery, bounded retries, bot and rate controls, and post-CRM Resend notification. |
-| Live Eden experience | `95e0628` plus the current phase | Ported the assessment to the rebuilt site, then added the product introduction, live-site positioning, full browser coverage, responsive hardening, and transition scroll restoration. |
+| Live Eden experience | `95e0628`, `6031ddc` | Ported the assessment to the rebuilt site, then added the product introduction, live-site positioning, full browser coverage, responsive hardening, and transition scroll restoration. |
+| Email gate plan | `0861022` | Defined the first-screen email decision, its storage boundary, the controlled example model, and the revised contact close before implementation. |
+| Email gate | `cd2945f` | Moved validated work email to question one while retaining it through keyboard and Back navigation. |
+| Tailored example and contact close | Current phase | Added a controlled answer-derived Eden scenario, preserved the original-answer record, and closed with `build@aygency.ai` plus the discovery-call route. |
 
 ## Automated verification
 
@@ -22,8 +25,8 @@ The final local gate runs only against controlled fakes. It creates no CRM recor
 
 | Command | Result | Coverage |
 | --- | --- | --- |
-| `pnpm test` | 26 tests pass | Schema boundaries, event mapping, stable idempotency, CRM retry classes, route trust, bot and rate controls, notification semantics, and attribution sanitisation. |
-| `pnpm test:e2e` | 9 tests pass | Product positioning, one-screen flow, transition scroll position, keyboard and focus behaviour, branching, retained answers, separate consent, exact Blueprint answers, immutable automatic and manual retry, accessibility, responsive layouts, live navigation, contact route, and sitemap. |
+| `pnpm test` | 28 tests pass | Schema boundaries, event mapping, stable idempotency, CRM retry classes, route trust, bot and rate controls, notification semantics, attribution sanitisation, and deterministic Eden example mapping. |
+| `pnpm test:e2e` | 9 tests pass | Product positioning, first-screen email validation, one-screen flow, transition scroll position, keyboard and focus behaviour, branching, retained answers, separate consent, exact Blueprint answers, tailored example and contact actions, immutable automatic and manual retry, accessibility, responsive layouts, live navigation, contact route, and sitemap. |
 | `pnpm exec tsc --noEmit` | Passes | Strict TypeScript verification. |
 | `pnpm lint` | Passes with zero warnings or errors | Next.js ESLint gate. |
 | `pnpm build` | Production build succeeds | Type checking, static generation, and the dynamic `/api/eden/applications` route. |
@@ -55,11 +58,14 @@ Automated Axe scans report no violations in the Eden product introduction, activ
 ## Submission and data-safety evidence
 
 - Browser traffic terminates at the same-origin `/api/eden/applications` route. CRM endpoint and bearer-token configuration exist only in server modules and deployment documentation.
+- Before final submission, the work email and all other answers exist only in React Hook Form memory in that browser tab. Passing the email gate does not make a network request or create an abandoned-lead record.
+- After a completed, consented submission, the validated application is delivered server-to-server to the approved CRM endpoint as `EdenApplicationSubmitted.v1`. The CRM is the durable system of record; Resend is only a post-acceptance notification.
 - The CRM event is fixed to `EdenApplicationSubmitted.v1`; the validated answer object is preserved verbatim alongside derived Blueprint guidance.
 - Free text is length-bounded, omitted from operational logs and notification summaries, and rendered through React text nodes.
 - Inquiry processing is required. Marketing consent is optional, separately recorded, and off by default.
 - A failed CRM write fails the application. A failed Resend notification leaves the accepted CRM record successful.
 - Automatic and manual retries reuse the same frozen body, event ID, timestamp, and idempotency key.
+- The tailored example is constructed only from validated choice values and controlled copy. Applicant free text remains visible in the original-answer record and is never interpolated into generated claims.
 
 ## Deployment prerequisites
 

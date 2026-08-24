@@ -166,7 +166,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(page.getByLabel("Work email")).toHaveValue("alex@example.com");
   });
 
-  test("keeps inquiry and marketing consent separate and renders exact answers in the Blueprint", async ({
+  test("keeps consent separate and renders exact answers, a tailored example, and contact actions", async ({
     page,
   }, testInfo) => {
     let submittedBody: Record<string, unknown> | null = null;
@@ -204,6 +204,23 @@ test.describe("Eden AI Personal Assistant", () => {
       page.getByRole("heading", { name: "Your Eden Blueprint" })
     ).toBeVisible();
     await expect(page.getByText("Operational command system")).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: "An example of what your Eden can do for you",
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByText("A request arrives and leaves with a clear owner.")
+    ).toBeVisible();
+    await expect(
+      page.getByText("101–500 workflow runs / week", { exact: true })
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        "Email, inbox, or support desk and Project or operations tools",
+        { exact: true }
+      )
+    ).toBeVisible();
 
     await page.getByText("Your original answers").click();
     await expect(
@@ -213,13 +230,20 @@ test.describe("Eden AI Personal Assistant", () => {
       )
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "Book your discovery call" })
+      page.getByRole("link", { name: "Email build@aygency.ai" })
+    ).toHaveAttribute(
+      "href",
+      "mailto:build@aygency.ai?subject=Eden%20AI%20Personal%20Assistant%20enquiry"
+    );
+    await expect(
+      page.getByRole("link", { name: "Book a discovery call" })
     ).toHaveAttribute("href", "/contact");
 
     const submitted = submittedBody as {
       consent: { inquiry: boolean; marketing: boolean };
       attribution: Record<string, string>;
       answers: { desiredOutcome: string };
+      contact: { workEmail: string };
     } | null;
     expect(submitted?.consent).toEqual({ inquiry: true, marketing: false });
     expect(submitted?.attribution).toMatchObject({
@@ -231,6 +255,7 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(submitted?.answers.desiredOutcome).toBe(
       "Every recurring request reaches the right owner with context and a clear next action."
     );
+    expect(submitted?.contact.workEmail).toBe("alex@example.com");
 
     for (const viewport of [
       { name: "mobile-375", width: 375, height: 812 },

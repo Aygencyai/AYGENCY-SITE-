@@ -7,14 +7,17 @@ import {
   ChevronDown,
   Compass,
   Layers3,
+  Mail,
   ShieldCheck,
   Target,
+  Workflow,
 } from "lucide-react";
 import type { EdenApplication } from "@/lib/eden/application-schema";
 import {
   autonomyLabels,
   blueprintByGoal,
   dataReadinessLabels,
+  getEdenExample,
   getBlueprintOperatingMode,
   investmentLabels,
   primaryGoalLabels,
@@ -60,6 +63,13 @@ export default function EdenBlueprint({
   const blueprint = blueprintByGoal[application.answers.primaryGoal];
   const operatingMode = getBlueprintOperatingMode(
     application.answers.dataReadiness,
+    application.answers.autonomyPreference
+  );
+  const example = getEdenExample(
+    application.answers.primaryGoal,
+    application.answers.workflowVolume,
+    application.answers.systems,
+    application.answers.teamSize,
     application.answers.autonomyPreference
   );
   const externalDiscoveryUrl = /^https:\/\//.test(discoveryUrl);
@@ -178,6 +188,86 @@ export default function EdenBlueprint({
         </article>
       </div>
 
+      <section
+        aria-labelledby="eden-example-heading"
+        className="mt-6 overflow-hidden rounded-2xl border border-cyan/15 bg-void-light/80"
+      >
+        <div className="border-b border-ghost/[0.08] p-6 sm:p-8">
+          <div className="flex items-center gap-2 text-cyan">
+            <Workflow size={17} aria-hidden="true" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em]">
+              Your Eden at work
+            </p>
+          </div>
+          <h2
+            id="eden-example-heading"
+            className="mt-5 max-w-3xl font-heading text-2xl font-semibold uppercase leading-tight text-white sm:text-3xl"
+          >
+            An example of what your Eden can do for you
+          </h2>
+          <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-ghost-muted sm:text-base">
+            Based on the operating shape you described, this is one practical
+            first workflow for Eden and the specialists behind her.
+          </p>
+          <p className="mt-6 max-w-3xl font-heading text-xl font-medium text-ghost sm:text-2xl">
+            {example.title}
+          </p>
+        </div>
+
+        <dl className="grid border-b border-ghost/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            ["Weekly rhythm", example.context.volume],
+            ["People involved", example.context.people],
+            ["Tool context", example.context.systems],
+            ["Starting authority", example.context.authority],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="border-b border-ghost/[0.08] p-5 last:border-b-0 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0"
+            >
+              <dt className="font-mono text-[9px] uppercase tracking-[0.16em] text-ghost-muted">
+                {label}
+              </dt>
+              <dd className="mt-2 break-words font-sans text-sm leading-relaxed text-ghost">
+                {value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <ol className="grid gap-px bg-ghost/[0.08] lg:grid-cols-3">
+          {[
+            {
+              label: "01 // Work arrives",
+              title: example.arrivalTitle,
+              description: example.arrivalDescription,
+            },
+            {
+              label: "02 // Eden coordinates",
+              title: example.coordinationTitle,
+              description: example.coordinationDescription,
+            },
+            {
+              label: "03 // You decide",
+              title: example.context.authority,
+              description: example.authorityDescription,
+            },
+          ].map((step) => (
+            <li key={step.label} className="bg-surface/90 p-6 sm:p-7">
+              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-cyan-muted">
+                {step.label}
+              </p>
+              <h3 className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">
+                {step.title}
+              </h3>
+              <p className="mt-3 font-sans text-sm leading-relaxed text-ghost-muted">
+                {step.description}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       <details className="group mt-6 rounded-2xl border border-ghost/[0.08] bg-void-light/70">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-5 font-heading text-sm font-semibold uppercase tracking-[0.1em] text-ghost transition-colors hover:text-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40 sm:px-7">
           <span className="flex items-center gap-3">
@@ -249,25 +339,35 @@ export default function EdenBlueprint({
         <div className="relative flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-void/60">
-              The useful next step
+              Contact us
             </p>
             <h2 className="mt-3 font-heading text-2xl font-semibold uppercase leading-tight text-void sm:text-3xl">
-              Turn this direction into a buildable first system.
+              Want more information or a quote?
             </h2>
             <p className="mt-3 font-sans text-sm leading-relaxed text-void/70">
-              In a discovery call, we&rsquo;ll test the assumptions, map the
-              workflow, and decide whether there is a valuable first release.
+              Email build@aygency.ai and we&rsquo;ll turn this example into a
+              scoped recommendation for your operation, including approach,
+              timing, and pricing.
             </p>
           </div>
-          <a
-            href={discoveryUrl}
-            target={externalDiscoveryUrl ? "_blank" : undefined}
-            rel={externalDiscoveryUrl ? "noreferrer" : undefined}
-            className="inline-flex min-h-12 flex-none items-center justify-center gap-2 rounded-lg bg-void px-7 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.13em] text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-void/30"
-          >
-            Book your discovery call
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
+          <div className="flex w-full flex-col gap-3 lg:w-auto lg:min-w-[290px]">
+            <a
+              href="mailto:build@aygency.ai?subject=Eden%20AI%20Personal%20Assistant%20enquiry"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-void px-7 py-3 text-center font-heading text-[13px] font-semibold uppercase tracking-[0.11em] text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-void/30"
+            >
+              Email build@aygency.ai
+              <Mail size={16} aria-hidden="true" />
+            </a>
+            <a
+              href={discoveryUrl}
+              target={externalDiscoveryUrl ? "_blank" : undefined}
+              rel={externalDiscoveryUrl ? "noreferrer" : undefined}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-void/25 px-7 py-3 text-center font-heading text-[13px] font-semibold uppercase tracking-[0.11em] text-void transition-all duration-200 hover:bg-void/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-void/30"
+            >
+              Book a discovery call
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </section>
     </div>
