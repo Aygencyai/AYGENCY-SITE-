@@ -4,13 +4,13 @@ The public website for aygency.ai — we design, build, and deploy custom AI age
 
 ## What This Project Is
 
-A Next.js 14 (App Router) website that is undergoing a **design migration**. The backend logic, routing, data structures, API integrations, and page architecture are solid and must be preserved. The visual layer (colours, typography, component styling, animations, layout aesthetics) is being completely reworked to match a premium editorial design system.
+A Next.js 15 (App Router) website that is undergoing a **design migration**. The backend logic, routing, data structures, API integrations, and page architecture are solid and must be preserved. The visual layer (colours, typography, component styling, animations, layout aesthetics) is being completely reworked to match a premium editorial design system.
 
 **DO NOT break existing functionality.** Every change is cosmetic/presentational unless explicitly told otherwise. If you're unsure whether something is functional or cosmetic, ask before changing it.
 
 ## Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 15.5.21 (App Router)
 - **Language:** TypeScript (strict mode)
 - **Styling:** Tailwind CSS + CSS custom properties in globals.css
 - **Animations:** Framer Motion — do not introduce GSAP or any other animation library
@@ -26,6 +26,9 @@ A Next.js 14 (App Router) website that is undergoing a **design migration**. The
 - `pnpm dev` — start dev server
 - `pnpm build` — production build (run after every significant change)
 - `pnpm lint` — run linter
+- `pnpm test` — run Vitest unit and API boundary tests
+- `pnpm test:e2e` — run the Playwright browser suite
+- `pnpm exec tsc --noEmit` — run strict TypeScript verification
 
 ## Design System — The Rules
 
@@ -131,6 +134,17 @@ src/
 - `TypewriterText.tsx` uses IntersectionObserver with `margin: "-80px 0px"` — the vertical-only margin is intentional. Using just `"-80px"` shrinks the observation zone horizontally and breaks detection on narrow elements.
 - `GlowOrb.tsx` is a static CSS blur effect with no scroll parallax. The `parallaxStrength` prop exists in the interface for backward compatibility but is unused.
 - GSAP has been fully removed from the codebase. Do not re-introduce it.
+- `/design-your-eden` is the approved `EdenApplicationSubmitted.v1` sender. The
+  browser calls only the same-origin route; `src/lib/eden/crm.ts` holds the
+  server-only exact-byte HMAC adapter. Email is matching evidence, not identity,
+  and retries reuse a frozen UUID snapshot. Do not restore the historical bearer
+  envelope or infer missing contract facts.
+- Cloudflare Turnstile is explicitly rendered in the browser but always verified
+  by the CRM Edge Function. Only `EDEN_APPLICATION_TURNSTILE_SITE_KEY` may reach
+  the rendered page. Never add Supabase/service-role, signing, operator, or
+  Turnstile secret values to browser code.
+- The repository has no existing site-wide CSP. Do not add one only for Eden
+  without auditing all existing third-party site integrations.
 
 ## Environment Variables
 
@@ -139,13 +153,21 @@ src/
 | NEXT_PUBLIC_CAL_URL | Cal.com booking link |
 | RESEND_API_KEY | Resend API for contact form |
 | CONTACT_EMAIL | Recipient for contact form |
+| EDEN_APPLICATION_INGEST_URL | Server-only approved Eden ingestion Edge Function URL |
+| EDEN_APPLICATION_SIGNING_SECRET | Server-only HMAC signing secret, at least 32 characters |
+| EDEN_APPLICATION_TURNSTILE_SITE_KEY | Public Cloudflare Turnstile widget site key passed through the server page |
+| EDEN_ALLOWED_ORIGINS | Optional exact HTTPS preview origins, comma-separated |
+| EDEN_NOTIFICATION_EMAIL | Optional post-acceptance Eden notification recipient |
+| EDEN_NOTIFICATION_FROM | Optional verified Eden notification sender |
 
 ## Verification
 
-After any change, always run:
+After any significant change, always run:
 ```bash
-pnpm build
+pnpm test && pnpm exec tsc --noEmit && pnpm lint && pnpm build
 ```
 Zero errors = good. If build fails, fix before moving on.
 
-For visual changes, check at these breakpoints: 1440px, 1024px, 768px, 375px.
+For Eden or visual changes, also run `pnpm test:e2e` and check 1440px, 1024px,
+768px, and 375px. Before release, run `pnpm audit --audit-level high` and permit
+no unresolved applicable high/critical advisory.

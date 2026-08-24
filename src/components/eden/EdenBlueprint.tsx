@@ -15,18 +15,20 @@ import {
 } from "lucide-react";
 import type { EdenApplication } from "@/lib/eden/application-schema";
 import {
-  autonomyLabels,
-  blueprintByGoal,
-  dataReadinessLabels,
+  budgetReadinessLabels,
+  calendarComplexityLabels,
+  currentToolLabels,
+  decisionAuthorityLabels,
+  emailLoadLabels,
   getEdenExample,
-  getBlueprintOperatingMode,
-  investmentLabels,
-  primaryGoalLabels,
-  successMeasureLabels,
-  systemLabels,
-  teamSizeLabels,
-  timelineLabels,
-  workflowVolumeLabels,
+  getEdenBlueprintRecommendation,
+  getEdenOperatingMode,
+  meetingLoadLabels,
+  openLoopVolumeLabels,
+  organisationSizeBandLabels,
+  primaryOutcomeLabels,
+  targetStartWindowLabels,
+  travelFrequencyLabels,
 } from "@/lib/eden/questionnaire";
 
 interface EdenBlueprintProps {
@@ -63,17 +65,13 @@ export default function EdenBlueprint({
   discoveryUrl,
   recorded,
 }: EdenBlueprintProps) {
-  const blueprint = blueprintByGoal[application.answers.primaryGoal];
-  const operatingMode = getBlueprintOperatingMode(
-    application.answers.dataReadiness,
-    application.answers.autonomyPreference
+  const blueprint = getEdenBlueprintRecommendation(
+    application.answers.primaryOutcomes,
   );
+  const operatingMode = getEdenOperatingMode(application.answers);
   const example = getEdenExample(
-    application.answers.primaryGoal,
-    application.answers.workflowVolume,
-    application.answers.systems,
-    application.answers.teamSize,
-    application.answers.autonomyPreference
+    application.answers,
+    application.organisation.sizeBand,
   );
   const externalDiscoveryUrl = /^https:\/\//.test(discoveryUrl);
 
@@ -120,7 +118,7 @@ export default function EdenBlueprint({
         </div>
         {recorded && (
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ghost-muted">
-            Ref {application.submissionId.slice(0, 8)}
+            Ref {application.applicationId.slice(0, 8)}
           </p>
         )}
       </div>
@@ -146,10 +144,12 @@ export default function EdenBlueprint({
                 First responsibility
               </p>
               <p className="mt-2 font-sans text-lg font-medium text-ghost">
-                {primaryGoalLabels[application.answers.primaryGoal]}
+                {application.answers.primaryOutcomes
+                  .map((outcome) => primaryOutcomeLabels[outcome])
+                  .join(", ")}
               </p>
               <p className="mt-3 whitespace-pre-wrap break-words border-l border-cyan/30 pl-4 font-sans text-sm italic leading-relaxed text-ghost-muted">
-                “{application.answers.desiredOutcome}”
+                “{application.answers.currentFriction}”
               </p>
             </div>
           </div>
@@ -186,12 +186,12 @@ export default function EdenBlueprint({
             </h2>
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
-            {application.answers.successMeasures.map((measure) => (
+            {application.answers.primaryOutcomes.map((outcome) => (
               <span
-                key={measure}
+                key={outcome}
                 className="rounded-full border border-cyan/15 bg-cyan/[0.04] px-3 py-2 font-sans text-xs text-ghost"
               >
-                {successMeasureLabels[measure]}
+                {primaryOutcomeLabels[outcome]}
               </span>
             ))}
           </div>
@@ -205,7 +205,7 @@ export default function EdenBlueprint({
             </h2>
           </div>
           <p className="mt-5 font-heading text-xl font-medium text-ghost">
-            {timelineLabels[application.answers.timeline]}
+            {targetStartWindowLabels[application.answers.targetStartWindow]}
           </p>
         </article>
       </div>
@@ -304,55 +304,77 @@ export default function EdenBlueprint({
         </summary>
         <dl className="border-t border-ghost/[0.08] px-5 pb-2 sm:px-7">
           <AnswerRow
-            label="Priority"
-            value={primaryGoalLabels[application.answers.primaryGoal]}
-          />
-          <AnswerRow
-            label="Desired outcome"
-            value={application.answers.desiredOutcome}
-            preserveWhitespace
-          />
-          <AnswerRow
-            label="Current attention drain"
-            value={application.answers.currentChallenge}
-            preserveWhitespace
-          />
-          <AnswerRow
-            label="Weekly volume"
-            value={workflowVolumeLabels[application.answers.workflowVolume]}
-          />
-          <AnswerRow
-            label="People affected"
-            value={teamSizeLabels[application.answers.teamSize]}
-          />
-          <AnswerRow
-            label="Systems"
-            value={application.answers.systems
-              .map((system) => systemLabels[system])
+            label="Primary outcomes"
+            value={application.answers.primaryOutcomes
+              .map((outcome) => primaryOutcomeLabels[outcome])
               .join(", ")}
           />
           <AnswerRow
-            label="Data readiness"
-            value={dataReadinessLabels[application.answers.dataReadiness]}
+            label="Current friction"
+            value={application.answers.currentFriction}
+            preserveWhitespace
           />
           <AnswerRow
-            label="Preferred autonomy"
-            value={autonomyLabels[application.answers.autonomyPreference]}
+            label="Hours lost weekly"
+            value={String(application.answers.hoursLostWeekly)}
           />
           <AnswerRow
-            label="Success measures"
-            value={application.answers.successMeasures
-              .map((measure) => successMeasureLabels[measure])
+            label="Open-loop volume"
+            value={openLoopVolumeLabels[application.answers.openLoopVolume]}
+          />
+          <AnswerRow
+            label="Meeting load"
+            value={meetingLoadLabels[application.answers.meetingLoad]}
+          />
+          <AnswerRow
+            label="Email load"
+            value={emailLoadLabels[application.answers.emailLoad]}
+          />
+          <AnswerRow
+            label="Calendar complexity"
+            value={calendarComplexityLabels[application.answers.calendarComplexity]}
+          />
+          <AnswerRow
+            label="Travel frequency"
+            value={travelFrequencyLabels[application.answers.travelFrequency]}
+          />
+          <AnswerRow
+            label="Current tools"
+            value={application.answers.currentTools
+              .map((tool) => currentToolLabels[tool])
               .join(", ")}
           />
           <AnswerRow
-            label="Timeline"
-            value={timelineLabels[application.answers.timeline]}
+            label="Decision authority"
+            value={decisionAuthorityLabels[application.answers.decisionAuthority]}
           />
           <AnswerRow
-            label="Monthly service range"
-            value={investmentLabels[application.answers.investmentRange]}
+            label="Target start"
+            value={targetStartWindowLabels[application.answers.targetStartWindow]}
           />
+          <AnswerRow
+            label="Budget readiness"
+            value={budgetReadinessLabels[application.answers.budgetReadiness]}
+          />
+          <AnswerRow
+            label="Operated by Aygency"
+            value={application.answers.operatedServiceAck ? "Acknowledged" : "Not yet acknowledged"}
+          />
+          <AnswerRow
+            label="Safe data boundary"
+            value={application.answers.dataBoundaryAck ? "Acknowledged" : "Not yet acknowledged"}
+          />
+          <AnswerRow
+            label="Organisation size"
+            value={organisationSizeBandLabels[application.organisation.sizeBand]}
+          />
+          {application.answers.anythingElse.trim() && (
+            <AnswerRow
+              label="Additional context"
+              value={application.answers.anythingElse}
+              preserveWhitespace
+            />
+          )}
         </dl>
       </details>
 

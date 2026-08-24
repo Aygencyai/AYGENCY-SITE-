@@ -7,6 +7,7 @@ import {
 } from "@/lib/eden/application-handler";
 
 const now = Date.parse("2026-08-24T10:02:01.000Z");
+const requestId = "33333333-3333-4333-8333-333333333333";
 const allowedRate = {
   allowed: true,
   limit: 5,
@@ -27,13 +28,16 @@ function createRequest(body: unknown, headers: Record<string, string> = {}) {
   });
 }
 
-function createHandler(overrides: Parameters<typeof createEdenApplicationsPostHandler>[0] = {}) {
+function createHandler(
+  overrides: Parameters<typeof createEdenApplicationsPostHandler>[0] = {},
+) {
   return createEdenApplicationsPostHandler({
     now: () => now,
     consumeRateLimit: () => allowedRate,
     deliver: async (value) => ({
       outcome: "accepted",
       event: createEdenCrmEvent(value),
+      requestId,
     }),
     notify: async () => undefined,
     ...overrides,
@@ -51,19 +55,23 @@ describe("POST /api/eden/applications", () => {
     const order: string[] = [];
     const deliver = vi.fn(async (value) => {
       order.push("crm");
-      return { outcome: "accepted" as const, event: createEdenCrmEvent(value) };
+      return {
+        outcome: "accepted" as const,
+        event: createEdenCrmEvent(value),
+        requestId,
+      };
     });
     const notify = vi.fn(async () => {
       order.push("notification");
     });
     const response = await createHandler({ deliver, notify })(
-      createRequest(application)
+      createRequest(application),
     );
 
     expect(response.status).toBe(202);
     expect(await response.json()).toEqual({
       success: true,
-      submissionId: application.submissionId,
+      applicationId: application.applicationId,
       duplicate: false,
     });
     expect(deliver).toHaveBeenCalledWith(application);
@@ -71,13 +79,14 @@ describe("POST /api/eden/applications", () => {
     expect(order).toEqual(["crm", "notification"]);
   });
 
-  it("suppresses notification for a duplicate CRM receipt", async () => {
+  it("suppresses notification for a validated exact-retry receipt", async () => {
     const application = createEdenApplicationFixture();
     const notify = vi.fn(async () => undefined);
     const response = await createHandler({
       deliver: async (value) => ({
         outcome: "duplicate",
         event: createEdenCrmEvent(value),
+        requestId,
       }),
       notify,
     })(createRequest(application));
@@ -87,22 +96,23 @@ describe("POST /api/eden/applications", () => {
     expect(await response.json()).toMatchObject({ duplicate: true });
   });
 
-  it("keeps CRM success when the notification fails", async () => {
+  it("keeps CRM success when the best-effort notification fails", async () => {
     vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const application = createEdenApplicationFixture();
     const response = await createHandler({
       notify: async () => {
         throw new Error("notification unavailable");
       },
-    })(createRequest(createEdenApplicationFixture()));
+    })(createRequest(application));
 
     expect(response.status).toBe(202);
     expect(console.error).toHaveBeenCalledWith(
       "[eden-applications] notification_failed",
-      expect.objectContaining({ submissionId: expect.any(String) })
+      { eventId: application.eventId },
     );
   });
 
-  it("fails the submission when the CRM does not record it", async () => {
+  it("fails honestly when the CRM does not record the application", async () => {
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     const notify = vi.fn(async () => undefined);
     const response = await createHandler({
@@ -115,6 +125,18 @@ describe("POST /api/eden/applications", () => {
     expect(response.status).toBe(503);
     expect(await response.json()).toMatchObject({ code: "crm_unavailable" });
     expect(notify).not.toHaveBeenCalled();
+  });
+
+  it("does not call a changed-body conflict a duplicate success", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const response = await createHandler({
+      deliver: async () => {
+        throw new EdenCrmDeliveryError("conflict", 409);
+      },
+    })(createRequest(createEdenApplicationFixture()));
+
+    expect(response.status).toBe(409);
+    expect(await response.json()).toMatchObject({ code: "crm_conflict" });
   });
 
   it("identifies missing local CRM configuration without weakening production", async () => {
@@ -139,56 +161,38 @@ describe("POST /api/eden/applications", () => {
       createRequest(createEdenApplicationFixture(), {
         Origin: "https://attacker.example",
         "Sec-Fetch-Site": "cross-site",
-      })
+      }),
     );
 
     expect(response.status).toBe(403);
     expect(deliver).not.toHaveBeenCalled();
   });
 
-  it("accepts an HTTP localhost browser origin when development binds to 0.0.0.0", () => {
+  it("accepts an HTTP localhost browser origin only outside production", () => {
     vi.stubEnv("NODE_ENV", "development");
-    const request = new Request(
-      "http://0.0.0.0:3000/api/eden/applications",
-      {
-        method: "POST",
-        headers: {
-          Origin: "http://localhost:3000",
-          "Sec-Fetch-Site": "same-origin",
-        },
-      }
-    );
-
+    const request = new Request("http://0.0.0.0:3000/api/eden/applications", {
+      method: "POST",
+      headers: {
+        Origin: "http://localhost:3000",
+        "Sec-Fetch-Site": "same-origin",
+      },
+    });
     expect(isTrustedEdenOrigin(request)).toBe(true);
-  });
 
-  it("does not trust the localhost exception in production", () => {
     vi.stubEnv("NODE_ENV", "production");
-    const request = new Request(
-      "http://0.0.0.0:3000/api/eden/applications",
-      {
-        method: "POST",
-        headers: {
-          Origin: "http://localhost:3000",
-          "Sec-Fetch-Site": "same-origin",
-        },
-      }
-    );
-
     expect(isTrustedEdenOrigin(request)).toBe(false);
   });
 
   it("rejects an oversized body before JSON parsing", async () => {
     const response = await createHandler()(
-      createRequest("{}", { "Content-Length": String(48 * 1_024 + 1) })
+      createRequest("{}", { "Content-Length": String(48 * 1_024 + 1) }),
     );
-
     expect(response.status).toBe(413);
   });
 
   it("neutralizes a honeypot submission without calling the CRM", async () => {
     const application = createEdenApplicationFixture();
-    application.website = "https://spam.example";
+    application.website = "spam-value";
     const deliver = vi.fn();
     const response = await createHandler({ deliver })(createRequest(application));
 
@@ -197,18 +201,24 @@ describe("POST /api/eden/applications", () => {
     expect(deliver).not.toHaveBeenCalled();
   });
 
-  it("rejects implausibly fast completion", async () => {
-    const application = createEdenApplicationFixture();
-    application.startedAt = "2026-08-24T10:01:59.000Z";
+  it("rejects implausibly fast or expired completion", async () => {
+    const tooFast = createEdenApplicationFixture();
+    tooFast.submittedAt = "2026-08-24T10:02:00.000Z";
+    tooFast.startedAt = "2026-08-24T10:01:59.000Z";
+    const expired = createEdenApplicationFixture();
+    expired.submittedAt = "2026-08-24T09:56:59.000Z";
+    expired.startedAt = "2026-08-24T09:54:00.000Z";
     const deliver = vi.fn();
-    const response = await createHandler({ deliver })(createRequest(application));
 
-    expect(response.status).toBe(422);
-    expect(await response.json()).toMatchObject({ code: "timing_rejected" });
+    for (const application of [tooFast, expired]) {
+      const response = await createHandler({ deliver })(createRequest(application));
+      expect(response.status).toBe(422);
+      expect(await response.json()).toMatchObject({ code: "timing_rejected" });
+    }
     expect(deliver).not.toHaveBeenCalled();
   });
 
-  it("returns Retry-After when the application rate limit is exhausted", async () => {
+  it("returns Retry-After when the same-origin defense rate limit is exhausted", async () => {
     const deliver = vi.fn();
     const response = await createHandler({
       consumeRateLimit: () => ({

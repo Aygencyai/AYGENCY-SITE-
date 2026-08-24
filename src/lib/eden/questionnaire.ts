@@ -1,15 +1,18 @@
 import type { FieldPath } from "react-hook-form";
 import type {
-  AutonomyPreference,
-  DataReadiness,
+  BudgetReadiness,
+  CalendarComplexity,
+  CurrentTool,
+  DecisionAuthority,
+  EdenAnswers,
   EdenQuestionnaireValues,
-  InvestmentRange,
-  PrimaryGoal,
-  SuccessMeasure,
-  SystemOption,
-  TeamSize,
-  Timeline,
-  WorkflowVolume,
+  EmailLoad,
+  MeetingLoad,
+  OpenLoopVolume,
+  OrganisationSizeBand,
+  PrimaryOutcome,
+  TargetStartWindow,
+  TravelFrequency,
 } from "./application-schema";
 
 export interface EdenOption<T extends string> {
@@ -20,20 +23,46 @@ export interface EdenOption<T extends string> {
 
 export const edenSteps = [
   { id: "workEmail", fields: ["contact.workEmail"] },
-  { id: "primaryGoal", fields: ["answers.primaryGoal"] },
-  { id: "desiredOutcome", fields: ["answers.desiredOutcome"] },
-  { id: "currentChallenge", fields: ["answers.currentChallenge"] },
-  { id: "workflowVolume", fields: ["answers.workflowVolume"] },
-  { id: "teamSize", fields: ["answers.teamSize"] },
-  { id: "systems", fields: ["answers.systems"] },
-  { id: "dataReadiness", fields: ["answers.dataReadiness"] },
-  { id: "autonomyPreference", fields: ["answers.autonomyPreference"] },
-  { id: "successMeasures", fields: ["answers.successMeasures"] },
-  { id: "timeline", fields: ["answers.timeline"] },
-  { id: "investmentRange", fields: ["answers.investmentRange"] },
-  { id: "fullName", fields: ["contact.fullName"] },
-  { id: "companyName", fields: ["contact.companyName"] },
-  { id: "consents", fields: ["consent.inquiry", "consent.marketing"] },
+  { id: "primaryOutcomes", fields: ["answers.primaryOutcomes"] },
+  { id: "currentFriction", fields: ["answers.currentFriction"] },
+  { id: "hoursLostWeekly", fields: ["answers.hoursLostWeekly"] },
+  { id: "openLoopVolume", fields: ["answers.openLoopVolume"] },
+  { id: "meetingLoad", fields: ["answers.meetingLoad"] },
+  { id: "emailLoad", fields: ["answers.emailLoad"] },
+  { id: "calendarComplexity", fields: ["answers.calendarComplexity"] },
+  { id: "travelFrequency", fields: ["answers.travelFrequency"] },
+  { id: "currentTools", fields: ["answers.currentTools"] },
+  { id: "decisionAuthority", fields: ["answers.decisionAuthority"] },
+  { id: "targetStartWindow", fields: ["answers.targetStartWindow"] },
+  { id: "budgetReadiness", fields: ["answers.budgetReadiness"] },
+  {
+    id: "acknowledgements",
+    fields: ["answers.operatedServiceAck", "answers.dataBoundaryAck"],
+  },
+  {
+    id: "contactDetails",
+    fields: [
+      "contact.fullName",
+      "contact.phone",
+      "contact.roleTitle",
+      "contact.linkedinUrl",
+    ],
+  },
+  {
+    id: "organisation",
+    fields: [
+      "organisation.name",
+      "organisation.website",
+      "organisation.companyNumber",
+      "organisation.countryCode",
+      "organisation.sizeBand",
+    ],
+  },
+  { id: "anythingElse", fields: ["answers.anythingElse"] },
+  {
+    id: "consents",
+    fields: ["consent.inquiry", "consent.marketing", "botToken"],
+  },
 ] as const satisfies ReadonlyArray<{
   id: string;
   fields: ReadonlyArray<FieldPath<EdenQuestionnaireValues>>;
@@ -41,501 +70,214 @@ export const edenSteps = [
 
 export type EdenStepId = (typeof edenSteps)[number]["id"];
 
-export const primaryGoalOptions: ReadonlyArray<EdenOption<PrimaryGoal>> = [
+export const primaryOutcomeOptionList: ReadonlyArray<EdenOption<PrimaryOutcome>> = [
+  { value: "protect-time", label: "Protect my time" },
+  { value: "close-open-loops", label: "Close open loops" },
+  { value: "improve-follow-through", label: "Improve follow-through" },
+  { value: "reduce-inbox-load", label: "Reduce inbox load" },
+  { value: "improve-meeting-readiness", label: "Improve meeting readiness" },
+  { value: "protect-focus", label: "Protect focus" },
+  { value: "coordinate-travel", label: "Coordinate travel" },
   {
-    value: "revenue",
-    label: "Keep communication and follow-ups moving",
-    description:
-      "Inbox replies, introductions, sales follow-ups, and relationship nudges.",
+    value: "manage-reservations",
+    label: "Manage reservations",
+    description: "Recorded as discovery interest while this capability remains parked.",
   },
   {
-    value: "customer_experience",
-    label: "Stay ahead of clients and customers",
-    description:
-      "Requests, onboarding, check-ins, service updates, and account care.",
-  },
-  {
-    value: "operations",
-    label: "Coordinate projects and recurring work",
-    description: "Tasks, owners, hand-offs, deadlines, and recurring routines.",
-  },
-  {
-    value: "finance_admin",
-    label: "Handle admin and reporting",
-    description: "Documents, records, expenses, reports, and routine checks.",
-  },
-  {
-    value: "knowledge_people",
-    label: "Prepare research, briefs, and first drafts",
-    description:
-      "Research, meeting preparation, summaries, documents, and team answers.",
-  },
-  {
-    value: "leadership_visibility",
-    label: "Protect my focus and priorities",
-    description:
-      "Calendar, daily briefings, decisions, risks, and what needs attention.",
-  },
-  {
-    value: "other",
-    label: "Give Eden another responsibility",
-    description: "Describe the recurring responsibility you want her to own.",
+    value: "coordinate-household",
+    label: "Coordinate household logistics",
+    description: "Recorded as discovery interest while this capability remains parked.",
   },
 ];
 
-const volumeContext: Record<
-  PrimaryGoal,
-  { title: string; description: string; noun: string }
-> = {
-  revenue: {
-    title: "How many conversations or follow-ups could Eden help move each week?",
-    description:
-      "Count inbox replies, introductions, opportunities, and relationship follow-ups in a typical week.",
-    noun: "conversations or follow-ups",
-  },
-  customer_experience: {
-    title: "How many client or customer requests could Eden support each week?",
-    description:
-      "Include support, onboarding, check-ins, service updates, and account requests.",
-    noun: "client or customer requests",
-  },
-  operations: {
-    title: "How many tasks or hand-offs could Eden coordinate each week?",
-    description:
-      "Count recurring tasks, project updates, requests, approvals, and follow-ups in a typical week.",
-    noun: "tasks or hand-offs",
-  },
-  finance_admin: {
-    title: "How many admin or reporting items could Eden prepare each week?",
-    description:
-      "Count documents, expenses, records, routine checks, and reports in a typical week.",
-    noun: "admin or reporting items",
-  },
-  knowledge_people: {
-    title: "How many research or preparation requests could Eden handle each week?",
-    description:
-      "Include meeting briefs, research questions, summaries, drafts, and requests for internal context.",
-    noun: "research or preparation requests",
-  },
-  leadership_visibility: {
-    title: "How many updates, meetings, or priorities could Eden organise each week?",
-    description:
-      "Count the inputs that compete for your attention across a normal week.",
-    noun: "updates, meetings, or priorities",
-  },
-  other: {
-    title: "How often would Eden need to step in?",
-    description:
-      "A directional weekly estimate is enough. We can shape the exact responsibility together.",
-    noun: "requests or actions",
-  },
-};
+export const openLoopVolumeOptionList: ReadonlyArray<EdenOption<OpenLoopVolume>> = [
+  { value: "low", label: "Low", description: "A small number stay open at once." },
+  { value: "moderate", label: "Moderate", description: "Several need active follow-through." },
+  { value: "high", label: "High", description: "Open commitments regularly compete." },
+  { value: "overwhelming", label: "Overwhelming", description: "Important commitments are routinely at risk." },
+];
 
-export function getVolumeQuestion(goal: PrimaryGoal | undefined) {
-  const context = volumeContext[goal ?? "other"];
-  const options: ReadonlyArray<EdenOption<WorkflowVolume>> = [
-    { value: "under_25_weekly", label: `Under 25 ${context.noun} / week` },
-    { value: "25_100_weekly", label: `25–100 ${context.noun} / week` },
-    { value: "101_500_weekly", label: `101–500 ${context.noun} / week` },
-    { value: "over_500_weekly", label: `More than 500 ${context.noun} / week` },
-    { value: "irregular", label: "It is irregular or seasonal" },
-    { value: "unknown", label: "I do not know yet" },
-  ];
+export const meetingLoadOptionList: ReadonlyArray<EdenOption<MeetingLoad>> = [
+  { value: "low", label: "Low" },
+  { value: "moderate", label: "Moderate" },
+  { value: "high", label: "High" },
+  { value: "extreme", label: "Extreme" },
+];
 
-  return { ...context, options };
+export const emailLoadOptionList: ReadonlyArray<EdenOption<EmailLoad>> = [
+  { value: "low", label: "Low" },
+  { value: "moderate", label: "Moderate" },
+  { value: "high", label: "High" },
+  { value: "overwhelming", label: "Overwhelming" },
+];
+
+export const calendarComplexityOptionList: ReadonlyArray<
+  EdenOption<CalendarComplexity>
+> = [
+  { value: "simple", label: "Simple", description: "Few moving calendars or constraints." },
+  { value: "moderate", label: "Moderate", description: "Regular changes, attendees, or priorities." },
+  { value: "complex", label: "Complex", description: "Many stakeholders, time zones, or dependencies." },
+];
+
+export const travelFrequencyOptionList: ReadonlyArray<
+  EdenOption<TravelFrequency>
+> = [
+  { value: "rare", label: "Rarely" },
+  { value: "monthly", label: "About monthly" },
+  { value: "weekly", label: "About weekly" },
+  { value: "multiple_weekly", label: "Several times a week" },
+];
+
+export const currentToolOptionList: ReadonlyArray<EdenOption<CurrentTool>> = [
+  { value: "microsoft-365", label: "Microsoft 365" },
+  { value: "google-workspace", label: "Google Workspace" },
+  { value: "todoist", label: "Todoist" },
+  { value: "notion", label: "Notion" },
+  { value: "telegram", label: "Telegram" },
+  { value: "slack", label: "Slack", description: "Requires confirmation during discovery." },
+  { value: "other", label: "Another tool", description: "We will confirm the provider during discovery." },
+];
+
+export const decisionAuthorityOptionList: ReadonlyArray<
+  EdenOption<DecisionAuthority>
+> = [
+  { value: "sole_decision_maker", label: "I can decide" },
+  { value: "shared_decision", label: "The decision is shared" },
+  { value: "recommender", label: "I am recommending Eden" },
+];
+
+export const targetStartWindowOptionList: ReadonlyArray<
+  EdenOption<TargetStartWindow>
+> = [
+  { value: "immediately", label: "As soon as possible" },
+  { value: "within_30_days", label: "Within 30 days" },
+  { value: "within_90_days", label: "Within 90 days" },
+  { value: "exploring", label: "I am exploring" },
+];
+
+export const budgetReadinessOptionList: ReadonlyArray<
+  EdenOption<BudgetReadiness>
+> = [
+  { value: "approved", label: "Budget is approved" },
+  { value: "range_known", label: "We know the workable range" },
+  { value: "needs_business_case", label: "We need a business case" },
+  { value: "not_set", label: "Budget is not set" },
+];
+
+export const acknowledgementOptionList: ReadonlyArray<EdenOption<"yes" | "no">> = [
+  { value: "yes", label: "Yes" },
+  { value: "no", label: "Not yet" },
+];
+
+export const organisationSizeBandOptionList: ReadonlyArray<
+  EdenOption<OrganisationSizeBand>
+> = [
+  { value: "solo", label: "Just me" },
+  { value: "2-10", label: "2–10 people" },
+  { value: "11-50", label: "11–50 people" },
+  { value: "51-200", label: "51–200 people" },
+  { value: "201-1000", label: "201–1,000 people" },
+  { value: "1001+", label: "1,001+ people" },
+];
+
+function labelsFrom<T extends string>(options: ReadonlyArray<EdenOption<T>>) {
+  return Object.fromEntries(options.map((option) => [option.value, option.label])) as Record<T, string>;
 }
 
-export const teamSizeOptions: ReadonlyArray<EdenOption<TeamSize>> = [
-  { value: "just_me", label: "Just me" },
-  { value: "2_5", label: "Me and up to four others" },
-  { value: "6_20", label: "A team of 6–20" },
-  { value: "21_50", label: "A team of 21–50" },
-  { value: "51_plus", label: "More than 50 people" },
-  { value: "unknown", label: "Several teams or still deciding" },
-];
+export const primaryOutcomeLabels = labelsFrom(primaryOutcomeOptionList);
+export const openLoopVolumeLabels = labelsFrom(openLoopVolumeOptionList);
+export const meetingLoadLabels = labelsFrom(meetingLoadOptionList);
+export const emailLoadLabels = labelsFrom(emailLoadOptionList);
+export const calendarComplexityLabels = labelsFrom(calendarComplexityOptionList);
+export const travelFrequencyLabels = labelsFrom(travelFrequencyOptionList);
+export const currentToolLabels = labelsFrom(currentToolOptionList);
+export const decisionAuthorityLabels = labelsFrom(decisionAuthorityOptionList);
+export const targetStartWindowLabels = labelsFrom(targetStartWindowOptionList);
+export const budgetReadinessLabels = labelsFrom(budgetReadinessOptionList);
+export const organisationSizeBandLabels = labelsFrom(organisationSizeBandOptionList);
 
-export const systemOptionList: ReadonlyArray<EdenOption<SystemOption>> = [
-  { value: "email_support", label: "Email, calendar, or support inbox" },
-  { value: "crm", label: "CRM or sales platform" },
-  { value: "project_operations", label: "Project or task management" },
-  { value: "knowledge_documents", label: "Documents or knowledge base" },
-  { value: "spreadsheets", label: "Spreadsheets or shared trackers" },
-  { value: "finance_erp", label: "Finance, accounting, or ERP" },
-  { value: "data_warehouse", label: "Reporting, BI, or database" },
-  { value: "custom_internal", label: "Custom internal software" },
-  { value: "other", label: "Another work tool" },
-  { value: "not_sure", label: "Not sure yet" },
-];
-
-export const dataReadinessOptionList: ReadonlyArray<
-  EdenOption<DataReadiness>
-> = [
-  {
-    value: "structured",
-    label: "Ready for Eden to use",
-    description:
-      "The useful context already lives in dependable tools and documents.",
-  },
-  {
-    value: "fragmented",
-    label: "Useful, spread across a few places",
-    description:
-      "Eden would bring together context from tools, documents, and inboxes.",
-  },
-  {
-    value: "mostly_manual",
-    label: "Mostly in routines or people's heads",
-    description:
-      "We would first teach Eden the way the work currently gets done.",
-  },
-  {
-    value: "starting_fresh",
-    label: "A fresh responsibility for Eden",
-    description: "We would design the working rhythm and context together.",
-  },
-  {
-    value: "unknown",
-    label: "I need help assessing this",
-  },
-];
-
-export const autonomyOptionList: ReadonlyArray<
-  EdenOption<AutonomyPreference>
-> = [
-  {
-    value: "insights_only",
-    label: "Surface insights only",
-    description: "Eden finds patterns and recommends what a person should do.",
-  },
-  {
-    value: "draft_and_review",
-    label: "Prepare the work for review",
-    description: "Eden researches, drafts, and organises; a person completes it.",
-  },
-  {
-    value: "approval_gates",
-    label: "Act after clear approval",
-    description: "Eden prepares actions and waits at explicit decision gates.",
-  },
-  {
-    value: "bounded_autonomy",
-    label: "Run routine work within guardrails",
-    description: "Eden acts independently only inside agreed limits and escalation rules.",
-  },
-  {
-    value: "need_guidance",
-    label: "Recommend the right level",
-    description: "We will choose authority based on risk, reversibility, and evidence.",
-  },
-];
-
-export const successMeasureOptionList: ReadonlyArray<
-  EdenOption<SuccessMeasure>
-> = [
-  { value: "time_saved", label: "Hours back each week" },
-  { value: "faster_response", label: "Faster replies and follow-ups" },
-  { value: "quality_consistency", label: "More reliable execution" },
-  { value: "revenue_growth", label: "More opportunities followed through" },
-  { value: "cost_reduction", label: "Admin effort returned to useful work" },
-  { value: "operational_visibility", label: "Clearer priorities and open actions" },
-  { value: "customer_experience", label: "Clients feel better looked after" },
-  { value: "capacity_to_scale", label: "More capacity for valuable work" },
-];
-
-export const timelineOptionList: ReadonlyArray<EdenOption<Timeline>> = [
-  { value: "within_30_days", label: "Within the next 30 days" },
-  { value: "this_quarter", label: "During the next three months" },
-  { value: "next_6_months", label: "Within six months" },
-  { value: "this_year", label: "Later this year" },
-  { value: "exploring", label: "I am exploring what Eden could do" },
-];
-
-export const investmentOptionList: ReadonlyArray<
-  EdenOption<InvestmentRange>
-> = [
-  { value: "under_500_monthly", label: "Under £500 / month" },
-  { value: "500_1k_monthly", label: "£500–£1,000 / month" },
-  { value: "1k_2k_monthly", label: "£1,000–£2,000 / month" },
-  { value: "2k_plus_monthly", label: "£2,000+ / month" },
-  { value: "need_guidance", label: "Help me choose the right level" },
-];
-
-export const primaryGoalLabels: Record<PrimaryGoal, string> = {
-  revenue: "Communication and follow-ups",
-  customer_experience: "Client and customer care",
-  operations: "Projects and recurring work",
-  finance_admin: "Admin and reporting",
-  knowledge_people: "Research, briefs, and drafts",
-  leadership_visibility: "Focus and priorities",
-  other: "Another responsibility for Eden",
-};
-
-export const workflowVolumeLabels: Record<WorkflowVolume, string> = {
-  under_25_weekly: "Under 25 per week",
-  "25_100_weekly": "25–100 per week",
-  "101_500_weekly": "101–500 per week",
-  over_500_weekly: "More than 500 per week",
-  irregular: "Irregular or seasonal",
-  unknown: "Not known yet",
-};
-
-export const teamSizeLabels: Record<TeamSize, string> = {
-  just_me: "Just me",
-  "2_5": "Me and up to four others",
-  "6_20": "A team of 6–20",
-  "21_50": "A team of 21–50",
-  "51_plus": "More than 50 people",
-  unknown: "Several teams or still deciding",
-};
-
-export const systemLabels = Object.fromEntries(
-  systemOptionList.map((option) => [option.value, option.label])
-) as Record<SystemOption, string>;
-
-export const dataReadinessLabels = Object.fromEntries(
-  dataReadinessOptionList.map((option) => [option.value, option.label])
-) as Record<DataReadiness, string>;
-
-export const autonomyLabels = Object.fromEntries(
-  autonomyOptionList.map((option) => [option.value, option.label])
-) as Record<AutonomyPreference, string>;
-
-export const successMeasureLabels = Object.fromEntries(
-  successMeasureOptionList.map((option) => [option.value, option.label])
-) as Record<SuccessMeasure, string>;
-
-export const timelineLabels = Object.fromEntries(
-  timelineOptionList.map((option) => [option.value, option.label])
-) as Record<Timeline, string>;
-
-export const investmentLabels = Object.fromEntries(
-  investmentOptionList.map((option) => [option.value, option.label])
-) as Record<InvestmentRange, string>;
-
-interface EdenExamplePattern {
+interface EdenBlueprintRecommendation {
   title: string;
-  arrivalTitle: string;
-  arrivalDescription: string;
-  coordinationTitle: string;
-  coordinationDescription: string;
+  thesis: string;
+  firstCapability: string;
 }
 
-const edenExampleByGoal: Record<PrimaryGoal, EdenExamplePattern> = {
-  revenue: {
-    title: "A reply lands and Eden keeps the conversation moving.",
-    arrivalTitle: "A conversation needs a next step",
-    arrivalDescription:
-      "A lead replies, a contact makes an introduction, or an active opportunity needs a timely follow-up.",
-    coordinationTitle: "Eden prepares the follow-up",
-    coordinationDescription:
-      "Eden checks the conversation and CRM context, drafts the response, records the commitment, and keeps the next action visible.",
-  },
-  customer_experience: {
-    title: "A client request gets a prepared, informed response.",
-    arrivalTitle: "A client needs an update or answer",
-    arrivalDescription:
-      "A support question, onboarding task, account request, or promised check-in appears in a connected channel.",
-    coordinationTitle: "Eden brings the client context together",
-    coordinationDescription:
-      "Eden gathers the account history and open commitments, prepares the response, and routes any specialist work to the right place.",
-  },
-  operations: {
-    title: "A project update becomes a clear next action.",
-    arrivalTitle: "Work changes or a deadline approaches",
-    arrivalDescription:
-      "A task changes, a hand-off is due, a recurring routine begins, or an approval needs attention.",
-    coordinationTitle: "Eden coordinates the moving pieces",
-    coordinationDescription:
-      "Eden carries the context between the connected tools, prepares updates, confirms ownership, and tracks the next commitment.",
-  },
-  finance_admin: {
-    title: "A routine admin item arrives prepared for review.",
-    arrivalTitle: "A document, record, or report is due",
-    arrivalDescription:
-      "An expense, document, record, routine check, or reporting request enters the agreed working rhythm.",
-    coordinationTitle: "Eden assembles the supporting detail",
-    coordinationDescription:
-      "Eden gathers the relevant records, completes the preparation steps, and presents the item with its source context for review.",
-  },
-  knowledge_people: {
-    title: "A meeting starts with the research already prepared.",
-    arrivalTitle: "A brief, draft, or answer is needed",
-    arrivalDescription:
-      "A meeting appears on the calendar, a document needs a first draft, or someone asks for grounded context.",
-    coordinationTitle: "Eden prepares the useful material",
-    coordinationDescription:
-      "Eden researches against the approved sources, organises the evidence, and prepares the brief or draft in the requested format.",
-  },
-  leadership_visibility: {
-    title: "The day starts with a focused brief and clear priorities.",
-    arrivalTitle: "Your calendar and work produce new signals",
-    arrivalDescription:
-      "Meetings move, commitments change, updates arrive, and decisions compete for attention.",
-    coordinationTitle: "Eden prepares your priority view",
-    coordinationDescription:
-      "Eden brings together the relevant updates, open commitments, and decision context into a concise briefing for your day.",
-  },
-  other: {
-    title: "A recurring responsibility moves into Eden's working rhythm.",
-    arrivalTitle: "The agreed trigger appears",
-    arrivalDescription:
-      "A repeatable request, deadline, update, or signal appears in the connected tools.",
-    coordinationTitle: "Eden takes the agreed next steps",
-    coordinationDescription:
-      "Eden gathers the context, coordinates any specialist work, records progress, and prepares the next action within the agreed bounds.",
-  },
-};
-
-const authorityExampleByPreference: Record<AutonomyPreference, string> = {
-  insights_only:
-    "Eden surfaces the pattern and recommended response. Your team chooses and completes the action.",
-  draft_and_review:
-    "Eden prepares the work and supporting context for review. A named person completes the action.",
-  approval_gates:
-    "Eden prepares the action and pauses at an explicit approval gate before execution.",
-  bounded_autonomy:
-    "Eden completes agreed routine actions inside set limits, records the result, and brings exceptions to a named person.",
-  need_guidance:
-    "Aygency uses discovery to set the first decision boundary around risk, reversibility, and evidence.",
-};
-
-function summariseSystems(systems: ReadonlyArray<SystemOption>) {
-  const knownSystems = systems
-    .filter((system) => system !== "not_sure")
-    .map((system) => systemLabels[system]);
-
-  if (knownSystems.length === 0) return "Tool mix shaped during discovery";
-  if (knownSystems.length === 1) return knownSystems[0];
-  if (knownSystems.length === 2) {
-    return `${knownSystems[0]} and ${knownSystems[1]}`;
+export function getEdenBlueprintRecommendation(
+  outcomes: ReadonlyArray<PrimaryOutcome>,
+): EdenBlueprintRecommendation {
+  if (outcomes.includes("coordinate-travel")) {
+    return {
+      title: "Executive and travel coordination assistant",
+      thesis: "Eden protects the working thread across commitments, preparation, and changing travel plans.",
+      firstCapability: "Start with one calendar, one inbox, and the travel changes that most often create follow-up work.",
+    };
   }
-
-  const remaining = knownSystems.length - 2;
-  return `${knownSystems[0]}, ${knownSystems[1]}, and ${remaining} more`;
-}
-
-export function getEdenExample(
-  primaryGoal: PrimaryGoal,
-  workflowVolume: WorkflowVolume,
-  systems: ReadonlyArray<SystemOption>,
-  teamSize: TeamSize,
-  autonomyPreference: AutonomyPreference
-) {
-  const pattern = edenExampleByGoal[primaryGoal];
-  const volume =
-    getVolumeQuestion(primaryGoal).options.find(
-      (option) => option.value === workflowVolume
-    )?.label ?? workflowVolumeLabels[workflowVolume];
-
+  if (
+    outcomes.some((outcome) =>
+      ["reduce-inbox-load", "improve-meeting-readiness", "protect-focus"].includes(outcome),
+    )
+  ) {
+    return {
+      title: "Executive coordination assistant",
+      thesis: "Eden organises inbox, meeting, calendar, and commitment context into prepared next actions.",
+      firstCapability: "Connect the first approved workspace and build a daily preparation and follow-through rhythm.",
+    };
+  }
+  if (
+    outcomes.some((outcome) =>
+      ["manage-reservations", "coordinate-household"].includes(outcome),
+    )
+  ) {
+    return {
+      title: "Personal coordination assistant",
+      thesis: "Eden begins with supported coordination work while parked interests are clarified during discovery.",
+      firstCapability: "Start with a supported follow-through responsibility and define the next capability gate together.",
+    };
+  }
   return {
-    ...pattern,
-    context: {
-      volume,
-      people: teamSizeLabels[teamSize],
-      systems: summariseSystems(systems),
-      authority: autonomyLabels[autonomyPreference],
-    },
-    authorityDescription: authorityExampleByPreference[autonomyPreference],
+    title: "Follow-through assistant",
+    thesis: "Eden keeps commitments visible, prepares the next move, and helps close the open loops that consume attention.",
+    firstCapability: "Choose one recurring commitment flow and give every item a prepared, visible next action.",
   };
 }
 
-export const blueprintByGoal: Record<
-  PrimaryGoal,
-  { title: string; thesis: string; firstCapability: string }
-> = {
-  revenue: {
-    title: "Follow-up and communications assistant",
-    thesis:
-      "Eden watches active conversations, prepares relevant responses, records commitments, and keeps each next action visible.",
-    firstCapability:
-      "Connect one inbox or CRM motion and give every active conversation a clear next step.",
-  },
-  customer_experience: {
-    title: "Client care assistant",
-    thesis:
-      "Eden keeps client context close, prepares timely updates, and coordinates the people needed to move each request forward.",
-    firstCapability:
-      "Start with one recurring client journey and the check-ins, context, and decisions it needs.",
-  },
-  operations: {
-    title: "Project coordination assistant",
-    thesis:
-      "Eden keeps tasks, owners, deadlines, and hand-offs connected so the next useful action is always clear.",
-    firstCapability:
-      "Give Eden one live project or recurring routine with clear owners and decision points.",
-  },
-  finance_admin: {
-    title: "Admin and reporting assistant",
-    thesis:
-      "Eden prepares recurring records, documents, checks, and reports while keeping financial decisions with the right person.",
-    firstCapability:
-      "Choose one repeatable admin responsibility and teach Eden its sources, timing, and approval point.",
-  },
-  knowledge_people: {
-    title: "Research and briefing assistant",
-    thesis:
-      "Eden turns approved sources into useful research, meeting briefs, summaries, and first drafts prepared around your working style.",
-    firstCapability:
-      "Connect the first trusted knowledge sources and define one brief or draft Eden should prepare repeatedly.",
-  },
-  leadership_visibility: {
-    title: "Executive focus assistant",
-    thesis:
-      "Eden organises the calendar, commitments, updates, and decision context into a clear view of what deserves attention.",
-    firstCapability:
-      "Build a daily or weekly priority brief from the tools and updates you already rely on.",
-  },
-  other: {
-    title: "Tailored personal assistant",
-    thesis:
-      "Eden takes on a defined recurring responsibility, learns its context, and coordinates the next action within clear permissions.",
-    firstCapability:
-      "Define the trigger, context, output, and decision boundary for Eden's first responsibility.",
-  },
-};
-
-export function getBlueprintOperatingMode(
-  dataReadiness: DataReadiness,
-  autonomy: AutonomyPreference
-) {
-  if (
-    dataReadiness === "mostly_manual" ||
-    dataReadiness === "starting_fresh"
-  ) {
+export function getEdenOperatingMode(answers: EdenAnswers) {
+  if (!answers.operatedServiceAck || !answers.dataBoundaryAck) {
     return {
-      title: "Guided context setup",
+      title: "Boundary discovery first",
       description:
-        "Teach Eden the working rhythm and source context first, then add responsibility as the pattern becomes clear and dependable.",
+        "Before onboarding, we will resolve the operated-service and safe-data boundaries that are not yet accepted.",
     };
   }
-
-  if (dataReadiness === "unknown") {
-    return {
-      title: "Context discovery",
-      description:
-        "Map the tools, context, and working rhythm before setting Eden's first permissions and connections.",
-    };
-  }
-
-  if (autonomy === "bounded_autonomy") {
-    return {
-      title: "Guardrailed action",
-      description:
-        "Eden begins with reversible routine actions, explicit limits, a visible activity record, and a clear escalation path.",
-    };
-  }
-
-  if (autonomy === "insights_only") {
-    return {
-      title: "Briefing and recommendations",
-      description:
-        "Eden starts by organising grounded context and recommending the next move while you retain every action.",
-    };
-  }
-
   return {
-    title: "Review-first assistance",
+    title: "Aygency-operated, review-first",
     description:
-      "Eden prepares and coordinates the work while named people approve consequential actions.",
+      "Aygency operates Eden after launch. We begin with bounded access, visible activity, and explicit escalation points.",
+  };
+}
+
+export function getEdenExample(
+  answers: EdenAnswers,
+  sizeBand: OrganisationSizeBand,
+) {
+  const recommendation = getEdenBlueprintRecommendation(answers.primaryOutcomes);
+  return {
+    title: recommendation.firstCapability,
+    arrivalTitle: "A commitment needs attention",
+    arrivalDescription:
+      "A reply, meeting change, promised follow-up, or calendar signal creates a new open loop.",
+    coordinationTitle: "Eden prepares the next move",
+    coordinationDescription:
+      "Eden gathers approved context, prepares the action, records the commitment, and keeps its owner visible.",
+    context: {
+      volume: openLoopVolumeLabels[answers.openLoopVolume],
+      people: organisationSizeBandLabels[sizeBand],
+      systems: answers.currentTools.map((tool) => currentToolLabels[tool]).join(", "),
+      authority: decisionAuthorityLabels[answers.decisionAuthority],
+    },
+    authorityDescription:
+      answers.decisionAuthority === "sole_decision_maker"
+        ? "You set the initial authority and approval gates during discovery."
+        : "The discovery call identifies the decision owner and records the approval path before onboarding.",
   };
 }

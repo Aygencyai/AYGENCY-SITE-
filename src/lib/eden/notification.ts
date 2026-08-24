@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import type { EdenApplication } from "./application-schema";
-import { investmentLabels, primaryGoalLabels } from "./questionnaire";
+import { budgetReadinessLabels, primaryOutcomeLabels } from "./questionnaire";
 
 interface EmailSender {
   emails: {
@@ -56,17 +56,19 @@ export async function sendEdenApplicationNotification(
       text: [
         "An Eden application is now recorded in the CRM.",
         "",
-        `Reference: ${application.submissionId}`,
+        `Reference: ${application.applicationId}`,
         `Applicant: ${singleLine(application.contact.fullName)}`,
-        `Company: ${singleLine(application.contact.companyName)}`,
-        `First Eden responsibility: ${primaryGoalLabels[application.answers.primaryGoal]}`,
-        `Monthly service range: ${investmentLabels[application.answers.investmentRange]}`,
+        `Company: ${singleLine(application.organisation.name)}`,
+        `Primary outcomes: ${application.answers.primaryOutcomes
+          .map((outcome) => primaryOutcomeLabels[outcome])
+          .join(", ")}`,
+        `Budget readiness: ${budgetReadinessLabels[application.answers.budgetReadiness]}`,
         `Marketing consent: ${application.consent.marketing ? "granted" : "not granted"}`,
         "",
         "Open the CRM record for the complete, authoritative application.",
       ].join("\n"),
     },
-    { idempotencyKey: `eden-application-${application.submissionId}` }
+    { idempotencyKey: `eden-application-${application.eventId}` }
   );
 
   if (error) throw new Error("Eden application notification failed.");

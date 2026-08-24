@@ -6,19 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --ignore-pattern next-env.d.ts --max-warnings=0",
     "test": "vitest run",
     "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@react-three/drei": "9.99.0",
+    "@react-three/drei": "9.122.0",
     "@react-three/fiber": "8.15.19",
     "@react-three/postprocessing": "2.16.3",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.5",
     "lucide-react": "^0.576.0",
-    "next": "14.2.35",
+    "next": "15.5.21",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.71.2",
@@ -36,10 +36,25 @@
     "@types/three": "0.162.0",
     "autoprefixer": "^10.4.27",
     "eslint": "^8",
-    "eslint-config-next": "14.2.35",
-    "postcss": "^8",
+    "eslint-config-next": "15.5.21",
+    "postcss": "8.5.18",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
-    "vitest": "3.2.4"
+    "vitest": "3.2.6"
+  },
+  "pnpm": {
+    "overrides": {
+      "brace-expansion@1": "1.1.18",
+      "brace-expansion@2": "2.1.4",
+      "brace-expansion@5": "5.0.9",
+      "flatted": "3.4.2",
+      "glob@10": "10.5.0",
+      "js-yaml@4": "4.3.1",
+      "nanoid@3": "3.3.18",
+      "picomatch@2": "2.3.2",
+      "picomatch@4": "4.0.4",
+      "postcss": "8.5.18",
+      "sharp": "0.35.0"
+    }
   }
 }

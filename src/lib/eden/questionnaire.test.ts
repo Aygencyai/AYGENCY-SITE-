@@ -1,60 +1,52 @@
 import { describe, expect, it } from "vitest";
-import { getEdenExample } from "./questionnaire";
+import { createEdenApplicationFixture } from "./test-fixture";
+import {
+  getEdenBlueprintRecommendation,
+  getEdenExample,
+  getEdenOperatingMode,
+} from "./questionnaire";
 
 describe("Eden Blueprint example", () => {
-  it("builds a controlled example from workflow, volume, systems, team, and authority", () => {
+  it("builds a controlled example from the exact application facts", () => {
+    const application = createEdenApplicationFixture();
     const example = getEdenExample(
-      "operations",
-      "101_500_weekly",
-      ["email_support", "project_operations"],
-      "6_20",
-      "approval_gates"
+      application.answers,
+      application.organisation.sizeBand,
     );
 
     expect(example).toMatchObject({
-      title: "A project update becomes a clear next action.",
       context: {
-        volume: "101–500 tasks or hand-offs / week",
-        people: "A team of 6–20",
-        systems:
-          "Email, calendar, or support inbox and Project or task management",
-        authority: "Act after clear approval",
+        volume: "High",
+        people: "11–50 people",
+        systems: "Microsoft 365, Todoist, Notion, Telegram",
+        authority: "I can decide",
       },
     });
-    expect(example.coordinationDescription).toContain("connected tools");
-    expect(example.authorityDescription).toContain("explicit approval gate");
+    expect(example.coordinationDescription).toContain("approved context");
+    expect(example.authorityDescription).toContain("approval gates");
   });
 
-  it("changes the scenario when the selected opportunity changes", () => {
-    const revenue = getEdenExample(
-      "revenue",
-      "25_100_weekly",
-      ["crm"],
-      "2_5",
-      "draft_and_review"
-    );
-    const leadership = getEdenExample(
-      "leadership_visibility",
-      "25_100_weekly",
-      ["data_warehouse"],
-      "2_5",
-      "draft_and_review"
-    );
+  it("recommends mobility only when the submitted outcomes include travel", () => {
+    const mobility = getEdenBlueprintRecommendation([
+      "protect-time",
+      "coordinate-travel",
+    ]);
+    const executive = getEdenBlueprintRecommendation([
+      "reduce-inbox-load",
+      "protect-focus",
+    ]);
 
-    expect(revenue.title).toBe(
-      "A reply lands and Eden keeps the conversation moving."
-    );
-    expect(revenue.context.volume).toBe(
-      "25–100 conversations or follow-ups / week"
-    );
-    expect(leadership.title).toBe(
-      "The day starts with a focused brief and clear priorities."
-    );
-    expect(leadership.context.volume).toBe(
-      "25–100 updates, meetings, or priorities / week"
-    );
-    expect(revenue.coordinationDescription).not.toBe(
-      leadership.coordinationDescription
-    );
+    expect(mobility.title).toContain("travel");
+    expect(executive.title).toBe("Executive coordination assistant");
+    expect(executive.title).not.toContain("travel");
+  });
+
+  it("keeps false acknowledgements visible as discovery work", () => {
+    const application = createEdenApplicationFixture();
+    application.answers.operatedServiceAck = false;
+
+    expect(getEdenOperatingMode(application.answers)).toMatchObject({
+      title: "Boundary discovery first",
+    });
   });
 });

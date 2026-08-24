@@ -3,79 +3,94 @@ import { edenApplicationSchema } from "./application-schema";
 import { createEdenApplicationFixture } from "./test-fixture";
 
 describe("edenApplicationSchema", () => {
-  it("accepts the complete contract without rewriting original answers", () => {
+  it("accepts the complete sender contract without rewriting original answers", () => {
     const application = createEdenApplicationFixture();
-    application.answers.desiredOutcome =
-      "  Keep this deliberate leading space in the original answer.";
+    application.answers.currentFriction =
+      "  Keep this deliberate leading space in the original application answer.";
 
     const parsed = edenApplicationSchema.parse(application);
 
     expect(parsed).toEqual(application);
-    expect(parsed.answers.desiredOutcome.startsWith("  ")).toBe(true);
+    expect(parsed.answers.currentFriction.startsWith("  ")).toBe(true);
   });
 
-  it("requires inquiry consent independently of marketing consent", () => {
+  it("requires inquiry consent independently of optional marketing consent", () => {
     const application = createEdenApplicationFixture();
     application.consent.inquiry = false;
     application.consent.marketing = true;
 
-    const result = edenApplicationSchema.safeParse(application);
+    expect(edenApplicationSchema.safeParse(application).success).toBe(false);
+  });
 
-    expect(result.success).toBe(false);
+  it("accepts explicit false boundary answers without inventing acceptance", () => {
+    const application = createEdenApplicationFixture();
+    application.answers.operatedServiceAck = false;
+    application.answers.dataBoundaryAck = false;
+
+    expect(edenApplicationSchema.parse(application).answers).toMatchObject({
+      operatedServiceAck: false,
+      dataBoundaryAck: false,
+    });
   });
 
   it("rejects overlong untrusted free text", () => {
     const application = createEdenApplicationFixture();
-    application.answers.currentChallenge = "x".repeat(1_201);
+    application.answers.currentFriction = "x".repeat(1_501);
 
-    const result = edenApplicationSchema.safeParse(application);
-
-    expect(result.success).toBe(false);
+    expect(edenApplicationSchema.safeParse(application).success).toBe(false);
   });
 
-  it("rejects unknown keys at every public trust boundary", () => {
+  it("rejects unknown keys at the public trust boundary", () => {
     const application = {
       ...createEdenApplicationFixture(),
       privilegedCredential: "should-never-be-accepted",
     };
 
-    const result = edenApplicationSchema.safeParse(application);
-
-    expect(result.success).toBe(false);
+    expect(edenApplicationSchema.safeParse(application).success).toBe(false);
   });
 
-  it("rejects duplicate and contradictory multi-select values", () => {
-    const duplicated = createEdenApplicationFixture();
-    duplicated.answers.successMeasures = ["time_saved", "time_saved"];
-    const contradictory = createEdenApplicationFixture();
-    contradictory.answers.systems = ["not_sure", "crm"];
+  it("rejects duplicate multi-select values", () => {
+    const duplicatedOutcomes = createEdenApplicationFixture();
+    duplicatedOutcomes.answers.primaryOutcomes = ["protect-time", "protect-time"];
+    const duplicatedTools = createEdenApplicationFixture();
+    duplicatedTools.answers.currentTools = ["notion", "notion"];
 
-    expect(edenApplicationSchema.safeParse(duplicated).success).toBe(false);
-    expect(edenApplicationSchema.safeParse(contradictory).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(duplicatedOutcomes).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(duplicatedTools).success).toBe(false);
   });
 
-  it("rejects a submission timestamp before the questionnaire start", () => {
+  it("rejects non-v4 identifiers and a submission before questionnaire start", () => {
+    const wrongUuidVersion = createEdenApplicationFixture();
+    wrongUuidVersion.eventId = "11111111-1111-1111-8111-111111111111";
+    const reversed = createEdenApplicationFixture();
+    reversed.submittedAt = "2026-08-24T09:57:59.000Z";
+
+    expect(edenApplicationSchema.safeParse(wrongUuidVersion).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(reversed).success).toBe(false);
+  });
+
+  it("requires a bounded Turnstile token and exact country/identity shapes", () => {
+    const shortToken = createEdenApplicationFixture();
+    shortToken.botToken = "short";
+    const lowerCountry = createEdenApplicationFixture();
+    lowerCountry.organisation.countryCode = "gb";
+    const badPhone = createEdenApplicationFixture();
+    badPhone.contact.phone = "07700900123";
+
+    expect(edenApplicationSchema.safeParse(shortToken).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(lowerCountry).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(badPhone).success).toBe(false);
+  });
+
+  it("allows genuinely absent optional identity attributes as empty sender fields", () => {
     const application = createEdenApplicationFixture();
-    application.submittedAt = "2026-08-24T09:59:59.000Z";
+    application.contact.phone = "";
+    application.contact.roleTitle = "";
+    application.contact.linkedinUrl = "";
+    application.organisation.website = "";
+    application.organisation.companyNumber = "";
+    application.answers.anythingElse = "";
 
-    const result = edenApplicationSchema.safeParse(application);
-
-    expect(result.success).toBe(false);
-  });
-
-  it("stores Eden's monthly service range and rejects legacy build bands", () => {
-    const monthly = createEdenApplicationFixture();
-    const legacy = {
-      ...createEdenApplicationFixture(),
-      answers: {
-        ...createEdenApplicationFixture().answers,
-        investmentRange: "25k_50k",
-      },
-    };
-
-    expect(edenApplicationSchema.parse(monthly).answers.investmentRange).toBe(
-      "1k_2k_monthly"
-    );
-    expect(edenApplicationSchema.safeParse(legacy).success).toBe(false);
+    expect(edenApplicationSchema.safeParse(application).success).toBe(true);
   });
 });
