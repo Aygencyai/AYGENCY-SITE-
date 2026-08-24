@@ -244,6 +244,8 @@ export function createEdenApplicationsPostHandler(
     } catch (error) {
       const failure =
         error instanceof EdenCrmDeliveryError ? error.kind : "unexpected";
+      const localConfigurationMissing =
+        failure === "configuration" && process.env.NODE_ENV !== "production";
       console.error("[eden-applications] crm_delivery_failed", {
         submissionId: application.submissionId,
         failure,
@@ -252,8 +254,12 @@ export function createEdenApplicationsPostHandler(
       return jsonResponse(
         {
           error:
-            "We could not safely record your application. Your answers are still here. Please try again.",
-          code: "crm_unavailable",
+            localConfigurationMissing
+              ? "CRM storage is pending for this local preview."
+              : "We could not safely record your application. Your answers are still here. Please try again.",
+          code: localConfigurationMissing
+            ? "crm_not_configured"
+            : "crm_unavailable",
         },
         503,
         responseRateHeaders

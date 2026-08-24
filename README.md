@@ -46,6 +46,11 @@ CRM credentials must never use a `NEXT_PUBLIC_` prefix or be exposed to the
 browser. The CRM is the application system of record; Resend is notification
 only.
 
+Without `EDEN_CRM_ENDPOINT_URL` and `EDEN_CRM_API_TOKEN`, local development
+can show an explicitly labelled Eden Blueprint preview, but the submission is
+not stored. A real recorded result requires the approved CRM environment and a
+controlled end-to-end smoke submission.
+
 ## Project Structure
 
 ```

@@ -12,15 +12,16 @@ describe("Eden Blueprint example", () => {
     );
 
     expect(example).toMatchObject({
-      title: "A request arrives and leaves with a clear owner.",
+      title: "A project update becomes a clear next action.",
       context: {
-        volume: "101–500 workflow runs / week",
-        people: "6–20 people",
-        systems: "Email, inbox, or support desk and Project or operations tools",
+        volume: "101–500 tasks or hand-offs / week",
+        people: "A team of 6–20",
+        systems:
+          "Email, calendar, or support inbox and Project or task management",
         authority: "Act after clear approval",
       },
     });
-    expect(example.coordinationDescription).toContain("Operations specialist");
+    expect(example.coordinationDescription).toContain("connected tools");
     expect(example.authorityDescription).toContain("explicit approval gate");
   });
 
@@ -40,13 +41,17 @@ describe("Eden Blueprint example", () => {
       "draft_and_review"
     );
 
-    expect(revenue.title).toBe("A live opportunity gets the right follow-up.");
-    expect(revenue.context.volume).toBe("25–100 revenue touches / week");
+    expect(revenue.title).toBe(
+      "A reply lands and Eden keeps the conversation moving."
+    );
+    expect(revenue.context.volume).toBe(
+      "25–100 conversations or follow-ups / week"
+    );
     expect(leadership.title).toBe(
-      "A changing signal becomes a decision-ready brief."
+      "The day starts with a focused brief and clear priorities."
     );
     expect(leadership.context.volume).toBe(
-      "25–100 signals or decisions / week"
+      "25–100 updates, meetings, or priorities / week"
     );
     expect(revenue.coordinationDescription).not.toBe(
       leadership.coordinationDescription

@@ -76,9 +76,11 @@ class EdenSubmissionError extends Error {
 function getSubmissionErrorMessage(code: string | undefined, fallback?: string) {
   switch (code) {
     case "origin_denied":
-      return "We could not verify this page as the source of the submission. Refresh the page and try again.";
+      return "Please refresh this page so we can verify the submission source.";
     case "crm_unavailable":
-      return "We could not record this submission in the CRM right now.";
+      return "The CRM is temporarily unavailable. Your Eden Blueprint is ready to preview.";
+    case "crm_not_configured":
+      return "CRM storage is pending for this local preview. Your Eden Blueprint is ready below.";
     case "rate_limited":
       return "This browser has made several recent attempts. Please wait a moment before trying again.";
     case "timing_rejected":
@@ -87,7 +89,7 @@ function getSubmissionErrorMessage(code: string | undefined, fallback?: string) 
     default:
       return (
         fallback ??
-        "We could not safely record your application. Please try again."
+        "Your application is ready for another submission attempt."
       );
   }
 }
@@ -442,8 +444,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="Where should your Eden create leverage first?"
-            description="Choose the part of the operation where better speed, consistency, or visibility would matter most."
+            title="What should Eden take off your plate first?"
+            description="Choose the responsibility that would make the clearest difference to your working week."
           >
             <Controller
               name="answers.primaryGoal"
@@ -451,7 +453,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="Where should your Eden create leverage first?"
+                  legend="What should Eden take off your plate first?"
                   options={primaryGoalOptions}
                   value={field.value}
                   onChange={field.onChange}
@@ -467,8 +469,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What should be reliably true when this is working?"
-            description="Describe the better operating reality. Focus on the result you want to create."
+            title="If Eden were already helping, what would feel different in your week?"
+            description="Describe the outcome in practical terms. Tell us what Eden would keep moving, prepare, or bring to your attention."
           >
             <label htmlFor="desiredOutcome" className="sr-only">
               Desired outcome
@@ -477,7 +479,7 @@ export default function DesignYourEdenClient({
               id="desiredOutcome"
               rows={5}
               maxLength={800}
-              placeholder="For example: Every qualified enquiry gets a useful response within ten minutes, with the right context ready for our team."
+              placeholder="For example: I start each day with priorities already organised, important follow-ups prepared, and a clear view of what needs my decision."
               aria-describedby="eden-question-description desiredOutcome-hint desiredOutcome-error"
               aria-invalid={Boolean(errors.answers?.desiredOutcome)}
               className={`${inputClasses} min-h-[160px] resize-y`}
@@ -488,8 +490,8 @@ export default function DesignYourEdenClient({
                 id="desiredOutcome-hint"
                 className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
               >
-                Describe the result in your own words. A clear outcome makes
-                the first recommendation more useful.
+                Share enough detail for us to picture Eden in your normal
+                working week.
               </p>
               <CharacterCount current={desiredOutcome.length} maximum={800} />
             </div>
@@ -504,17 +506,17 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="Where does the current workflow lose momentum?"
-            description="Tell us where work waits, repeats, gets missed, or depends too heavily on one person."
+            title="What currently takes your attention or gets missed?"
+            description="Tell us what you repeatedly chase, remember, prepare, copy between tools, or pick up after it has slowed down."
           >
             <label htmlFor="currentChallenge" className="sr-only">
-              Current workflow challenge
+              Current working challenge
             </label>
             <textarea
               id="currentChallenge"
               rows={6}
               maxLength={1200}
-              placeholder="For example: Requests arrive in three inboxes, someone copies them into a tracker, and handoffs are easy to miss when volume rises."
+              placeholder="For example: Follow-ups sit across email, meeting notes, and our task board. I spend too much time rebuilding context and remembering who needs a response."
               aria-describedby="eden-question-description currentChallenge-hint currentChallenge-error"
               aria-invalid={Boolean(errors.answers?.currentChallenge)}
               className={`${inputClasses} min-h-[180px] resize-y`}
@@ -525,8 +527,8 @@ export default function DesignYourEdenClient({
                 id="currentChallenge-hint"
                 className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
               >
-                The more specific you are about what happens, who handles it,
-                and where it slows down, the sharper your Eden Blueprint will be.
+                Include the tools, people, and recurring moments involved. That
+                context makes your Eden example more useful.
               </p>
               <CharacterCount current={currentChallenge.length} maximum={1200} />
             </div>
@@ -566,8 +568,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="How many people feel this workflow today?"
-            description="Count the people doing the work, waiting on it, managing it, or depending on its output."
+            title="Who should Eden support first?"
+            description="Start with the people whose priorities, communication, or recurring work Eden would help coordinate."
           >
             <Controller
               name="answers.teamSize"
@@ -575,7 +577,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="How many people feel this workflow today?"
+                  legend="Who should Eden support first?"
                   options={teamSizeOptions}
                   value={field.value}
                   onChange={field.onChange}
@@ -591,8 +593,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="Which kinds of systems are already in the workflow?"
-            description="Select up to six categories so Eden can be shaped around the tools your team already uses."
+            title="Where does the work Eden needs to understand live?"
+            description="Select up to six tool categories so we can understand where Eden's working context lives."
           >
             <Controller
               name="answers.systems"
@@ -600,7 +602,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="Which kinds of systems are already in the workflow?"
+                  legend="Where does the work Eden needs to understand live?"
                   options={systemOptionList}
                   value={field.value}
                   multiple
@@ -634,8 +636,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="How ready is the information this workflow depends on?"
-            description="This sets the safest first phase. Fragmented or manual data is common, and it helps us choose where to begin."
+            title="How ready is the context Eden would need?"
+            description="Think about the emails, documents, task history, and working routines that would teach Eden how you operate."
           >
             <Controller
               name="answers.dataReadiness"
@@ -643,7 +645,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="How ready is the information this workflow depends on?"
+                  legend="How ready is the context Eden would need?"
                   options={dataReadinessOptionList}
                   value={field.value}
                   onChange={field.onChange}
@@ -660,8 +662,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="How much authority should Eden earn first?"
-            description="Start with the level that fits the risk. Authority can expand only after the workflow proves it deserves it."
+            title="What should Eden be allowed to do at first?"
+            description="Choose the starting level that feels comfortable. Eden can earn more responsibility as you see the quality of her work."
           >
             <Controller
               name="answers.autonomyPreference"
@@ -669,7 +671,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="How much authority should Eden earn first?"
+                  legend="What should Eden be allowed to do at first?"
                   options={autonomyOptionList}
                   value={field.value}
                   onChange={field.onChange}
@@ -686,8 +688,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What evidence would make this worth building?"
-            description="Choose up to four measures. The first release should have a small number of outcomes that can actually be observed."
+            title="What would make Eden valuable each month?"
+            description="Choose up to four outcomes you would genuinely notice in your work or your team's experience."
           >
             <Controller
               name="answers.successMeasures"
@@ -695,7 +697,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="What evidence would make this worth building?"
+                  legend="What would make Eden valuable each month?"
                   options={successMeasureOptionList}
                   value={field.value}
                   multiple
@@ -720,8 +722,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="When would meaningful progress matter?"
-            description="Choose the honest horizon. We use this to shape a realistic first release around your priorities."
+            title="When would you like Eden working with you?"
+            description="Choose the timing that best reflects your current interest and readiness."
           >
             <Controller
               name="answers.timeline"
@@ -729,7 +731,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="When would meaningful progress matter?"
+                  legend="When would you like Eden working with you?"
                   options={timelineOptionList}
                   value={field.value}
                   onChange={field.onChange}
@@ -746,8 +748,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What level of build investment are you prepared to explore?"
-            description="A range helps us recommend a proportionate first system. We will confirm scope and pricing together during discovery."
+            title="What monthly level feels realistic for a managed Eden?"
+            description="This helps us shape the right level of ongoing assistance and support. Any one-off onboarding or tool connections are scoped separately."
           >
             <Controller
               name="answers.investmentRange"
@@ -755,7 +757,7 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="What level of build investment are you prepared to explore?"
+                  legend="What monthly level feels realistic for a managed Eden?"
                   options={investmentOptionList}
                   value={field.value}
                   onChange={field.onChange}
@@ -829,8 +831,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="Which company would this Eden work for?"
-            description="Share the company name so we can frame your Eden Blueprint around the right operation."
+            title="Which company would Eden be supporting?"
+            description="Share the company name so we can frame your Eden Blueprint around the right working context."
           >
             <label htmlFor="companyName" className="sr-only">
               Company name
@@ -892,11 +894,11 @@ export default function DesignYourEdenClient({
                   />
                   <span>
                     <span className="block font-sans text-sm font-medium text-ghost">
-                      Occasional practical AI systems insights
+                      Aygency newsletter and Eden updates
                     </span>
                     <span className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">
-                      Optional. Send me occasional Aygency insights. I can
-                      unsubscribe at any time.
+                      Optional. Send me practical AI ideas, Eden updates, and
+                      occasional Aygency news. I can unsubscribe at any time.
                     </span>
                   </span>
                 </label>
@@ -954,11 +956,11 @@ export default function DesignYourEdenClient({
                   Personalisation logic
                 </p>
                 <p className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">
-                  Intent → workflow → authority → proof
+                  Role → workload → authority → value
                 </p>
                 <p className="mt-4 font-sans text-xs leading-relaxed text-ghost-dim">
-                  Every answer shows where Eden can help first. Your original
-                  wording stays intact alongside the recommendation.
+                  Every answer shapes Eden&rsquo;s first responsibility. Your
+                  original wording stays intact alongside the recommendation.
                 </p>
                 <div className="mt-8 space-y-3">
                   {["Start", "Opportunity", "Constraints", "First release", "Contact"].map(
@@ -1070,11 +1072,11 @@ export default function DesignYourEdenClient({
                 tabIndex={-1}
                 className="mt-6 font-heading text-2xl font-semibold uppercase text-white outline-none sm:text-3xl"
               >
-                Recording your application
+                Recording your Eden inquiry
               </h1>
               <p className="mt-4 font-sans text-sm leading-relaxed text-ghost-muted">
                 We&rsquo;re safely handing your original answers to the CRM,
-                then shaping the Blueprint you&rsquo;ll see next.
+                then preparing the Eden example you&rsquo;ll see next.
               </p>
             </motion.div>
           </div>
@@ -1097,7 +1099,7 @@ export default function DesignYourEdenClient({
                 tabIndex={-1}
                 className="mt-6 font-heading text-2xl font-semibold uppercase text-white outline-none sm:text-3xl"
               >
-                We could not record this submission
+                CRM storage needs another attempt
               </h1>
               <p className="mx-auto mt-4 max-w-xl font-sans text-sm leading-relaxed text-ghost-muted">
                 {submissionError}

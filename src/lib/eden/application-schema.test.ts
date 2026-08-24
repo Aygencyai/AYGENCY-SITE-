@@ -62,4 +62,20 @@ describe("edenApplicationSchema", () => {
 
     expect(result.success).toBe(false);
   });
+
+  it("stores Eden's monthly service range and rejects legacy build bands", () => {
+    const monthly = createEdenApplicationFixture();
+    const legacy = {
+      ...createEdenApplicationFixture(),
+      answers: {
+        ...createEdenApplicationFixture().answers,
+        investmentRange: "25k_50k",
+      },
+    };
+
+    expect(edenApplicationSchema.parse(monthly).answers.investmentRange).toBe(
+      "1k_2k_monthly"
+    );
+    expect(edenApplicationSchema.safeParse(legacy).success).toBe(false);
+  });
 });

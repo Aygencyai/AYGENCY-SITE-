@@ -117,6 +117,22 @@ describe("POST /api/eden/applications", () => {
     expect(notify).not.toHaveBeenCalled();
   });
 
+  it("identifies missing local CRM configuration without weakening production", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const response = await createHandler({
+      deliver: async () => {
+        throw new EdenCrmDeliveryError("configuration");
+      },
+    })(createRequest(createEdenApplicationFixture()));
+
+    expect(response.status).toBe(503);
+    expect(await response.json()).toMatchObject({
+      code: "crm_not_configured",
+      error: "CRM storage is pending for this local preview.",
+    });
+  });
+
   it("rejects cross-origin requests before processing a body", async () => {
     const deliver = vi.fn();
     const response = await createHandler({ deliver })(

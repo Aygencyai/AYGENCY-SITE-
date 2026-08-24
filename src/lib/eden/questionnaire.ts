@@ -44,38 +44,42 @@ export type EdenStepId = (typeof edenSteps)[number]["id"];
 export const primaryGoalOptions: ReadonlyArray<EdenOption<PrimaryGoal>> = [
   {
     value: "revenue",
-    label: "Revenue that moves without chasing",
-    description: "Prospecting, qualification, follow-up, pipeline, or expansion.",
+    label: "Keep communication and follow-ups moving",
+    description:
+      "Inbox replies, introductions, sales follow-ups, and relationship nudges.",
   },
   {
     value: "customer_experience",
-    label: "A faster customer experience",
-    description: "Support, onboarding, service delivery, or account care.",
+    label: "Stay ahead of clients and customers",
+    description:
+      "Requests, onboarding, check-ins, service updates, and account care.",
   },
   {
     value: "operations",
-    label: "Operations that run themselves",
-    description: "Coordination, handoffs, fulfilment, QA, or recurring workflows.",
+    label: "Coordinate projects and recurring work",
+    description: "Tasks, owners, hand-offs, deadlines, and recurring routines.",
   },
   {
     value: "finance_admin",
-    label: "Less finance and admin drag",
-    description: "Reconciliation, documents, reporting, or routine back-office work.",
+    label: "Handle admin and reporting",
+    description: "Documents, records, expenses, reports, and routine checks.",
   },
   {
     value: "knowledge_people",
-    label: "Knowledge people can actually use",
-    description: "Internal answers, training, recruitment, or team enablement.",
+    label: "Prepare research, briefs, and first drafts",
+    description:
+      "Research, meeting preparation, summaries, documents, and team answers.",
   },
   {
     value: "leadership_visibility",
-    label: "Sharper leadership visibility",
-    description: "Signals, forecasts, decisions, risks, and cross-business insight.",
+    label: "Protect my focus and priorities",
+    description:
+      "Calendar, daily briefings, decisions, risks, and what needs attention.",
   },
   {
     value: "other",
-    label: "Another workflow",
-    description: "You know there is leverage here, even if it needs mapping first.",
+    label: "Give Eden another responsibility",
+    description: "Describe the recurring responsibility you want her to own.",
   },
 ];
 
@@ -84,46 +88,46 @@ const volumeContext: Record<
   { title: string; description: string; noun: string }
 > = {
   revenue: {
-    title: "How much revenue activity moves through this workflow?",
+    title: "How many conversations or follow-ups could Eden help move each week?",
     description:
-      "A directional weekly estimate is enough. Think leads, follow-ups, opportunities, or account touches.",
-    noun: "revenue touches",
+      "Count inbox replies, introductions, opportunities, and relationship follow-ups in a typical week.",
+    noun: "conversations or follow-ups",
   },
   customer_experience: {
-    title: "How many customer conversations move through this workflow?",
+    title: "How many client or customer requests could Eden support each week?",
     description:
-      "Estimate a typical week across support, onboarding, service, and account care.",
-    noun: "customer conversations",
+      "Include support, onboarding, check-ins, service updates, and account requests.",
+    noun: "client or customer requests",
   },
   operations: {
-    title: "How often does this workflow run?",
+    title: "How many tasks or hand-offs could Eden coordinate each week?",
     description:
-      "Estimate the weekly number of requests, handoffs, cases, or operational cycles.",
-    noun: "workflow runs",
+      "Count recurring tasks, project updates, requests, approvals, and follow-ups in a typical week.",
+    noun: "tasks or hand-offs",
   },
   finance_admin: {
-    title: "How much finance or admin work passes through it?",
+    title: "How many admin or reporting items could Eden prepare each week?",
     description:
-      "Estimate a typical week of invoices, records, documents, checks, or reporting items.",
-    noun: "items",
+      "Count documents, expenses, records, routine checks, and reports in a typical week.",
+    noun: "admin or reporting items",
   },
   knowledge_people: {
-    title: "How often does the team need this knowledge workflow?",
+    title: "How many research or preparation requests could Eden handle each week?",
     description:
-      "Estimate weekly questions, searches, people requests, or learning moments.",
-    noun: "requests",
+      "Include meeting briefs, research questions, summaries, drafts, and requests for internal context.",
+    noun: "research or preparation requests",
   },
   leadership_visibility: {
-    title: "How many signals feed the decisions you want to improve?",
+    title: "How many updates, meetings, or priorities could Eden organise each week?",
     description:
-      "Estimate recurring updates, reports, exceptions, or decisions reviewed in a week.",
-    noun: "signals or decisions",
+      "Count the inputs that compete for your attention across a normal week.",
+    noun: "updates, meetings, or priorities",
   },
   other: {
-    title: "How often does this work repeat?",
+    title: "How often would Eden need to step in?",
     description:
-      "A directional weekly estimate is enough. We will map the detail together later.",
-    noun: "workflow items",
+      "A directional weekly estimate is enough. We can shape the exact responsibility together.",
+    noun: "requests or actions",
   },
 };
 
@@ -143,23 +147,23 @@ export function getVolumeQuestion(goal: PrimaryGoal | undefined) {
 
 export const teamSizeOptions: ReadonlyArray<EdenOption<TeamSize>> = [
   { value: "just_me", label: "Just me" },
-  { value: "2_5", label: "2–5 people" },
-  { value: "6_20", label: "6–20 people" },
-  { value: "21_50", label: "21–50 people" },
-  { value: "51_plus", label: "51+ people" },
-  { value: "unknown", label: "It crosses teams / not sure" },
+  { value: "2_5", label: "Me and up to four others" },
+  { value: "6_20", label: "A team of 6–20" },
+  { value: "21_50", label: "A team of 21–50" },
+  { value: "51_plus", label: "More than 50 people" },
+  { value: "unknown", label: "Several teams or still deciding" },
 ];
 
 export const systemOptionList: ReadonlyArray<EdenOption<SystemOption>> = [
+  { value: "email_support", label: "Email, calendar, or support inbox" },
   { value: "crm", label: "CRM or sales platform" },
-  { value: "email_support", label: "Email, inbox, or support desk" },
+  { value: "project_operations", label: "Project or task management" },
+  { value: "knowledge_documents", label: "Documents or knowledge base" },
   { value: "spreadsheets", label: "Spreadsheets or shared trackers" },
-  { value: "project_operations", label: "Project or operations tools" },
   { value: "finance_erp", label: "Finance, accounting, or ERP" },
-  { value: "knowledge_documents", label: "Knowledge base or documents" },
-  { value: "data_warehouse", label: "Database, BI, or data warehouse" },
+  { value: "data_warehouse", label: "Reporting, BI, or database" },
   { value: "custom_internal", label: "Custom internal software" },
-  { value: "other", label: "Another tool category" },
+  { value: "other", label: "Another work tool" },
   { value: "not_sure", label: "Not sure yet" },
 ];
 
@@ -168,23 +172,26 @@ export const dataReadinessOptionList: ReadonlyArray<
 > = [
   {
     value: "structured",
-    label: "Mostly structured and accessible",
-    description: "The useful information already lives in dependable systems.",
+    label: "Ready for Eden to use",
+    description:
+      "The useful context already lives in dependable tools and documents.",
   },
   {
     value: "fragmented",
-    label: "Useful, but fragmented",
-    description: "It exists across tools, documents, inboxes, or teams.",
+    label: "Useful, spread across a few places",
+    description:
+      "Eden would bring together context from tools, documents, and inboxes.",
   },
   {
     value: "mostly_manual",
-    label: "Mostly manual or in people's heads",
-    description: "The workflow works through habit more than system design.",
+    label: "Mostly in routines or people's heads",
+    description:
+      "We would first teach Eden the way the work currently gets done.",
   },
   {
     value: "starting_fresh",
-    label: "We would be starting fresh",
-    description: "The process or data foundation still needs designing.",
+    label: "A fresh responsibility for Eden",
+    description: "We would design the working rhythm and context together.",
   },
   {
     value: "unknown",
@@ -225,42 +232,42 @@ export const autonomyOptionList: ReadonlyArray<
 export const successMeasureOptionList: ReadonlyArray<
   EdenOption<SuccessMeasure>
 > = [
-  { value: "time_saved", label: "Time returned to the team" },
-  { value: "faster_response", label: "Faster response or cycle time" },
-  { value: "quality_consistency", label: "More consistent quality" },
-  { value: "revenue_growth", label: "Revenue created or protected" },
-  { value: "cost_reduction", label: "Lower operating cost" },
-  { value: "operational_visibility", label: "Clearer operational visibility" },
-  { value: "customer_experience", label: "A better customer experience" },
-  { value: "capacity_to_scale", label: "Capacity to scale without matching headcount" },
+  { value: "time_saved", label: "Hours back each week" },
+  { value: "faster_response", label: "Faster replies and follow-ups" },
+  { value: "quality_consistency", label: "More reliable execution" },
+  { value: "revenue_growth", label: "More opportunities followed through" },
+  { value: "cost_reduction", label: "Admin effort returned to useful work" },
+  { value: "operational_visibility", label: "Clearer priorities and open actions" },
+  { value: "customer_experience", label: "Clients feel better looked after" },
+  { value: "capacity_to_scale", label: "More capacity for valuable work" },
 ];
 
 export const timelineOptionList: ReadonlyArray<EdenOption<Timeline>> = [
-  { value: "within_30_days", label: "We need movement in the next 30 days" },
-  { value: "this_quarter", label: "This quarter" },
+  { value: "within_30_days", label: "Within the next 30 days" },
+  { value: "this_quarter", label: "During the next three months" },
   { value: "next_6_months", label: "Within six months" },
-  { value: "this_year", label: "This year" },
-  { value: "exploring", label: "We are exploring the opportunity" },
+  { value: "this_year", label: "Later this year" },
+  { value: "exploring", label: "I am exploring what Eden could do" },
 ];
 
 export const investmentOptionList: ReadonlyArray<
   EdenOption<InvestmentRange>
 > = [
-  { value: "under_10k", label: "Under £10k" },
-  { value: "10k_25k", label: "£10k–£25k" },
-  { value: "25k_50k", label: "£25k–£50k" },
-  { value: "50k_plus", label: "£50k+ for the right system" },
-  { value: "need_guidance", label: "I need guidance on scope and investment" },
+  { value: "under_500_monthly", label: "Under £500 / month" },
+  { value: "500_1k_monthly", label: "£500–£1,000 / month" },
+  { value: "1k_2k_monthly", label: "£1,000–£2,000 / month" },
+  { value: "2k_plus_monthly", label: "£2,000+ / month" },
+  { value: "need_guidance", label: "Help me choose the right level" },
 ];
 
 export const primaryGoalLabels: Record<PrimaryGoal, string> = {
-  revenue: "Revenue operations",
-  customer_experience: "Customer experience",
-  operations: "Core operations",
-  finance_admin: "Finance and administration",
-  knowledge_people: "Knowledge and people",
-  leadership_visibility: "Leadership intelligence",
-  other: "A mapped priority workflow",
+  revenue: "Communication and follow-ups",
+  customer_experience: "Client and customer care",
+  operations: "Projects and recurring work",
+  finance_admin: "Admin and reporting",
+  knowledge_people: "Research, briefs, and drafts",
+  leadership_visibility: "Focus and priorities",
+  other: "Another responsibility for Eden",
 };
 
 export const workflowVolumeLabels: Record<WorkflowVolume, string> = {
@@ -274,11 +281,11 @@ export const workflowVolumeLabels: Record<WorkflowVolume, string> = {
 
 export const teamSizeLabels: Record<TeamSize, string> = {
   just_me: "Just me",
-  "2_5": "2–5 people",
-  "6_20": "6–20 people",
-  "21_50": "21–50 people",
-  "51_plus": "51+ people",
-  unknown: "Cross-team / not known yet",
+  "2_5": "Me and up to four others",
+  "6_20": "A team of 6–20",
+  "21_50": "A team of 21–50",
+  "51_plus": "More than 50 people",
+  unknown: "Several teams or still deciding",
 };
 
 export const systemLabels = Object.fromEntries(
@@ -315,67 +322,67 @@ interface EdenExamplePattern {
 
 const edenExampleByGoal: Record<PrimaryGoal, EdenExamplePattern> = {
   revenue: {
-    title: "A live opportunity gets the right follow-up.",
-    arrivalTitle: "A commercial signal arrives",
+    title: "A reply lands and Eden keeps the conversation moving.",
+    arrivalTitle: "A conversation needs a next step",
     arrivalDescription:
-      "A lead replies, an opportunity changes, or an account shows fresh intent across the connected revenue channels.",
-    coordinationTitle: "Eden prepares the next move",
+      "A lead replies, a contact makes an introduction, or an active opportunity needs a timely follow-up.",
+    coordinationTitle: "Eden prepares the follow-up",
     coordinationDescription:
-      "Eden brings together Lead Gen, Outreach, and Analyst context, assigns the next action, and keeps the commercial thread current.",
+      "Eden checks the conversation and CRM context, drafts the response, records the commitment, and keeps the next action visible.",
   },
   customer_experience: {
-    title: "A customer request moves with its context attached.",
-    arrivalTitle: "A customer needs something",
+    title: "A client request gets a prepared, informed response.",
+    arrivalTitle: "A client needs an update or answer",
     arrivalDescription:
-      "A support question, onboarding task, or account request enters through a connected customer channel.",
-    coordinationTitle: "Eden assembles the response",
+      "A support question, onboarding task, account request, or promised check-in appears in a connected channel.",
+    coordinationTitle: "Eden brings the client context together",
     coordinationDescription:
-      "Eden engages Front-Desk and the relevant specialist, gathers account context, and prepares or routes the next action.",
+      "Eden gathers the account history and open commitments, prepares the response, and routes any specialist work to the right place.",
   },
   operations: {
-    title: "A request arrives and leaves with a clear owner.",
-    arrivalTitle: "Operational work enters the queue",
+    title: "A project update becomes a clear next action.",
+    arrivalTitle: "Work changes or a deadline approaches",
     arrivalDescription:
-      "A recurring request, hand-off, approval, or exception appears in one of the connected operating tools.",
-    coordinationTitle: "Eden keeps the workflow moving",
+      "A task changes, a hand-off is due, a recurring routine begins, or an approval needs attention.",
+    coordinationTitle: "Eden coordinates the moving pieces",
     coordinationDescription:
-      "Eden engages the Operations specialist, carries the context between systems, assigns ownership, and tracks the next action.",
+      "Eden carries the context between the connected tools, prepares updates, confirms ownership, and tracks the next commitment.",
   },
   finance_admin: {
-    title: "An admin item is prepared, checked, and ready for approval.",
-    arrivalTitle: "A finance or admin item arrives",
+    title: "A routine admin item arrives prepared for review.",
+    arrivalTitle: "A document, record, or report is due",
     arrivalDescription:
-      "An invoice, document, record, reconciliation item, or reporting request enters the agreed workflow.",
-    coordinationTitle: "Eden prepares the controlled work",
+      "An expense, document, record, routine check, or reporting request enters the agreed working rhythm.",
+    coordinationTitle: "Eden assembles the supporting detail",
     coordinationDescription:
-      "Eden coordinates Operations and Analyst checks, gathers the supporting evidence, and prepares the item for its decision point.",
+      "Eden gathers the relevant records, completes the preparation steps, and presents the item with its source context for review.",
   },
   knowledge_people: {
-    title: "A team question becomes a grounded next step.",
-    arrivalTitle: "Someone needs trusted context",
+    title: "A meeting starts with the research already prepared.",
+    arrivalTitle: "A brief, draft, or answer is needed",
     arrivalDescription:
-      "A question, training need, recruitment task, or people request appears in a connected team channel.",
-    coordinationTitle: "Eden finds and shapes the answer",
+      "A meeting appears on the calendar, a document needs a first draft, or someone asks for grounded context.",
+    coordinationTitle: "Eden prepares the useful material",
     coordinationDescription:
-      "Eden coordinates Analyst, Strategist, or Content Production work against the approved knowledge sources and prepares the useful response.",
+      "Eden researches against the approved sources, organises the evidence, and prepares the brief or draft in the requested format.",
   },
   leadership_visibility: {
-    title: "A changing signal becomes a decision-ready brief.",
-    arrivalTitle: "The operation produces a signal",
+    title: "The day starts with a focused brief and clear priorities.",
+    arrivalTitle: "Your calendar and work produce new signals",
     arrivalDescription:
-      "A metric changes, a risk appears, or a recurring leadership review reaches its scheduled point.",
-    coordinationTitle: "Eden builds the decision context",
+      "Meetings move, commitments change, updates arrive, and decisions compete for attention.",
+    coordinationTitle: "Eden prepares your priority view",
     coordinationDescription:
-      "Eden brings Analyst evidence into the CEO Agent view, connects the relevant operating context, and prepares the decision brief.",
+      "Eden brings together the relevant updates, open commitments, and decision context into a concise briefing for your day.",
   },
   other: {
-    title: "A recurring request reaches the right specialist.",
-    arrivalTitle: "The priority workflow begins",
+    title: "A recurring responsibility moves into Eden's working rhythm.",
+    arrivalTitle: "The agreed trigger appears",
     arrivalDescription:
-      "A repeatable request or signal enters through the tools and channels selected for the first release.",
-    coordinationTitle: "Eden coordinates the response",
+      "A repeatable request, deadline, update, or signal appears in the connected tools.",
+    coordinationTitle: "Eden takes the agreed next steps",
     coordinationDescription:
-      "Eden carries the context to the specialist best suited to the work, keeps ownership visible, and prepares the next action.",
+      "Eden gathers the context, coordinates any specialist work, records progress, and prepares the next action within the agreed bounds.",
   },
 };
 
@@ -437,46 +444,53 @@ export const blueprintByGoal: Record<
   { title: string; thesis: string; firstCapability: string }
 > = {
   revenue: {
-    title: "Revenue orchestration system",
+    title: "Follow-up and communications assistant",
     thesis:
-      "An agent layer that keeps commercial signals moving, prepares the next best action, and prevents valuable opportunities from going quiet.",
-    firstCapability: "Map one revenue motion end to end and close its follow-up gaps.",
+      "Eden watches active conversations, prepares relevant responses, records commitments, and keeps each next action visible.",
+    firstCapability:
+      "Connect one inbox or CRM motion and give every active conversation a clear next step.",
   },
   customer_experience: {
-    title: "Customer experience system",
+    title: "Client care assistant",
     thesis:
-      "A coordinated service layer that understands context, accelerates routine responses, and escalates the moments that need a person.",
-    firstCapability: "Start with one high-volume customer journey and its escalation rules.",
+      "Eden keeps client context close, prepares timely updates, and coordinates the people needed to move each request forward.",
+    firstCapability:
+      "Start with one recurring client journey and the check-ins, context, and decisions it needs.",
   },
   operations: {
-    title: "Operational command system",
+    title: "Project coordination assistant",
     thesis:
-      "An agent system that coordinates recurring work, keeps ownership visible, and moves exceptions to the right person before they become bottlenecks.",
-    firstCapability: "Instrument one recurring workflow with clear inputs, owners, and exceptions.",
+      "Eden keeps tasks, owners, deadlines, and hand-offs connected so the next useful action is always clear.",
+    firstCapability:
+      "Give Eden one live project or recurring routine with clear owners and decision points.",
   },
   finance_admin: {
-    title: "Finance and admin operations system",
+    title: "Admin and reporting assistant",
     thesis:
-      "A controlled agent layer for repetitive records, checks, preparation, and reporting, with human approval wherever financial authority begins.",
-    firstCapability: "Choose one document-heavy process with a measurable error or delay cost.",
+      "Eden prepares recurring records, documents, checks, and reports while keeping financial decisions with the right person.",
+    firstCapability:
+      "Choose one repeatable admin responsibility and teach Eden its sources, timing, and approval point.",
   },
   knowledge_people: {
-    title: "Organisational knowledge system",
+    title: "Research and briefing assistant",
     thesis:
-      "A dependable knowledge layer that finds grounded answers, prepares people workflows, and makes institutional context available at the moment of need.",
-    firstCapability: "Unify one high-value knowledge domain and its source-of-truth rules.",
+      "Eden turns approved sources into useful research, meeting briefs, summaries, and first drafts prepared around your working style.",
+    firstCapability:
+      "Connect the first trusted knowledge sources and define one brief or draft Eden should prepare repeatedly.",
   },
   leadership_visibility: {
-    title: "Leadership intelligence system",
+    title: "Executive focus assistant",
     thesis:
-      "A signal layer that connects operational data, surfaces changes and risks, and prepares evidence-backed decisions grounded in the available facts.",
-    firstCapability: "Define the first decision cadence and the signals it genuinely needs.",
+      "Eden organises the calendar, commitments, updates, and decision context into a clear view of what deserves attention.",
+    firstCapability:
+      "Build a daily or weekly priority brief from the tools and updates you already rely on.",
   },
   other: {
-    title: "Priority workflow system",
+    title: "Tailored personal assistant",
     thesis:
-      "A focused agent system designed around the highest-leverage recurring work, with scope set by evidence rather than a generic automation template.",
-    firstCapability: "Map the workflow, quantify the friction, and select the narrowest valuable first release.",
+      "Eden takes on a defined recurring responsibility, learns its context, and coordinates the next action within clear permissions.",
+    firstCapability:
+      "Define the trigger, context, output, and decision boundary for Eden's first responsibility.",
   },
 };
 
@@ -489,39 +503,39 @@ export function getBlueprintOperatingMode(
     dataReadiness === "starting_fresh"
   ) {
     return {
-      title: "Foundation-first pilot",
+      title: "Guided context setup",
       description:
-        "Structure the workflow and its evidence trail first, then add agent capability where the work is clear and measurable.",
+        "Teach Eden the working rhythm and source context first, then add responsibility as the pattern becomes clear and dependable.",
     };
   }
 
   if (dataReadiness === "unknown") {
     return {
-      title: "Discovery-led pilot",
+      title: "Context discovery",
       description:
-        "Audit the workflow and data surface before fixing autonomy or integration scope.",
+        "Map the tools, context, and working rhythm before setting Eden's first permissions and connections.",
     };
   }
 
   if (autonomy === "bounded_autonomy") {
     return {
-      title: "Guardrailed execution pilot",
+      title: "Guardrailed action",
       description:
-        "Begin with reversible routine actions, explicit limits, evidence logs, and a clear escalation path.",
+        "Eden begins with reversible routine actions, explicit limits, a visible activity record, and a clear escalation path.",
     };
   }
 
   if (autonomy === "insights_only") {
     return {
-      title: "Decision-support pilot",
+      title: "Briefing and recommendations",
       description:
-        "Start by surfacing grounded signals and recommendations while your team retains every action.",
+        "Eden starts by organising grounded context and recommending the next move while you retain every action.",
     };
   }
 
   return {
-    title: "Human-in-the-loop pilot",
+    title: "Review-first assistance",
     description:
-      "Let Eden prepare and coordinate the work while named people approve consequential actions.",
+      "Eden prepares and coordinates the work while named people approve consequential actions.",
   };
 }

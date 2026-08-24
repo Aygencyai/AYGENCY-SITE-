@@ -35,6 +35,9 @@ describe("Eden application notification", () => {
       `eden-application-${application.submissionId}`
     );
     expect(payload.text).toContain("authoritative application");
+    expect(payload.text).toContain(
+      "Monthly service range: £1,000–£2,000 / month"
+    );
     expect(payload.text).not.toContain(application.answers.currentChallenge);
     expect(payload.text).not.toContain(application.answers.desiredOutcome);
   });

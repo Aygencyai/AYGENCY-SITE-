@@ -17,7 +17,10 @@ Live-site source: `origin/main@0b2ca36`
 | Live Eden experience | `95e0628`, `6031ddc` | Ported the assessment to the rebuilt site, then added the product introduction, live-site positioning, full browser coverage, responsive hardening, and transition scroll restoration. |
 | Email gate plan | `0861022` | Defined the first-screen email decision, its storage boundary, the controlled example model, and the revised contact close before implementation. |
 | Email gate | `cd2945f` | Moved validated work email to question one while retaining it through keyboard and Back navigation. |
-| Tailored example and contact close | Current phase | Added a controlled answer-derived Eden scenario, preserved the original-answer record, and closed with `build@aygency.ai` plus the discovery-call route. |
+| Tailored example and contact close | `512cbcc` | Added a controlled answer-derived Eden scenario, preserved the original-answer record, and closed with `build@aygency.ai` plus the discovery-call route. |
+| Product correction plan | `e2c7633` | Planned the localhost correction, Eden-specific monthly qualification, and a separate contract-first funnel for custom Aygency systems. |
+| Local submission recovery | `e0ab97d` | Allowed explicit loopback origins in development, retained production origin protection, and added an honest unstored Blueprint preview plus contact recovery. |
+| Eden-specific qualification | Current phase | Replaced agency-system questions and build bands with personal-assistant responsibilities, working context, and monthly managed-service ranges. |
 
 ## Automated verification
 
@@ -25,8 +28,8 @@ The final local gate runs only against controlled fakes. It creates no CRM recor
 
 | Command | Result | Coverage |
 | --- | --- | --- |
-| `pnpm test` | 28 tests pass | Schema boundaries, event mapping, stable idempotency, CRM retry classes, route trust, bot and rate controls, notification semantics, attribution sanitisation, and deterministic Eden example mapping. |
-| `pnpm test:e2e` | 9 tests pass | Product positioning, first-screen email validation, one-screen flow, transition scroll position, keyboard and focus behaviour, branching, retained answers, separate consent, exact Blueprint answers, tailored example and contact actions, immutable automatic and manual retry, accessibility, responsive layouts, live navigation, contact route, and sitemap. |
+| `pnpm test` | 32 tests pass | Schema boundaries, monthly service values, event mapping, stable idempotency, CRM retry classes, production and development origin trust, bot and rate controls, notification semantics, attribution sanitisation, and deterministic Eden example mapping. |
+| `pnpm test:e2e` | 10 tests pass | Product positioning, first-screen email validation, Eden-specific one-screen flow, monthly service qualification, transition scroll position, keyboard and focus behaviour, branching, retained answers, separate newsletter consent, exact Blueprint answers, tailored example and contact actions, honest unstored preview, immutable automatic and manual retry, accessibility, responsive layouts, live navigation, contact route, and sitemap. |
 | `pnpm exec tsc --noEmit` | Passes | Strict TypeScript verification. |
 | `pnpm lint` | Passes with zero warnings or errors | Next.js ESLint gate. |
 | `pnpm build` | Production build succeeds | Type checking, static generation, and the dynamic `/api/eden/applications` route. |
@@ -45,6 +48,8 @@ Playwright generates product introduction, active question, and successful Bluep
 All four widths report zero horizontal overflow. The page returns to the top after the introduction CTA, on every question transition, and on result-state transitions, so the next screen and its focused heading are immediately available.
 
 Automated Axe scans report no violations in the Eden product introduction, active form, or expanded Blueprint result. The keyboard pass covers number-key selection, Enter and Control+Enter progression, focus transfer to the next heading, Back navigation with retained values, and safe retry. The existing reduced-motion provider remains in effect.
+
+The monthly managed-service question and recorded Blueprint were additionally reviewed at all four required widths. The selected value is preserved as `1k_2k_monthly` rather than a legacy custom-build band.
 
 ## Live-site integration evidence
 
@@ -66,6 +71,9 @@ Automated Axe scans report no violations in the Eden product introduction, activ
 - A failed CRM write fails the application. A failed Resend notification leaves the accepted CRM record successful.
 - Automatic and manual retries reuse the same frozen body, event ID, timestamp, and idempotency key.
 - The tailored example is constructed only from validated choice values and controlled copy. Applicant free text remains visible in the original-answer record and is never interpolated into generated claims.
+- A development browser origin using HTTP loopback is accepted even when Next.js binds internally to `0.0.0.0`. Production keeps exact same-origin or configured HTTPS-origin checks.
+- When the local CRM environment is absent, the route returns `crm_not_configured`. The UI describes the Blueprint as a preview and explicitly states that CRM storage is pending.
+- Eden now stores monthly service qualification using `under_500_monthly`, `500_1k_monthly`, `1k_2k_monthly`, `2k_plus_monthly`, or `need_guidance`. Legacy custom-build values fail validation.
 
 ## Deployment prerequisites
 

@@ -15,7 +15,13 @@ async function selectOption(page: Page, name: string | RegExp) {
 
 async function completeQuestionnaire(
   page: Page,
-  { grantInquiry = true }: { grantInquiry?: boolean } = {}
+  {
+    grantInquiry = true,
+    onInvestmentStep,
+  }: {
+    grantInquiry?: boolean;
+    onInvestmentStep?: (page: Page) => Promise<void>;
+  } = {}
 ) {
   await page
     .getByRole("button", { name: /See what Eden could do for you/i })
@@ -25,7 +31,7 @@ async function completeQuestionnaire(
   await page.getByLabel("Work email").fill("alex@example.com");
   await continueQuestion(page);
 
-  await selectOption(page, "Operations that run themselves");
+  await selectOption(page, "Coordinate projects and recurring work");
   await continueQuestion(page);
 
   await page
@@ -36,37 +42,38 @@ async function completeQuestionnaire(
   await continueQuestion(page);
 
   await page
-    .getByLabel("Current workflow challenge")
+    .getByLabel("Current working challenge")
     .fill(
       "Requests arrive through several channels, then wait for manual triage and repeated follow-up."
     );
   await continueQuestion(page);
 
-  await selectOption(page, /101–500 workflow runs/);
+  await selectOption(page, /101–500 tasks or hand-offs/);
   await continueQuestion(page);
 
-  await selectOption(page, "6–20 people");
+  await selectOption(page, "A team of 6–20");
   await continueQuestion(page);
 
-  await selectOption(page, "Email, inbox, or support desk");
-  await selectOption(page, "Project or operations tools");
+  await selectOption(page, "Email, calendar, or support inbox");
+  await selectOption(page, "Project or task management");
   await continueQuestion(page);
 
-  await selectOption(page, "Useful, but fragmented");
+  await selectOption(page, "Useful, spread across a few places");
   await continueQuestion(page);
 
   await selectOption(page, "Act after clear approval");
   await continueQuestion(page);
 
-  await selectOption(page, "Time returned to the team");
-  await selectOption(page, "More consistent quality");
-  await selectOption(page, "Clearer operational visibility");
+  await selectOption(page, "Hours back each week");
+  await selectOption(page, "More reliable execution");
+  await selectOption(page, "Clearer priorities and open actions");
   await continueQuestion(page);
 
-  await selectOption(page, "This quarter");
+  await selectOption(page, "During the next three months");
   await continueQuestion(page);
 
-  await selectOption(page, "£25k–£50k");
+  await onInvestmentStep?.(page);
+  await selectOption(page, "£1,000–£2,000 / month");
   await continueQuestion(page);
 
   await page.getByLabel("Full name").fill("Alex Morgan");
@@ -124,16 +131,18 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
     await expect(
       page.getByRole("heading", {
-        name: "Where should your Eden create leverage first?",
+        name: "What should Eden take off your plate first?",
       })
     ).toBeFocused();
     await page.keyboard.press("3");
-    await expect(page.getByLabel("Operations that run themselves")).toBeChecked();
+    await expect(
+      page.getByLabel("Coordinate projects and recurring work")
+    ).toBeChecked();
     await page.keyboard.press("Enter");
 
     await expect(
       page.getByRole("heading", {
-        name: "What should be reliably true when this is working?",
+        name: "If Eden were already helping, what would feel different in your week?",
       })
     ).toBeFocused();
 
@@ -143,17 +152,19 @@ test.describe("Eden AI Personal Assistant", () => {
     await page.getByLabel("Desired outcome").press("Control+Enter");
 
     await page
-      .getByLabel("Current workflow challenge")
+      .getByLabel("Current working challenge")
       .fill("The team copies requests between inboxes and trackers before work can begin.");
-    await page.getByLabel("Current workflow challenge").press("Control+Enter");
+    await page.getByLabel("Current working challenge").press("Control+Enter");
 
     await expect(
-      page.getByRole("heading", { name: "How often does this workflow run?" })
+      page.getByRole("heading", {
+        name: "How many tasks or hand-offs could Eden coordinate each week?",
+      })
     ).toBeVisible();
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "5");
 
     await page.getByRole("button", { name: "Back" }).click();
-    await expect(page.getByLabel("Current workflow challenge")).toHaveValue(
+    await expect(page.getByLabel("Current working challenge")).toHaveValue(
       "The team copies requests between inboxes and trackers before work can begin."
     );
     await page.getByRole("button", { name: "Back" }).click();
@@ -161,7 +172,9 @@ test.describe("Eden AI Personal Assistant", () => {
       "Routine work moves to the right person without manual chasing every day."
     );
     await page.getByRole("button", { name: "Back" }).click();
-    await expect(page.getByLabel("Operations that run themselves")).toBeChecked();
+    await expect(
+      page.getByLabel("Coordinate projects and recurring work")
+    ).toBeChecked();
     await page.getByRole("button", { name: "Back" }).click();
     await expect(page.getByLabel("Work email")).toHaveValue("alex@example.com");
   });
@@ -186,9 +199,42 @@ test.describe("Eden AI Personal Assistant", () => {
     await page.goto(
       "/design-your-eden?utm_source=linkedin&utm_campaign=blueprint&password=not-attribution"
     );
-    await completeQuestionnaire(page, { grantInquiry: false });
+    await completeQuestionnaire(page, {
+      grantInquiry: false,
+      onInvestmentStep: async (currentPage) => {
+        await expect(
+          currentPage.getByRole("heading", {
+            name: "What monthly level feels realistic for a managed Eden?",
+          })
+        ).toBeVisible();
 
-    await expect(page.getByLabel(/Occasional practical AI systems insights/)).not.toBeChecked();
+        for (const viewport of [
+          { name: "mobile-375", width: 375, height: 812 },
+          { name: "tablet-768", width: 768, height: 1024 },
+          { name: "laptop-1024", width: 1024, height: 768 },
+          { name: "desktop-1440", width: 1440, height: 1000 },
+        ]) {
+          await currentPage.setViewportSize({
+            width: viewport.width,
+            height: viewport.height,
+          });
+          const overflow = await currentPage.evaluate(
+            () =>
+              document.documentElement.scrollWidth -
+              document.documentElement.clientWidth
+          );
+          expect(overflow).toBeLessThanOrEqual(0);
+          await currentPage.screenshot({
+            path: testInfo.outputPath(`${viewport.name}-monthly-service.png`),
+            fullPage: true,
+          });
+        }
+      },
+    });
+
+    await expect(
+      page.getByLabel(/Aygency newsletter and Eden updates/)
+    ).not.toBeChecked();
     await page
       .getByRole("button", { name: "Show me my Eden Blueprint" })
       .click();
@@ -203,21 +249,21 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(
       page.getByRole("heading", { name: "Your Eden Blueprint" })
     ).toBeVisible();
-    await expect(page.getByText("Operational command system")).toBeVisible();
+    await expect(page.getByText("Project coordination assistant")).toBeVisible();
     await expect(
       page.getByRole("heading", {
         name: "An example of what your Eden can do for you",
       })
     ).toBeVisible();
     await expect(
-      page.getByText("A request arrives and leaves with a clear owner.")
+      page.getByText("A project update becomes a clear next action.")
     ).toBeVisible();
     await expect(
-      page.getByText("101–500 workflow runs / week", { exact: true })
+      page.getByText("101–500 tasks or hand-offs / week", { exact: true })
     ).toBeVisible();
     await expect(
       page.getByText(
-        "Email, inbox, or support desk and Project or operations tools",
+        "Email, calendar, or support inbox and Project or task management",
         { exact: true }
       )
     ).toBeVisible();
@@ -242,7 +288,7 @@ test.describe("Eden AI Personal Assistant", () => {
     const submitted = submittedBody as {
       consent: { inquiry: boolean; marketing: boolean };
       attribution: Record<string, string>;
-      answers: { desiredOutcome: string };
+      answers: { desiredOutcome: string; investmentRange: string };
       contact: { workEmail: string };
     } | null;
     expect(submitted?.consent).toEqual({ inquiry: true, marketing: false });
@@ -255,6 +301,7 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(submitted?.answers.desiredOutcome).toBe(
       "Every recurring request reaches the right owner with context and a clear next action."
     );
+    expect(submitted?.answers.investmentRange).toBe("1k_2k_monthly");
     expect(submitted?.contact.workEmail).toBe("alex@example.com");
 
     for (const viewport of [
@@ -310,7 +357,7 @@ test.describe("Eden AI Personal Assistant", () => {
       .click();
 
     await expect(
-      page.getByRole("heading", { name: "We could not record this submission" })
+      page.getByRole("heading", { name: "CRM storage needs another attempt" })
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Email build@aygency.ai" })
@@ -347,10 +394,12 @@ test.describe("Eden AI Personal Assistant", () => {
       .click();
 
     await expect(
-      page.getByRole("heading", { name: "We could not record this submission" })
+      page.getByRole("heading", { name: "CRM storage needs another attempt" })
     ).toBeVisible();
     await expect(
-      page.getByText("We could not record this submission in the CRM right now.")
+      page.getByText(
+        "The CRM is temporarily unavailable. Your Eden Blueprint is ready to preview."
+      )
     ).toBeVisible();
     await page.getByRole("button", { name: "Preview my Blueprint" }).click();
 
@@ -359,7 +408,7 @@ test.describe("Eden AI Personal Assistant", () => {
     ).toBeVisible();
     await expect(
       page.getByText(
-        "This preview is based on answers still held in this browser. Aygency has not received or stored this submission."
+        "This preview is based on answers held in this browser. CRM storage is still pending."
       )
     ).toBeVisible();
     await expect(

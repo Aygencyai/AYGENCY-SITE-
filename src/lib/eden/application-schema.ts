@@ -77,10 +77,10 @@ export const timelineOptions = [
 ] as const;
 
 export const investmentRanges = [
-  "under_10k",
-  "10k_25k",
-  "25k_50k",
-  "50k_plus",
+  "under_500_monthly",
+  "500_1k_monthly",
+  "1k_2k_monthly",
+  "2k_plus_monthly",
   "need_guidance",
 ] as const;
 

@@ -114,8 +114,8 @@ export default function EdenBlueprint({
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
             {recorded
-              ? "A directional first architecture based on what you told us. It gives us a useful starting point for technical discovery."
-              : "This preview is based on answers still held in this browser. Aygency has not received or stored this submission."}
+              ? "A practical first recommendation based on what you told us. It gives us a useful starting point for shaping your Eden."
+              : "This preview is based on answers held in this browser. CRM storage is still pending."}
           </p>
         </div>
         {recorded && (
@@ -132,7 +132,7 @@ export default function EdenBlueprint({
             <div className="flex items-center gap-2 text-cyan">
               <Compass size={16} aria-hidden="true" />
               <p className="font-mono text-[10px] uppercase tracking-[0.18em]">
-                Recommended system
+                Recommended Eden role
               </p>
             </div>
             <h2 className="mt-6 font-heading text-2xl font-semibold uppercase leading-tight text-white sm:text-3xl">
@@ -143,7 +143,7 @@ export default function EdenBlueprint({
             </p>
             <div className="mt-8 border-t border-ghost/[0.08] pt-6">
               <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ghost-muted">
-                North star
+                First responsibility
               </p>
               <p className="mt-2 font-sans text-lg font-medium text-ghost">
                 {primaryGoalLabels[application.answers.primaryGoal]}
@@ -159,7 +159,7 @@ export default function EdenBlueprint({
           <div className="flex items-center gap-2 text-cyan-muted">
             <ShieldCheck size={16} aria-hidden="true" />
             <p className="font-mono text-[10px] uppercase tracking-[0.18em]">
-              First operating mode
+              How Eden starts
             </p>
           </div>
           <h2 className="mt-6 font-heading text-xl font-semibold uppercase text-ghost">
@@ -182,7 +182,7 @@ export default function EdenBlueprint({
           <div className="flex items-center gap-2 text-cyan-muted">
             <Target size={16} aria-hidden="true" />
             <h2 className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">
-              Proof it is working
+              What makes Eden valuable
             </h2>
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
@@ -201,7 +201,7 @@ export default function EdenBlueprint({
           <div className="flex items-center gap-2 text-cyan-muted">
             <CalendarDays size={16} aria-hidden="true" />
             <h2 className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">
-              Target horizon
+              Preferred start
             </h2>
           </div>
           <p className="mt-5 font-heading text-xl font-medium text-ghost">
@@ -313,7 +313,7 @@ export default function EdenBlueprint({
             preserveWhitespace
           />
           <AnswerRow
-            label="Current challenge"
+            label="Current attention drain"
             value={application.answers.currentChallenge}
             preserveWhitespace
           />
@@ -350,7 +350,7 @@ export default function EdenBlueprint({
             value={timelineLabels[application.answers.timeline]}
           />
           <AnswerRow
-            label="Investment range"
+            label="Monthly service range"
             value={investmentLabels[application.answers.investmentRange]}
           />
         </dl>
@@ -368,8 +368,8 @@ export default function EdenBlueprint({
             </h2>
             <p className="mt-3 font-sans text-sm leading-relaxed text-void/70">
               Email build@aygency.ai and we&rsquo;ll turn this example into a
-              scoped recommendation for your operation, including approach,
-              timing, and pricing.
+              scoped recommendation for your Eden, including onboarding,
+              ongoing service, timing, and pricing.
             </p>
           </div>
           <div className="flex w-full flex-col gap-3 lg:w-auto lg:min-w-[290px]">
