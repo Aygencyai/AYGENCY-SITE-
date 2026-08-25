@@ -11,6 +11,16 @@ Phase 8 base: `efccb184d30084e38ba44d33d1fc047c56be5459`
 
 Production status: **feature branch published for review; not merged or deployed; no live CRM, Vercel production, Supabase, or dashboard mutation**
 
+Review surface: draft [PR #2](https://github.com/Aygencyai/AYGENCY-SITE-/pull/2)
+against `main`, reported mergeable by GitHub. Both Vercel checks passed. The
+approved `aygency-site` integration produced Ready Preview deployment
+`dpl_FBKiw6LRkzeeJxFwSz6XjEFCjHQh`; no production target changed.
+
+One preview-inspection command from the unlinked worktree auto-created an empty
+separate Vercel project named `eden-crm-sender-worktree`. It was verified to
+contain no deployments, domains, or environment variables, deleted immediately,
+and its local link was moved to Trash. The approved project remained untouched.
+
 ## Phase 8 CRM sender receipt
 
 The existing Eden experience now produces the locked

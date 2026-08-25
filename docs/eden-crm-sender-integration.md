@@ -6,6 +6,24 @@ Repository: `Aygencyai/AYGENCY-SITE-`
 
 Contract: `EdenApplicationSubmitted.v1`
 
+Review: draft [PR #2](https://github.com/Aygencyai/AYGENCY-SITE-/pull/2), base
+`main`; GitHub reports it as mergeable and both Vercel checks succeeded.
+
+## Published preview evidence
+
+Publishing the feature branch triggered the existing approved `aygency-site`
+Vercel integration. Deployment `dpl_FBKiw6LRkzeeJxFwSz6XjEFCjHQh` is Ready at
+`https://aygency-site-4vc3tm871-wazzalouis-projects.vercel.app` with target
+Preview, not Production. Vercel authentication protects the preview, so the
+provider build/check is recorded without claiming an unauthenticated browser
+smoke test. No production alias or deployment changed.
+
+During inspection, `vercel curl --yes` from this unlinked worktree unexpectedly
+created a separate empty project named `eden-crm-sender-worktree`. It was
+verified to have no deployments, domains, or environment variables, deleted
+immediately, and its local link metadata was moved to Trash for recovery. The
+approved `aygency-site` project was not relinked or mutated by that cleanup.
+
 ## Boundary
 
 The browser submits the strict application model only to the website's
