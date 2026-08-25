@@ -330,3 +330,22 @@ Free text remains untrusted original input. It may be displayed safely and used 
 2. Update the Zod contract, questionnaire copy, Blueprint, notification, fixtures, and tests as one implementation phase. Preserve original answers and keep the event name `EdenApplicationSubmitted.v1` while replacing the obsolete price field with the newly approved buying-priority field.
 3. Run `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build`. Review 375, 768, 1024, and 1440 pixel layouts before the implementation commit.
 4. Reopen the verified local route for review and confirm the browser payload contains no price band.
+
+## Iteration: decisive hero action
+
+This iteration responds to review feedback that the hero's `See how Eden works` anchor produces only a small page movement and does not feel like a meaningful action.
+
+### Interaction decision
+
+- Replace the hero anchor with a real button that starts the same validated questionnaire as the closing Eden CTA.
+- Label the action `Show me what Eden could do` so the outcome is clear without introducing internal Blueprint terminology too early.
+- Keep the full capabilities and operating explanation immediately below the hero for visitors who continue scrolling.
+- Keep Contact Us available through the global navigation and the existing secondary hero action.
+- Preserve the first-screen work-email gate, answer model, attribution capture, and submission behavior.
+
+### Verification gate
+
+- Browser coverage proves the hero action changes the page from the product introduction to question 1 and focuses its heading.
+- The closing action continues to start the same questionnaire.
+- Keyboard activation, reduced motion, and scroll restoration continue to work.
+- `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass before the implementation commit.
