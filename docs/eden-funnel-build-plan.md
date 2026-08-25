@@ -1,6 +1,6 @@
 # Eden AI Personal Assistant Funnel — Build Plan
 
-Status: **Phase 8 sender and disposable cross-system verification complete locally; not deployed**
+Status: **Phase 8 sender and disposable cross-system verification complete; feature branch published for review; not merged or deployed**
 
 ## Current Phase 8 authority
 

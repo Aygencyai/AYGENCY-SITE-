@@ -1,6 +1,6 @@
 # Eden CRM sender integration
 
-Status: **complete and verified locally on `feat/eden-crm-sender`; not deployed**
+Status: **complete and verified on `feat/eden-crm-sender`; branch published for review; not merged or deployed**
 
 Repository: `Aygencyai/AYGENCY-SITE-`
 

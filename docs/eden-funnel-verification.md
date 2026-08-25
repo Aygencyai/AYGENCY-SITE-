@@ -9,7 +9,7 @@ Current isolated worktree:
 
 Phase 8 base: `efccb184d30084e38ba44d33d1fc047c56be5459`
 
-Production status: **not deployed; no live CRM, Vercel, Supabase, or dashboard mutation**
+Production status: **feature branch published for review; not merged or deployed; no live CRM, Vercel production, Supabase, or dashboard mutation**
 
 ## Phase 8 CRM sender receipt
 
