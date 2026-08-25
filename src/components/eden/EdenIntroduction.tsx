@@ -126,13 +126,14 @@ export default function EdenIntroduction({
             built around how you and your business actually work.
           </p>
           <div className="mt-9 flex flex-col items-start gap-3 min-[440px]:flex-row sm:gap-4">
-            <a
-              href="#eden-capabilities"
+            <button
+              type="button"
+              onClick={onStart}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40 focus-visible:ring-offset-2 focus-visible:ring-offset-void"
             >
-              See how Eden works
+              Show me what Eden could do
               <ArrowRight size={16} aria-hidden="true" />
-            </a>
+            </button>
             <Link
               href="/contact"
               className="inline-flex min-h-12 items-center justify-center rounded-lg border border-cyan/30 px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-all duration-200 hover:border-cyan/50 hover:bg-cyan/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40"

@@ -110,7 +110,7 @@ test.describe("Eden AI Personal Assistant", () => {
       })
     ).toBeVisible();
     await page
-      .getByRole("button", { name: /See what Eden could do for you/i })
+      .getByRole("button", { name: "Show me what Eden could do" })
       .click();
 
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);

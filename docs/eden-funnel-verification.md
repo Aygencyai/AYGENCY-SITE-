@@ -22,7 +22,9 @@ Live-site source: `origin/main@0b2ca36`
 | Local submission recovery | `e0ab97d` | Allowed explicit loopback origins in development, retained production origin protection, and added an honest unstored Blueprint preview plus contact recovery. |
 | Eden-specific qualification | `efccb18` | Replaced agency-system questions and build bands with personal-assistant responsibilities, working context, and monthly managed-service ranges. |
 | Value-led qualification plan | `d43cc2c` | Audited every screen for conversation leverage and implementation discovery, then approved removal of public price anchoring. |
-| Value-led qualification | Current phase | Replaced monthly bands with a typed decision-priority answer and sharpened outcome, consequence, value, and readiness questions. |
+| Value-led qualification | `83854dc` | Replaced monthly bands with a typed decision-priority answer and sharpened outcome, consequence, value, and readiness questions. |
+| Decisive hero action plan | `688df43` | Replaced the low-value anchor-jump behavior with a planned direct questionnaire action. |
+| Decisive hero action | Current phase | Made the primary hero CTA enter question 1 directly while retaining the full Eden explanation and closing entry action. |
 
 ## Automated verification
 
@@ -31,7 +33,7 @@ The final local gate runs only against controlled fakes. It creates no CRM recor
 | Command | Result | Coverage |
 | --- | --- | --- |
 | `pnpm test` | 32 tests pass | Schema boundaries, decision-priority values, obsolete price-band rejection, event mapping, stable idempotency, CRM retry classes, production and development origin trust, bot and rate controls, notification semantics, attribution sanitisation, and deterministic Eden example mapping. |
-| `pnpm test:e2e` | 10 tests pass | Product positioning, first-screen email validation, Eden-specific one-screen flow, value-led qualification, transition scroll position, keyboard and focus behaviour, branching, retained answers, separate newsletter consent, exact Blueprint answers, tailored example and contact actions, honest unstored preview, immutable automatic and manual retry, accessibility, responsive layouts, live navigation, contact route, and sitemap. |
+| `pnpm test:e2e` | 10 tests pass | Product positioning, direct hero and closing questionnaire entry, first-screen email validation, Eden-specific one-screen flow, value-led qualification, transition scroll position, keyboard and focus behaviour, branching, retained answers, separate newsletter consent, exact Blueprint answers, tailored example and contact actions, honest unstored preview, immutable automatic and manual retry, accessibility, responsive layouts, live navigation, contact route, and sitemap. |
 | `pnpm exec tsc --noEmit` | Passes | Strict TypeScript verification. |
 | `pnpm lint` | Passes with zero warnings or errors | Next.js ESLint gate. |
 | `pnpm build` | Production build succeeds | Type checking, static generation, and the dynamic `/api/eden/applications` route. |
