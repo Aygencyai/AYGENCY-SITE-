@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -20,6 +20,7 @@ import EdenBlueprint from "@/components/eden/EdenBlueprint";
 import EdenIntroduction from "@/components/eden/EdenIntroduction";
 import EdenOptionGroup from "@/components/eden/EdenOptionGroup";
 import EdenProgress from "@/components/eden/EdenProgress";
+import EdenTurnstile from "@/components/eden/EdenTurnstile";
 import {
   edenApplicationSchema,
   edenQuestionnaireSchema,
@@ -29,28 +30,35 @@ import {
 } from "@/lib/eden/application-schema";
 import { captureEdenAttribution } from "@/lib/eden/attribution";
 import {
-  autonomyOptionList,
-  buyingPriorityOptionList,
-  dataReadinessOptionList,
+  edenLeadCaptureSchema,
+  type EdenLeadCapture,
+} from "@/lib/eden/lead-capture-schema";
+import {
+  acknowledgementOptionList,
+  budgetReadinessOptionList,
+  calendarComplexityOptionList,
+  currentToolOptionList,
+  decisionAuthorityOptionList,
   edenSteps,
-  getVolumeQuestion,
-  primaryGoalOptions,
-  successMeasureOptionList,
-  systemOptionList,
-  teamSizeOptions,
-  timelineOptionList,
+  emailLoadOptionList,
+  meetingLoadOptionList,
+  openLoopVolumeOptionList,
+  organisationSizeBandOptionList,
+  primaryOutcomeOptionList,
+  targetStartWindowOptionList,
+  travelFrequencyOptionList,
 } from "@/lib/eden/questionnaire";
 
 interface DesignYourEdenClientProps {
+  applicationId: string;
+  captureEventId: string;
   discoveryUrl: string;
+  eventId: string;
+  localPreview: boolean;
+  turnstileSiteKey: string;
 }
 
-type FunnelPhase =
-  | "intro"
-  | "questions"
-  | "submitting"
-  | "error"
-  | "complete";
+type FunnelPhase = "intro" | "questions" | "submitting" | "error" | "complete";
 
 interface QuestionFrameProps {
   number: number;
@@ -77,6 +85,8 @@ function getSubmissionErrorMessage(code: string | undefined, fallback?: string) 
   switch (code) {
     case "origin_denied":
       return "Please refresh this page so we can verify the submission source.";
+    case "crm_conflict":
+      return "We could not confirm this retry safely. Please contact Aygency with your Blueprint reference.";
     case "crm_unavailable":
       return "The CRM is temporarily unavailable. Your Eden Blueprint is ready to preview.";
     case "crm_not_configured":
@@ -84,22 +94,17 @@ function getSubmissionErrorMessage(code: string | undefined, fallback?: string) 
     case "rate_limited":
       return "This browser has made several recent attempts. Please wait a moment before trying again.";
     case "timing_rejected":
+      return "This security check has expired. Refresh the page to create a fresh attempt.";
+    case "invalid_capture":
+      return "Check your email, contact permission, and security check before continuing.";
     case "invalid_application":
       return "Please review your answers, then submit them again.";
     default:
-      return (
-        fallback ??
-        "Your application is ready for another submission attempt."
-      );
+      return fallback ?? "Your application is ready for another submission attempt.";
   }
 }
 
-function QuestionFrame({
-  number,
-  title,
-  description,
-  children,
-}: QuestionFrameProps) {
+function QuestionFrame({ number, title, description, children }: QuestionFrameProps) {
   return (
     <div className="relative">
       <span
@@ -152,12 +157,15 @@ function wait(milliseconds: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
 }
 
-async function fetchWithTimeout(body: string) {
+interface SubmissionReceipt {
+  recorded: boolean;
+}
+
+async function fetchWithTimeout(endpoint: string, body: string) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 25_000);
-
   try {
-    return await fetch("/api/eden/applications", {
+    return await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
@@ -171,15 +179,13 @@ async function fetchWithTimeout(body: string) {
 
 async function submitFrozenApplication(application: EdenApplication) {
   const frozenBody = JSON.stringify(application);
-  let finalMessage =
-    "We could not safely record your application. Please try again.";
+  let finalMessage = "We could not safely record your application. Please try again.";
   let finalCode = "submission_unavailable";
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
-
     try {
-      response = await fetchWithTimeout(frozenBody);
+      response = await fetchWithTimeout("/api/eden/applications", frozenBody);
     } catch {
       if (attempt === 0) {
         await wait(450);
@@ -192,9 +198,12 @@ async function submitFrozenApplication(application: EdenApplication) {
       success?: boolean;
       error?: string;
       code?: string;
+      recorded?: boolean;
     } | null;
 
-    if (response.ok && result?.success) return;
+    if (response.ok && result?.success) {
+      return { recorded: result.recorded !== false } satisfies SubmissionReceipt;
+    }
     finalCode = result?.code ?? `http_${response.status}`;
     finalMessage = getSubmissionErrorMessage(finalCode, result?.error);
 
@@ -206,7 +215,50 @@ async function submitFrozenApplication(application: EdenApplication) {
       await wait(delay);
       continue;
     }
+    throw new EdenSubmissionError(finalMessage, finalCode);
+  }
 
+  throw new EdenSubmissionError(finalMessage, finalCode);
+}
+
+async function submitFrozenLeadCapture(capture: EdenLeadCapture) {
+  const frozenBody = JSON.stringify(capture);
+  let finalMessage = "We could not record your inquiry. Please try again.";
+  let finalCode = "capture_unavailable";
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    let response: Response;
+    try {
+      response = await fetchWithTimeout("/api/eden/leads", frozenBody);
+    } catch {
+      if (attempt === 0) {
+        await wait(450);
+        continue;
+      }
+      throw new EdenSubmissionError(finalMessage, finalCode);
+    }
+
+    const result = (await response.json().catch(() => null)) as {
+      success?: boolean;
+      error?: string;
+      code?: string;
+      recorded?: boolean;
+    } | null;
+
+    if (response.ok && result?.success) {
+      return { recorded: result.recorded !== false } satisfies SubmissionReceipt;
+    }
+
+    finalCode = result?.code ?? `http_${response.status}`;
+    finalMessage = getSubmissionErrorMessage(finalCode, result?.error);
+    if (attempt === 0 && retryableBrowserStatuses.has(response.status)) {
+      const retryAfter = Number(response.headers.get("retry-after"));
+      const delay = Number.isFinite(retryAfter)
+        ? Math.min(Math.max(retryAfter * 1_000, 300), 1_500)
+        : 450;
+      await wait(delay);
+      continue;
+    }
     throw new EdenSubmissionError(finalMessage, finalCode);
   }
 
@@ -214,21 +266,31 @@ async function submitFrozenApplication(application: EdenApplication) {
 }
 
 export default function DesignYourEdenClient({
+  applicationId,
+  captureEventId,
   discoveryUrl,
+  eventId,
+  localPreview,
+  turnstileSiteKey,
 }: DesignYourEdenClientProps) {
+  const prefersReducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<FunnelPhase>("intro");
   const [stepIndex, setStepIndex] = useState(0);
   const [isAdvancing, setIsAdvancing] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
-  const [submissionSnapshot, setSubmissionSnapshot] =
-    useState<EdenApplication | null>(null);
-  const [completedApplication, setCompletedApplication] =
-    useState<EdenApplication | null>(null);
+  const [submissionSnapshot, setSubmissionSnapshot] = useState<EdenApplication | null>(null);
+  const [completedApplication, setCompletedApplication] = useState<EdenApplication | null>(null);
   const [submissionRecorded, setSubmissionRecorded] = useState(false);
+  const [captureCompleted, setCaptureCompleted] = useState(false);
+  const [captureRecorded, setCaptureRecorded] = useState(false);
+  const [captureError, setCaptureError] = useState("");
+  const [captureToken, setCaptureToken] = useState(
+    localPreview ? "local-preview-token" : "",
+  );
   const startTimeRef = useRef<string | null>(null);
-  const attributionRef = useRef<EdenAttribution>({
-    landingPath: "/design-your-eden",
-  });
+  const attributionRef = useRef<EdenAttribution>({ landingPath: "/design-your-eden" });
+  const captureSnapshotRef = useRef<EdenLeadCapture | null>(null);
+  const captureInFlightRef = useRef(false);
   const submissionInFlightRef = useRef(false);
   const questionPanelRef = useRef<HTMLFormElement>(null);
   const handleNextRef = useRef<() => Promise<void>>(async () => undefined);
@@ -238,8 +300,10 @@ export default function DesignYourEdenClient({
     register,
     watch,
     trigger,
+    clearErrors,
     getValues,
     getFieldState,
+    setValue,
     formState: { errors },
   } = useForm<EdenQuestionnaireValues>({
     resolver: zodResolver(edenQuestionnaireSchema),
@@ -247,29 +311,33 @@ export default function DesignYourEdenClient({
     shouldUnregister: false,
     defaultValues: {
       answers: {
-        desiredOutcome: "",
-        currentChallenge: "",
-        systems: [],
-        successMeasures: [],
+        primaryOutcomes: [],
+        currentFriction: "",
+        currentTools: [],
+        anythingElse: "",
       },
       contact: {
         fullName: "",
         workEmail: "",
-        companyName: "",
+        phone: "",
+        roleTitle: "",
+        linkedinUrl: "",
       },
-      consent: {
-        inquiry: false,
-        marketing: false,
+      organisation: {
+        name: "",
+        website: "",
+        companyNumber: "",
+        countryCode: "",
       },
+      consent: { inquiry: false, marketing: false },
+      botToken: "",
       website: "",
     },
   });
 
-  const primaryGoal = watch("answers.primaryGoal");
-  const desiredOutcome = watch("answers.desiredOutcome") ?? "";
-  const currentChallenge = watch("answers.currentChallenge") ?? "";
+  const currentFriction = watch("answers.currentFriction") ?? "";
+  const anythingElse = watch("answers.anythingElse") ?? "";
   const currentStep = edenSteps[stepIndex];
-  const volumeQuestion = getVolumeQuestion(primaryGoal);
 
   useEffect(() => {
     attributionRef.current = captureEdenAttribution();
@@ -294,17 +362,16 @@ export default function DesignYourEdenClient({
     submissionInFlightRef.current = true;
     setSubmissionError("");
     setPhase("submitting");
-
     try {
-      await submitFrozenApplication(application);
+      const receipt = await submitFrozenApplication(application);
       setCompletedApplication(application);
-      setSubmissionRecorded(true);
+      setSubmissionRecorded(receipt.recorded);
       setPhase("complete");
     } catch (error) {
       setSubmissionError(
         error instanceof Error
           ? error.message
-          : "We could not safely record your application. Please try again."
+          : "We could not safely record your application. Please try again.",
       );
       setPhase("error");
     } finally {
@@ -312,18 +379,76 @@ export default function DesignYourEdenClient({
     }
   };
 
+  const createLeadCaptureSnapshot = () => {
+    if (captureSnapshotRef.current) return captureSnapshotRef.current;
+
+    const parsed = edenLeadCaptureSchema.safeParse({
+      eventId: captureEventId,
+      applicationId,
+      capturedAt: new Date().toISOString(),
+      workEmail: getValues("contact.workEmail"),
+      inquiryConsent: getValues("consent.inquiry"),
+      attribution: attributionRef.current,
+      botToken: captureToken,
+      website: getValues("website"),
+    });
+    if (!parsed.success) {
+      throw new EdenSubmissionError(
+        parsed.error.issues[0]?.message ??
+          "Check your email and permission before continuing.",
+        "invalid_capture",
+      );
+    }
+
+    captureSnapshotRef.current = parsed.data;
+    return parsed.data;
+  };
+
+  const captureInquiry = async () => {
+    if (captureCompleted) return true;
+    if (captureInFlightRef.current) return false;
+
+    captureInFlightRef.current = true;
+    setCaptureError("");
+    try {
+      const receipt = await submitFrozenLeadCapture(createLeadCaptureSnapshot());
+      setCaptureRecorded(receipt.recorded);
+      setCaptureCompleted(true);
+      return true;
+    } catch (error) {
+      setCaptureError(
+        error instanceof Error
+          ? error.message
+          : "We could not record your inquiry. Please try again.",
+      );
+      return false;
+    } finally {
+      captureInFlightRef.current = false;
+    }
+  };
+
   const createApplicationSnapshot = () => {
     const questionnaire = edenQuestionnaireSchema.parse(getValues());
     const submittedAt = new Date().toISOString();
-    const startedAt =
-      startTimeRef.current ?? new Date(Date.now() - 60_000).toISOString();
-    const application = edenApplicationSchema.parse({
-      submissionId: crypto.randomUUID(),
+    const startedAt = startTimeRef.current ?? new Date(Date.now() - 60_000).toISOString();
+    const parsed = edenApplicationSchema.safeParse({
+      eventId,
+      applicationId,
       startedAt,
       submittedAt,
       ...questionnaire,
       attribution: attributionRef.current,
     });
+    if (!parsed.success) {
+      console.error("[eden-application] snapshot_invalid", {
+        paths: parsed.error.issues.map((issue) => issue.path.join(".")),
+      });
+      throw new EdenSubmissionError(
+        "Please review your application before submitting.",
+        "invalid_application",
+      );
+    }
+    const application = parsed.data;
     setSubmissionSnapshot(application);
     return application;
   };
@@ -331,29 +456,29 @@ export default function DesignYourEdenClient({
   const handleNext = async () => {
     if (isAdvancing || !currentStep) return;
     setIsAdvancing(true);
-
     try {
-      const currentValid = await trigger([...currentStep.fields], {
-        shouldFocus: true,
-      });
+      if (localPreview && currentStep.id === "consents" && !getValues("botToken")) {
+        setValue("botToken", "local-preview-token", {
+          shouldDirty: true,
+          shouldValidate: false,
+        });
+      }
+      const currentValid = await trigger([...currentStep.fields], { shouldFocus: true });
       if (!currentValid) return;
-
+      if (currentStep.id === "workEmail" && !(await captureInquiry())) return;
       if (stepIndex < edenSteps.length - 1) {
         setStepIndex((index) => index + 1);
         return;
       }
-
       const allValid = await trigger(undefined, { shouldFocus: true });
       if (!allValid) {
         const firstInvalidStep = edenSteps.findIndex((step) =>
-          step.fields.some((field) => getFieldState(field).invalid)
+          step.fields.some((field) => getFieldState(field).invalid),
         );
         if (firstInvalidStep >= 0) setStepIndex(firstInvalidStep);
         return;
       }
-
-      const application = createApplicationSnapshot();
-      await sendApplication(application);
+      await sendApplication(createApplicationSnapshot());
     } finally {
       setIsAdvancing(false);
     }
@@ -363,13 +488,12 @@ export default function DesignYourEdenClient({
 
   useEffect(() => {
     if (phase !== "questions") return;
-
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
       const target = event.target as HTMLElement;
       const input = target instanceof HTMLInputElement ? target : null;
       const isEditable =
         target instanceof HTMLTextAreaElement ||
-        (input && ["text", "email", "url", "search", "tel"].includes(input.type));
+        (input && ["text", "email", "url", "search", "tel", "number"].includes(input.type));
 
       if (
         /^[1-9]$/.test(event.key) &&
@@ -380,7 +504,7 @@ export default function DesignYourEdenClient({
       ) {
         const optionIndex = Number(event.key) - 1;
         const option = questionPanelRef.current?.querySelector<HTMLInputElement>(
-          `input[data-option-index="${optionIndex}"]`
+          `input[data-option-index="${optionIndex}"]`,
         );
         if (option && !option.disabled) {
           event.preventDefault();
@@ -391,24 +515,11 @@ export default function DesignYourEdenClient({
       }
 
       if (event.key !== "Enter" || event.shiftKey) return;
-      if (
-        target instanceof HTMLButtonElement ||
-        target instanceof HTMLAnchorElement
-      ) {
-        return;
-      }
-      if (
-        target instanceof HTMLTextAreaElement &&
-        !event.metaKey &&
-        !event.ctrlKey
-      ) {
-        return;
-      }
-
+      if (target instanceof HTMLButtonElement || target instanceof HTMLAnchorElement) return;
+      if (target instanceof HTMLTextAreaElement && !event.metaKey && !event.ctrlKey) return;
       event.preventDefault();
       void handleNextRef.current();
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [phase]);
@@ -425,6 +536,8 @@ export default function DesignYourEdenClient({
     setSubmissionSnapshot(null);
     setSubmissionError("");
     setSubmissionRecorded(false);
+    setValue("botToken", "", { shouldDirty: true, shouldValidate: false });
+    clearErrors("botToken");
     setStepIndex(edenSteps.length - 1);
     setPhase("questions");
   };
@@ -436,279 +549,171 @@ export default function DesignYourEdenClient({
     setPhase("complete");
   };
 
+  const renderSingleChoice = <T extends string>(
+    name:
+      | "answers.openLoopVolume"
+      | "answers.meetingLoad"
+      | "answers.emailLoad"
+      | "answers.calendarComplexity"
+      | "answers.travelFrequency"
+      | "answers.decisionAuthority"
+      | "answers.targetStartWindow"
+      | "answers.budgetReadiness",
+    legend: string,
+    options: ReadonlyArray<{ value: T; label: string; description?: string }>,
+  ) => (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => (
+        <EdenOptionGroup
+          name={field.name}
+          legend={legend}
+          options={options}
+          value={field.value as T | undefined}
+          onChange={field.onChange}
+          onBlur={field.onBlur}
+          error={fieldState.error?.message}
+        />
+      )}
+    />
+  );
+
   const renderQuestion = () => {
     const questionNumber = stepIndex + 1;
-
     switch (currentStep.id) {
-      case "primaryGoal":
+      case "workEmail":
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What should Eden take off your plate first?"
-            description="Choose the responsibility that would make the clearest difference to your working week."
+            title="First, where should we send your Eden Blueprint?"
+            description="Your work email creates the inquiry in our CRM before the diagnostic begins, so we can keep your Blueprint and any follow-up connected."
           >
-            <Controller
-              name="answers.primaryGoal"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="What should Eden take off your plate first?"
-                  options={primaryGoalOptions}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  error={fieldState.error?.message}
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="workEmail" className="mb-2 block font-sans text-xs text-ghost-muted">
+                  Work email <span className="text-cyan">*</span>
+                </label>
+                <input
+                  id="workEmail"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  maxLength={254}
+                  placeholder="you@company.com"
+                  readOnly={Boolean(captureSnapshotRef.current)}
+                  aria-invalid={Boolean(errors.contact?.workEmail)}
+                  aria-describedby="eden-question-description workEmail-error"
+                  className={`${inputClasses} read-only:cursor-not-allowed read-only:opacity-70`}
+                  {...register("contact.workEmail")}
                 />
-              )}
-            />
-          </QuestionFrame>
-        );
+                <ErrorMessage id="workEmail-error" message={errors.contact?.workEmail?.message} />
+              </div>
 
-      case "desiredOutcome":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="What should Eden make reliably true each week?"
-            description="Describe the result in practical terms. Tell us what better looks like, who notices, and what no longer depends on you."
-          >
-            <label htmlFor="desiredOutcome" className="sr-only">
-              Desired outcome
-            </label>
-            <textarea
-              id="desiredOutcome"
-              rows={5}
-              maxLength={800}
-              placeholder="For example: I start each day with priorities already organised, important follow-ups prepared, and a clear view of what needs my decision."
-              aria-describedby="eden-question-description desiredOutcome-hint desiredOutcome-error"
-              aria-invalid={Boolean(errors.answers?.desiredOutcome)}
-              className={`${inputClasses} min-h-[160px] resize-y`}
-              {...register("answers.desiredOutcome")}
-            />
-            <div className="flex items-start justify-between gap-4">
-              <p
-                id="desiredOutcome-hint"
-                className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
-              >
-                A specific outcome gives us a useful first acceptance test for
-                your Eden.
-              </p>
-              <CharacterCount current={desiredOutcome.length} maximum={800} />
+              <Controller
+                name="consent.inquiry"
+                control={control}
+                render={({ field }) => (
+                  <label className="flex cursor-pointer items-start gap-4 rounded-xl border border-ghost/[0.1] bg-surface p-5 transition-colors hover:border-cyan/30">
+                    <input
+                      ref={field.ref}
+                      name={field.name}
+                      type="checkbox"
+                      checked={field.value}
+                      disabled={Boolean(captureSnapshotRef.current)}
+                      onBlur={field.onBlur}
+                      onChange={(event) => {
+                        const granted = event.target.checked;
+                        field.onChange(granted);
+                        if (granted) clearErrors("consent.inquiry");
+                      }}
+                      className="mt-0.5 h-5 w-5 flex-none rounded border-ghost/20 bg-void-light accent-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40 disabled:opacity-60"
+                      aria-invalid={Boolean(errors.consent?.inquiry)}
+                      aria-describedby="inquiry-consent-copy inquiry-consent-error"
+                    />
+                    <span>
+                      <span className="block font-sans text-sm font-medium text-ghost">
+                        Send my Blueprint and respond to my inquiry <span className="text-cyan">*</span>
+                      </span>
+                      <span id="inquiry-consent-copy" className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">
+                        I agree that Aygency may store my email and use my answers to prepare this Eden recommendation and contact me about it.
+                      </span>
+                    </span>
+                  </label>
+                )}
+              />
+              <ErrorMessage id="inquiry-consent-error" message={errors.consent?.inquiry?.message} />
+
+              {!captureSnapshotRef.current && !localPreview && (
+                <div className="rounded-xl border border-ghost/[0.08] bg-surface/60 p-4">
+                  <EdenTurnstile
+                    action="eden_lead_capture"
+                    siteKey={turnstileSiteKey}
+                    onToken={(token) => {
+                      setCaptureToken(token);
+                      if (token) setCaptureError("");
+                    }}
+                  />
+                </div>
+              )}
+
+              {localPreview && !captureCompleted && (
+                <p className="rounded-xl border border-cyan/15 bg-cyan/[0.04] p-4 font-sans text-xs leading-relaxed text-ghost-muted">
+                  Local preview mode: you can inspect the complete experience, but this email and your answers will not be recorded.
+                </p>
+              )}
+
+              {captureCompleted && (
+                <p className="rounded-xl border border-cyan/20 bg-cyan/[0.05] p-4 font-sans text-sm leading-relaxed text-ghost">
+                  {captureRecorded
+                    ? "Inquiry recorded. Continue to see what Eden could do for you."
+                    : "Local preview ready. Continue to see what Eden could do for you."}
+                </p>
+              )}
+
+              {captureError && (
+                <div role="alert" className="rounded-xl border border-error/20 bg-error/[0.04] p-4">
+                  <p className="font-sans text-sm leading-relaxed text-error">{captureError}</p>
+                  {captureSnapshotRef.current && (
+                    <p className="mt-2 font-sans text-xs leading-relaxed text-ghost-muted">
+                      Continue retries the exact same frozen capture. Refresh the page to use a different email.
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
-            <ErrorMessage
-              id="desiredOutcome-error"
-              message={errors.answers?.desiredOutcome?.message}
-            />
-          </QuestionFrame>
-        );
-
-      case "currentChallenge":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="What gets in the way today, and what happens when it slips?"
-            description="Tell us what you repeatedly chase, remember, prepare, or copy between tools, then describe the consequence when it slows down or gets missed."
-          >
-            <label htmlFor="currentChallenge" className="sr-only">
-              Current working challenge
-            </label>
-            <textarea
-              id="currentChallenge"
-              rows={6}
-              maxLength={1200}
-              placeholder="For example: Follow-ups sit across email, meeting notes, and our task board. I spend too much time rebuilding context and remembering who needs a response."
-              aria-describedby="eden-question-description currentChallenge-hint currentChallenge-error"
-              aria-invalid={Boolean(errors.answers?.currentChallenge)}
-              className={`${inputClasses} min-h-[180px] resize-y`}
-              {...register("answers.currentChallenge")}
-            />
-            <div className="flex items-start justify-between gap-4">
-              <p
-                id="currentChallenge-hint"
-                className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim"
-              >
-                Include the people and recurring moments involved. We will ask
-                about the tools separately.
-              </p>
-              <CharacterCount current={currentChallenge.length} maximum={1200} />
+            <div className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="website-capture">Leave this field empty</label>
+              <input id="website-capture" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
             </div>
-            <ErrorMessage
-              id="currentChallenge-error"
-              message={errors.answers?.currentChallenge?.message}
-            />
           </QuestionFrame>
         );
 
-      case "workflowVolume":
+      case "primaryOutcomes":
         return (
           <QuestionFrame
             number={questionNumber}
-            title={volumeQuestion.title}
-            description={volumeQuestion.description}
+            title="What should Eden improve first?"
+            description="Choose every outcome that belongs in the first discovery conversation."
           >
             <Controller
-              name="answers.workflowVolume"
+              name="answers.primaryOutcomes"
               control={control}
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend={volumeQuestion.title}
-                  options={volumeQuestion.options}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-          </QuestionFrame>
-        );
-
-      case "teamSize":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="Who should Eden support first?"
-            description="Start with the people whose priorities, communication, or recurring work Eden would help coordinate."
-          >
-            <Controller
-              name="answers.teamSize"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="Who should Eden support first?"
-                  options={teamSizeOptions}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-          </QuestionFrame>
-        );
-
-      case "systems":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="Where does the work Eden needs to understand live?"
-            description="Select up to six tool categories so we can understand where Eden's working context lives."
-          >
-            <Controller
-              name="answers.systems"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="Where does the work Eden needs to understand live?"
-                  options={systemOptionList}
+                  legend="What should Eden improve first?"
+                  options={primaryOutcomeOptionList}
                   value={field.value}
                   multiple
-                  maxSelections={6}
-                  onBlur={field.onBlur}
-                  onChange={(option) => {
-                    const current = field.value ?? [];
-                    if (option === "not_sure") {
-                      field.onChange(
-                        current.includes("not_sure") ? [] : ["not_sure"]
-                      );
-                      return;
-                    }
-                    const withoutUnknown = current.filter(
-                      (value) => value !== "not_sure"
-                    );
-                    field.onChange(
-                      withoutUnknown.includes(option)
-                        ? withoutUnknown.filter((value) => value !== option)
-                        : [...withoutUnknown, option]
-                    );
-                  }}
-                  error={fieldState.error?.message}
-                />
-              )}
-            />
-          </QuestionFrame>
-        );
-
-      case "dataReadiness":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="How ready is the context Eden would need?"
-            description="Think about the emails, documents, task history, and working routines that would teach Eden how you operate."
-          >
-            <Controller
-              name="answers.dataReadiness"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="How ready is the context Eden would need?"
-                  options={dataReadinessOptionList}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  error={fieldState.error?.message}
-                  columns={1}
-                />
-              )}
-            />
-          </QuestionFrame>
-        );
-
-      case "autonomyPreference":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="What should Eden be allowed to do at first?"
-            description="Choose the starting level that feels comfortable. Eden can earn more responsibility as you see the quality of her work."
-          >
-            <Controller
-              name="answers.autonomyPreference"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="What should Eden be allowed to do at first?"
-                  options={autonomyOptionList}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  error={fieldState.error?.message}
-                  columns={1}
-                />
-              )}
-            />
-          </QuestionFrame>
-        );
-
-      case "successMeasures":
-        return (
-          <QuestionFrame
-            number={questionNumber}
-            title="How would you know Eden is earning her place?"
-            description="Choose up to four outcomes you would genuinely measure or notice in your work or your team's experience."
-          >
-            <Controller
-              name="answers.successMeasures"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="How would you know Eden is earning her place?"
-                  options={successMeasureOptionList}
-                  value={field.value}
-                  multiple
-                  maxSelections={4}
+                  maxSelections={9}
                   onBlur={field.onBlur}
                   onChange={(option) => {
                     const current = field.value ?? [];
                     field.onChange(
                       current.includes(option)
                         ? current.filter((value) => value !== option)
-                        : [...current, option]
+                        : [...current, option],
                     );
                   }}
                   error={fieldState.error?.message}
@@ -718,335 +723,383 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
-      case "timeline":
+      case "currentFriction":
         return (
           <QuestionFrame
             number={questionNumber}
-            title="How ready are you to put Eden to work?"
-            description="Choose the timing that best reflects when you would be ready to begin discovery and onboarding."
+            title="What currently takes your attention or gets missed?"
+            description="Describe the commitments, preparation, and follow-through that create the most friction."
           >
+            <label htmlFor="currentFriction" className="sr-only">Current friction</label>
+            <textarea
+              id="currentFriction"
+              rows={6}
+              maxLength={1500}
+              placeholder="For example: Follow-ups sit across email, meeting notes, and our task board. I spend too much time rebuilding context and remembering who needs a response."
+              aria-describedby="eden-question-description currentFriction-hint currentFriction-error"
+              aria-invalid={Boolean(errors.answers?.currentFriction)}
+              className={`${inputClasses} min-h-[180px] resize-y`}
+              {...register("answers.currentFriction")}
+            />
+            <div className="flex items-start justify-between gap-4">
+              <p id="currentFriction-hint" className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim">
+                Do not include passwords, credentials, messages, transcripts, or private operational data.
+              </p>
+              <CharacterCount current={currentFriction.length} maximum={1500} />
+            </div>
+            <ErrorMessage id="currentFriction-error" message={errors.answers?.currentFriction?.message} />
+          </QuestionFrame>
+        );
+
+      case "hoursLostWeekly":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="How many hours does this cost in a typical week?"
+            description="Use a whole-number estimate from 0 to 168. A measured estimate is more useful than a polished one."
+          >
+            <label htmlFor="hoursLostWeekly" className="sr-only">Hours lost weekly</label>
+            <input
+              id="hoursLostWeekly"
+              type="number"
+              inputMode="numeric"
+              min={0}
+              max={168}
+              step={1}
+              placeholder="14"
+              aria-invalid={Boolean(errors.answers?.hoursLostWeekly)}
+              aria-describedby="eden-question-description hoursLostWeekly-error"
+              className={inputClasses}
+              {...register("answers.hoursLostWeekly", { valueAsNumber: true })}
+            />
+            <ErrorMessage id="hoursLostWeekly-error" message={errors.answers?.hoursLostWeekly?.message} />
+          </QuestionFrame>
+        );
+
+      case "openLoopVolume":
+        return (
+          <QuestionFrame number={questionNumber} title="How many open loops compete at once?" description="Think about unresolved replies, promises, actions, and decisions that still need follow-through.">
+            {renderSingleChoice("answers.openLoopVolume", "Open-loop volume", openLoopVolumeOptionList)}
+          </QuestionFrame>
+        );
+      case "meetingLoad":
+        return (
+          <QuestionFrame number={questionNumber} title="How heavy is your meeting load?" description="Include the preparation and follow-up around meetings, not only time spent in the room.">
+            {renderSingleChoice("answers.meetingLoad", "Meeting load", meetingLoadOptionList)}
+          </QuestionFrame>
+        );
+      case "emailLoad":
+        return (
+          <QuestionFrame number={questionNumber} title="How heavy is your email load?" description="Choose the level that best reflects triage, replies, introductions, and follow-ups.">
+            {renderSingleChoice("answers.emailLoad", "Email load", emailLoadOptionList)}
+          </QuestionFrame>
+        );
+      case "calendarComplexity":
+        return (
+          <QuestionFrame number={questionNumber} title="How complex is your calendar?" description="Consider attendees, changes, time zones, travel, and preparation dependencies.">
+            {renderSingleChoice("answers.calendarComplexity", "Calendar complexity", calendarComplexityOptionList)}
+          </QuestionFrame>
+        );
+      case "travelFrequency":
+        return (
+          <QuestionFrame number={questionNumber} title="How often do you travel for work?" description="This determines whether mobility coordination belongs in Eden's first capability plan.">
+            {renderSingleChoice("answers.travelFrequency", "Travel frequency", travelFrequencyOptionList)}
+          </QuestionFrame>
+        );
+
+      case "currentTools":
+        return (
+          <QuestionFrame number={questionNumber} title="Which tools hold the context Eden would need?" description="Choose the named providers you use today. Slack and other providers are confirmed during discovery.">
             <Controller
-              name="answers.timeline"
+              name="answers.currentTools"
               control={control}
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="How ready are you to put Eden to work?"
-                  options={timelineOptionList}
+                  legend="Current tools"
+                  options={currentToolOptionList}
                   value={field.value}
-                  onChange={field.onChange}
+                  multiple
+                  maxSelections={7}
                   onBlur={field.onBlur}
+                  onChange={(option) => {
+                    const current = field.value ?? [];
+                    field.onChange(
+                      current.includes(option)
+                        ? current.filter((value) => value !== option)
+                        : [...current, option],
+                    );
+                  }}
                   error={fieldState.error?.message}
-                  columns={1}
                 />
               )}
             />
           </QuestionFrame>
         );
 
-      case "buyingPriority":
+      case "decisionAuthority":
         return (
-          <QuestionFrame
-            number={questionNumber}
-            title="What matters most when choosing your Eden?"
-            description="Choose the trade-off that should lead our recommendation. Pricing is scoped after we understand the Eden you need."
-          >
-            <Controller
-              name="answers.buyingPriority"
-              control={control}
-              render={({ field, fieldState }) => (
-                <EdenOptionGroup
-                  name={field.name}
-                  legend="What matters most when choosing your Eden?"
-                  options={buyingPriorityOptionList}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  error={fieldState.error?.message}
-                  columns={1}
+          <QuestionFrame number={questionNumber} title="What is your role in the decision?" description="This records the buying path without treating an email address as identity or authority.">
+            {renderSingleChoice("answers.decisionAuthority", "Decision authority", decisionAuthorityOptionList)}
+          </QuestionFrame>
+        );
+      case "targetStartWindow":
+        return (
+          <QuestionFrame number={questionNumber} title="When would you like Eden to start?" description="Choose the window that reflects your current readiness.">
+            {renderSingleChoice("answers.targetStartWindow", "Target start window", targetStartWindowOptionList)}
+          </QuestionFrame>
+        );
+      case "budgetReadiness":
+        return (
+          <QuestionFrame number={questionNumber} title="How ready is the budget decision?" description="We ask about readiness, not a guessed amount. Pricing and scope are worked through during discovery.">
+            {renderSingleChoice("answers.budgetReadiness", "Budget readiness", budgetReadinessOptionList)}
+          </QuestionFrame>
+        );
+
+      case "acknowledgements":
+        return (
+          <QuestionFrame number={questionNumber} title="Confirm Eden's operating boundaries" description="Both answers are recorded exactly. A ‘not yet’ answer is valid and becomes a visible discovery question.">
+            <div className="space-y-8">
+              <div>
+                <p className="mb-3 font-sans text-sm font-medium text-ghost">Do you understand that Aygency operates Eden after launch?</p>
+                <Controller
+                  name="answers.operatedServiceAck"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <EdenOptionGroup
+                      name={field.name}
+                      legend="Aygency-operated service acknowledgement"
+                      options={acknowledgementOptionList}
+                      value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
+                      onChange={(value) => field.onChange(value === "yes")}
+                      onBlur={field.onBlur}
+                      error={fieldState.error?.message}
+                    />
+                  )}
                 />
-              )}
-            />
+              </div>
+              <div>
+                <p className="mb-3 font-sans text-sm font-medium text-ghost">Do you agree that this application contains sales context only, with no credentials, private Eden memory, conversations, or customer operational data?</p>
+                <Controller
+                  name="answers.dataBoundaryAck"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <EdenOptionGroup
+                      name={field.name}
+                      legend="Safe application-data boundary acknowledgement"
+                      options={acknowledgementOptionList}
+                      value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
+                      onChange={(value) => field.onChange(value === "yes")}
+                      onBlur={field.onBlur}
+                      error={fieldState.error?.message}
+                    />
+                  )}
+                />
+              </div>
+            </div>
           </QuestionFrame>
         );
 
-      case "fullName":
+      case "contactDetails":
         return (
-          <QuestionFrame
-            number={questionNumber}
-            title="Who are we designing this with?"
-            description="Your name lets us address the Blueprint and follow up on this inquiry."
-          >
-            <label htmlFor="fullName" className="sr-only">
-              Full name
-            </label>
-            <input
-              id="fullName"
-              type="text"
-              autoComplete="name"
-              maxLength={100}
-              placeholder="Your full name"
-              aria-describedby="eden-question-description fullName-error"
-              aria-invalid={Boolean(errors.contact?.fullName)}
-              className={inputClasses}
-              {...register("contact.fullName")}
-            />
-            <ErrorMessage
-              id="fullName-error"
-              message={errors.contact?.fullName?.message}
-            />
+          <QuestionFrame number={questionNumber} title="Who are we designing this with?" description="Your name is required. Phone, role, and LinkedIn are optional and stay within the application record.">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="fullName" className="mb-2 block font-sans text-xs text-ghost-muted">Full name <span className="text-cyan">*</span></label>
+                <input id="fullName" type="text" autoComplete="name" maxLength={120} className={inputClasses} aria-invalid={Boolean(errors.contact?.fullName)} {...register("contact.fullName")} />
+                <ErrorMessage id="fullName-error" message={errors.contact?.fullName?.message} />
+              </div>
+              <div>
+                <label htmlFor="roleTitle" className="mb-2 block font-sans text-xs text-ghost-muted">Role title</label>
+                <input id="roleTitle" type="text" autoComplete="organization-title" maxLength={120} className={inputClasses} {...register("contact.roleTitle")} />
+                <ErrorMessage id="roleTitle-error" message={errors.contact?.roleTitle?.message} />
+              </div>
+              <div>
+                <label htmlFor="phone" className="mb-2 block font-sans text-xs text-ghost-muted">Phone (international format)</label>
+                <input id="phone" type="tel" autoComplete="tel" maxLength={16} placeholder="+447700900123" className={inputClasses} {...register("contact.phone")} />
+                <ErrorMessage id="phone-error" message={errors.contact?.phone?.message} />
+              </div>
+              <div>
+                <label htmlFor="linkedinUrl" className="mb-2 block font-sans text-xs text-ghost-muted">LinkedIn URL</label>
+                <input id="linkedinUrl" type="url" autoComplete="url" maxLength={2048} placeholder="https://www.linkedin.com/in/your-profile" className={inputClasses} {...register("contact.linkedinUrl")} />
+                <ErrorMessage id="linkedinUrl-error" message={errors.contact?.linkedinUrl?.message} />
+              </div>
+            </div>
           </QuestionFrame>
         );
 
-      case "workEmail":
+      case "organisation":
         return (
-          <QuestionFrame
-            number={questionNumber}
-            title="Where should we send your Eden Blueprint?"
-            description="Start with your work email. We will use it to respond when you submit your Eden inquiry."
-          >
-            <label htmlFor="workEmail" className="sr-only">
-              Work email
-            </label>
-            <input
-              id="workEmail"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              maxLength={254}
-              placeholder="you@company.com"
-              aria-describedby="eden-question-description workEmail-error"
-              aria-invalid={Boolean(errors.contact?.workEmail)}
-              className={inputClasses}
-              {...register("contact.workEmail")}
-            />
-            <ErrorMessage
-              id="workEmail-error"
-              message={errors.contact?.workEmail?.message}
-            />
+          <QuestionFrame number={questionNumber} title="Which organisation would Eden support?" description="These matching attributes help the CRM find possible records without making email the primary identity.">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <label htmlFor="organisationName" className="mb-2 block font-sans text-xs text-ghost-muted">Organisation name <span className="text-cyan">*</span></label>
+                <input id="organisationName" type="text" autoComplete="organization" maxLength={200} className={inputClasses} {...register("organisation.name")} />
+                <ErrorMessage id="organisationName-error" message={errors.organisation?.name?.message} />
+              </div>
+              <div>
+                <label htmlFor="organisationWebsite" className="mb-2 block font-sans text-xs text-ghost-muted">Website</label>
+                <input id="organisationWebsite" type="url" inputMode="url" autoComplete="url" maxLength={2048} placeholder="https://example.com" className={inputClasses} {...register("organisation.website")} />
+                <ErrorMessage id="organisationWebsite-error" message={errors.organisation?.website?.message} />
+              </div>
+              <div>
+                <label htmlFor="companyNumber" className="mb-2 block font-sans text-xs text-ghost-muted">Company number</label>
+                <input id="companyNumber" type="text" maxLength={32} className={inputClasses} {...register("organisation.companyNumber")} />
+                <ErrorMessage id="companyNumber-error" message={errors.organisation?.companyNumber?.message} />
+              </div>
+              <div>
+                <label htmlFor="countryCode" className="mb-2 block font-sans text-xs text-ghost-muted">Two-letter country code <span className="text-cyan">*</span></label>
+                <input id="countryCode" type="text" autoComplete="country" minLength={2} maxLength={2} placeholder="GB" className={`${inputClasses} uppercase`} {...register("organisation.countryCode", { setValueAs: (value) => String(value).trim().toUpperCase() })} />
+                <ErrorMessage id="countryCode-error" message={errors.organisation?.countryCode?.message} />
+              </div>
+              <div>
+                <p className="mb-2 font-sans text-xs text-ghost-muted">Organisation size <span className="text-cyan">*</span></p>
+                <Controller
+                  name="organisation.sizeBand"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <EdenOptionGroup name={field.name} legend="Organisation size" options={organisationSizeBandOptionList} value={field.value} onChange={field.onChange} onBlur={field.onBlur} error={fieldState.error?.message} columns={1} />
+                  )}
+                />
+              </div>
+            </div>
           </QuestionFrame>
         );
 
-      case "companyName":
+      case "anythingElse":
         return (
-          <QuestionFrame
-            number={questionNumber}
-            title="Which company would Eden be supporting?"
-            description="Share the company name so we can frame your Eden Blueprint around the right working context."
-          >
-            <label htmlFor="companyName" className="sr-only">
-              Company name
-            </label>
-            <input
-              id="companyName"
-              type="text"
-              autoComplete="organization"
-              maxLength={160}
-              placeholder="Your company"
-              aria-describedby="eden-question-description companyName-error"
-              aria-invalid={Boolean(errors.contact?.companyName)}
-              className={inputClasses}
-              {...register("contact.companyName")}
-            />
-            <ErrorMessage
-              id="companyName-error"
-              message={errors.contact?.companyName?.message}
-            />
+          <QuestionFrame number={questionNumber} title="Anything else for the discovery call?" description="Optional. Add bounded sales context only; do not paste messages, transcripts, credentials, or private operational data.">
+            <label htmlFor="anythingElse" className="sr-only">Additional discovery context</label>
+            <textarea id="anythingElse" rows={5} maxLength={1000} placeholder="For example: Start with follow-through before expanding into travel coordination." className={`${inputClasses} min-h-[160px] resize-y`} {...register("answers.anythingElse")} />
+            <CharacterCount current={anythingElse.length} maximum={1000} />
+            <ErrorMessage id="anythingElse-error" message={errors.answers?.anythingElse?.message} />
           </QuestionFrame>
         );
 
       case "consents":
         return (
-          <QuestionFrame
-            number={questionNumber}
-            title="How may we use what you have shared?"
-            description="Inquiry processing and marketing are separate choices. Marketing remains optional and off by default."
-          >
+          <QuestionFrame number={questionNumber} title="Would you like practical Eden updates too?" description="Your inquiry permission was recorded before the diagnostic. Marketing is separate, optional, and off by default.">
             <fieldset>
-              <legend className="sr-only">Contact permissions</legend>
+              <legend className="sr-only">Optional marketing permission</legend>
               <div className="space-y-3">
-                <label className="flex cursor-pointer items-start gap-4 rounded-xl border border-ghost/[0.1] bg-surface p-5 transition-colors hover:border-cyan/30">
-                  <input
-                    type="checkbox"
-                    className="mt-0.5 h-5 w-5 flex-none rounded border-ghost/20 bg-void-light accent-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40"
-                    aria-invalid={Boolean(errors.consent?.inquiry)}
-                    aria-describedby="inquiry-consent-copy inquiry-consent-error"
-                    {...register("consent.inquiry")}
-                  />
-                  <span>
-                    <span className="block font-sans text-sm font-medium text-ghost">
-                      Respond to this inquiry <span className="text-cyan">*</span>
-                    </span>
-                    <span
-                      id="inquiry-consent-copy"
-                      className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted"
-                    >
-                      I agree that Aygency may use my answers and contact details
-                      to assess and respond to my Eden inquiry.
-                    </span>
-                  </span>
-                </label>
-                <label className="flex cursor-pointer items-start gap-4 rounded-xl border border-ghost/[0.1] bg-surface p-5 transition-colors hover:border-cyan/30">
-                  <input
-                    type="checkbox"
-                    className="mt-0.5 h-5 w-5 flex-none rounded border-ghost/20 bg-void-light accent-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40"
-                    {...register("consent.marketing")}
-                  />
-                  <span>
-                    <span className="block font-sans text-sm font-medium text-ghost">
-                      Aygency newsletter and Eden updates
-                    </span>
-                    <span className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">
-                      Optional. Send me practical AI ideas, Eden updates, and
-                      occasional Aygency news. I can unsubscribe at any time.
-                    </span>
-                  </span>
-                </label>
+                <div className="rounded-xl border border-cyan/15 bg-cyan/[0.04] p-5">
+                  <p className="font-sans text-sm font-medium text-ghost">Blueprint inquiry permission granted</p>
+                  <p className="mt-1 font-sans text-xs leading-relaxed text-ghost-muted">
+                    This covers preparing your result and contacting you about this Eden inquiry. It does not subscribe you to marketing.
+                  </p>
+                </div>
+                <Controller
+                  name="consent.marketing"
+                  control={control}
+                  render={({ field }) => (
+                    <label className="flex cursor-pointer items-start gap-4 rounded-xl border border-ghost/[0.1] bg-surface p-5 transition-colors hover:border-cyan/30">
+                      <input
+                        ref={field.ref}
+                        name={field.name}
+                        type="checkbox"
+                        checked={field.value}
+                        onBlur={field.onBlur}
+                        onChange={(event) => field.onChange(event.target.checked)}
+                        className="mt-0.5 h-5 w-5 flex-none rounded border-ghost/20 bg-void-light accent-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40"
+                      />
+                      <span>
+                        <span className="block font-sans text-sm font-medium text-ghost">Aygency newsletter and Eden updates</span>
+                        <span className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">Optional. Send me practical AI ideas and occasional Eden updates.</span>
+                      </span>
+                    </label>
+                  )}
+                />
               </div>
-              <ErrorMessage
-                id="inquiry-consent-error"
-                message={errors.consent?.inquiry?.message}
-              />
             </fieldset>
+            <input type="hidden" {...register("botToken")} />
+            {!localPreview ? (
+              <div className="mt-6 rounded-xl border border-ghost/[0.08] bg-surface/60 p-4">
+                <EdenTurnstile
+                  action="eden_application_submit"
+                  siteKey={turnstileSiteKey}
+                  error={errors.botToken?.message}
+                  onToken={(token) => setValue("botToken", token, { shouldDirty: true, shouldValidate: true })}
+                />
+              </div>
+            ) : (
+              <p className="mt-6 rounded-xl border border-cyan/15 bg-cyan/[0.04] p-4 font-sans text-xs leading-relaxed text-ghost-muted">
+                Local preview mode: production security verification and CRM recording are intentionally inactive.
+              </p>
+            )}
             <div className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
               <label htmlFor="website">Leave this field empty</label>
-              <input
-                id="website"
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                {...register("website")}
-              />
+              <input id="website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
             </div>
           </QuestionFrame>
         );
     }
   };
 
-  const keyboardHint =
-    currentStep.id === "desiredOutcome" || currentStep.id === "currentChallenge"
-      ? "⌘ / Ctrl + Enter to continue"
-      : ["fullName", "workEmail", "companyName"].includes(currentStep.id)
-        ? "Enter to continue"
-        : "1–9 to choose · Enter to continue";
+  const textStepIds = ["currentFriction", "anythingElse"];
+  const inputStepIds = ["workEmail", "hoursLostWeekly", "contactDetails", "organisation"];
+  const keyboardHint = textStepIds.includes(currentStep.id)
+    ? "⌘ / Ctrl + Enter to continue"
+    : inputStepIds.includes(currentStep.id)
+      ? "Enter to continue"
+      : "1–9 to choose · Enter to continue";
 
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-void pt-24">
       <AnimatedGrid className="opacity-70" />
-      <GlowOrb
-        size={620}
-        opacity={0.08}
-        className="absolute -right-64 top-20"
-      />
+      <GlowOrb size={620} opacity={0.08} className="absolute -right-64 top-20" />
       <div className="pointer-events-none absolute inset-x-0 top-24 h-px bg-gradient-to-r from-transparent via-cyan/15 to-transparent" />
-
       <div className="relative z-10 mx-auto min-h-[calc(100svh-6rem)] max-w-7xl px-6 py-12 md:px-8 md:py-16 lg:px-12">
-        {phase === "intro" && (
-          <EdenIntroduction
-            isReturning={Boolean(startTimeRef.current)}
-            onStart={beginQuestionnaire}
-          />
-        )}
+        {phase === "intro" && <EdenIntroduction isReturning={Boolean(startTimeRef.current)} onStart={beginQuestionnaire} />}
 
         {phase === "questions" && (
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
             <aside className="hidden lg:block">
               <div className="sticky top-32 border-l border-ghost/[0.08] pl-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">
-                  Personalisation logic
-                </p>
-                <p className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">
-                  Role → workload → authority → value
-                </p>
-                <p className="mt-4 font-sans text-xs leading-relaxed text-ghost-dim">
-                  Every answer shapes Eden&rsquo;s first responsibility. Your
-                  original wording stays intact alongside the recommendation.
-                </p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">Personalisation logic</p>
+                <p className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">Pain → workload → fit → readiness</p>
+                <p className="mt-4 font-sans text-xs leading-relaxed text-ghost-dim">Every answer remains versioned alongside Eden&rsquo;s deterministic score and Blueprint.</p>
                 <div className="mt-8 space-y-3">
-                  {["Start", "Opportunity", "Constraints", "First release", "Contact"].map(
-                    (label, index) => {
-                      const boundary = [0, 1, 5, 9, 12][index];
-                      const active = stepIndex >= boundary;
-                      return (
-                        <div key={label} className="flex items-center gap-3">
-                          <span
-                            className={`h-1.5 w-1.5 rounded-full ${
-                              active ? "bg-cyan" : "bg-ghost-dim/40"
-                            }`}
-                          />
-                          <span
-                            className={`font-mono text-[10px] uppercase tracking-[0.12em] ${
-                              active ? "text-ghost-muted" : "text-ghost-dim/60"
-                            }`}
-                          >
-                            {label}
-                          </span>
-                        </div>
-                      );
-                    }
-                  )}
+                  {["Start", "Pain", "Workload", "Readiness", "Identity"].map((label, index) => {
+                    const boundary = [0, 1, 4, 10, 14][index];
+                    const active = stepIndex >= boundary;
+                    return (
+                      <div key={label} className="flex items-center gap-3">
+                        <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-cyan" : "bg-ghost-dim/40"}`} />
+                        <span className={`font-mono text-[10px] uppercase tracking-[0.12em] ${active ? "text-ghost-muted" : "text-ghost-dim/60"}`}>{label}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </aside>
 
             <div className="min-w-0">
               <EdenProgress current={stepIndex + 1} total={edenSteps.length} />
-              <form
-                ref={questionPanelRef}
-                className="mt-9 flex min-h-[560px] flex-col rounded-2xl border border-ghost/[0.08] bg-void-light/75 p-5 backdrop-blur-xl sm:p-8 lg:p-10"
-                onSubmit={(event) => event.preventDefault()}
-                noValidate
-              >
+              <form ref={questionPanelRef} className="mt-9 flex min-h-[560px] flex-col rounded-2xl border border-ghost/[0.08] bg-void-light/75 p-5 backdrop-blur-xl sm:p-8 lg:p-10" onSubmit={(event) => event.preventDefault()} noValidate>
                 <div className="flex-1">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={currentStep.id}
-                      initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  onAnimationComplete={() => {
-                    document
-                      .getElementById("eden-phase-heading")
-                      ?.focus({ preventScroll: true })
-                  }}
-                >
+                      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+                      transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
+                      onAnimationComplete={() => document.getElementById("eden-phase-heading")?.focus({ preventScroll: true })}
+                    >
                       {renderQuestion()}
                     </motion.div>
                   </AnimatePresence>
                 </div>
-
                 <div className="mt-10 flex flex-col-reverse gap-4 border-t border-ghost/[0.07] pt-6 sm:flex-row sm:items-center sm:justify-between">
-                  <button
-                    type="button"
-                    onClick={handleBack}
-                    disabled={isAdvancing}
-                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-cyan/20 px-5 py-3 font-heading text-xs font-semibold uppercase tracking-[0.13em] text-cyan transition-colors hover:border-cyan/40 hover:bg-cyan/[0.04] disabled:opacity-50"
-                  >
-                    <ArrowLeft size={15} aria-hidden="true" />
-                    Back
+                  <button type="button" onClick={handleBack} disabled={isAdvancing} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-cyan/20 px-5 py-3 font-heading text-xs font-semibold uppercase tracking-[0.13em] text-cyan transition-colors hover:border-cyan/40 hover:bg-cyan/[0.04] disabled:opacity-50">
+                    <ArrowLeft size={15} aria-hidden="true" /> Back
                   </button>
                   <div className="flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center">
-                    <p className="hidden font-mono text-[9px] uppercase tracking-[0.12em] text-ghost-dim xl:block">
-                      {keyboardHint}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => void handleNext()}
-                      disabled={isAdvancing}
-                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan px-7 py-3 font-heading text-xs font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] disabled:cursor-wait disabled:opacity-60"
-                    >
-                      {isAdvancing ? (
-                        <Loader2 size={15} className="animate-spin" aria-hidden="true" />
-                      ) : stepIndex === edenSteps.length - 1 ? (
-                        <Sparkles size={15} aria-hidden="true" />
-                      ) : null}
-                      {stepIndex === edenSteps.length - 1
-                        ? "Show me my Eden Blueprint"
-                        : "Continue"}
-                      {!isAdvancing && stepIndex < edenSteps.length - 1 && (
-                        <ArrowRight size={15} aria-hidden="true" />
-                      )}
+                    <p className="hidden font-mono text-[9px] uppercase tracking-[0.12em] text-ghost-dim xl:block">{keyboardHint}</p>
+                    <button type="button" onClick={() => void handleNext()} disabled={isAdvancing} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan px-7 py-3 font-heading text-xs font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] disabled:cursor-wait disabled:opacity-60">
+                      {isAdvancing ? <Loader2 size={15} className="animate-spin" aria-hidden="true" /> : stepIndex === edenSteps.length - 1 ? <Sparkles size={15} aria-hidden="true" /> : null}
+                      {stepIndex === edenSteps.length - 1 ? "Show me my Eden Blueprint" : "Continue"}
+                      {!isAdvancing && stepIndex < edenSteps.length - 1 && <ArrowRight size={15} aria-hidden="true" />}
                     </button>
                   </div>
                 </div>
@@ -1057,109 +1110,36 @@ export default function DesignYourEdenClient({
 
         {phase === "submitting" && (
           <div className="flex min-h-[calc(100svh-13rem)] items-center justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-xl rounded-2xl border border-ghost/[0.08] bg-void-light/80 p-8 text-center backdrop-blur-xl sm:p-12"
-              aria-live="polite"
-            >
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan/20 bg-cyan/[0.06] text-cyan">
-                <Loader2 size={24} className="animate-spin" aria-hidden="true" />
-              </div>
-              <h1
-                id="eden-phase-heading"
-                tabIndex={-1}
-                className="mt-6 font-heading text-2xl font-semibold uppercase text-white outline-none sm:text-3xl"
-              >
-                Recording your Eden inquiry
-              </h1>
-              <p className="mt-4 font-sans text-sm leading-relaxed text-ghost-muted">
-                We&rsquo;re safely handing your original answers to the CRM,
-                then preparing the Eden example you&rsquo;ll see next.
-              </p>
+            <motion.div initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-xl rounded-2xl border border-ghost/[0.08] bg-void-light/80 p-8 text-center backdrop-blur-xl sm:p-12" aria-live="polite">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan/20 bg-cyan/[0.06] text-cyan"><Loader2 size={24} className="animate-spin" aria-hidden="true" /></div>
+              <h1 id="eden-phase-heading" tabIndex={-1} className="mt-6 font-heading text-2xl font-semibold uppercase text-ghost outline-none sm:text-3xl">Recording your Eden application</h1>
+              <p className="mt-4 font-sans text-sm leading-relaxed text-ghost-muted">We&rsquo;re handing the exact validated application to the CRM before preparing the Blueprint you see next.</p>
             </motion.div>
           </div>
         )}
 
         {phase === "error" && (
           <div className="flex min-h-[calc(100svh-13rem)] items-center justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl rounded-2xl border border-error/20 bg-void-light/85 p-7 text-center backdrop-blur-xl sm:p-12"
-              role="alert"
-            >
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-error/20 bg-error/[0.06] text-error">
-                <RefreshCcw size={23} aria-hidden="true" />
-              </div>
-              <h1
-                id="eden-phase-heading"
-                tabIndex={-1}
-                className="mt-6 font-heading text-2xl font-semibold uppercase text-white outline-none sm:text-3xl"
-              >
-                CRM storage needs another attempt
-              </h1>
-              <p className="mx-auto mt-4 max-w-xl font-sans text-sm leading-relaxed text-ghost-muted">
-                {submissionError}
-              </p>
-              <p className="mx-auto mt-3 max-w-xl font-sans text-xs leading-relaxed text-ghost-dim">
-                Your answers remain available in this browser. You can retry,
-                review them, or preview your Blueprint before contacting us.
-              </p>
+            <motion.div initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl rounded-2xl border border-error/20 bg-void-light/85 p-7 text-center backdrop-blur-xl sm:p-12" role="alert">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-error/20 bg-error/[0.06] text-error"><RefreshCcw size={23} aria-hidden="true" /></div>
+              <h1 id="eden-phase-heading" tabIndex={-1} className="mt-6 font-heading text-2xl font-semibold uppercase text-ghost outline-none sm:text-3xl">CRM storage needs another attempt</h1>
+              <p className="mx-auto mt-4 max-w-xl font-sans text-sm leading-relaxed text-ghost-muted">{submissionError}</p>
+              <p className="mx-auto mt-3 max-w-xl font-sans text-xs leading-relaxed text-ghost-dim">Your answers remain in this browser. Retry preserves the exact snapshot; review creates a fresh timestamp and security proof.</p>
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (submissionSnapshot) void sendApplication(submissionSnapshot);
-                  }}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all hover:brightness-110 hover:shadow-glow-sm"
-                >
-                  <RefreshCcw size={15} aria-hidden="true" />
-                  Retry safely
-                </button>
-                <button
-                  type="button"
-                  onClick={handlePreviewBlueprint}
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-cyan/30 px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:bg-cyan/[0.05]"
-                >
-                  <Eye size={15} aria-hidden="true" />
-                  Preview my Blueprint
-                </button>
+                <button type="button" onClick={() => { if (submissionSnapshot) void sendApplication(submissionSnapshot); }} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all hover:brightness-110 hover:shadow-glow-sm"><RefreshCcw size={15} aria-hidden="true" />Retry safely</button>
+                <button type="button" onClick={handlePreviewBlueprint} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-cyan/30 px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:bg-cyan/[0.05]"><Eye size={15} aria-hidden="true" />Preview my Blueprint</button>
               </div>
               <div className="mt-5 flex flex-col items-center justify-center gap-3 text-center sm:flex-row sm:gap-6">
-                <button
-                  type="button"
-                  onClick={handleReviewAnswers}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 font-sans text-sm text-ghost-muted underline decoration-ghost-dim underline-offset-4 transition-colors hover:text-cyan"
-                >
-                  <FileText size={14} aria-hidden="true" />
-                  Review answers
-                </button>
-                <a
-                  href="mailto:build@aygency.ai?subject=Eden%20AI%20Personal%20Assistant%20enquiry"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 font-sans text-sm text-ghost-muted underline decoration-ghost-dim underline-offset-4 transition-colors hover:text-cyan"
-                >
-                  <Mail size={14} aria-hidden="true" />
-                  Email build@aygency.ai
-                </a>
+                <button type="button" onClick={handleReviewAnswers} className="inline-flex min-h-11 items-center justify-center gap-2 font-sans text-sm text-ghost-muted underline decoration-ghost-dim underline-offset-4 transition-colors hover:text-cyan"><FileText size={14} aria-hidden="true" />Review answers</button>
+                <a href="mailto:build@aygency.ai?subject=Eden%20AI%20Personal%20Assistant%20enquiry" className="inline-flex min-h-11 items-center justify-center gap-2 font-sans text-sm text-ghost-muted underline decoration-ghost-dim underline-offset-4 transition-colors hover:text-cyan"><Mail size={14} aria-hidden="true" />Email build@aygency.ai</a>
               </div>
             </motion.div>
           </div>
         )}
 
         {phase === "complete" && completedApplication && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <EdenBlueprint
-              application={completedApplication}
-              discoveryUrl={discoveryUrl}
-              recorded={submissionRecorded}
-            />
+          <motion.div initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}>
+            <EdenBlueprint application={completedApplication} discoveryUrl={discoveryUrl} recorded={submissionRecorded} />
           </motion.div>
         )}
       </div>

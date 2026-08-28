@@ -82,7 +82,12 @@ export function getHashedRequestIdentifier(request: Request) {
 }
 
 const consumeIdentifier = createFixedWindowRateLimiter();
+const consumeLeadCaptureIdentifier = createFixedWindowRateLimiter({ limit: 8 });
 
 export function consumeEdenApplicationRateLimit(request: Request) {
   return consumeIdentifier(getHashedRequestIdentifier(request));
+}
+
+export function consumeEdenLeadCaptureRateLimit(request: Request) {
+  return consumeLeadCaptureIdentifier(getHashedRequestIdentifier(request));
 }

@@ -18,6 +18,9 @@ export default defineConfig({
   },
   webServer: {
     command: "pnpm dev --hostname 127.0.0.1 --port 3100",
+    env: {
+      EDEN_APPLICATION_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
+    },
     url: "http://127.0.0.1:3100",
     reuseExistingServer: true,
     timeout: 120_000,

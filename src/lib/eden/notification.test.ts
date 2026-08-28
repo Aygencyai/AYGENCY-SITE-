@@ -32,14 +32,13 @@ describe("Eden application notification", () => {
     expect(result).toBe("sent");
     const [payload, options] = send.mock.calls[0];
     expect(options.idempotencyKey).toBe(
-      `eden-application-${application.submissionId}`
+      `eden-application-${application.eventId}`
     );
     expect(payload.text).toContain("authoritative application");
-    expect(payload.text).toContain(
-      "Decision priority: Getting the strongest fit and result"
-    );
-    expect(payload.text).not.toContain(application.answers.currentChallenge);
-    expect(payload.text).not.toContain(application.answers.desiredOutcome);
+    expect(payload.text).toContain("Budget readiness: Budget is approved");
+    expect(payload.text).not.toContain(application.answers.currentFriction);
+    expect(payload.text).not.toContain(application.answers.anythingElse);
+    expect(payload.text).not.toContain(application.botToken);
   });
 
   it("skips cleanly when notification configuration is absent", async () => {

@@ -4,7 +4,7 @@ AI agency website for [aygency.ai](https://aygency.ai) — we design, build, and
 
 ## Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 15.5.21 (App Router)
 - **Language:** TypeScript (strict mode)
 - **Styling:** Tailwind CSS + CSS custom properties
 - **Animations:** Framer Motion
@@ -35,8 +35,11 @@ Open [http://localhost:3000](http://localhost:3000).
 | `NEXT_PUBLIC_CAL_URL` | Cal.com scheduling link URL |
 | `RESEND_API_KEY` | Resend API key for contact form emails |
 | `CONTACT_EMAIL` | Recipient email for contact form |
-| `EDEN_CRM_ENDPOINT_URL` | Server-only HTTPS endpoint for the approved `EdenApplicationSubmitted.v1` CRM event |
-| `EDEN_CRM_API_TOKEN` | Server-only, write-only bearer token for the CRM endpoint; never use a database service-role credential |
+| `EDEN_LEAD_CAPTURE_INGEST_URL` | Server-only HTTPS URL for the approved `EdenLeadCaptured.v1` Edge Function |
+| `EDEN_LEAD_CAPTURE_SIGNING_SECRET` | Server-only lead-capture HMAC secret, at least 32 characters and separate from the application secret |
+| `EDEN_APPLICATION_INGEST_URL` | Server-only HTTPS URL for the approved `EdenApplicationSubmitted.v1` Edge Function |
+| `EDEN_APPLICATION_SIGNING_SECRET` | Server-only HMAC signing secret, at least 32 characters |
+| `EDEN_APPLICATION_TURNSTILE_SITE_KEY` | Public Cloudflare Turnstile widget site key passed through the server page |
 | `EDEN_ALLOWED_ORIGINS` | Optional comma-separated exact HTTPS origins for controlled previews |
 | `EDEN_NOTIFICATION_EMAIL` | Optional Resend notification recipient; falls back to `CONTACT_EMAIL` |
 | `EDEN_NOTIFICATION_FROM` | Optional verified sender for Eden application notifications |
@@ -46,10 +49,13 @@ CRM credentials must never use a `NEXT_PUBLIC_` prefix or be exposed to the
 browser. The CRM is the application system of record; Resend is notification
 only.
 
-Without `EDEN_CRM_ENDPOINT_URL` and `EDEN_CRM_API_TOKEN`, local development
-can show an explicitly labelled Eden Blueprint preview, but the submission is
-not stored. A real recorded result requires the approved CRM environment and a
-controlled end-to-end smoke submission.
+The first funnel screen sends work email, inquiry permission, and attribution to
+the private `EdenLeadCaptured.v1` boundary before revealing diagnostic
+questions. The completed diagnostic uses the same application ID with
+`EdenApplicationSubmitted.v1`. Without either sender's configuration, local
+development can show an explicitly labelled Eden Blueprint preview, but no
+capture or application is stored. A real recorded result requires the approved
+CRM environment and a controlled end-to-end smoke submission.
 
 ## Project Structure
 

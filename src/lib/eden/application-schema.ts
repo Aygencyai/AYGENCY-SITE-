@@ -1,86 +1,81 @@
 import { z } from "zod";
 
-export const primaryGoals = [
-  "revenue",
-  "customer_experience",
-  "operations",
-  "finance_admin",
-  "knowledge_people",
-  "leadership_visibility",
+export const primaryOutcomeOptions = [
+  "protect-time",
+  "close-open-loops",
+  "improve-follow-through",
+  "reduce-inbox-load",
+  "improve-meeting-readiness",
+  "protect-focus",
+  "coordinate-travel",
+  "manage-reservations",
+  "coordinate-household",
+] as const;
+
+export const openLoopVolumeOptions = [
+  "low",
+  "moderate",
+  "high",
+  "overwhelming",
+] as const;
+
+export const meetingLoadOptions = ["low", "moderate", "high", "extreme"] as const;
+export const emailLoadOptions = [
+  "low",
+  "moderate",
+  "high",
+  "overwhelming",
+] as const;
+export const calendarComplexityOptions = ["simple", "moderate", "complex"] as const;
+export const travelFrequencyOptions = [
+  "rare",
+  "monthly",
+  "weekly",
+  "multiple_weekly",
+] as const;
+export const currentToolOptions = [
+  "microsoft-365",
+  "google-workspace",
+  "todoist",
+  "notion",
+  "telegram",
+  "slack",
   "other",
 ] as const;
-
-export const workflowVolumes = [
-  "under_25_weekly",
-  "25_100_weekly",
-  "101_500_weekly",
-  "over_500_weekly",
-  "irregular",
-  "unknown",
+export const decisionAuthorityOptions = [
+  "sole_decision_maker",
+  "shared_decision",
+  "recommender",
 ] as const;
-
-export const teamSizes = [
-  "just_me",
-  "2_5",
-  "6_20",
-  "21_50",
-  "51_plus",
-  "unknown",
-] as const;
-
-export const systemOptions = [
-  "crm",
-  "email_support",
-  "spreadsheets",
-  "project_operations",
-  "finance_erp",
-  "knowledge_documents",
-  "data_warehouse",
-  "custom_internal",
-  "other",
-  "not_sure",
-] as const;
-
-export const dataReadinessOptions = [
-  "structured",
-  "fragmented",
-  "mostly_manual",
-  "starting_fresh",
-  "unknown",
-] as const;
-
-export const autonomyPreferences = [
-  "insights_only",
-  "draft_and_review",
-  "approval_gates",
-  "bounded_autonomy",
-  "need_guidance",
-] as const;
-
-export const successMeasureOptions = [
-  "time_saved",
-  "faster_response",
-  "quality_consistency",
-  "revenue_growth",
-  "cost_reduction",
-  "operational_visibility",
-  "customer_experience",
-  "capacity_to_scale",
-] as const;
-
-export const timelineOptions = [
+export const targetStartWindowOptions = [
+  "immediately",
   "within_30_days",
-  "this_quarter",
-  "next_6_months",
-  "this_year",
+  "within_90_days",
   "exploring",
 ] as const;
-
-export const buyingPriorities = [
-  "best_result",
-  "balanced_value",
-  "lowest_price",
+export const budgetReadinessOptions = [
+  "approved",
+  "range_known",
+  "needs_business_case",
+  "not_set",
 ] as const;
+export const organisationSizeBandOptions = [
+  "solo",
+  "2-10",
+  "11-50",
+  "51-200",
+  "201-1000",
+  "1001+",
+] as const;
+
+const UUID_V4_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const SAFE_UTM_PATTERN = /^[A-Za-z0-9][A-Za-z0-9 ._~+/-]{0,99}$/;
+
+const uuidV4Schema = z
+  .string()
+  .uuid("Submission reference must be a UUID.")
+  .refine((value) => UUID_V4_PATTERN.test(value), "Submission reference must be UUIDv4.");
 
 const requiredText = (field: string, minimum: number, maximum: number) =>
   z
@@ -88,48 +83,106 @@ const requiredText = (field: string, minimum: number, maximum: number) =>
     .max(maximum, `${field} must be ${maximum} characters or fewer.`)
     .refine(
       (value) => value.trim().length >= minimum,
-      `${field} must be at least ${minimum} characters.`
+      `${field} must be at least ${minimum} characters.`,
     );
+
+const optionalText = (field: string, maximum: number) =>
+  z.string().max(maximum, `${field} must be ${maximum} characters or fewer.`);
 
 const uniqueArray = <T extends string>(values: T[]) =>
   new Set(values).size === values.length;
 
+const optionalHttpUrl = (field: string) =>
+  optionalText(field, 2_048).refine((value) => {
+    if (!value.trim()) return true;
+    try {
+      const url = new URL(value);
+      return (
+        ["http:", "https:"].includes(url.protocol) &&
+        Boolean(url.hostname) &&
+        !url.username &&
+        !url.password
+      );
+    } catch {
+      return false;
+    }
+  }, `${field} must be a valid HTTP or HTTPS URL.`);
+
+const optionalLinkedInUrl = optionalText("LinkedIn URL", 2_048).refine((value) => {
+  if (!value.trim()) return true;
+  try {
+    const url = new URL(value);
+    return (
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      (url.hostname === "linkedin.com" || url.hostname.endsWith(".linkedin.com"))
+    );
+  } catch {
+    return false;
+  }
+}, "LinkedIn URL must be an HTTPS linkedin.com address.");
+
 const answersSchema = z
   .object({
-    primaryGoal: z.enum(primaryGoals),
-    desiredOutcome: requiredText("Desired outcome", 20, 800),
-    currentChallenge: requiredText("Current challenge", 20, 1_200),
-    workflowVolume: z.enum(workflowVolumes),
-    teamSize: z.enum(teamSizes),
-    systems: z
-      .array(z.enum(systemOptions))
-      .min(1, "Select at least one tool category.")
-      .max(6, "Select no more than six tool categories.")
-      .refine(uniqueArray, "Select each tool category only once.")
-      .refine(
-        (values) => !values.includes("not_sure") || values.length === 1,
-        '“Not sure yet” cannot be combined with another tool category.'
-      ),
-    dataReadiness: z.enum(dataReadinessOptions),
-    autonomyPreference: z.enum(autonomyPreferences),
-    successMeasures: z
-      .array(z.enum(successMeasureOptions))
-      .min(1, "Select at least one measure of success.")
-      .max(4, "Select no more than four measures of success.")
-      .refine(uniqueArray, "Select each success measure only once."),
-    timeline: z.enum(timelineOptions),
-    buyingPriority: z.enum(buyingPriorities),
+    primaryOutcomes: z
+      .array(z.enum(primaryOutcomeOptions))
+      .min(1, "Select at least one outcome.")
+      .max(9)
+      .refine(uniqueArray, "Select each outcome only once."),
+    currentFriction: requiredText("Current friction", 20, 1_500),
+    hoursLostWeekly: z
+      .number({ error: "Enter the hours lost in a typical week." })
+      .int("Use a whole number of hours.")
+      .min(0)
+      .max(168),
+    openLoopVolume: z.enum(openLoopVolumeOptions),
+    meetingLoad: z.enum(meetingLoadOptions),
+    emailLoad: z.enum(emailLoadOptions),
+    calendarComplexity: z.enum(calendarComplexityOptions),
+    travelFrequency: z.enum(travelFrequencyOptions),
+    currentTools: z
+      .array(z.enum(currentToolOptions))
+      .min(1, "Select at least one current tool.")
+      .max(7)
+      .refine(uniqueArray, "Select each tool only once."),
+    decisionAuthority: z.enum(decisionAuthorityOptions),
+    targetStartWindow: z.enum(targetStartWindowOptions),
+    budgetReadiness: z.enum(budgetReadinessOptions),
+    operatedServiceAck: z.boolean({ error: "Choose an operated-service answer." }),
+    dataBoundaryAck: z.boolean({ error: "Choose a safe-data answer." }),
+    anythingElse: optionalText("Additional context", 1_000),
   })
   .strict();
 
 const contactSchema = z
   .object({
-    fullName: requiredText("Name", 2, 100),
+    fullName: requiredText("Name", 2, 120),
     workEmail: z
       .string()
       .max(254, "Email address is too long.")
       .email("Enter a valid work email address."),
-    companyName: requiredText("Company name", 2, 160),
+    phone: optionalText("Phone number", 16).refine(
+      (value) => !value.trim() || /^\+[1-9]\d{6,14}$/.test(value.trim()),
+      "Use an international phone number such as +447700900123.",
+    ),
+    roleTitle: optionalText("Role title", 120),
+    linkedinUrl: optionalLinkedInUrl,
+  })
+  .strict();
+
+const organisationSchema = z
+  .object({
+    name: requiredText("Company name", 2, 200),
+    website: optionalHttpUrl("Company website"),
+    companyNumber: optionalText("Company number", 32).refine(
+      (value) => !value.trim() || /^[A-Za-z0-9][A-Za-z0-9 ./-]*$/.test(value.trim()),
+      "Company number contains an unsupported character.",
+    ),
+    countryCode: z
+      .string()
+      .regex(/^[A-Z]{2}$/, "Use a two-letter country code such as GB."),
+    sizeBand: z.enum(organisationSizeBandOptions),
   })
   .strict();
 
@@ -137,39 +190,37 @@ const consentSchema = z
   .object({
     inquiry: z
       .boolean()
-      .refine(
-        (granted) => granted,
-        "Consent is required so we can respond to your inquiry."
-      ),
+      .refine((granted) => granted, "Consent is required so we can respond."),
     marketing: z.boolean(),
   })
   .strict();
 
-const optionalAttributionValue = z.string().max(200).optional();
+const optionalAttributionValue = z.string().regex(SAFE_UTM_PATTERN).optional();
 
 const attributionSchema = z
   .object({
+    landingPath: z
+      .string()
+      .min(1)
+      .max(300)
+      .regex(/^\/(?!\/)[^\s?#]*$/, "Landing path must be an origin-relative path."),
+    referrerOrigin: z
+      .string()
+      .max(300)
+      .refine((value) => {
+        try {
+          const url = new URL(value);
+          return ["http:", "https:"].includes(url.protocol) && url.origin === value;
+        } catch {
+          return false;
+        }
+      }, "Referrer must contain only an HTTP or HTTPS origin.")
+      .optional(),
     utmSource: optionalAttributionValue,
     utmMedium: optionalAttributionValue,
     utmCampaign: optionalAttributionValue,
     utmTerm: optionalAttributionValue,
     utmContent: optionalAttributionValue,
-    gclid: optionalAttributionValue,
-    fbclid: optionalAttributionValue,
-    msclkid: optionalAttributionValue,
-    landingPath: z
-      .string()
-      .max(500)
-      .regex(/^\/(?!\/)/, "Landing path must be a relative site path."),
-    referrer: z
-      .string()
-      .max(500)
-      .url("Referrer must be a valid URL.")
-      .refine((value) => {
-        const protocol = new URL(value).protocol;
-        return protocol === "https:" || protocol === "http:";
-      }, "Referrer must use HTTP or HTTPS.")
-      .optional(),
   })
   .strict();
 
@@ -177,20 +228,28 @@ export const edenQuestionnaireSchema = z
   .object({
     answers: answersSchema,
     contact: contactSchema,
+    organisation: organisationSchema,
     consent: consentSchema,
+    botToken: z
+      .string()
+      .min(10, "Complete the security check before submitting.")
+      .max(2_048),
     website: z.string().max(200),
   })
   .strict();
 
 export const edenApplicationSchema = z
   .object({
-    submissionId: z.string().uuid("Submission ID must be a UUID."),
+    eventId: uuidV4Schema,
+    applicationId: uuidV4Schema,
     startedAt: z.string().datetime({ offset: true }),
     submittedAt: z.string().datetime({ offset: true }),
     answers: answersSchema,
     contact: contactSchema,
+    organisation: organisationSchema,
     consent: consentSchema,
     attribution: attributionSchema,
+    botToken: z.string().min(10).max(2_048),
     website: z.string().max(200),
   })
   .strict()
@@ -208,13 +267,16 @@ export type EdenApplication = z.infer<typeof edenApplicationSchema>;
 export type EdenQuestionnaireValues = z.infer<typeof edenQuestionnaireSchema>;
 export type EdenAnswers = EdenApplication["answers"];
 export type EdenContact = EdenApplication["contact"];
+export type EdenOrganisation = EdenApplication["organisation"];
 export type EdenAttribution = EdenApplication["attribution"];
-export type PrimaryGoal = EdenAnswers["primaryGoal"];
-export type WorkflowVolume = EdenAnswers["workflowVolume"];
-export type TeamSize = EdenAnswers["teamSize"];
-export type SystemOption = EdenAnswers["systems"][number];
-export type DataReadiness = EdenAnswers["dataReadiness"];
-export type AutonomyPreference = EdenAnswers["autonomyPreference"];
-export type SuccessMeasure = EdenAnswers["successMeasures"][number];
-export type Timeline = EdenAnswers["timeline"];
-export type BuyingPriority = EdenAnswers["buyingPriority"];
+export type PrimaryOutcome = EdenAnswers["primaryOutcomes"][number];
+export type OpenLoopVolume = EdenAnswers["openLoopVolume"];
+export type MeetingLoad = EdenAnswers["meetingLoad"];
+export type EmailLoad = EdenAnswers["emailLoad"];
+export type CalendarComplexity = EdenAnswers["calendarComplexity"];
+export type TravelFrequency = EdenAnswers["travelFrequency"];
+export type CurrentTool = EdenAnswers["currentTools"][number];
+export type DecisionAuthority = EdenAnswers["decisionAuthority"];
+export type TargetStartWindow = EdenAnswers["targetStartWindow"];
+export type BudgetReadiness = EdenAnswers["budgetReadiness"];
+export type OrganisationSizeBand = EdenApplication["organisation"]["sizeBand"];

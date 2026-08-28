@@ -6,9 +6,6 @@ const ATTRIBUTION_KEYS = {
   utm_campaign: "utmCampaign",
   utm_term: "utmTerm",
   utm_content: "utmContent",
-  gclid: "gclid",
-  fbclid: "fbclid",
-  msclkid: "msclkid",
 } as const;
 
 interface AttributionSource {
@@ -18,8 +15,10 @@ interface AttributionSource {
 
 function boundedValue(value: string | null) {
   if (!value) return undefined;
-  const bounded = value.trim().slice(0, 200);
-  return bounded || undefined;
+  const bounded = value.trim().slice(0, 100);
+  return /^[A-Za-z0-9][A-Za-z0-9 ._~+/-]{0,99}$/.test(bounded)
+    ? bounded
+    : undefined;
 }
 
 function safeReferrer(value: string | undefined) {
@@ -30,10 +29,7 @@ function safeReferrer(value: string | undefined) {
     if (referrer.protocol !== "https:" && referrer.protocol !== "http:") {
       return undefined;
     }
-    referrer.search = "";
-    referrer.hash = "";
-    const safeValue = referrer.toString();
-    return safeValue.length <= 500 ? safeValue : undefined;
+    return referrer.origin.length <= 300 ? referrer.origin : undefined;
   } catch {
     return undefined;
   }
@@ -48,7 +44,7 @@ export function captureEdenAttribution(
       ? new URL("https://aygency.ai/design-your-eden")
       : new URL(window.location.href));
   const attribution: EdenAttribution = {
-    landingPath: location.pathname.slice(0, 500) || "/design-your-eden",
+    landingPath: location.pathname.slice(0, 300) || "/design-your-eden",
   };
 
   for (const [queryKey, property] of Object.entries(ATTRIBUTION_KEYS)) {
@@ -60,7 +56,7 @@ export function captureEdenAttribution(
     source?.referrer ??
       (typeof document === "undefined" ? undefined : document.referrer)
   );
-  if (referrer) attribution.referrer = referrer;
+  if (referrer) attribution.referrerOrigin = referrer;
 
   return attribution;
 }

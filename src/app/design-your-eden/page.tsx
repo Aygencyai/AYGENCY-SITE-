@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { randomUUID } from "node:crypto";
 import PageTransition from "@/components/ui/PageTransition";
 import DesignYourEdenClient from "./DesignYourEdenClient";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Eden: Your AI Personal Assistant | Aygency",
@@ -32,10 +35,25 @@ function discoveryUrl() {
   }
 }
 
+function turnstileSiteKey() {
+  const configured = process.env.EDEN_APPLICATION_TURNSTILE_SITE_KEY?.trim() ?? "";
+  return /^[A-Za-z0-9_-]{3,128}$/.test(configured) ? configured : "";
+}
+
 export default function DesignYourEdenPage() {
+  const siteKey = turnstileSiteKey();
+  const localPreview = process.env.NODE_ENV !== "production" && !siteKey;
+
   return (
     <PageTransition>
-      <DesignYourEdenClient discoveryUrl={discoveryUrl()} />
+      <DesignYourEdenClient
+        applicationId={randomUUID()}
+        captureEventId={randomUUID()}
+        discoveryUrl={discoveryUrl()}
+        eventId={randomUUID()}
+        localPreview={localPreview}
+        turnstileSiteKey={siteKey}
+      />
     </PageTransition>
   );
 }

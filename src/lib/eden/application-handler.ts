@@ -14,7 +14,7 @@ import {
 const MAX_BODY_BYTES = 48 * 1_024;
 const MIN_COMPLETION_MS = 8_000;
 const MAX_CLOCK_SKEW_MS = 5 * 60 * 1_000;
-const MAX_RETRY_AGE_MS = 7 * 24 * 60 * 60 * 1_000;
+const MAX_RETRY_AGE_MS = 5 * 60 * 1_000;
 
 interface HandlerDependencies {
   deliver: (application: EdenApplication) => Promise<EdenCrmDelivery>;
@@ -202,7 +202,11 @@ export function createEdenApplicationsPostHandler(
 
     if (application.website.trim()) {
       return jsonResponse(
-        { success: true, submissionId: application.submissionId },
+        {
+          success: true,
+          applicationId: application.applicationId,
+          recorded: false,
+        },
         202,
         responseRateHeaders
       );
@@ -227,7 +231,7 @@ export function createEdenApplicationsPostHandler(
           await notify(application);
         } catch {
           console.error("[eden-applications] notification_failed", {
-            submissionId: application.submissionId,
+            eventId: application.eventId,
           });
         }
       }
@@ -235,8 +239,9 @@ export function createEdenApplicationsPostHandler(
       return jsonResponse(
         {
           success: true,
-          submissionId: application.submissionId,
+          applicationId: application.applicationId,
           duplicate: delivery.outcome === "duplicate",
+          recorded: true,
         },
         202,
         responseRateHeaders
@@ -247,19 +252,41 @@ export function createEdenApplicationsPostHandler(
       const localConfigurationMissing =
         failure === "configuration" && process.env.NODE_ENV !== "production";
       console.error("[eden-applications] crm_delivery_failed", {
-        submissionId: application.submissionId,
+        eventId: application.eventId,
         failure,
       });
+
+      if (failure === "conflict") {
+        return jsonResponse(
+          {
+            error:
+              "We could not confirm this retry safely. Please contact Aygency with the reference shown in your Blueprint.",
+            code: "crm_conflict",
+          },
+          409,
+          responseRateHeaders,
+        );
+      }
+
+      if (localConfigurationMissing) {
+        return jsonResponse(
+          {
+            success: true,
+            applicationId: application.applicationId,
+            duplicate: false,
+            recorded: false,
+            preview: true,
+          },
+          202,
+          responseRateHeaders,
+        );
+      }
 
       return jsonResponse(
         {
           error:
-            localConfigurationMissing
-              ? "CRM storage is pending for this local preview."
-              : "We could not safely record your application. Your answers are still here. Please try again.",
-          code: localConfigurationMissing
-            ? "crm_not_configured"
-            : "crm_unavailable",
+            "We could not safely record your application. Your answers are still here. Please try again.",
+          code: "crm_unavailable",
         },
         503,
         responseRateHeaders

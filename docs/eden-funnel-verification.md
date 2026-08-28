@@ -2,11 +2,81 @@
 
 Date: 25 August 2026
 
-Branch: `feat/eden-live-site`
+Current branch: `feat/eden-crm-sender`
 
-Isolated worktree: `/Users/elaygency/aygency/projects/aygency-site-eden-live`
+Current isolated worktree:
+`/Users/elaygency/aygency/AgencyInternal/orgo/eden-crm-sender-worktree`
 
-Live-site source: `origin/main@0b2ca36`
+Phase 8 base: `efccb184d30084e38ba44d33d1fc047c56be5459`
+
+Production status: **feature branch published for review; not merged or deployed; no live CRM, Vercel production, Supabase, or dashboard mutation**
+
+Review surface: draft [PR #2](https://github.com/Aygencyai/AYGENCY-SITE-/pull/2)
+against `main`, reported mergeable by GitHub. Both Vercel checks passed. The
+approved `aygency-site` integration produced Ready Preview deployment
+`dpl_FBKiw6LRkzeeJxFwSz6XjEFCjHQh`; no production target changed.
+
+One preview-inspection command from the unlinked worktree auto-created an empty
+separate Vercel project named `eden-crm-sender-worktree`. It was verified to
+contain no deployments, domains, or environment variables, deleted immediately,
+and its local link was moved to Trash. The approved project remained untouched.
+
+## Phase 8 CRM sender receipt
+
+The existing Eden experience now produces the locked
+`EdenApplicationSubmitted.v1` contract through a server-only HMAC boundary. It
+asks rather than infers every required fact, generates application/event UUIDs
+on the dynamic server page, keeps an immutable browser retry snapshot, and uses
+Cloudflare Turnstile with mandatory downstream verification. The obsolete
+bearer envelope and legacy Eden question model are no longer used by code.
+
+The sender and dashboard commit byte-identical synthetic fixtures with SHA-256
+`a5ee75bb0404407d84dac68e118c577e1951633cfee81b1683fbad5269730ccf`.
+The event produces application digest `f082cf25…`, deterministic score
+`87 / qualified`, qualification output digest `80748f17…`, and call-brief digest
+`ca6c578f…` in the independently implemented consumers.
+
+### Current automated verification
+
+| Command | Result | Coverage |
+|---|---|---|
+| `pnpm test` | PASS, 7 files / 39 tests; one local-integration file/test skipped by default | Browser/server schema, exact event mapping, HMAC headers, byte-stable retries, receipt/conflict classes, origin/timing/honeypot/rate behavior, attribution, notification ordering, and deterministic Blueprint mappings. |
+| Opt-in local integration test | PASS, 1/1 against the real disposable Edge Function | Accepted write, exact duplicate, changed-body collision, invalid bot proof, active/retired signing secrets, disabled ingress, and a concurrent changed-body race with exactly one winner. |
+| `pnpm exec tsc --noEmit` | PASS | Strict TypeScript after the Next 15 compiler update. |
+| `pnpm lint` | PASS, zero warnings/errors | ESLint CLI over application/tests/config; only generated `next-env.d.ts` is ignored. |
+| `pnpm build` | PASS | Next.js `15.5.21`; dynamic `/design-your-eden` and `/api/eden/applications` compile successfully. |
+| `pnpm test:e2e` | PASS, 11/11 | Exact outgoing facts, consent, Turnstile failure, frozen retry, honest collision, inert malicious text, critical Axe checks, navigation/contact/sitemap regression, and all four required widths. |
+| `pnpm audit --audit-level high` | PASS | Zero high or critical advisories; two moderate findings remain below the Phase 8 gate. |
+
+Playwright reported no critical accessibility violation in the intro, active
+form, or completed Blueprint. Horizontal-overflow assertions passed at 375,
+768, 1024, and 1440 pixels. The successful-contract journey captured no page or
+console error and proved applicant HTML-shaped text stayed inert.
+
+The dependency gate upgraded Next.js, `eslint-config-next`, Vitest, Drei, and
+patched transitives/overrides. The production build no longer emits the prior
+Drei encoding compatibility warning, and Browserslist data was refreshed. The
+entire test/build/browser matrix passed after the upgrade.
+
+Cross-system disposable Supabase/Edge/dashboard evidence is recorded in the
+dashboard Phase 8 plan and data-plane status. Production rollout remains behind
+the separate named-human Phase 9 gate.
+
+The final cross-repository run used the actual website adapter rather than a
+hand-authored HTTP client. It returned the expected accepted, duplicate,
+collision, bot-failure, retired-secret, and disabled-boundary results. The
+concurrent changed-body case produced exactly one accepted application and one
+conflict. Database inspection confirmed that Turnstile proof and transport
+material were absent, and the receiver logs contained only bounded IDs,
+outcomes, reason codes, duration, and event digest. The disposable functions,
+verifier, env file, and database were removed after verification.
+
+## Historical live-site integration record
+
+The sections below preserve the earlier live-site funnel history. Counts,
+transport names, and question semantics in that historical record are
+superseded by the Phase 8 receipt above and
+`docs/eden-crm-sender-integration.md`.
 
 ## Phase history
 
@@ -66,7 +136,7 @@ The buying-priority question and recorded Blueprint were additionally reviewed a
 
 ## Submission and data-safety evidence
 
-- Browser traffic terminates at the same-origin `/api/eden/applications` route. CRM endpoint and bearer-token configuration exist only in server modules and deployment documentation.
+- Browser traffic terminates at the same-origin `/api/eden/applications` route. CRM endpoint and HMAC signing configuration exist only in server modules and deployment documentation.
 - Before final submission, the work email and all other answers exist only in React Hook Form memory in that browser tab. Passing the email gate does not make a network request or create an abandoned-lead record.
 - After a completed, consented submission, the validated application is delivered server-to-server to the approved CRM endpoint as `EdenApplicationSubmitted.v1`. The CRM is the durable system of record; Resend is only a post-acceptance notification.
 - The CRM event is fixed to `EdenApplicationSubmitted.v1`; the validated answer object is preserved verbatim alongside derived Blueprint guidance.
@@ -83,8 +153,9 @@ The buying-priority question and recorded Blueprint were additionally reviewed a
 
 Configure these only in the server deployment environment:
 
-- `EDEN_CRM_ENDPOINT_URL`
-- `EDEN_CRM_API_TOKEN`
+- `EDEN_APPLICATION_INGEST_URL`
+- `EDEN_APPLICATION_SIGNING_SECRET`
+- `EDEN_APPLICATION_TURNSTILE_SITE_KEY`
 - `EDEN_ALLOWED_ORIGINS` when controlled preview origins are required
 - `EDEN_NOTIFICATION_EMAIL` or the existing `CONTACT_EMAIL`
 - `EDEN_NOTIFICATION_FROM` with a verified sender

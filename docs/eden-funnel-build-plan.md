@@ -1,6 +1,82 @@
 # Eden AI Personal Assistant Funnel — Build Plan
 
-## Outcome
+Status: **Phase 8 sender and disposable cross-system verification complete; feature branch published for review; not merged or deployed**
+
+## Current Phase 8 authority
+
+The locked CRM contract and current implementation supersede the historical
+question/transport iterations retained later in this file. Do not implement the
+old bearer-token envelope, click-ID attribution, build-budget fields, or inferred
+facts. Read in this order:
+
+1. dashboard `docs/contracts/eden-application-submitted-v1.md`;
+2. dashboard `docs/eden-crm-build-plan.md`, Phase 8;
+3. this repository's `docs/eden-crm-sender-integration.md`;
+4. `docs/eden-funnel-verification.md`.
+
+### Goal
+
+Make the existing `/design-your-eden` experience an exact, safe website-server
+producer for `EdenApplicationSubmitted.v1`, while preserving the live site,
+contact flow, design system, and honest local Blueprint.
+
+### Scope and exact deliverables
+
+- A dynamic server page generates UUIDv4 `eventId` and `applicationId` and passes
+  only the public Turnstile site key to the client.
+- The 18-screen questionnaire captures work email first, then every locked v1
+  answer, applicant/organisation facts, two explicit acknowledgements, separate
+  inquiry/marketing consent, and a Turnstile proof.
+- The browser freezes one immutable snapshot. Retry keeps identical UUIDs and
+  bytes; a new visit/application gets a new UUID even for the same email.
+- The same-origin API applies strict schema, 48 KiB, origin, timing, honeypot,
+  process-local rate, and safe-error controls.
+- The server adapter maps to the exact event catalogue, signs
+  `timestamp + "." + raw_body` with HMAC-SHA-256, and validates only the locked
+  `201`/`200` receipts. A changed-body `409` remains a conflict.
+- Cloudflare Turnstile uses explicit rendering and mandatory downstream
+  Siteverify. No database or service-role credential enters the site.
+- The local Blueprint uses controlled deterministic mappings and React text
+  rendering. It contains no private Eden/runtime data and does not claim CRM
+  storage after failure.
+- Unit/API and Playwright coverage prove contract facts, bot/origin/timing/rate
+  boundaries, exact retry, conflict, inert malicious text, accessibility,
+  navigation/contact regression, and 375/768/1024/1440 layouts.
+- `docs/eden-crm-sender-integration.md` and the verification record document
+  environment, disable, secret rotation, deployment prerequisites, and rollback.
+
+### Dependencies
+
+- Locked dashboard Phase 1 event/question/qualification/brief contract.
+- Approved sender repository `Aygencyai/AYGENCY-SITE-`.
+- Existing data-plane ingest function and local/disposable Supabase stack.
+- Cloudflare's documented public test key for automated browser tests only.
+
+### Verification and exit criteria
+
+```bash
+pnpm install --frozen-lockfile
+pnpm test
+pnpm exec tsc --noEmit
+pnpm lint
+pnpm build
+pnpm test:e2e
+pnpm audit --audit-level high
+git diff --check
+```
+
+The sender phase exits only when all commands pass, sender/dashboard fixture
+bytes share SHA-256
+`a5ee75bb0404407d84dac68e118c577e1951633cfee81b1683fbad5269730ccf`,
+the browser bundle contains no server-only variable/seeded-secret value, and the
+disposable HTTP chain proves `201`, exact retry `200`, changed retry `409`, bot
+failure, signature failure, and disabled ingress without partial writes.
+
+Rollback is independent: disable ingress at the receiver, restore the previous
+Vercel sender deployment, and preserve CRM/audit rows. No production deployment
+is authorised by this phase.
+
+## Historical outcome and design record (superseded where it conflicts above)
 
 Build a premium, mobile-first product page at `/design-your-eden` that introduces Eden as Aygency's AI personal assistant before helping a prospective client describe the first version worth building. A focused assessment follows the product story, presents one question per screen, branches its volume language to the selected opportunity, and finishes with a useful Eden Blueprint plus a discovery-call CTA.
 
@@ -62,8 +138,8 @@ Browser questionnaire
   -> POST /api/eden/applications (same origin, no privileged credential)
      -> strict server Zod validation + size/origin/bot/rate checks
      -> POST approved CRM ingest URL with EdenApplicationSubmitted.v1
-        + Authorization: Bearer <server-only token>
-        + Idempotency-Key: <submission UUID>
+        + X-Eden-Signature: v1=<server-only exact-byte HMAC>
+        + Idempotency-Key: <event UUID>
      <- accepted or duplicate receipt
      -> best-effort Resend notification (never the record)
   <- success reference -> Eden Blueprint
@@ -107,9 +183,20 @@ The server constructs the outbound envelope; the browser cannot choose event met
 }
 ```
 
-The destination is configured with `EDEN_CRM_ENDPOINT_URL`; `EDEN_CRM_API_TOKEN` is sent only from the server as a bearer token. Both are required at request time and are never imported by a client component. The endpoint receives `Idempotency-Key` and the event type as headers as well as the versioned event envelope. The server validates the frozen `submittedAt` against the start time and its own clock before mapping it to `occurredAt`; this keeps the full event identical across stateless retries with the same submission ID.
+The current destination is configured with `EDEN_APPLICATION_INGEST_URL` and
+signed only on the server with `EDEN_APPLICATION_SIGNING_SECRET`. Neither is
+imported by a client component. The endpoint receives the event UUID as both
+`Idempotency-Key` and `X-Eden-Event-Id`, plus the event type, timestamp, and
+exact-byte HMAC headers. The server validates the frozen `submittedAt` against
+the start time and its own clock; every bounded delivery retry reuses the same
+body, timestamp, UUIDs, and signature.
 
-HTTP 2xx is accepted. HTTP 409 is treated as an idempotent replay only because the approved endpoint owns uniqueness for the submitted key. Timeouts, network failures, 408, 425, 429, and 5xx receive a small bounded retry with the same body and key; other 4xx responses fail without retry. A final CRM failure returns `503` so the browser can safely retry its frozen snapshot. No direct database driver or privileged database credential will be added.
+Only a strict `201` new-write receipt or strict `200` exact-duplicate receipt is
+accepted. HTTP `409` is a changed-body idempotency conflict and never success.
+Timeouts, network failures, `408`, `425`, `429`, and `5xx` receive a small
+bounded retry with the same frozen request; other `4xx` responses fail without
+retry. A final CRM failure returns `503` so the browser can safely retry its
+snapshot. No direct database driver or privileged database credential is added.
 
 ## Validation and abuse controls
 
@@ -195,12 +282,13 @@ Exit gate:
 - `pnpm build` passes; and
 - commit any verification-only fixes as `fix: harden Eden funnel integration` (no empty commit when no changes are needed).
 
-## Deployment prerequisites
+## Historical deployment prerequisites (superseded by the current Phase 8 authority)
 
 Set these only in the server deployment environment:
 
-- `EDEN_CRM_ENDPOINT_URL` — exact HTTPS URL for the approved `EdenApplicationSubmitted.v1` ingest endpoint.
-- `EDEN_CRM_API_TOKEN` — write-only endpoint credential; never a database service-role credential.
+- `EDEN_APPLICATION_INGEST_URL` — exact HTTPS URL for the approved `EdenApplicationSubmitted.v1` ingest endpoint.
+- `EDEN_APPLICATION_SIGNING_SECRET` — server-only exact-byte HMAC secret; never a database service-role credential.
+- `EDEN_APPLICATION_TURNSTILE_SITE_KEY` — public Cloudflare widget site key passed through the server-rendered page.
 - `EDEN_ALLOWED_ORIGINS` — optional comma-separated exact HTTPS preview origins.
 - `EDEN_NOTIFICATION_EMAIL` — optional notification recipient; falls back to `CONTACT_EMAIL`.
 - `EDEN_NOTIFICATION_FROM` — optional verified Resend sender.
