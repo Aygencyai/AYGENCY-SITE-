@@ -29,22 +29,22 @@ import {
   type EdenQuestionnaireValues,
 } from "@/lib/eden/application-schema";
 import { captureEdenAttribution } from "@/lib/eden/attribution";
+import { countryOptionList } from "@/lib/eden/countries";
 import {
   edenLeadCaptureSchema,
   type EdenLeadCapture,
 } from "@/lib/eden/lead-capture-schema";
 import {
-  acknowledgementOptionList,
   budgetReadinessOptionList,
   calendarComplexityOptionList,
   currentToolOptionList,
-  decisionAuthorityOptionList,
   edenSteps,
   emailLoadOptionList,
   meetingLoadOptionList,
   openLoopVolumeOptionList,
   organisationSizeBandOptionList,
   primaryOutcomeOptionList,
+  serviceModelOptionList,
   targetStartWindowOptionList,
   travelFrequencyOptionList,
 } from "@/lib/eden/questionnaire";
@@ -328,6 +328,7 @@ export default function DesignYourEdenClient({
         website: "",
         companyNumber: "",
         countryCode: "",
+        sizeBand: "",
       },
       consent: { inquiry: false, marketing: false },
       botToken: "",
@@ -437,6 +438,9 @@ export default function DesignYourEdenClient({
       startedAt,
       submittedAt,
       ...questionnaire,
+      organisation: questionnaire.organisation.name.trim()
+        ? questionnaire.organisation
+        : null,
       attribution: attributionRef.current,
     });
     if (!parsed.success) {
@@ -556,7 +560,6 @@ export default function DesignYourEdenClient({
       | "answers.emailLoad"
       | "answers.calendarComplexity"
       | "answers.travelFrequency"
-      | "answers.decisionAuthority"
       | "answers.targetStartWindow"
       | "answers.budgetReadiness",
     legend: string,
@@ -837,12 +840,6 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
-      case "decisionAuthority":
-        return (
-          <QuestionFrame number={questionNumber} title="What is your role in the decision?" description="This records the buying path without treating an email address as identity or authority.">
-            {renderSingleChoice("answers.decisionAuthority", "Decision authority", decisionAuthorityOptionList)}
-          </QuestionFrame>
-        );
       case "targetStartWindow":
         return (
           <QuestionFrame number={questionNumber} title="When would you like Eden to start?" description="Choose the window that reflects your current readiness.">
@@ -852,51 +849,39 @@ export default function DesignYourEdenClient({
       case "budgetReadiness":
         return (
           <QuestionFrame number={questionNumber} title="What matters most when choosing your Eden?" description="We build around the strongest fit and result, then scope the investment with you. Choose the statement that best describes where the decision stands.">
-            {renderSingleChoice("answers.budgetReadiness", "Investment decision", budgetReadinessOptionList)}
+            {renderSingleChoice("answers.budgetReadiness", "What matters most", budgetReadinessOptionList)}
           </QuestionFrame>
         );
 
-      case "acknowledgements":
+      case "serviceModel":
         return (
-          <QuestionFrame number={questionNumber} title="Is Eden's managed model the right fit?" description="Both answers help us shape the discovery conversation. ‘Not yet’ is a valid answer and shows us what needs explaining first.">
-            <div className="space-y-8">
-              <div>
-                <p className="mb-3 font-sans text-sm font-medium text-ghost">Are you looking for an Eden that Aygency configures, operates, and improves with you?</p>
-                <Controller
-                  name="answers.operatedServiceAck"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <EdenOptionGroup
-                      name={field.name}
-                      legend="Aygency-operated service acknowledgement"
-                      options={acknowledgementOptionList}
-                      value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
-                      onChange={(value) => field.onChange(value === "yes")}
-                      onBlur={field.onBlur}
-                      error={fieldState.error?.message}
-                    />
-                  )}
+          <QuestionFrame
+            number={questionNumber}
+            title="How would you like your Eden to be managed?"
+            description="Choose the service model you would want us to shape around you. Both options give us a useful starting point for the conversation."
+          >
+            <Controller
+              name="answers.operatedServiceAck"
+              control={control}
+              render={({ field, fieldState }) => (
+                <EdenOptionGroup
+                  name={field.name}
+                  legend="Eden service model"
+                  options={serviceModelOptionList}
+                  value={
+                    field.value === undefined
+                      ? undefined
+                      : field.value
+                        ? "managed"
+                        : "self_maintained"
+                  }
+                  onChange={(value) => field.onChange(value === "managed")}
+                  onBlur={field.onBlur}
+                  error={fieldState.error?.message}
+                  columns={1}
                 />
-              </div>
-              <div>
-                <p className="mb-3 font-sans text-sm font-medium text-ghost">Are you comfortable keeping discovery high-level until we agree the secure connection and permission plan?</p>
-                <Controller
-                  name="answers.dataBoundaryAck"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <EdenOptionGroup
-                      name={field.name}
-                      legend="Safe application-data boundary acknowledgement"
-                      options={acknowledgementOptionList}
-                      value={field.value === undefined ? undefined : field.value ? "yes" : "no"}
-                      onChange={(value) => field.onChange(value === "yes")}
-                      onBlur={field.onBlur}
-                      error={fieldState.error?.message}
-                    />
-                  )}
-                />
-              </div>
-            </div>
+              )}
+            />
           </QuestionFrame>
         );
 
@@ -930,10 +915,14 @@ export default function DesignYourEdenClient({
 
       case "organisation":
         return (
-          <QuestionFrame number={questionNumber} title="Which organisation would Eden support?" description="These matching attributes help the CRM find possible records without making email the primary identity.">
+          <QuestionFrame
+            number={questionNumber}
+            title="If you want to share, which organisation would Eden support?"
+            description="Optional. Knowing the background Eden would work within helps us make her example more relevant. Leave every field blank to continue without sharing organisation details."
+          >
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label htmlFor="organisationName" className="mb-2 block font-sans text-xs text-ghost-muted">Organisation name <span className="text-cyan">*</span></label>
+                <label htmlFor="organisationName" className="mb-2 block font-sans text-xs text-ghost-muted">Organisation name</label>
                 <input id="organisationName" type="text" autoComplete="organization" maxLength={200} className={inputClasses} {...register("organisation.name")} />
                 <ErrorMessage id="organisationName-error" message={errors.organisation?.name?.message} />
               </div>
@@ -948,17 +937,29 @@ export default function DesignYourEdenClient({
                 <ErrorMessage id="companyNumber-error" message={errors.organisation?.companyNumber?.message} />
               </div>
               <div>
-                <label htmlFor="countryCode" className="mb-2 block font-sans text-xs text-ghost-muted">Two-letter country code <span className="text-cyan">*</span></label>
-                <input id="countryCode" type="text" autoComplete="country" minLength={2} maxLength={2} placeholder="GB" className={`${inputClasses} uppercase`} {...register("organisation.countryCode", { setValueAs: (value) => String(value).trim().toUpperCase() })} />
+                <label htmlFor="countryCode" className="mb-2 block font-sans text-xs text-ghost-muted">Country</label>
+                <select
+                  id="countryCode"
+                  autoComplete="country"
+                  className={inputClasses}
+                  {...register("organisation.countryCode")}
+                >
+                  <option value="">Choose a country</option>
+                  {countryOptionList.map((country) => (
+                    <option key={country.value} value={country.value}>
+                      {country.label}
+                    </option>
+                  ))}
+                </select>
                 <ErrorMessage id="countryCode-error" message={errors.organisation?.countryCode?.message} />
               </div>
               <div>
-                <p className="mb-2 font-sans text-xs text-ghost-muted">Organisation size <span className="text-cyan">*</span></p>
+                <p className="mb-2 font-sans text-xs text-ghost-muted">Organisation size</p>
                 <Controller
                   name="organisation.sizeBand"
                   control={control}
                   render={({ field, fieldState }) => (
-                    <EdenOptionGroup name={field.name} legend="Organisation size" options={organisationSizeBandOptionList} value={field.value} onChange={field.onChange} onBlur={field.onBlur} error={fieldState.error?.message} columns={1} />
+                    <EdenOptionGroup name={field.name} legend="Organisation size" options={organisationSizeBandOptionList} value={field.value || undefined} onChange={field.onChange} onBlur={field.onBlur} error={fieldState.error?.message} columns={1} />
                   )}
                 />
               </div>
@@ -968,7 +969,7 @@ export default function DesignYourEdenClient({
 
       case "anythingElse":
         return (
-          <QuestionFrame number={questionNumber} title="Anything else for the discovery call?" description="Optional. Add bounded sales context only; do not paste messages, transcripts, credentials, or private operational data.">
+          <QuestionFrame number={questionNumber} title="What else would make Eden genuinely useful to you?" description="Optional. Add any detail that would help us understand the personal-assistant experience you want.">
             <label htmlFor="anythingElse" className="sr-only">Additional discovery context</label>
             <textarea id="anythingElse" rows={5} maxLength={1000} placeholder="For example: Start with follow-through before expanding into travel coordination." className={`${inputClasses} min-h-[160px] resize-y`} {...register("answers.anythingElse")} />
             <CharacterCount current={anythingElse.length} maximum={1000} />

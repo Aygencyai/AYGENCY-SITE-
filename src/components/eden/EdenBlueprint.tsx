@@ -14,11 +14,11 @@ import {
   Workflow,
 } from "lucide-react";
 import type { EdenApplication } from "@/lib/eden/application-schema";
+import { countryName } from "@/lib/eden/countries";
 import {
   budgetReadinessLabels,
   calendarComplexityLabels,
   currentToolLabels,
-  decisionAuthorityLabels,
   emailLoadLabels,
   getEdenCapabilityPlan,
   getEdenExample,
@@ -73,7 +73,7 @@ export default function EdenBlueprint({
   const capabilityPlan = getEdenCapabilityPlan(application.answers);
   const example = getEdenExample(
     application.answers,
-    application.organisation.sizeBand,
+    application.organisation?.sizeBand ?? null,
   );
   const externalDiscoveryUrl = /^https:\/\//.test(discoveryUrl);
 
@@ -114,7 +114,7 @@ export default function EdenBlueprint({
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
             {recorded
-              ? "Your answers point to a clear first role for Eden, the responsibilities she should own, and the decisions that should stay with you."
+              ? "Your answers point to a clear first role for Eden, the responsibilities she could take on, and the review points that keep you in control."
               : "This working preview is based on answers held in this browser. It shows the shape of your Eden, but CRM storage is still pending."}
           </p>
         </div>
@@ -287,7 +287,7 @@ export default function EdenBlueprint({
             ["Weekly rhythm", example.context.volume],
             ["People involved", example.context.people],
             ["Tool context", example.context.systems],
-            ["Starting authority", example.context.authority],
+            ["Service model", example.context.serviceModel],
           ].map(([label, value]) => (
             <div
               key={label}
@@ -316,9 +316,9 @@ export default function EdenBlueprint({
               description: example.coordinationDescription,
             },
             {
-              label: "03 // You decide",
-              title: example.context.authority,
-              description: example.authorityDescription,
+              label: "03 // You stay in control",
+              title: example.controlTitle,
+              description: example.controlDescription,
             },
           ].map((step) => (
             <li key={step.label} className="bg-surface/90 p-6 sm:p-7">
@@ -391,28 +391,18 @@ export default function EdenBlueprint({
               .join(", ")}
           />
           <AnswerRow
-            label="Decision authority"
-            value={decisionAuthorityLabels[application.answers.decisionAuthority]}
-          />
-          <AnswerRow
             label="Target start"
             value={targetStartWindowLabels[application.answers.targetStartWindow]}
           />
           <AnswerRow
-            label="Investment decision"
+            label="What matters most"
             value={budgetReadinessLabels[application.answers.budgetReadiness]}
           />
           <AnswerRow
-            label="Operated by Aygency"
-            value={application.answers.operatedServiceAck ? "Acknowledged" : "Not yet acknowledged"}
-          />
-          <AnswerRow
-            label="Safe data boundary"
-            value={application.answers.dataBoundaryAck ? "Acknowledged" : "Not yet acknowledged"}
-          />
-          <AnswerRow
-            label="Organisation size"
-            value={organisationSizeBandLabels[application.organisation.sizeBand]}
+            label="Service model"
+            value={application.answers.operatedServiceAck
+              ? "Aygency configures, operates and improves Eden with me"
+              : "I want to buy Eden and maintain her myself"}
           />
           <AnswerRow label="Name" value={application.contact.fullName} />
           <AnswerRow label="Work email" value={application.contact.workEmail} />
@@ -425,14 +415,27 @@ export default function EdenBlueprint({
           {application.contact.linkedinUrl.trim() && (
             <AnswerRow label="LinkedIn" value={application.contact.linkedinUrl} />
           )}
-          <AnswerRow label="Organisation" value={application.organisation.name} />
-          {application.organisation.website.trim() && (
-            <AnswerRow label="Organisation website" value={application.organisation.website} />
+          {application.organisation ? (
+            <>
+              <AnswerRow label="Organisation" value={application.organisation.name} />
+              <AnswerRow
+                label="Organisation size"
+                value={organisationSizeBandLabels[application.organisation.sizeBand]}
+              />
+              {application.organisation.website.trim() && (
+                <AnswerRow label="Organisation website" value={application.organisation.website} />
+              )}
+              {application.organisation.companyNumber.trim() && (
+                <AnswerRow label="Company number" value={application.organisation.companyNumber} />
+              )}
+              <AnswerRow
+                label="Country"
+                value={countryName(application.organisation.countryCode)}
+              />
+            </>
+          ) : (
+            <AnswerRow label="Organisation" value="Not shared" />
           )}
-          {application.organisation.companyNumber.trim() && (
-            <AnswerRow label="Company number" value={application.organisation.companyNumber} />
-          )}
-          <AnswerRow label="Country" value={application.organisation.countryCode} />
           <AnswerRow
             label="Marketing updates"
             value={application.consent.marketing ? "Granted" : "Not granted"}

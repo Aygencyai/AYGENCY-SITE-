@@ -43,11 +43,9 @@ export function createEdenApplicationFixture(): EdenApplication {
       calendarComplexity: "complex",
       travelFrequency: "monthly",
       currentTools: ["microsoft-365", "todoist", "notion", "telegram"],
-      decisionAuthority: "sole_decision_maker",
       targetStartWindow: "within_30_days",
       budgetReadiness: "approved",
       operatedServiceAck: true,
-      dataBoundaryAck: true,
       anythingElse:
         "A measured first release should focus on follow-through before expanding scope.",
     },

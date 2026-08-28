@@ -12,7 +12,7 @@ describe("Eden Blueprint example", () => {
     const application = createEdenApplicationFixture();
     const example = getEdenExample(
       application.answers,
-      application.organisation.sizeBand,
+      application.organisation!.sizeBand,
     );
 
     expect(example).toMatchObject({
@@ -20,11 +20,11 @@ describe("Eden Blueprint example", () => {
         volume: "High",
         people: "11–50 people",
         systems: "Microsoft 365, Todoist, Notion, Telegram",
-        authority: "I can decide",
+        serviceModel: "Managed with Aygency",
       },
     });
     expect(example.coordinationDescription).toContain("approved context");
-    expect(example.authorityDescription).toContain("approval gates");
+    expect(example.controlDescription).toContain("review points");
   });
 
   it("recommends mobility only when the submitted outcomes include travel", () => {
@@ -42,12 +42,12 @@ describe("Eden Blueprint example", () => {
     expect(executive.title).not.toContain("travel");
   });
 
-  it("keeps false acknowledgements visible as discovery work", () => {
+  it("keeps the customer-maintained service preference visible", () => {
     const application = createEdenApplicationFixture();
     application.answers.operatedServiceAck = false;
 
     expect(getEdenOperatingMode(application.answers)).toMatchObject({
-      title: "Boundary discovery first",
+      title: "Built for you to maintain",
     });
   });
 
@@ -73,17 +73,25 @@ describe("Eden Blueprint example", () => {
     application.answers.primaryOutcomes = ["reduce-inbox-load"];
     const inbox = getEdenExample(
       application.answers,
-      application.organisation.sizeBand,
+      application.organisation!.sizeBand,
     );
 
     application.answers.primaryOutcomes = ["coordinate-travel"];
     const travel = getEdenExample(
       application.answers,
-      application.organisation.sizeBand,
+      application.organisation!.sizeBand,
     );
 
     expect(inbox.arrivalTitle).toContain("inbox");
     expect(travel.arrivalTitle).toContain("travel");
     expect(inbox.arrivalTitle).not.toBe(travel.arrivalTitle);
+  });
+
+  it("builds a personal example when organisation context is not shared", () => {
+    const application = createEdenApplicationFixture();
+
+    expect(getEdenExample(application.answers, null).context.people).toBe(
+      "Personal use",
+    );
   });
 });

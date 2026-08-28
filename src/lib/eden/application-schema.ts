@@ -42,11 +42,6 @@ export const currentToolOptions = [
   "slack",
   "other",
 ] as const;
-export const decisionAuthorityOptions = [
-  "sole_decision_maker",
-  "shared_decision",
-  "recommender",
-] as const;
 export const targetStartWindowOptions = [
   "immediately",
   "within_30_days",
@@ -146,11 +141,9 @@ const answersSchema = z
       .min(1, "Select at least one current tool.")
       .max(7)
       .refine(uniqueArray, "Select each tool only once."),
-    decisionAuthority: z.enum(decisionAuthorityOptions),
     targetStartWindow: z.enum(targetStartWindowOptions),
     budgetReadiness: z.enum(budgetReadinessOptions),
-    operatedServiceAck: z.boolean({ error: "Choose an operated-service answer." }),
-    dataBoundaryAck: z.boolean({ error: "Choose a safe-data answer." }),
+    operatedServiceAck: z.boolean({ error: "Choose how you would like Eden to be managed." }),
     anythingElse: optionalText("Additional context", 1_000),
   })
   .strict();
@@ -171,7 +164,7 @@ const contactSchema = z
   })
   .strict();
 
-const organisationSchema = z
+const applicationOrganisationSchema = z
   .object({
     name: requiredText("Company name", 2, 200),
     website: optionalHttpUrl("Company website"),
@@ -181,10 +174,57 @@ const organisationSchema = z
     ),
     countryCode: z
       .string()
-      .regex(/^[A-Z]{2}$/, "Use a two-letter country code such as GB."),
+      .regex(/^[A-Z]{2}$/, "Choose a country."),
     sizeBand: z.enum(organisationSizeBandOptions),
   })
   .strict();
+
+const questionnaireOrganisationSchema = z
+  .object({
+    name: optionalText("Organisation name", 200),
+    website: optionalHttpUrl("Organisation website"),
+    companyNumber: optionalText("Company number", 32).refine(
+      (value) => !value.trim() || /^[A-Za-z0-9][A-Za-z0-9 ./-]*$/.test(value.trim()),
+      "Company number contains an unsupported character.",
+    ),
+    countryCode: z.union([
+      z.literal(""),
+      z.string().regex(/^[A-Z]{2}$/, "Choose a country."),
+    ]),
+    sizeBand: z.union([z.literal(""), z.enum(organisationSizeBandOptions)]),
+  })
+  .strict()
+  .superRefine((organisation, context) => {
+    const shared = [
+      organisation.name,
+      organisation.website,
+      organisation.companyNumber,
+      organisation.countryCode,
+      organisation.sizeBand,
+    ].some((value) => value.trim().length > 0);
+    if (!shared) return;
+    if (organisation.name.trim().length < 2) {
+      context.addIssue({
+        code: "custom",
+        path: ["name"],
+        message: "Add the organisation name, or leave this optional section blank.",
+      });
+    }
+    if (!organisation.countryCode) {
+      context.addIssue({
+        code: "custom",
+        path: ["countryCode"],
+        message: "Choose the organisation country, or leave this section blank.",
+      });
+    }
+    if (!organisation.sizeBand) {
+      context.addIssue({
+        code: "custom",
+        path: ["sizeBand"],
+        message: "Choose the organisation size, or leave this section blank.",
+      });
+    }
+  });
 
 const consentSchema = z
   .object({
@@ -228,7 +268,7 @@ export const edenQuestionnaireSchema = z
   .object({
     answers: answersSchema,
     contact: contactSchema,
-    organisation: organisationSchema,
+    organisation: questionnaireOrganisationSchema,
     consent: consentSchema,
     botToken: z
       .string()
@@ -246,7 +286,7 @@ export const edenApplicationSchema = z
     submittedAt: z.string().datetime({ offset: true }),
     answers: answersSchema,
     contact: contactSchema,
-    organisation: organisationSchema,
+    organisation: applicationOrganisationSchema.nullable(),
     consent: consentSchema,
     attribution: attributionSchema,
     botToken: z.string().min(10).max(2_048),
@@ -276,7 +316,6 @@ export type EmailLoad = EdenAnswers["emailLoad"];
 export type CalendarComplexity = EdenAnswers["calendarComplexity"];
 export type TravelFrequency = EdenAnswers["travelFrequency"];
 export type CurrentTool = EdenAnswers["currentTools"][number];
-export type DecisionAuthority = EdenAnswers["decisionAuthority"];
 export type TargetStartWindow = EdenAnswers["targetStartWindow"];
 export type BudgetReadiness = EdenAnswers["budgetReadiness"];
-export type OrganisationSizeBand = EdenApplication["organisation"]["sizeBand"];
+export type OrganisationSizeBand = (typeof organisationSizeBandOptions)[number];

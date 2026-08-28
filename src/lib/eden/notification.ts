@@ -58,7 +58,11 @@ export async function sendEdenApplicationNotification(
         "",
         `Reference: ${application.applicationId}`,
         `Applicant: ${singleLine(application.contact.fullName)}`,
-        `Company: ${singleLine(application.organisation.name)}`,
+        `Organisation: ${
+          application.organisation
+            ? singleLine(application.organisation.name)
+            : "Not shared"
+        }`,
         `Primary outcomes: ${application.answers.primaryOutcomes
           .map((outcome) => primaryOutcomeLabels[outcome])
           .join(", ")}`,

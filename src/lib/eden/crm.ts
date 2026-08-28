@@ -1,8 +1,8 @@
 import { createHmac } from "node:crypto";
-import type { EdenApplication } from "./application-schema";
+import type { EdenApplication, OrganisationSizeBand } from "./application-schema";
 
 export const EDEN_CRM_EVENT_TYPE = "EdenApplicationSubmitted.v1" as const;
-export const EDEN_CRM_FORM_VERSION = "eden-application.v1" as const;
+export const EDEN_CRM_FORM_VERSION = "eden-application.v2" as const;
 export const EDEN_CRM_ACTION = "eden_application_submit" as const;
 const MAX_BODY_BYTES = 65_536;
 const MAX_ATTEMPTS = 3;
@@ -47,12 +47,12 @@ export interface EdenApplicationSubmittedEvent {
       website: string | null;
       company_number: string | null;
       country_code: string;
-      size_band: EdenApplication["organisation"]["sizeBand"];
-    };
+      size_band: OrganisationSizeBand;
+    } | null;
     answers: EdenContractAnswer[];
     consents: Array<{
       purpose: "application_processing" | "sales_follow_up" | "marketing";
-      status: "granted";
+      status: "granted" | "denied";
       policy_version: "eden-application-privacy.v1";
       captured_at: string;
     }>;
@@ -157,18 +157,12 @@ export function createEdenCrmEvent(
     answer("eden-travel-frequency", "single_select", application.answers.travelFrequency),
     answer("eden-current-tools", "multi_select", [...application.answers.currentTools]),
     answer(
-      "eden-decision-authority",
-      "single_select",
-      application.answers.decisionAuthority,
-    ),
-    answer(
       "eden-target-start-window",
       "single_select",
       application.answers.targetStartWindow,
     ),
     answer("eden-budget-readiness", "single_select", application.answers.budgetReadiness),
     answer("eden-operated-service-ack", "boolean", application.answers.operatedServiceAck),
-    answer("eden-data-boundary-ack", "boolean", application.answers.dataBoundaryAck),
   ];
   if (application.answers.anythingElse.trim()) {
     answers.push(
@@ -191,14 +185,12 @@ export function createEdenCrmEvent(
       captured_at: capturedAt,
     },
   ];
-  if (application.consent.marketing) {
-    consents.push({
-      purpose: "marketing",
-      status: "granted",
-      policy_version: "eden-application-privacy.v1",
-      captured_at: capturedAt,
-    });
-  }
+  consents.push({
+    purpose: "marketing",
+    status: application.consent.marketing ? "granted" : "denied",
+    policy_version: "eden-application-privacy.v1",
+    captured_at: capturedAt,
+  });
 
   return {
     event: EDEN_CRM_EVENT_TYPE,
@@ -220,13 +212,15 @@ export function createEdenCrmEvent(
         role_title: nullableTrimmed(application.contact.roleTitle),
         linkedin_url: nullableTrimmed(application.contact.linkedinUrl),
       },
-      organisation: {
-        name: application.organisation.name,
-        website: nullableTrimmed(application.organisation.website),
-        company_number: nullableTrimmed(application.organisation.companyNumber),
-        country_code: application.organisation.countryCode,
-        size_band: application.organisation.sizeBand,
-      },
+      organisation: application.organisation
+        ? {
+          name: application.organisation.name,
+          website: nullableTrimmed(application.organisation.website),
+          company_number: nullableTrimmed(application.organisation.companyNumber),
+          country_code: application.organisation.countryCode,
+          size_band: application.organisation.sizeBand,
+        }
+        : null,
       answers,
       consents,
       attribution: {

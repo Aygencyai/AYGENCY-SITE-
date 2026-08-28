@@ -3,7 +3,6 @@ import type {
   BudgetReadiness,
   CalendarComplexity,
   CurrentTool,
-  DecisionAuthority,
   EdenAnswers,
   EdenQuestionnaireValues,
   EmailLoad,
@@ -32,13 +31,9 @@ export const edenSteps = [
   { id: "calendarComplexity", fields: ["answers.calendarComplexity"] },
   { id: "travelFrequency", fields: ["answers.travelFrequency"] },
   { id: "currentTools", fields: ["answers.currentTools"] },
-  { id: "decisionAuthority", fields: ["answers.decisionAuthority"] },
   { id: "targetStartWindow", fields: ["answers.targetStartWindow"] },
   { id: "budgetReadiness", fields: ["answers.budgetReadiness"] },
-  {
-    id: "acknowledgements",
-    fields: ["answers.operatedServiceAck", "answers.dataBoundaryAck"],
-  },
+  { id: "serviceModel", fields: ["answers.operatedServiceAck"] },
   {
     id: "contactDetails",
     fields: [
@@ -138,14 +133,6 @@ export const currentToolOptionList: ReadonlyArray<EdenOption<CurrentTool>> = [
   { value: "other", label: "Another tool", description: "We will confirm the provider during discovery." },
 ];
 
-export const decisionAuthorityOptionList: ReadonlyArray<
-  EdenOption<DecisionAuthority>
-> = [
-  { value: "sole_decision_maker", label: "I can decide" },
-  { value: "shared_decision", label: "The decision is shared" },
-  { value: "recommender", label: "I am recommending Eden" },
-];
-
 export const targetStartWindowOptionList: ReadonlyArray<
   EdenOption<TargetStartWindow>
 > = [
@@ -176,9 +163,19 @@ export const budgetReadinessOptionList: ReadonlyArray<
   },
 ];
 
-export const acknowledgementOptionList: ReadonlyArray<EdenOption<"yes" | "no">> = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "Not yet" },
+export const serviceModelOptionList: ReadonlyArray<
+  EdenOption<"managed" | "self_maintained">
+> = [
+  {
+    value: "managed",
+    label: "Aygency configures, operates and improves Eden with me",
+    description: "A managed personal-assistant service with ongoing support and improvement.",
+  },
+  {
+    value: "self_maintained",
+    label: "I want to buy Eden and maintain her myself",
+    description: "A customer-maintained model to discuss and scope with Aygency.",
+  },
 ];
 
 export const organisationSizeBandOptionList: ReadonlyArray<
@@ -203,7 +200,6 @@ export const emailLoadLabels = labelsFrom(emailLoadOptionList);
 export const calendarComplexityLabels = labelsFrom(calendarComplexityOptionList);
 export const travelFrequencyLabels = labelsFrom(travelFrequencyOptionList);
 export const currentToolLabels = labelsFrom(currentToolOptionList);
-export const decisionAuthorityLabels = labelsFrom(decisionAuthorityOptionList);
 export const targetStartWindowLabels = labelsFrom(targetStartWindowOptionList);
 export const budgetReadinessLabels = labelsFrom(budgetReadinessOptionList);
 export const organisationSizeBandLabels = labelsFrom(organisationSizeBandOptionList);
@@ -377,23 +373,23 @@ export function getEdenBlueprintRecommendation(
 }
 
 export function getEdenOperatingMode(answers: EdenAnswers) {
-  if (!answers.operatedServiceAck || !answers.dataBoundaryAck) {
+  if (!answers.operatedServiceAck) {
     return {
-      title: "Boundary discovery first",
+      title: "Built for you to maintain",
       description:
-        "Before onboarding, we will resolve the operated-service and safe-data boundaries that are not yet accepted.",
+        "Aygency can configure your starting Eden, then scope the ownership, support, and improvement responsibilities you want to keep in-house.",
     };
   }
   return {
-    title: "Aygency-operated, review-first",
+    title: "Managed and improved with you",
     description:
-      "Aygency operates Eden after launch. We begin with bounded access, visible activity, and explicit escalation points.",
+      "Aygency configures, operates, and improves Eden with you, with visible review points and agreed responsibilities.",
   };
 }
 
 export function getEdenExample(
   answers: EdenAnswers,
-  sizeBand: OrganisationSizeBand,
+  sizeBand: OrganisationSizeBand | null,
 ) {
   const firstCapability = getEdenCapabilityPlan(answers)[0];
   const scenarios: Record<EdenCapabilityId, EdenExampleScenario> = {
@@ -452,13 +448,15 @@ export function getEdenExample(
     ...scenario,
     context: {
       volume: openLoopVolumeLabels[answers.openLoopVolume],
-      people: organisationSizeBandLabels[sizeBand],
+      people: sizeBand ? organisationSizeBandLabels[sizeBand] : "Personal use",
       systems: answers.currentTools.map((tool) => currentToolLabels[tool]).join(", "),
-      authority: decisionAuthorityLabels[answers.decisionAuthority],
+      serviceModel: answers.operatedServiceAck
+        ? "Managed with Aygency"
+        : "Maintained by you",
     },
-    authorityDescription:
-      answers.decisionAuthority === "sole_decision_maker"
-        ? "You set the initial authority and approval gates during discovery."
-        : "The discovery call identifies the decision owner and records the approval path before onboarding.",
+    controlTitle: "Your review points stay visible",
+    controlDescription: answers.operatedServiceAck
+      ? "You agree Eden's responsibilities and review points with Aygency before she begins operating."
+      : "You agree the initial responsibilities and receive a maintainable starting scope to operate yourself.",
   };
 }

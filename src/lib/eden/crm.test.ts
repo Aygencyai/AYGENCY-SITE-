@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import validGoldenPayload from "../../../tests/fixtures/eden-application-submitted-v1/valid-new.json";
+import validGoldenPayload from "../../../tests/fixtures/eden-application-submitted-v2/valid-new.json";
 import {
   createEdenCrmEvent,
   deliverEdenApplication,
@@ -35,7 +35,7 @@ afterEach(() => {
 });
 
 describe("Eden CRM delivery", () => {
-  it("constructs the byte-shared EdenApplicationSubmitted.v1 golden", () => {
+  it("constructs the byte-shared EdenApplicationSubmitted.v1 V2-form golden", () => {
     const event = createEdenCrmEvent(createEdenApplicationFixture(), {
       occurredAt: "2026-08-24T10:01:00.000Z",
       environment: "test",
@@ -47,13 +47,13 @@ describe("Eden CRM delivery", () => {
     expect(JSON.stringify(event)).not.toContain("website\":\"\"");
   });
 
-  it("maps blank optional values to null and records marketing only when granted", () => {
+  it("maps blank optional values to null and records marketing separately", () => {
     const application = createEdenApplicationFixture();
     application.contact.phone = "";
     application.contact.roleTitle = "";
     application.contact.linkedinUrl = "";
-    application.organisation.website = "";
-    application.organisation.companyNumber = "";
+    application.organisation!.website = "";
+    application.organisation!.companyNumber = "";
     application.consent.marketing = true;
 
     const event = createEdenCrmEvent(application);
@@ -70,6 +70,27 @@ describe("Eden CRM delivery", () => {
     expect(event.application.consents.at(-1)).toMatchObject({
       purpose: "marketing",
       status: "granted",
+    });
+  });
+
+  it("sends an absent organisation as null and never fabricates removed answers", () => {
+    const application = createEdenApplicationFixture();
+    application.organisation = null;
+    application.consent.marketing = false;
+
+    const event = createEdenCrmEvent(application);
+
+    expect(event.source.form_version).toBe("eden-application.v2");
+    expect(event.application.organisation).toBeNull();
+    expect(event.application.answers.map(({ question_id }) => question_id)).not.toEqual(
+      expect.arrayContaining([
+        "eden-decision-authority",
+        "eden-data-boundary-ack",
+      ]),
+    );
+    expect(event.application.consents.at(-1)).toMatchObject({
+      purpose: "marketing",
+      status: "denied",
     });
   });
 

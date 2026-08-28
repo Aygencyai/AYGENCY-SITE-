@@ -22,14 +22,12 @@ describe("edenApplicationSchema", () => {
     expect(edenApplicationSchema.safeParse(application).success).toBe(false);
   });
 
-  it("accepts explicit false boundary answers without inventing acceptance", () => {
+  it("preserves the explicit customer-maintained service-model choice", () => {
     const application = createEdenApplicationFixture();
     application.answers.operatedServiceAck = false;
-    application.answers.dataBoundaryAck = false;
 
     expect(edenApplicationSchema.parse(application).answers).toMatchObject({
       operatedServiceAck: false,
-      dataBoundaryAck: false,
     });
   });
 
@@ -73,7 +71,7 @@ describe("edenApplicationSchema", () => {
     const shortToken = createEdenApplicationFixture();
     shortToken.botToken = "short";
     const lowerCountry = createEdenApplicationFixture();
-    lowerCountry.organisation.countryCode = "gb";
+    lowerCountry.organisation!.countryCode = "gb";
     const badPhone = createEdenApplicationFixture();
     badPhone.contact.phone = "07700900123";
 
@@ -87,10 +85,17 @@ describe("edenApplicationSchema", () => {
     application.contact.phone = "";
     application.contact.roleTitle = "";
     application.contact.linkedinUrl = "";
-    application.organisation.website = "";
-    application.organisation.companyNumber = "";
+    application.organisation!.website = "";
+    application.organisation!.companyNumber = "";
     application.answers.anythingElse = "";
 
     expect(edenApplicationSchema.safeParse(application).success).toBe(true);
+  });
+
+  it("accepts a genuinely absent optional organisation without fabricating one", () => {
+    const application = createEdenApplicationFixture();
+    application.organisation = null;
+
+    expect(edenApplicationSchema.parse(application).organisation).toBeNull();
   });
 });

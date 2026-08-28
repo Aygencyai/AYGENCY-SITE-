@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-28
 
-**Status:** Planned
+**Status:** Phase 1 verified locally; Phase 2 final live-shaped check pending
 
 ## Outcome
 
@@ -61,6 +61,12 @@ absent, organisation can be skipped, supplied organisation values survive
 unchanged, the selected service model is submitted, original free text is
 rendered inertly, and 1440/1024/768/375 layouts have no overflow. Full lint and
 build pass before commit.
+
+**Verification record (2026-08-28):** Complete. 58/58 unit tests passed with
+one opt-in integration test skipped; all 12 Eden Playwright journeys passed,
+including Axe checks, inert free-text rendering, exact retry bytes, optional
+organisation storage, and 1440/1024/768/375 screenshots with no overflow.
+`pnpm lint`, `pnpm build`, and the shared data-plane V2 parser check passed.
 
 ## Phase 2 — Verify the live-shaped local journey
 

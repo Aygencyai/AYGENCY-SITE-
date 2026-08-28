@@ -42,9 +42,11 @@ async function completeQuestionnaire(
     currentFriction =
       "Follow-ups, meeting preparation, and travel changes compete for attention, so client commitments are revisited too late.",
     onOrganisationStep,
+    shareOrganisation = true,
   }: {
     currentFriction?: string;
     onOrganisationStep?: (page: Page) => Promise<void>;
+    shareOrganisation?: boolean;
   } = {},
 ) {
   await page.getByRole("button", { name: /See what Eden could do for you/i }).click();
@@ -82,8 +84,6 @@ async function completeQuestionnaire(
   await selectOption(page, "Notion");
   await continueQuestion(page);
 
-  await selectOption(page, "I can decide");
-  await continueQuestion(page);
   await selectOption(page, "Within 30 days");
   await continueQuestion(page);
   await selectOption(page, "Best fit and outcome; budget is approved");
@@ -91,13 +91,8 @@ async function completeQuestionnaire(
 
   await selectGroupedOption(
     page,
-    "Aygency-operated service acknowledgement",
-    "Yes",
-  );
-  await selectGroupedOption(
-    page,
-    "Safe application-data boundary acknowledgement",
-    "Yes",
+    "Eden service model",
+    "Aygency configures, operates and improves Eden with me",
   );
   await continueQuestion(page);
 
@@ -109,11 +104,13 @@ async function completeQuestionnaire(
     .fill("https://www.linkedin.com/in/example-applicant");
   await continueQuestion(page);
 
-  await page.getByLabel(/Organisation name/).fill("Northstar Advisory");
-  await page.getByLabel("Website").fill("https://northstar.example.com");
-  await page.getByLabel("Company number").fill("01234567");
-  await page.getByLabel(/Two-letter country code/).fill("gb");
-  await selectOption(page, "11–50 people");
+  if (shareOrganisation) {
+    await page.getByLabel("Organisation name").fill("Northstar Advisory");
+    await page.getByLabel("Website").fill("https://northstar.example.com");
+    await page.getByLabel("Company number").fill("01234567");
+    await page.getByLabel("Country").selectOption("GB");
+    await selectOption(page, "11–50 people");
+  }
   await onOrganisationStep?.(page);
   await continueQuestion(page);
 
@@ -311,7 +308,6 @@ test.describe("Eden AI Personal Assistant", () => {
         currentFriction: string;
         hoursLostWeekly: number;
         operatedServiceAck: boolean;
-        dataBoundaryAck: boolean;
       };
       consent: { inquiry: boolean; marketing: boolean };
       attribution: Record<string, string>;
@@ -342,7 +338,6 @@ test.describe("Eden AI Personal Assistant", () => {
       currentFriction: maliciousButInert,
       hoursLostWeekly: 14,
       operatedServiceAck: true,
-      dataBoundaryAck: true,
     });
     expect(submitted?.consent).toEqual({ inquiry: true, marketing: false });
     expect(submitted?.attribution).toMatchObject({
@@ -354,6 +349,29 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(submitted?.attribution).not.toHaveProperty("password");
     expect(submitted?.botToken).toBe("XXXX.DUMMY.TOKEN.XXXX");
     expect(submitted?.organisation).toMatchObject({ countryCode: "GB", sizeBand: "11-50" });
+  });
+
+  test("lets a prospect skip organisation context without fabricating it", async ({
+    page,
+  }) => {
+    let submittedBody: { organisation?: unknown } | null = null;
+    await page.route("**/api/eden/applications", async (route) => {
+      submittedBody = route.request().postDataJSON() as { organisation?: unknown };
+      await route.fulfill({
+        status: 202,
+        contentType: "application/json",
+        body: JSON.stringify({ success: true, recorded: true }),
+      });
+    });
+
+    await page.goto("/design-your-eden");
+    await completeQuestionnaire(page, { shareOrganisation: false });
+    await page.getByRole("button", { name: "Show me my Eden Blueprint" }).click();
+
+    await expect(page.getByRole("heading", { name: "This is how your Eden can help" })).toBeVisible();
+    expect(submittedBody?.organisation).toBeNull();
+    await page.getByText("Your original answers").click();
+    await expect(page.getByText("Not shared", { exact: true })).toBeVisible();
   });
 
   test("fails closed when the Turnstile proof is absent", async ({ page }) => {
