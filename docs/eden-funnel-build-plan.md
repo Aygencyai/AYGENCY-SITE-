@@ -241,6 +241,96 @@ This iteration responds to review feedback after the live-site integration.
 - Axe scans and horizontal-overflow checks pass at 375, 768, 1024, and 1440 pixels.
 - `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass before the implementation commit.
 
+## Iteration: CRM-first Eden diagnosis and build draft
+
+This iteration supersedes the earlier decision to keep the first email only in browser state. A visitor who grants inquiry permission must become a bounded CRM intake before the operational questions are revealed. The completed application remains a separate, immutable event.
+
+### Phase 0: contract and trust-boundary plan
+
+Goal: define the early capture, final application, and dashboard draft boundaries before changing code.
+
+Scope:
+
+- retain `EdenApplicationSubmitted.v1` as the approved final application contract and restore its HMAC-signed server sender;
+- add a separate `EdenLeadCaptured.v1` contract for email, required inquiry permission, first-touch attribution, and a stable application identifier;
+- keep both CRM credentials and the Supabase service role outside the browser;
+- treat the dashboard `Create Eden` action as creation of a deterministic build draft, not live provisioning or onboarding; and
+- preserve the exact submitted answers as untrusted source material alongside controlled derived recommendations.
+
+Deliverables: this plan plus matching data-plane and dashboard plans.
+
+Dependencies: the clean feature worktrees and the existing v1 CRM contract.
+
+Exit criteria:
+
+- the early-capture event has a distinct purpose, consent notice, idempotency key, retention boundary, and bot/rate policy;
+- old v1 application records retain their original meaning;
+- `pnpm lint` and `pnpm build` pass; and
+- commit as `docs: plan CRM-first Eden diagnosis`.
+
+### Phase 1: approved sender integration and email capture
+
+Goal: make question 1 create a CRM intake before the visitor reaches question 2.
+
+Scope:
+
+- integrate the approved HMAC request signing, strict receipt validation, Cloudflare Turnstile verification path, bounded retries, and frozen idempotency behavior;
+- add a same-origin `/api/eden/leads` route that validates and forwards only the early-capture allowlist;
+- put required inquiry permission on the email gate and keep marketing permission optional and off by default at completion;
+- in local preview mode, allow the visitor to continue with an explicit non-recorded state when server credentials are absent; and
+- never notify through Resend until the complete application is durably accepted.
+
+Deliverables: tested early-capture schema, CRM adapter, route, and email-gate UI.
+
+Dependencies: the deployed data-plane contract will be required for live writes, but local tests use fakes.
+
+Exit criteria:
+
+- tests cover valid capture, unknown keys, missing permission, honeypot, origin denial, exact retry, conflict, timeout, and terminal rejection;
+- browser coverage proves question 2 cannot be reached until question 1 has a valid capture receipt or a clearly labelled local-preview receipt;
+- `pnpm test`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass; and
+- commit as `feat: capture Eden enquiries before questions`.
+
+### Phase 2: Eden-specific diagnostic and result
+
+Goal: ensure every operational answer either sharpens the sales conversation or reduces the work needed to shape the first Eden.
+
+Scope:
+
+- replace the generic systems questionnaire with the approved Eden v1 question catalogue and Eden-specific wording;
+- keep one question per screen, meaningful branching, answer retention, semantic progress, keyboard controls, and reduced-motion behavior;
+- derive a controlled `This is how your Eden can help` plan from workload, open loops, meetings, inbox, calendar, travel, tools, timing, and decision context;
+- display exact original answers separately without inserting free text into HTML or executable instructions; and
+- close with `build@aygency.ai` plus a discovery-call action.
+
+Deliverables: the complete diagnostic funnel, deterministic customer-facing capability plan, and matching tests.
+
+Dependencies: Phase 1.
+
+Exit criteria:
+
+- happy-path, back-navigation, retry, separate-consent, and result-mapping tests pass;
+- 375, 768, 1024, and 1440 pixel views have no horizontal overflow and retain visible focus;
+- `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass; and
+- commit as `feat: make Eden funnel diagnostic`.
+
+### Phase 3: cross-surface verification and preview
+
+Goal: prove the site remains stable and provide the requested local review route.
+
+Scope: recheck the homepage, navigation, Eden introduction, funnel, Blueprint, contact route, API error states, and local preview behavior.
+
+Deliverables: updated verification receipt and an open localhost tab on `/design-your-eden`.
+
+Dependencies: Phases 1 and 2 plus the dashboard and data-plane phases in their own plans.
+
+Exit criteria:
+
+- all unit, browser, type, lint, and production-build checks pass;
+- all required breakpoints are visually reviewed;
+- no live credential or production CRM mutation is used for local verification; and
+- commit any verification-only correction before opening the preview.
+
 ## Iteration: reliable local completion and Eden-specific qualification
 
 This iteration responds to hands-on review of the completed questionnaire on 24 August 2026.
@@ -349,3 +439,7 @@ This iteration responds to review feedback that the hero's `See how Eden works` 
 - The closing action continues to start the same questionnaire.
 - Keyboard activation, reduced motion, and scroll restoration continue to work.
 - `pnpm test`, `pnpm test:e2e`, `pnpm exec tsc --noEmit`, `pnpm lint`, and `pnpm build` pass before the implementation commit.
+
+## Current execution order: 28 August 2026
+
+The `CRM-first Eden diagnosis and build draft` phases in this document are the current, chronologically latest direction and supersede the earlier browser-only email decision and generic questionnaire implementation. Execute them in this order: contract plan, email capture, Eden-specific diagnostic and result, then cross-surface verification and localhost preview.
