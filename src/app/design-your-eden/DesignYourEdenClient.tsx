@@ -851,17 +851,17 @@ export default function DesignYourEdenClient({
         );
       case "budgetReadiness":
         return (
-          <QuestionFrame number={questionNumber} title="How ready is the budget decision?" description="We ask about readiness, not a guessed amount. Pricing and scope are worked through during discovery.">
-            {renderSingleChoice("answers.budgetReadiness", "Budget readiness", budgetReadinessOptionList)}
+          <QuestionFrame number={questionNumber} title="What matters most when choosing your Eden?" description="We build around the strongest fit and result, then scope the investment with you. Choose the statement that best describes where the decision stands.">
+            {renderSingleChoice("answers.budgetReadiness", "Investment decision", budgetReadinessOptionList)}
           </QuestionFrame>
         );
 
       case "acknowledgements":
         return (
-          <QuestionFrame number={questionNumber} title="Confirm Eden's operating boundaries" description="Both answers are recorded exactly. A ‘not yet’ answer is valid and becomes a visible discovery question.">
+          <QuestionFrame number={questionNumber} title="Is Eden's managed model the right fit?" description="Both answers help us shape the discovery conversation. ‘Not yet’ is a valid answer and shows us what needs explaining first.">
             <div className="space-y-8">
               <div>
-                <p className="mb-3 font-sans text-sm font-medium text-ghost">Do you understand that Aygency operates Eden after launch?</p>
+                <p className="mb-3 font-sans text-sm font-medium text-ghost">Are you looking for an Eden that Aygency configures, operates, and improves with you?</p>
                 <Controller
                   name="answers.operatedServiceAck"
                   control={control}
@@ -879,7 +879,7 @@ export default function DesignYourEdenClient({
                 />
               </div>
               <div>
-                <p className="mb-3 font-sans text-sm font-medium text-ghost">Do you agree that this application contains sales context only, with no credentials, private Eden memory, conversations, or customer operational data?</p>
+                <p className="mb-3 font-sans text-sm font-medium text-ghost">Are you comfortable keeping discovery high-level until we agree the secure connection and permission plan?</p>
                 <Controller
                   name="answers.dataBoundaryAck"
                   control={control}

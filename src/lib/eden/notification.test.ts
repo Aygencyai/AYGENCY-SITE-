@@ -35,7 +35,9 @@ describe("Eden application notification", () => {
       `eden-application-${application.eventId}`
     );
     expect(payload.text).toContain("authoritative application");
-    expect(payload.text).toContain("Budget readiness: Budget is approved");
+    expect(payload.text).toContain(
+      "Investment decision: Best fit and outcome; budget is approved",
+    );
     expect(payload.text).not.toContain(application.answers.currentFriction);
     expect(payload.text).not.toContain(application.answers.anythingElse);
     expect(payload.text).not.toContain(application.botToken);

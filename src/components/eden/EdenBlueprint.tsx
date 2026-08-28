@@ -20,6 +20,7 @@ import {
   currentToolLabels,
   decisionAuthorityLabels,
   emailLoadLabels,
+  getEdenCapabilityPlan,
   getEdenExample,
   getEdenBlueprintRecommendation,
   getEdenOperatingMode,
@@ -69,6 +70,7 @@ export default function EdenBlueprint({
     application.answers.primaryOutcomes,
   );
   const operatingMode = getEdenOperatingMode(application.answers);
+  const capabilityPlan = getEdenCapabilityPlan(application.answers);
   const example = getEdenExample(
     application.answers,
     application.organisation.sizeBand,
@@ -99,7 +101,7 @@ export default function EdenBlueprint({
               }`}
             >
               {recorded
-                ? "Application recorded // Blueprint 01"
+                ? "Diagnostic recorded // Blueprint 01"
                 : "Blueprint preview // Submission pending"}
             </p>
           </div>
@@ -108,12 +110,12 @@ export default function EdenBlueprint({
             tabIndex={-1}
             className="max-w-3xl font-heading text-[32px] font-semibold uppercase leading-[1.02] text-white outline-none sm:text-[42px] lg:text-[52px]"
           >
-            Your Eden Blueprint
+            This is how your Eden can help
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
             {recorded
-              ? "A practical first recommendation based on what you told us. It gives us a useful starting point for shaping your Eden."
-              : "This preview is based on answers held in this browser. CRM storage is still pending."}
+              ? "Your answers point to a clear first role for Eden, the responsibilities she should own, and the decisions that should stay with you."
+              : "This working preview is based on answers held in this browser. It shows the shape of your Eden, but CRM storage is still pending."}
           </p>
         </div>
         {recorded && (
@@ -141,15 +143,12 @@ export default function EdenBlueprint({
             </p>
             <div className="mt-8 border-t border-ghost/[0.08] pt-6">
               <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ghost-muted">
-                First responsibility
+                Priorities to design around
               </p>
               <p className="mt-2 font-sans text-lg font-medium text-ghost">
                 {application.answers.primaryOutcomes
                   .map((outcome) => primaryOutcomeLabels[outcome])
                   .join(", ")}
-              </p>
-              <p className="mt-3 whitespace-pre-wrap break-words border-l border-cyan/30 pl-4 font-sans text-sm italic leading-relaxed text-ghost-muted">
-                “{application.answers.currentFriction}”
               </p>
             </div>
           </div>
@@ -211,6 +210,52 @@ export default function EdenBlueprint({
       </div>
 
       <section
+        aria-labelledby="eden-capability-plan-heading"
+        className="mt-6 rounded-2xl border border-cyan/15 bg-void-light/80 p-6 sm:p-8"
+      >
+        <div className="max-w-3xl">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan">
+            Your first Eden responsibilities
+          </p>
+          <h2
+            id="eden-capability-plan-heading"
+            className="mt-4 font-heading text-2xl font-semibold uppercase leading-tight text-white sm:text-3xl"
+          >
+            What Eden can take off your plate
+          </h2>
+          <p className="mt-3 font-sans text-sm leading-relaxed text-ghost-muted sm:text-base">
+            These recommendations come from the structured workload, priorities,
+            and control preferences you selected. They give the discovery call a
+            practical starting scope rather than a blank page.
+          </p>
+        </div>
+
+        <ol className="mt-8 grid gap-4 lg:grid-cols-3">
+          {capabilityPlan.map((capability, index) => (
+            <li
+              key={capability.id}
+              className="min-w-0 rounded-xl border border-ghost/[0.08] bg-surface/80 p-5 sm:p-6"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-cyan-muted">
+                  Responsibility {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="max-w-[58%] break-words rounded-full border border-cyan/15 bg-cyan/[0.04] px-2.5 py-1 text-right font-mono text-[9px] uppercase leading-relaxed tracking-[0.1em] text-ghost-muted">
+                  {capability.signal}
+                </span>
+              </div>
+              <h3 className="mt-5 font-heading text-lg font-semibold uppercase leading-tight text-ghost">
+                {capability.title}
+              </h3>
+              <p className="mt-3 font-sans text-sm leading-relaxed text-ghost-muted">
+                {capability.description}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section
         aria-labelledby="eden-example-heading"
         className="mt-6 overflow-hidden rounded-2xl border border-cyan/15 bg-void-light/80"
       >
@@ -225,11 +270,12 @@ export default function EdenBlueprint({
             id="eden-example-heading"
             className="mt-5 max-w-3xl font-heading text-2xl font-semibold uppercase leading-tight text-white sm:text-3xl"
           >
-            An example of what your Eden can do for you
+            See your Eden handle a real working moment
           </h2>
           <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-ghost-muted sm:text-base">
-            Based on the operating shape you described, this is one practical
-            first workflow for Eden and the specialists behind her.
+            Based on the operating shape you described, this is how one of those
+            responsibilities could move from incoming signal to a controlled
+            next action.
           </p>
           <p className="mt-6 max-w-3xl font-heading text-xl font-medium text-ghost sm:text-2xl">
             {example.title}
@@ -353,7 +399,7 @@ export default function EdenBlueprint({
             value={targetStartWindowLabels[application.answers.targetStartWindow]}
           />
           <AnswerRow
-            label="Budget readiness"
+            label="Investment decision"
             value={budgetReadinessLabels[application.answers.budgetReadiness]}
           />
           <AnswerRow
@@ -367,6 +413,29 @@ export default function EdenBlueprint({
           <AnswerRow
             label="Organisation size"
             value={organisationSizeBandLabels[application.organisation.sizeBand]}
+          />
+          <AnswerRow label="Name" value={application.contact.fullName} />
+          <AnswerRow label="Work email" value={application.contact.workEmail} />
+          {application.contact.roleTitle.trim() && (
+            <AnswerRow label="Role" value={application.contact.roleTitle} />
+          )}
+          {application.contact.phone.trim() && (
+            <AnswerRow label="Phone" value={application.contact.phone} />
+          )}
+          {application.contact.linkedinUrl.trim() && (
+            <AnswerRow label="LinkedIn" value={application.contact.linkedinUrl} />
+          )}
+          <AnswerRow label="Organisation" value={application.organisation.name} />
+          {application.organisation.website.trim() && (
+            <AnswerRow label="Organisation website" value={application.organisation.website} />
+          )}
+          {application.organisation.companyNumber.trim() && (
+            <AnswerRow label="Company number" value={application.organisation.companyNumber} />
+          )}
+          <AnswerRow label="Country" value={application.organisation.countryCode} />
+          <AnswerRow
+            label="Marketing updates"
+            value={application.consent.marketing ? "Granted" : "Not granted"}
           />
           {application.answers.anythingElse.trim() && (
             <AnswerRow

@@ -86,7 +86,7 @@ async function completeQuestionnaire(
   await continueQuestion(page);
   await selectOption(page, "Within 30 days");
   await continueQuestion(page);
-  await selectOption(page, "Budget is approved");
+  await selectOption(page, "Best fit and outcome; budget is approved");
   await continueQuestion(page);
 
   await selectGroupedOption(
@@ -265,13 +265,35 @@ test.describe("Eden AI Personal Assistant", () => {
     const submitButton = page.getByRole("button", { name: "Show me my Eden Blueprint" });
     await expect(submitButton).toBeEnabled();
     await submitButton.click();
-    await expect(page.getByRole("heading", { name: "Your Eden Blueprint" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "This is how your Eden can help" })).toBeVisible();
     expect(submittedBody).not.toBeNull();
     expect(capturedBody).not.toBeNull();
     expect(consoleErrors).toEqual([]);
     expect(pageErrors).toEqual([]);
     await expect(page.getByText("Executive and travel coordination assistant")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "What Eden can take off your plate" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Keep every commitment moving" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Prepare every meeting and close the loop" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Coordinate the moving parts around travel" })).toBeVisible();
     await expect(page.getByText("High", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(maliciousButInert, { exact: true })).toBeHidden();
+    for (const viewport of [
+      { name: "mobile-375", width: 375, height: 812 },
+      { name: "tablet-768", width: 768, height: 1024 },
+      { name: "laptop-1024", width: 1024, height: 768 },
+      { name: "desktop-1440", width: 1440, height: 1000 },
+    ]) {
+      await page.setViewportSize(viewport);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        ),
+      ).toBeLessThanOrEqual(0);
+      await page.screenshot({
+        path: testInfo.outputPath(`${viewport.name}-result.png`),
+        fullPage: true,
+      });
+    }
     await page.getByText("Your original answers").click();
     await expect(page.getByText(maliciousButInert, { exact: true })).toBeVisible();
     expect(await page.evaluate(() => (window as typeof window & { __edenInjected?: boolean }).__edenInjected)).not.toBe(true);
@@ -381,7 +403,7 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(bodies[0]).toBe(bodies[1]);
 
     await page.getByRole("button", { name: "Retry safely" }).click();
-    await expect(page.getByRole("heading", { name: "Your Eden Blueprint" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "This is how your Eden can help" })).toBeVisible();
     expect(bodies).toHaveLength(3);
     expect(new Set(bodies).size).toBe(1);
   });
@@ -427,7 +449,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await page.reload();
     await completeQuestionnaire(page);
     await page.getByRole("button", { name: "Show me my Eden Blueprint" }).click();
-    await expect(page.getByRole("heading", { name: "Your Eden Blueprint" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "This is how your Eden can help" })).toBeVisible();
     await page.getByText("Your original answers").click();
     expect((await new AxeBuilder({ page }).include("#main-content").analyze()).violations).toEqual([]);
   });

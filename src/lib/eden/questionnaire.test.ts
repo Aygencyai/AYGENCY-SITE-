@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { createEdenApplicationFixture } from "./test-fixture";
 import {
   getEdenBlueprintRecommendation,
+  getEdenCapabilityPlan,
   getEdenExample,
   getEdenOperatingMode,
 } from "./questionnaire";
@@ -48,5 +49,41 @@ describe("Eden Blueprint example", () => {
     expect(getEdenOperatingMode(application.answers)).toMatchObject({
       title: "Boundary discovery first",
     });
+  });
+
+  it("turns structured priorities and workload into three controlled responsibilities", () => {
+    const application = createEdenApplicationFixture();
+    const plan = getEdenCapabilityPlan(application.answers);
+
+    expect(plan.map((capability) => capability.id)).toEqual([
+      "follow-through",
+      "inbox",
+      "meetings",
+    ]);
+    expect(plan[0]).toMatchObject({
+      title: "Keep every commitment moving",
+      signal: "High open-loop volume · 14 hrs/week",
+    });
+    expect(JSON.stringify(plan)).not.toContain(application.answers.currentFriction);
+    expect(JSON.stringify(plan)).not.toContain(application.answers.anythingElse);
+  });
+
+  it("changes the working example when the selected first responsibility changes", () => {
+    const application = createEdenApplicationFixture();
+    application.answers.primaryOutcomes = ["reduce-inbox-load"];
+    const inbox = getEdenExample(
+      application.answers,
+      application.organisation.sizeBand,
+    );
+
+    application.answers.primaryOutcomes = ["coordinate-travel"];
+    const travel = getEdenExample(
+      application.answers,
+      application.organisation.sizeBand,
+    );
+
+    expect(inbox.arrivalTitle).toContain("inbox");
+    expect(travel.arrivalTitle).toContain("travel");
+    expect(inbox.arrivalTitle).not.toBe(travel.arrivalTitle);
   });
 });

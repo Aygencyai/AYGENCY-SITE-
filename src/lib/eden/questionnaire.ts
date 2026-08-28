@@ -158,10 +158,22 @@ export const targetStartWindowOptionList: ReadonlyArray<
 export const budgetReadinessOptionList: ReadonlyArray<
   EdenOption<BudgetReadiness>
 > = [
-  { value: "approved", label: "Budget is approved" },
-  { value: "range_known", label: "We know the workable range" },
-  { value: "needs_business_case", label: "We need a business case" },
-  { value: "not_set", label: "Budget is not set" },
+  {
+    value: "approved",
+    label: "Best fit and outcome; budget is approved",
+  },
+  {
+    value: "range_known",
+    label: "Best fit within a known workable range",
+  },
+  {
+    value: "needs_business_case",
+    label: "Strongest outcome; I need the business case",
+  },
+  {
+    value: "not_set",
+    label: "Right solution first; budget follows",
+  },
 ];
 
 export const acknowledgementOptionList: ReadonlyArray<EdenOption<"yes" | "no">> = [
@@ -200,6 +212,129 @@ interface EdenBlueprintRecommendation {
   title: string;
   thesis: string;
   firstCapability: string;
+}
+
+export type EdenCapabilityId =
+  | "follow-through"
+  | "inbox"
+  | "meetings"
+  | "calendar"
+  | "travel"
+  | "personal-logistics";
+
+export interface EdenCapabilityRecommendation {
+  id: EdenCapabilityId;
+  title: string;
+  description: string;
+  signal: string;
+}
+
+interface EdenExampleScenario {
+  arrivalTitle: string;
+  arrivalDescription: string;
+  coordinationTitle: string;
+  coordinationDescription: string;
+}
+
+function capabilityFor(
+  id: EdenCapabilityId,
+  answers: EdenAnswers,
+): EdenCapabilityRecommendation {
+  switch (id) {
+    case "inbox":
+      return {
+        id,
+        title: "Run your inbox before it runs you",
+        description:
+          "Eden can triage approved inbox signals, prepare replies, surface the messages that need your judgment, and turn promised follow-ups into visible actions.",
+        signal: `${emailLoadLabels[answers.emailLoad]} email load`,
+      };
+    case "meetings":
+      return {
+        id,
+        title: "Prepare every meeting and close the loop",
+        description:
+          "Eden can assemble the brief before a meeting, carry decisions into the right actions, and keep owners and due dates visible afterwards.",
+        signal: `${meetingLoadLabels[answers.meetingLoad]} meeting load`,
+      };
+    case "calendar":
+      return {
+        id,
+        title: "Protect focus as the calendar moves",
+        description:
+          "Eden can coordinate scheduling constraints, protect priority time, prepare the context around changes, and escalate only the conflicts that need you.",
+        signal: `${calendarComplexityLabels[answers.calendarComplexity]} calendar`,
+      };
+    case "travel":
+      return {
+        id,
+        title: "Coordinate the moving parts around travel",
+        description:
+          "Eden can keep itinerary, calendar, preparation, and follow-up in one working thread so a change does not create a chain of missed commitments.",
+        signal: `${travelFrequencyLabels[answers.travelFrequency]} work travel`,
+      };
+    case "personal-logistics":
+      return {
+        id,
+        title: "Bring personal logistics into one thread",
+        description:
+          "Eden can coordinate supported reservations and recurring logistics through agreed providers, with permissions and exceptions scoped during discovery.",
+        signal: "Personal coordination selected",
+      };
+    case "follow-through":
+      return {
+        id,
+        title: "Keep every commitment moving",
+        description:
+          "Eden can capture the next action, prepare what is needed, remind the right owner, and bring you a concise exception when progress needs your decision.",
+        signal: `${openLoopVolumeLabels[answers.openLoopVolume]} open-loop volume · ${answers.hoursLostWeekly} hrs/week`,
+      };
+  }
+}
+
+export function getEdenCapabilityPlan(
+  answers: EdenAnswers,
+): EdenCapabilityRecommendation[] {
+  const requested = answers.primaryOutcomes.flatMap<EdenCapabilityId>((outcome) => {
+    switch (outcome) {
+      case "reduce-inbox-load":
+        return ["inbox"];
+      case "improve-meeting-readiness":
+        return ["meetings"];
+      case "protect-focus":
+        return ["calendar"];
+      case "coordinate-travel":
+        return ["travel"];
+      case "manage-reservations":
+      case "coordinate-household":
+        return ["personal-logistics"];
+      default:
+        return ["follow-through"];
+    }
+  });
+
+  const workload: EdenCapabilityId[] = [
+    ...(["high", "overwhelming"].includes(answers.openLoopVolume)
+      ? (["follow-through"] as const)
+      : []),
+    ...(["high", "overwhelming"].includes(answers.emailLoad)
+      ? (["inbox"] as const)
+      : []),
+    ...(["high", "extreme"].includes(answers.meetingLoad)
+      ? (["meetings"] as const)
+      : []),
+    ...(answers.calendarComplexity === "complex"
+      ? (["calendar"] as const)
+      : []),
+    ...(answers.travelFrequency !== "rare" ? (["travel"] as const) : []),
+  ];
+
+  const unique = [...new Set<EdenCapabilityId>([
+    ...requested,
+    ...workload,
+    "follow-through",
+  ])];
+  return unique.slice(0, 3).map((id) => capabilityFor(id, answers));
 }
 
 export function getEdenBlueprintRecommendation(
@@ -260,15 +395,61 @@ export function getEdenExample(
   answers: EdenAnswers,
   sizeBand: OrganisationSizeBand,
 ) {
-  const recommendation = getEdenBlueprintRecommendation(answers.primaryOutcomes);
+  const firstCapability = getEdenCapabilityPlan(answers)[0];
+  const scenarios: Record<EdenCapabilityId, EdenExampleScenario> = {
+    "follow-through": {
+      arrivalTitle: "A commitment needs attention",
+      arrivalDescription:
+        "A promised reply, decision, or next action becomes due across one of the approved tools.",
+      coordinationTitle: "Eden prepares the next move",
+      coordinationDescription:
+        "Eden gathers approved context, prepares the action, records the commitment, and keeps its owner visible.",
+    },
+    inbox: {
+      arrivalTitle: "A priority message reaches the inbox",
+      arrivalDescription:
+        "Eden separates routine traffic from a message that affects a live commitment or needs your decision.",
+      coordinationTitle: "Eden turns the message into progress",
+      coordinationDescription:
+        "Eden prepares the reply, links the relevant context, and creates the follow-up before bringing you the decision point.",
+    },
+    meetings: {
+      arrivalTitle: "A meeting is approaching",
+      arrivalDescription:
+        "The agenda, recent commitments, and unresolved decisions sit across approved tools and calendars.",
+      coordinationTitle: "Eden prepares the room and the follow-through",
+      coordinationDescription:
+        "Eden assembles a concise brief, then carries agreed actions, owners, and dates into the working system afterwards.",
+    },
+    calendar: {
+      arrivalTitle: "The calendar changes around a priority",
+      arrivalDescription:
+        "A new request, conflict, or attendee change puts focus time or preparation at risk.",
+      coordinationTitle: "Eden protects the important work",
+      coordinationDescription:
+        "Eden checks the agreed constraints, prepares a resolution, and escalates only when the trade-off needs your judgment.",
+    },
+    travel: {
+      arrivalTitle: "A travel plan changes",
+      arrivalDescription:
+        "An itinerary, meeting, or preparation dependency moves and creates follow-on work across the week.",
+      coordinationTitle: "Eden keeps the whole thread aligned",
+      coordinationDescription:
+        "Eden prepares the approved changes across itinerary, calendar, briefings, and follow-ups, then surfaces exceptions for review.",
+    },
+    "personal-logistics": {
+      arrivalTitle: "A recurring personal task needs coordination",
+      arrivalDescription:
+        "A supported booking or logistics request arrives through the agreed channel and provider boundary.",
+      coordinationTitle: "Eden prepares the supported action",
+      coordinationDescription:
+        "Eden gathers the approved preferences, prepares the next step, and asks for review wherever the agreed authority requires it.",
+    },
+  };
+  const scenario = scenarios[firstCapability.id];
   return {
-    title: recommendation.firstCapability,
-    arrivalTitle: "A commitment needs attention",
-    arrivalDescription:
-      "A reply, meeting change, promised follow-up, or calendar signal creates a new open loop.",
-    coordinationTitle: "Eden prepares the next move",
-    coordinationDescription:
-      "Eden gathers approved context, prepares the action, records the commitment, and keeps its owner visible.",
+    title: firstCapability.title,
+    ...scenario,
     context: {
       volume: openLoopVolumeLabels[answers.openLoopVolume],
       people: organisationSizeBandLabels[sizeBand],

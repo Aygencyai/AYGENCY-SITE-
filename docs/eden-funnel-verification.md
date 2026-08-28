@@ -1,15 +1,51 @@
 # Eden AI Personal Assistant: Verification Record
 
-Date: 25 August 2026
+Date: 28 August 2026
 
-Current branch: `feat/eden-crm-sender`
+Current branch: `feat/eden-live-site`
 
 Current isolated worktree:
-`/Users/elaygency/aygency/AgencyInternal/orgo/eden-crm-sender-worktree`
+`/Users/elaygency/aygency/projects/aygency-site-eden-live`
 
 Phase 8 base: `efccb184d30084e38ba44d33d1fc047c56be5459`
 
-Production status: **feature branch published for review; not merged or deployed; no live CRM, Vercel production, Supabase, or dashboard mutation**
+Production status: **local feature worktree only; not pushed, merged, or deployed; no live CRM, Vercel production, Supabase, or dashboard mutation**
+
+## Current CRM-first diagnostic receipt
+
+The first questionnaire screen now posts a strict `EdenLeadCaptured.v1` event
+through the same-origin `/api/eden/leads` route before question 2 is revealed.
+It uses a separate event UUID and signing secret while retaining the final
+application UUID, so the private CRM intake can move from `captured` to
+`diagnostic_complete`. Inquiry permission is recorded at that gate. Optional
+marketing permission remains separate and off at completion.
+
+The completed `EdenApplicationSubmitted.v1` sender remains the system-of-record
+path for the diagnostic. Resend remains a best-effort notification after first
+acceptance only. Local development without sender credentials receives an
+explicit `recorded: false` result; production does not weaken CRM acceptance.
+
+The result now opens with `This is how your Eden can help`, derives three
+controlled responsibilities from structured workload and priority answers, and
+shows a matching working scenario. Applicant free text appears only in the
+collapsed original-answer record and is never interpolated into capability
+claims.
+
+Current phase gate:
+
+| Command | Result |
+|---|---|
+| `pnpm test` | PASS, 55 tests; one opt-in local integration test skipped |
+| `pnpm exec tsc --noEmit` | PASS |
+| `pnpm lint` | PASS, zero warnings |
+| `pnpm build` | PASS on Next.js 15.5.21 |
+| `pnpm test:e2e` | PASS, 11 browser tests including Axe and 375/768/1024/1440 screenshots |
+| `pnpm audit --audit-level high` | PASS; two moderate findings remain below the gate |
+
+This receipt supersedes the browser-only email statements in the historical
+sections below.
+
+## Historical Phase 8 review context
 
 Review surface: draft [PR #2](https://github.com/Aygencyai/AYGENCY-SITE-/pull/2)
 against `main`, reported mergeable by GitHub. Both Vercel checks passed. The
@@ -153,6 +189,8 @@ The buying-priority question and recorded Blueprint were additionally reviewed a
 
 Configure these only in the server deployment environment:
 
+- `EDEN_LEAD_CAPTURE_INGEST_URL`
+- `EDEN_LEAD_CAPTURE_SIGNING_SECRET`
 - `EDEN_APPLICATION_INGEST_URL`
 - `EDEN_APPLICATION_SIGNING_SECRET`
 - `EDEN_APPLICATION_TURNSTILE_SITE_KEY`

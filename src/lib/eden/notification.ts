@@ -62,7 +62,7 @@ export async function sendEdenApplicationNotification(
         `Primary outcomes: ${application.answers.primaryOutcomes
           .map((outcome) => primaryOutcomeLabels[outcome])
           .join(", ")}`,
-        `Budget readiness: ${budgetReadinessLabels[application.answers.budgetReadiness]}`,
+        `Investment decision: ${budgetReadinessLabels[application.answers.budgetReadiness]}`,
         `Marketing consent: ${application.consent.marketing ? "granted" : "not granted"}`,
         "",
         "Open the CRM record for the complete, authoritative application.",
