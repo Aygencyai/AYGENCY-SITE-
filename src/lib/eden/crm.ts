@@ -377,11 +377,11 @@ export async function deliverEdenApplication(
   const random = dependencies.random ?? Math.random;
   const now = dependencies.now ?? Date.now;
   const frozenNow = now();
-  const occurredAt = new Date(
-    Math.max(frozenNow, Date.parse(application.submittedAt)),
-  ).toISOString();
   const event = createEdenCrmEvent(application, {
-    occurredAt,
+    // The browser freezes the application snapshot before its first attempt.
+    // Keep every event byte derived from that snapshot too, so a later
+    // same-application retry cannot become a changed-body idempotency conflict.
+    occurredAt: application.submittedAt,
     environment: dependencies.environment,
   });
   const body = JSON.stringify(event);

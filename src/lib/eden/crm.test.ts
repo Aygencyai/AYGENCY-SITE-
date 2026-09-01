@@ -200,6 +200,34 @@ describe("Eden CRM delivery", () => {
     }
   });
 
+  it("keeps event bytes stable across separate browser retry requests", async () => {
+    const bodies: string[] = [];
+    const application = createEdenApplicationFixture();
+    const fetchImpl = vi.fn<MockFetch>(async (_input, init) => {
+      bodies.push(String(init?.body));
+      return receipt(201);
+    });
+
+    await deliverEdenApplication(application, {
+      endpointUrl,
+      signingSecret,
+      fetchImpl,
+      now: () => now,
+    });
+    await deliverEdenApplication(application, {
+      endpointUrl,
+      signingSecret,
+      fetchImpl,
+      now: () => now + 30_000,
+    });
+
+    expect(bodies).toHaveLength(2);
+    expect(bodies[0]).toBe(bodies[1]);
+    expect(JSON.parse(bodies[0] ?? "{}")).toMatchObject({
+      occurred_at: application.submittedAt,
+    });
+  });
+
   it("rejects malformed success receipts and terminal contract failures", async () => {
     await expect(
       deliverEdenApplication(createEdenApplicationFixture(), {
