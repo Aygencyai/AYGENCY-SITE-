@@ -8,18 +8,18 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Eden: Your AI Personal Assistant | Aygency",
   description:
-    "Meet Eden, your personal interface to Aygency's specialist-agent system. She coordinates work, prepares decisions, and keeps your operation connected.",
+    "Meet Eden, your dedicated AI personal assistant. She handles recurring work, prepares decisions, and keeps your working life connected.",
   openGraph: {
     title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:
-      "Meet the AI personal assistant that coordinates the right specialist agents and adapts to how your operation runs.",
+      "Meet the dedicated AI personal assistant that handles recurring work and adapts to how you operate.",
     url: "https://aygency.ai/design-your-eden",
   },
   twitter: {
     card: "summary_large_image",
     title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:
-      "Meet the AI personal assistant that coordinates the right specialist agents and adapts to how your operation runs.",
+      "Meet the dedicated AI personal assistant that handles recurring work and adapts to how you operate.",
   },
 };
 

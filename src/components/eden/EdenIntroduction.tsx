@@ -42,7 +42,7 @@ const capabilities: Capability[] = [
     number: "02",
     title: "Keep work moving",
     description:
-      "She carries context between people, tools, and specialist agents so every hand-off has an owner.",
+      "She carries context between people and tools, follows each hand-off, and makes sure the next action has an owner.",
     examples: ["Coordinate follow-ups", "Track open actions", "Surface blockers early"],
   },
   {
@@ -64,9 +64,9 @@ const operatingSteps = [
   },
   {
     number: "02",
-    title: "She coordinates the specialists",
+    title: "She keeps the work moving",
     description:
-      "Eden brings in the right specialist, carries the context forward, and keeps the operational thread intact.",
+      "Eden handles the agreed work herself, carries the context forward, and keeps the thread intact from one task to the next.",
   },
   {
     number: "03",
@@ -116,14 +116,13 @@ export default function EdenIntroduction({
             Meet Eden. Your new AI personal assistant.
           </h1>
           <p className="mt-7 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-xl">
-            Eden gives you one clear point of contact for the AI agent system
-            working around you. She coordinates the right specialists, keeps
-            the operational thread moving, and brings you the decisions that
-            need your judgment.
+            Eden is one dedicated AI personal assistant built around you. She
+            handles the recurring work, keeps the operational thread moving,
+            and brings you the decisions that need your judgment.
           </p>
           <p className="mt-5 max-w-xl border-l border-cyan/30 pl-4 font-sans text-sm leading-relaxed text-ghost sm:text-base">
-            Your personal interface to Aygency&rsquo;s specialist-agent system,
-            built around how you and your business actually work.
+            Your own AI specialist, built around how you and your business
+            actually work.
           </p>
           <div className="mt-9 flex flex-col items-start gap-3 min-[440px]:flex-row sm:gap-4">
             <button
@@ -226,12 +225,12 @@ export default function EdenIntroduction({
             What Eden can do
           </p>
           <h2 className="mt-5 font-heading text-[32px] font-semibold uppercase leading-[1.05] text-ghost sm:text-[44px] lg:text-[48px]">
-            One assistant. The right specialist for every job.
+            One assistant. Built around your working life.
           </h2>
           <p className="mt-5 max-w-2xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
-            Eden coordinates the recurring work around your role. The right
-            specialist handles each job while she keeps the context, priorities,
-            and hand-offs connected.
+            Eden handles the recurring work around your role herself, keeping
+            the context, priorities, and hand-offs connected from one job to
+            the next.
           </p>
         </motion.div>
 
@@ -293,8 +292,8 @@ export default function EdenIntroduction({
           </h2>
           <p className="mt-5 font-sans text-base leading-relaxed text-ghost-muted">
             Eden follows the operating rhythm you define. She prepares what
-            comes next, coordinates the specialists behind her, and works within
-            clear boundaries from day one.
+            comes next, handles the agreed work herself, and works within clear
+            boundaries from day one.
           </p>
           <div className="mt-8 rounded-2xl border border-cyan/15 bg-cyan/[0.04] p-5 sm:p-6">
             <div className="flex items-center gap-3 text-cyan">
@@ -304,9 +303,9 @@ export default function EdenIntroduction({
               </p>
             </div>
             <p className="mt-4 font-sans text-sm leading-relaxed text-ghost-muted">
-              Your version of Eden coordinates the specialists your operation
-              needs, from executive assistance and customer work to operations,
-              finance, knowledge, and growth.
+              Your Eden is the specialist: one personal assistant configured
+              around your priorities, routines, tools, and preferred way of
+              working.
             </p>
           </div>
         </motion.div>

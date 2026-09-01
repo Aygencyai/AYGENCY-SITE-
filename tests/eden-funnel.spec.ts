@@ -196,7 +196,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(
       page.getByRole("heading", { name: "Meet Eden. Your new AI personal assistant." }),
     ).toBeVisible();
-    await expect(page.getByText(/Your personal interface to Aygency/i)).toBeVisible();
+    await expect(page.getByText(/Your own AI specialist/i)).toBeVisible();
     await page.getByRole("button", { name: /See what Eden could do for you/i }).click();
 
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);

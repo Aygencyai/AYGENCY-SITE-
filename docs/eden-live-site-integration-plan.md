@@ -8,7 +8,7 @@ The completed first implementation remains preserved on `feat/design-your-eden` 
 
 ## Outcome
 
-Add Eden to the website that is actually deployed. Eden will be presented as the client's AI personal assistant and the personal interface to an Aygency agent system. She coordinates the right specialist work, keeps the operational thread moving, and brings the client the decisions that need human judgment.
+Add Eden to the website that is actually deployed. Eden will be presented as the client’s own AI personal assistant: one dedicated specialist who handles agreed work, keeps the operational thread moving, and brings the client the decisions that need human judgment.
 
 The existing Aygency homepage, system story, services, use cases, insights, about, trust, contact flow, and live visual language must remain intact. The new `/design-your-eden` product page will introduce Eden before offering a focused one-question assessment and an Eden Blueprint.
 
@@ -20,7 +20,7 @@ The existing Aygency homepage, system story, services, use cases, insights, abou
 - Do not rewrite the rebuilt homepage to match the obsolete local branch.
 - Keep `/design-your-eden` as the route for compatibility, while all visible naming leads with `Eden` or `AI Personal Assistant`.
 - Introduce Eden with positive, plain-language copy. Visible copy and metadata will contain no em dashes and will not define the offer through negative comparisons.
-- Explain Eden as the personal layer that coordinates specialist agents, preserving the live site's system architecture rather than implying one generic assistant performs every job.
+- Explain Eden as one dedicated AI personal assistant: she is the customer’s specialist and handles her agreed responsibilities herself rather than coordinating other agents.
 
 ## Trust boundary
 
