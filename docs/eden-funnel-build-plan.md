@@ -531,3 +531,131 @@ This iteration responds to review feedback that the hero's `See how Eden works` 
 ## Current execution order: 28 August 2026
 
 The `CRM-first Eden diagnosis and build draft` phases in this document are the current, chronologically latest direction and supersede the earlier browser-only email decision and generic questionnaire implementation. Execute them in this order: contract plan, email capture, Eden-specific diagnostic and result, then cross-surface verification and localhost preview.
+
+## Iteration: plain-language 25-question Eden diagnostic and researched Brain
+
+**Date:** 1 September 2026
+
+**Status:** Phase 0 planned; implementation pending
+
+This iteration supersedes the earlier 15-question catalogue and any visitor
+copy that describes a capability as parked. It also corrects the handoff model:
+**Create Eden** is the only founder decision required to build the technical
+Eden. The customer connects through the secure Telegram flow, Eden completes
+the conversational onboarding, verifies her deterministic readiness state, and
+then begins normal operation. There is no separate founder or dashboard
+Activate Eden button.
+
+### Phase 0: freeze the V3 question and research contract
+
+**Goal:** Make every question understandable without AI or operations jargon,
+while collecting enough useful context to produce a specific result and give
+the created Eden a meaningful head start.
+
+**Question screens:**
+
+| # | Visitor-facing question | Answer type and purpose |
+|---|---|---|
+| 1 | Where should we send your Eden summary? | Work email plus inquiry consent; creates the early CRM lead. |
+| 2 | What should Eden take off your plate first? | Multi-select priorities. Household logistics remains; reservations is removed. |
+| 3 | In a normal week, what do you most wish someone else would handle for you? | Required open text describing real work. |
+| 4 | What would you like Eden to make reliably happen every week? | Required open text defining the desired result. |
+| 5 | What gets missed or delayed when you are busy, and what happens when it slips? | Required open text combining current friction and consequence. |
+| 6 | Roughly how many tasks, requests, or follow-ups compete for your attention each week? | Plain-language volume bands; replaces “open loops.” |
+| 7 | How many hours does that work take from you in a typical week? | Whole-hour estimate. |
+| 8 | How meeting-heavy is a normal week? | Quick single choice. |
+| 9 | How demanding is your inbox in a normal week? | Quick single choice. |
+| 10 | How much coordination does your calendar need? | Quick single choice. |
+| 11 | How often does work travel create extra planning or follow-up? | Quick single choice. |
+| 12 | Where would Eden need to work with you? | Multi-select tool categories. |
+| 13 | How ready is the information Eden would need? | Organised, partly organised, scattered, or mostly in the visitor’s head. |
+| 14 | What should Eden understand about you or your work from day one? | Required open text for the initial Brain. |
+| 15 | Who should Eden support first? | Personal and team scope. |
+| 16 | How should Eden begin helping? | Suggest only, prepare for approval, or handle agreed routine work. |
+| 17 | Which decisions should Eden always bring back to you? | Required open text defining the customer’s boundaries. |
+| 18 | What would you like Eden to brief you on, and how often? | Optional open text for useful proactive rhythms. |
+| 19 | How would you know Eden is earning her place? | Required open text defining success. |
+| 20 | Who should look after Eden once she is set up? | Managed by Aygency or customer-maintained. |
+| 21 | When would you like Eden to start? | Timing signal. |
+| 22 | What matters more when choosing your Eden? | Strongest outcome even if it costs more; right balance of outcome and cost; or lowest possible price. |
+| 23 | Who are we designing this with? | Name and optional contact context. |
+| 24 | Would you like to share the organisation Eden would support? | Optional organisation context, including a public website. |
+| 25 | Is there anything else Eden should understand? | Optional open text, separate marketing consent, and final bot check. |
+
+The event name remains `EdenApplicationSubmitted.v1`; the source form version
+advances to `eden-application.v3`. V1 and V2 snapshots remain immutable and
+valid under their original catalogues. V3 stores all original answers exactly,
+labels every free-text answer as untrusted, and never turns applicant prose
+into commands, permissions, schedules, HTML, or executable configuration.
+
+If an organisation website is supplied, **Create Eden** may start a separate
+least-privileged public-research step. The browser never performs that research.
+The retriever may access only validated public HTTP(S) pages after DNS/IP,
+redirect, content-type, size, timeout, and credential checks. It produces a
+bounded, cited, untrusted evidence pack. The contextual builder may interpret
+that evidence, but deterministic code decides which cited facts enter the
+customer’s Obsidian-compatible Brain. Source URL, retrieval time, and evidence
+digest stay attached; page instructions cannot grant tools or authority.
+
+**Exit criteria:** the plan is committed only after lint and production build
+pass. No application, CRM row, dashboard action, builder job, or live VM changes
+in this phase.
+
+### Phase 1: build and verify the local V3 funnel
+
+**Goal:** Replace the current questionnaire and result with the 25-screen
+plain-language experience for local review.
+
+**Scope:** Zod/RHF types, V3 event mapping, copy, option labels, open-text
+controls, progress, keyboard flow, retained answers, simple-language Eden
+summary, fixtures, unit tests, Playwright, and 375/768/1024/1440 review.
+
+**Exit criteria:** all repository tests, strict TypeScript, lint, production
+build, audit, and Eden Playwright journeys pass; reservations and “open loops”
+are absent from visitor copy and payload; original free text renders inertly;
+the local preview is reopened before commit.
+
+### Phase 2: add the backward-compatible V3 CRM receiver
+
+**Goal:** Accept and store the new exact snapshot without changing V1 or V2.
+
+**Scope:** additive Edge catalogue and derivations, forward-only migration,
+exact V3 storage, dashboard-safe projection, build-spec mapping, hostile-input
+tests, and disabled-first deployment.
+
+**Exit criteria:** V1, V2, and V3 golden payloads pass together; retry remains
+byte-identical; unknown questions and credential-shaped text fail closed; the
+browser still has no database authority; full AOS Python, Deno, SQL, shell, and
+diff gates pass before commit and rollout.
+
+### Phase 3: add cited website research to Create Eden
+
+**Goal:** Let the contextual build use useful public company context without
+giving Hermes arbitrary browsing or treating web content as instructions.
+
+**Scope:** safe public-site retriever, bounded cited evidence schema, immutable
+application/site/retrieval bindings, research status in the one-click job,
+builder prompt integration, Brain source notes, idempotency, safe retry, and
+content-free dashboard progress.
+
+**Exit criteria:** synthetic websites prove useful cited differences; private
+addresses, redirects, credentials, prompt injection, unsupported content,
+oversized pages, crossed applications, and stale evidence fail closed; no raw
+page enters logs or executable files; the same Create Eden request reuses the
+same research/build/provisioning chain.
+
+### Phase 4: deploy and run the Louis acceptance journey
+
+**Goal:** Prove the first real founder-observed customer journey using Louis’s
+own answers and no manual stage between Create Eden and onboarding.
+
+**Scope:** production website rollout, live Turnstile submission, dashboard
+read-back, one Create Eden click, isolated VM and LLM-route verification,
+private Telegram link, automatic conversational onboarding, automatic readiness
+transition, and first normal Eden interaction.
+
+**Exit criteria:** Louis’s name and email appear in the Eden dashboard; one
+click creates exactly one VM and contextual Brain; the LLM route is healthy
+without exposing its credential; the private Telegram binding starts onboarding
+automatically; completing onboarding makes Eden say she is ready and begin
+normal operation; no separate activation button or founder approval exists.
