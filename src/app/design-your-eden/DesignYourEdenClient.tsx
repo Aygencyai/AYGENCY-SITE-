@@ -35,18 +35,21 @@ import {
   type EdenLeadCapture,
 } from "@/lib/eden/lead-capture-schema";
 import {
-  budgetReadinessOptionList,
+  buyingPriorityOptionList,
   calendarComplexityOptionList,
+  contextReadinessOptionList,
   currentToolOptionList,
   edenSteps,
   emailLoadOptionList,
   meetingLoadOptionList,
-  openLoopVolumeOptionList,
   organisationSizeBandOptionList,
   primaryOutcomeOptionList,
   serviceModelOptionList,
+  startingAuthorityOptionList,
+  supportScopeOptionList,
   targetStartWindowOptionList,
   travelFrequencyOptionList,
+  weeklyWorkloadVolumeOptionList,
 } from "@/lib/eden/questionnaire";
 
 interface DesignYourEdenClientProps {
@@ -312,8 +315,14 @@ export default function DesignYourEdenClient({
     defaultValues: {
       answers: {
         primaryOutcomes: [],
+        normalWeekSupport: "",
+        desiredWeeklyResult: "",
         currentFriction: "",
         currentTools: [],
+        dayOneContext: "",
+        decisionBoundaries: "",
+        briefingPreferences: "",
+        successMeasure: "",
         anythingElse: "",
       },
       contact: {
@@ -336,7 +345,15 @@ export default function DesignYourEdenClient({
     },
   });
 
-  const currentFriction = watch("answers.currentFriction") ?? "";
+  const openTextValues = {
+    normalWeekSupport: watch("answers.normalWeekSupport") ?? "",
+    desiredWeeklyResult: watch("answers.desiredWeeklyResult") ?? "",
+    currentFriction: watch("answers.currentFriction") ?? "",
+    dayOneContext: watch("answers.dayOneContext") ?? "",
+    decisionBoundaries: watch("answers.decisionBoundaries") ?? "",
+    briefingPreferences: watch("answers.briefingPreferences") ?? "",
+    successMeasure: watch("answers.successMeasure") ?? "",
+  };
   const anythingElse = watch("answers.anythingElse") ?? "";
   const currentStep = edenSteps[stepIndex];
 
@@ -461,7 +478,7 @@ export default function DesignYourEdenClient({
     if (isAdvancing || !currentStep) return;
     setIsAdvancing(true);
     try {
-      if (localPreview && currentStep.id === "consents" && !getValues("botToken")) {
+      if (localPreview && currentStep.id === "anythingElse" && !getValues("botToken")) {
         setValue("botToken", "local-preview-token", {
           shouldDirty: true,
           shouldValidate: false,
@@ -555,13 +572,16 @@ export default function DesignYourEdenClient({
 
   const renderSingleChoice = <T extends string>(
     name:
-      | "answers.openLoopVolume"
+      | "answers.weeklyWorkloadVolume"
       | "answers.meetingLoad"
       | "answers.emailLoad"
       | "answers.calendarComplexity"
       | "answers.travelFrequency"
+      | "answers.contextReadiness"
+      | "answers.supportScope"
+      | "answers.startingAuthority"
       | "answers.targetStartWindow"
-      | "answers.budgetReadiness",
+      | "answers.buyingPriority",
     legend: string,
     options: ReadonlyArray<{ value: T; label: string; description?: string }>,
   ) => (
@@ -589,8 +609,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="First, where should we send your Eden Blueprint?"
-            description="Your work email creates the inquiry in our CRM before the diagnostic begins, so we can keep your Blueprint and any follow-up connected."
+            title="First, where should we send your Eden summary?"
+            description="Enter your work email so we can keep your answers together and send you what Eden could do for you."
           >
             <div className="space-y-4">
               <div>
@@ -636,7 +656,7 @@ export default function DesignYourEdenClient({
                     />
                     <span>
                       <span className="block font-sans text-sm font-medium text-ghost">
-                        Send my Blueprint and respond to my inquiry <span className="text-cyan">*</span>
+                        Send my Eden summary and respond to my inquiry <span className="text-cyan">*</span>
                       </span>
                       <span id="inquiry-consent-copy" className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">
                         I agree that Aygency may store my email and use my answers to prepare this Eden recommendation and contact me about it.
@@ -696,8 +716,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What should Eden improve first?"
-            description="Choose every outcome that belongs in the first discovery conversation."
+            title="What should Eden take off your plate first?"
+            description="Choose the areas where having a reliable personal assistant would make the biggest difference."
           >
             <Controller
               name="answers.primaryOutcomes"
@@ -705,11 +725,11 @@ export default function DesignYourEdenClient({
               render={({ field, fieldState }) => (
                 <EdenOptionGroup
                   name={field.name}
-                  legend="What should Eden improve first?"
+                  legend="What should Eden take off your plate first?"
                   options={primaryOutcomeOptionList}
                   value={field.value}
                   multiple
-                  maxSelections={9}
+                  maxSelections={8}
                   onBlur={field.onBlur}
                   onChange={(option) => {
                     const current = field.value ?? [];
@@ -726,19 +746,65 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
+      case "normalWeekSupport":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="In a normal week, what do you most wish someone else would handle for you?"
+            description="Describe the real work in your own words. Think about the things that repeatedly take time or mental energy."
+          >
+            <label htmlFor="normalWeekSupport" className="sr-only">Weekly support</label>
+            <textarea
+              id="normalWeekSupport"
+              rows={6}
+              maxLength={1500}
+              placeholder="For example: Keep track of the people I need to reply to, prepare me for meetings, and make sure agreed actions actually happen."
+              aria-describedby="eden-question-description normalWeekSupport-error"
+              aria-invalid={Boolean(errors.answers?.normalWeekSupport)}
+              className={`${inputClasses} min-h-[180px] resize-y`}
+              {...register("answers.normalWeekSupport")}
+            />
+            <CharacterCount current={openTextValues.normalWeekSupport.length} maximum={1500} />
+            <ErrorMessage id="normalWeekSupport-error" message={errors.answers?.normalWeekSupport?.message} />
+          </QuestionFrame>
+        );
+
+      case "desiredWeeklyResult":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="What would you like Eden to make reliably happen every week?"
+            description="Tell us what a noticeably better week would look like once Eden is helping."
+          >
+            <label htmlFor="desiredWeeklyResult" className="sr-only">Desired weekly result</label>
+            <textarea
+              id="desiredWeeklyResult"
+              rows={6}
+              maxLength={1500}
+              placeholder="For example: I start each day knowing what matters, important follow-ups are prepared, and meetings never catch me without context."
+              aria-describedby="eden-question-description desiredWeeklyResult-error"
+              aria-invalid={Boolean(errors.answers?.desiredWeeklyResult)}
+              className={`${inputClasses} min-h-[180px] resize-y`}
+              {...register("answers.desiredWeeklyResult")}
+            />
+            <CharacterCount current={openTextValues.desiredWeeklyResult.length} maximum={1500} />
+            <ErrorMessage id="desiredWeeklyResult-error" message={errors.answers?.desiredWeeklyResult?.message} />
+          </QuestionFrame>
+        );
+
       case "currentFriction":
         return (
           <QuestionFrame
             number={questionNumber}
-            title="What currently takes your attention or gets missed?"
-            description="Describe the commitments, preparation, and follow-through that create the most friction."
+            title="What gets missed or delayed when you are busy, and what happens when it slips?"
+            description="This helps us understand both the problem and why fixing it would matter."
           >
             <label htmlFor="currentFriction" className="sr-only">Current friction</label>
             <textarea
               id="currentFriction"
               rows={6}
               maxLength={1500}
-              placeholder="For example: Follow-ups sit across email, meeting notes, and our task board. I spend too much time rebuilding context and remembering who needs a response."
+              placeholder="For example: Follow-ups are delayed because they sit across email and meeting notes. People have to chase me, decisions slow down, and I lose time rebuilding the context."
               aria-describedby="eden-question-description currentFriction-hint currentFriction-error"
               aria-invalid={Boolean(errors.answers?.currentFriction)}
               className={`${inputClasses} min-h-[180px] resize-y`}
@@ -748,7 +814,7 @@ export default function DesignYourEdenClient({
               <p id="currentFriction-hint" className="mt-2 max-w-lg font-sans text-xs leading-relaxed text-ghost-dim">
                 Do not include passwords, credentials, messages, transcripts, or private operational data.
               </p>
-              <CharacterCount current={currentFriction.length} maximum={1500} />
+              <CharacterCount current={openTextValues.currentFriction.length} maximum={1500} />
             </div>
             <ErrorMessage id="currentFriction-error" message={errors.answers?.currentFriction?.message} />
           </QuestionFrame>
@@ -758,8 +824,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="How many hours does this cost in a typical week?"
-            description="Use a whole-number estimate from 0 to 168. A measured estimate is more useful than a polished one."
+            title="How many hours does that work take from you in a typical week?"
+            description="A rough whole-number estimate is enough. Include the time spent remembering, preparing, chasing, and checking."
           >
             <label htmlFor="hoursLostWeekly" className="sr-only">Hours lost weekly</label>
             <input
@@ -779,40 +845,48 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
-      case "openLoopVolume":
+      case "weeklyWorkloadVolume":
         return (
-          <QuestionFrame number={questionNumber} title="How many open loops compete at once?" description="Think about unresolved replies, promises, actions, and decisions that still need follow-through.">
-            {renderSingleChoice("answers.openLoopVolume", "Open-loop volume", openLoopVolumeOptionList)}
+          <QuestionFrame
+            number={questionNumber}
+            title="Roughly how many tasks, requests, or follow-ups compete for your attention each week?"
+            description="Choose the closest range. There is no need to count them exactly."
+          >
+            {renderSingleChoice(
+              "answers.weeklyWorkloadVolume",
+              "Weekly tasks, requests, and follow-ups",
+              weeklyWorkloadVolumeOptionList,
+            )}
           </QuestionFrame>
         );
       case "meetingLoad":
         return (
-          <QuestionFrame number={questionNumber} title="How heavy is your meeting load?" description="Include the preparation and follow-up around meetings, not only time spent in the room.">
+          <QuestionFrame number={questionNumber} title="How meeting-heavy is a normal week?" description="Include the preparation and follow-up around meetings, not only the time spent in them.">
             {renderSingleChoice("answers.meetingLoad", "Meeting load", meetingLoadOptionList)}
           </QuestionFrame>
         );
       case "emailLoad":
         return (
-          <QuestionFrame number={questionNumber} title="How heavy is your email load?" description="Choose the level that best reflects triage, replies, introductions, and follow-ups.">
+          <QuestionFrame number={questionNumber} title="How demanding is your inbox in a normal week?" description="Think about reading, replying, introducing people, and remembering what needs a follow-up.">
             {renderSingleChoice("answers.emailLoad", "Email load", emailLoadOptionList)}
           </QuestionFrame>
         );
       case "calendarComplexity":
         return (
-          <QuestionFrame number={questionNumber} title="How complex is your calendar?" description="Consider attendees, changes, time zones, travel, and preparation dependencies.">
+          <QuestionFrame number={questionNumber} title="How much coordination does your calendar need?" description="Think about changes, attendees, time zones, travel, and protecting time for important work.">
             {renderSingleChoice("answers.calendarComplexity", "Calendar complexity", calendarComplexityOptionList)}
           </QuestionFrame>
         );
       case "travelFrequency":
         return (
-          <QuestionFrame number={questionNumber} title="How often do you travel for work?" description="This determines whether mobility coordination belongs in Eden's first capability plan.">
+          <QuestionFrame number={questionNumber} title="How often does work travel create extra planning or follow-up?" description="Choose how often travel affects your calendar, preparation, or unfinished work.">
             {renderSingleChoice("answers.travelFrequency", "Travel frequency", travelFrequencyOptionList)}
           </QuestionFrame>
         );
 
       case "currentTools":
         return (
-          <QuestionFrame number={questionNumber} title="Which tools hold the context Eden would need?" description="Choose the named providers you use today. Slack and other providers are confirmed during discovery.">
+          <QuestionFrame number={questionNumber} title="Where would Eden need to work with you?" description="Choose the tools that currently hold your messages, calendar, notes, or tasks.">
             <Controller
               name="answers.currentTools"
               control={control}
@@ -840,16 +914,156 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
+      case "contextReadiness":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="How ready is the information Eden would need?"
+            description="Think about your preferences, responsibilities, contacts, projects, and usual ways of working."
+          >
+            {renderSingleChoice(
+              "answers.contextReadiness",
+              "Information readiness",
+              contextReadinessOptionList,
+            )}
+          </QuestionFrame>
+        );
+
+      case "dayOneContext":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="What should Eden understand about you or your work from day one?"
+            description="Share the useful background that would help a personal assistant support you well. Keep it high level and do not include private records or credentials."
+          >
+            <label htmlFor="dayOneContext" className="sr-only">Day-one context</label>
+            <textarea
+              id="dayOneContext"
+              rows={6}
+              maxLength={1500}
+              placeholder="For example: I split my time between client work and running the company. Mornings are for focused work, and I want important decisions grouped rather than sent one at a time."
+              aria-describedby="eden-question-description dayOneContext-error"
+              aria-invalid={Boolean(errors.answers?.dayOneContext)}
+              className={`${inputClasses} min-h-[180px] resize-y`}
+              {...register("answers.dayOneContext")}
+            />
+            <CharacterCount current={openTextValues.dayOneContext.length} maximum={1500} />
+            <ErrorMessage id="dayOneContext-error" message={errors.answers?.dayOneContext?.message} />
+          </QuestionFrame>
+        );
+
+      case "supportScope":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="Who should Eden support first?"
+            description="Start with the smallest group that would feel useful. Eden can expand later as responsibilities become clear."
+          >
+            {renderSingleChoice("answers.supportScope", "Initial support", supportScopeOptionList)}
+          </QuestionFrame>
+        );
+
+      case "startingAuthority":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="How should Eden begin helping?"
+            description="This sets the starting point for how much Eden prepares or handles before coming back to you."
+          >
+            {renderSingleChoice(
+              "answers.startingAuthority",
+              "Starting level of help",
+              startingAuthorityOptionList,
+            )}
+          </QuestionFrame>
+        );
+
+      case "decisionBoundaries":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="Which decisions should Eden always bring back to you?"
+            description="Describe the choices where you always want the final say."
+          >
+            <label htmlFor="decisionBoundaries" className="sr-only">Decision boundaries</label>
+            <textarea
+              id="decisionBoundaries"
+              rows={6}
+              maxLength={1500}
+              placeholder="For example: Anything involving money, commitments to a client, changes to important dates, or messages sent in my name."
+              aria-describedby="eden-question-description decisionBoundaries-error"
+              aria-invalid={Boolean(errors.answers?.decisionBoundaries)}
+              className={`${inputClasses} min-h-[180px] resize-y`}
+              {...register("answers.decisionBoundaries")}
+            />
+            <CharacterCount current={openTextValues.decisionBoundaries.length} maximum={1500} />
+            <ErrorMessage id="decisionBoundaries-error" message={errors.answers?.decisionBoundaries?.message} />
+          </QuestionFrame>
+        );
+
+      case "briefingPreferences":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="What would you like Eden to brief you on, and how often?"
+            description="Optional. Tell us what you would want to hear each morning, before meetings, at the end of the day, or only when something needs you."
+          >
+            <label htmlFor="briefingPreferences" className="sr-only">Briefing preferences</label>
+            <textarea
+              id="briefingPreferences"
+              rows={5}
+              maxLength={1000}
+              placeholder="For example: A short morning plan, a five-minute meeting brief, and one end-of-day list of anything still waiting on me."
+              aria-describedby="eden-question-description briefingPreferences-error"
+              className={`${inputClasses} min-h-[160px] resize-y`}
+              {...register("answers.briefingPreferences")}
+            />
+            <CharacterCount current={openTextValues.briefingPreferences.length} maximum={1000} />
+            <ErrorMessage id="briefingPreferences-error" message={errors.answers?.briefingPreferences?.message} />
+          </QuestionFrame>
+        );
+
+      case "successMeasure":
+        return (
+          <QuestionFrame
+            number={questionNumber}
+            title="How would you know Eden is earning her place?"
+            description="Describe the result that would make Eden feel clearly worthwhile to you."
+          >
+            <label htmlFor="successMeasure" className="sr-only">Success measure</label>
+            <textarea
+              id="successMeasure"
+              rows={5}
+              maxLength={1000}
+              placeholder="For example: I recover five focused hours a week, fewer people have to chase me, and I arrive at important meetings already prepared."
+              aria-describedby="eden-question-description successMeasure-error"
+              aria-invalid={Boolean(errors.answers?.successMeasure)}
+              className={`${inputClasses} min-h-[160px] resize-y`}
+              {...register("answers.successMeasure")}
+            />
+            <CharacterCount current={openTextValues.successMeasure.length} maximum={1000} />
+            <ErrorMessage id="successMeasure-error" message={errors.answers?.successMeasure?.message} />
+          </QuestionFrame>
+        );
+
       case "targetStartWindow":
         return (
           <QuestionFrame number={questionNumber} title="When would you like Eden to start?" description="Choose the window that reflects your current readiness.">
             {renderSingleChoice("answers.targetStartWindow", "Target start window", targetStartWindowOptionList)}
           </QuestionFrame>
         );
-      case "budgetReadiness":
+      case "buyingPriority":
         return (
-          <QuestionFrame number={questionNumber} title="What matters most when choosing your Eden?" description="We build around the strongest fit and result, then scope the investment with you. Choose the statement that best describes where the decision stands.">
-            {renderSingleChoice("answers.budgetReadiness", "What matters most", budgetReadinessOptionList)}
+          <QuestionFrame
+            number={questionNumber}
+            title="What matters more when choosing your Eden?"
+            description="Choose the statement that most honestly reflects how you would make the decision."
+          >
+            {renderSingleChoice(
+              "answers.buyingPriority",
+              "Outcome or price priority",
+              buyingPriorityOptionList,
+            )}
           </QuestionFrame>
         );
 
@@ -857,8 +1071,8 @@ export default function DesignYourEdenClient({
         return (
           <QuestionFrame
             number={questionNumber}
-            title="How would you like your Eden to be managed?"
-            description="Choose the service model you would want us to shape around you. Both options give us a useful starting point for the conversation."
+            title="Who should look after Eden once she is set up?"
+            description="Tell us whether you want Aygency to keep Eden running and improving with you, or whether you want to maintain her yourself."
           >
             <Controller
               name="answers.operatedServiceAck"
@@ -918,7 +1132,7 @@ export default function DesignYourEdenClient({
           <QuestionFrame
             number={questionNumber}
             title="If you want to share, which organisation would Eden support?"
-            description="Optional. Knowing the background Eden would work within helps us make her example more relevant. Leave every field blank to continue without sharing organisation details."
+            description="Optional. If you share a website, we can use public information about the organisation to make Eden more relevant. Leave every field blank to continue without sharing organisation details."
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
@@ -969,24 +1183,29 @@ export default function DesignYourEdenClient({
 
       case "anythingElse":
         return (
-          <QuestionFrame number={questionNumber} title="What else would make Eden genuinely useful to you?" description="Optional. Add any detail that would help us understand the personal-assistant experience you want.">
+          <QuestionFrame
+            number={questionNumber}
+            title="Is there anything else Eden should understand?"
+            description="Optional. Add anything that would help us understand the personal assistant you want. You can also choose whether to receive occasional Eden updates."
+          >
             <label htmlFor="anythingElse" className="sr-only">Additional discovery context</label>
-            <textarea id="anythingElse" rows={5} maxLength={1000} placeholder="For example: Start with follow-through before expanding into travel coordination." className={`${inputClasses} min-h-[160px] resize-y`} {...register("answers.anythingElse")} />
+            <textarea
+              id="anythingElse"
+              rows={4}
+              maxLength={1000}
+              placeholder="For example: I prefer one clear summary rather than lots of notifications, and I want Eden to start with work before helping with household logistics."
+              className={`${inputClasses} min-h-[140px] resize-y`}
+              {...register("answers.anythingElse")}
+            />
             <CharacterCount current={anythingElse.length} maximum={1000} />
             <ErrorMessage id="anythingElse-error" message={errors.answers?.anythingElse?.message} />
-          </QuestionFrame>
-        );
-
-      case "consents":
-        return (
-          <QuestionFrame number={questionNumber} title="Would you like practical Eden updates too?" description="Your inquiry permission was recorded before the diagnostic. Marketing is separate, optional, and off by default.">
             <fieldset>
               <legend className="sr-only">Optional marketing permission</legend>
-              <div className="space-y-3">
+              <div className="mt-6 space-y-3">
                 <div className="rounded-xl border border-cyan/15 bg-cyan/[0.04] p-5">
-                  <p className="font-sans text-sm font-medium text-ghost">Blueprint inquiry permission granted</p>
+                  <p className="font-sans text-sm font-medium text-ghost">Your Eden inquiry permission is already recorded</p>
                   <p className="mt-1 font-sans text-xs leading-relaxed text-ghost-muted">
-                    This covers preparing your result and contacting you about this Eden inquiry. It does not subscribe you to marketing.
+                    This lets us prepare your result and contact you about this inquiry. It does not subscribe you to marketing.
                   </p>
                 </div>
                 <Controller
@@ -1004,8 +1223,8 @@ export default function DesignYourEdenClient({
                         className="mt-0.5 h-5 w-5 flex-none rounded border-ghost/20 bg-void-light accent-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/40"
                       />
                       <span>
-                        <span className="block font-sans text-sm font-medium text-ghost">Aygency newsletter and Eden updates</span>
-                        <span className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">Optional. Send me practical AI ideas and occasional Eden updates.</span>
+                        <span className="block font-sans text-sm font-medium text-ghost">Send me useful Eden updates too</span>
+                        <span className="mt-1 block font-sans text-xs leading-relaxed text-ghost-muted">Optional and off by default. This includes practical ideas and occasional product updates.</span>
                       </span>
                     </label>
                   )}
@@ -1036,7 +1255,16 @@ export default function DesignYourEdenClient({
     }
   };
 
-  const textStepIds = ["currentFriction", "anythingElse"];
+  const textStepIds = [
+    "normalWeekSupport",
+    "desiredWeeklyResult",
+    "currentFriction",
+    "dayOneContext",
+    "decisionBoundaries",
+    "briefingPreferences",
+    "successMeasure",
+    "anythingElse",
+  ];
   const inputStepIds = ["workEmail", "hoursLostWeekly", "contactDetails", "organisation"];
   const keyboardHint = textStepIds.includes(currentStep.id)
     ? "⌘ / Ctrl + Enter to continue"
@@ -1057,11 +1285,11 @@ export default function DesignYourEdenClient({
             <aside className="hidden lg:block">
               <div className="sticky top-32 border-l border-ghost/[0.08] pl-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">Personalisation logic</p>
-                <p className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">Pain → workload → fit → readiness</p>
-                <p className="mt-4 font-sans text-xs leading-relaxed text-ghost-dim">Every answer remains versioned alongside Eden&rsquo;s deterministic score and Blueprint.</p>
+                <p className="mt-4 font-heading text-lg font-semibold uppercase leading-tight text-ghost">Your week → your Eden → your result</p>
+                <p className="mt-4 font-sans text-xs leading-relaxed text-ghost-dim">Every answer stays connected to the practical example and the Eden we could prepare for you.</p>
                 <div className="mt-8 space-y-3">
-                  {["Start", "Pain", "Workload", "Readiness", "Identity"].map((label, index) => {
-                    const boundary = [0, 1, 4, 10, 14][index];
+                  {["Start", "Your week", "How Eden helps", "Fit", "About you"].map((label, index) => {
+                    const boundary = [0, 2, 12, 19, 22][index];
                     const active = stepIndex >= boundary;
                     return (
                       <div key={label} className="flex items-center gap-3">

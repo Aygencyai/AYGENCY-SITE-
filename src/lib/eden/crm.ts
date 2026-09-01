@@ -2,7 +2,7 @@ import { createHmac } from "node:crypto";
 import type { EdenApplication, OrganisationSizeBand } from "./application-schema";
 
 export const EDEN_CRM_EVENT_TYPE = "EdenApplicationSubmitted.v1" as const;
-export const EDEN_CRM_FORM_VERSION = "eden-application.v2" as const;
+export const EDEN_CRM_FORM_VERSION = "eden-application.v3" as const;
 export const EDEN_CRM_ACTION = "eden_application_submit" as const;
 const MAX_BODY_BYTES = 65_536;
 const MAX_ATTEMPTS = 3;
@@ -144,9 +144,15 @@ export function createEdenCrmEvent(
 ): EdenApplicationSubmittedEvent {
   const answers: EdenContractAnswer[] = [
     answer("eden-primary-outcomes", "multi_select", [...application.answers.primaryOutcomes]),
+    answer("eden-normal-week-support", "text", application.answers.normalWeekSupport),
+    answer("eden-desired-weekly-result", "text", application.answers.desiredWeeklyResult),
     answer("eden-current-friction", "text", application.answers.currentFriction),
+    answer(
+      "eden-weekly-workload-volume",
+      "single_select",
+      application.answers.weeklyWorkloadVolume,
+    ),
     answer("eden-hours-lost-weekly", "integer", application.answers.hoursLostWeekly),
-    answer("eden-open-loop-volume", "single_select", application.answers.openLoopVolume),
     answer("eden-meeting-load", "single_select", application.answers.meetingLoad),
     answer("eden-email-load", "single_select", application.answers.emailLoad),
     answer(
@@ -156,13 +162,28 @@ export function createEdenCrmEvent(
     ),
     answer("eden-travel-frequency", "single_select", application.answers.travelFrequency),
     answer("eden-current-tools", "multi_select", [...application.answers.currentTools]),
+    answer("eden-context-readiness", "single_select", application.answers.contextReadiness),
+    answer("eden-day-one-context", "text", application.answers.dayOneContext),
+    answer("eden-support-scope", "single_select", application.answers.supportScope),
+    answer("eden-starting-authority", "single_select", application.answers.startingAuthority),
+    answer("eden-decision-boundaries", "text", application.answers.decisionBoundaries),
+    ...(application.answers.briefingPreferences.trim()
+      ? [
+          answer(
+            "eden-briefing-preferences",
+            "text",
+            application.answers.briefingPreferences,
+          ),
+        ]
+      : []),
+    answer("eden-success-measure", "text", application.answers.successMeasure),
+    answer("eden-operated-service-ack", "boolean", application.answers.operatedServiceAck),
     answer(
       "eden-target-start-window",
       "single_select",
       application.answers.targetStartWindow,
     ),
-    answer("eden-budget-readiness", "single_select", application.answers.budgetReadiness),
-    answer("eden-operated-service-ack", "boolean", application.answers.operatedServiceAck),
+    answer("eden-buying-priority", "single_select", application.answers.buyingPriority),
   ];
   if (application.answers.anythingElse.trim()) {
     answers.push(

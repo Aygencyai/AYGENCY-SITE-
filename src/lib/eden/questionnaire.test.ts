@@ -17,14 +17,14 @@ describe("Eden Blueprint example", () => {
 
     expect(example).toMatchObject({
       context: {
-        volume: "High",
-        people: "11–50 people",
+        volume: "About 26 to 50",
+        people: "A small team",
         systems: "Microsoft 365, Todoist, Notion, Telegram",
-        serviceModel: "Managed with Aygency",
+        organisation: "11 to 50 people",
       },
     });
-    expect(example.coordinationDescription).toContain("approved context");
-    expect(example.controlDescription).toContain("review points");
+    expect(example.coordinationDescription).toContain("useful context");
+    expect(example.controlDescription).toContain("approval");
   });
 
   it("recommends mobility only when the submitted outcomes include travel", () => {
@@ -38,7 +38,7 @@ describe("Eden Blueprint example", () => {
     ]);
 
     expect(mobility.title).toContain("travel");
-    expect(executive.title).toBe("Executive coordination assistant");
+    expect(executive.title).toBe("Personal assistant for a busy working week");
     expect(executive.title).not.toContain("travel");
   });
 
@@ -47,7 +47,7 @@ describe("Eden Blueprint example", () => {
     application.answers.operatedServiceAck = false;
 
     expect(getEdenOperatingMode(application.answers)).toMatchObject({
-      title: "Built for you to maintain",
+      title: "Set up for you to maintain",
     });
   });
 
@@ -61,8 +61,8 @@ describe("Eden Blueprint example", () => {
       "meetings",
     ]);
     expect(plan[0]).toMatchObject({
-      title: "Keep every commitment moving",
-      signal: "High open-loop volume · 14 hrs/week",
+      title: "Keep tasks, requests, and promises moving",
+      signal: "About 26 to 50",
     });
     expect(JSON.stringify(plan)).not.toContain(application.answers.currentFriction);
     expect(JSON.stringify(plan)).not.toContain(application.answers.anythingElse);
@@ -82,7 +82,7 @@ describe("Eden Blueprint example", () => {
       application.organisation!.sizeBand,
     );
 
-    expect(inbox.arrivalTitle).toContain("inbox");
+    expect(inbox.arrivalTitle).toContain("message");
     expect(travel.arrivalTitle).toContain("travel");
     expect(inbox.arrivalTitle).not.toBe(travel.arrivalTitle);
   });
@@ -90,8 +90,8 @@ describe("Eden Blueprint example", () => {
   it("builds a personal example when organisation context is not shared", () => {
     const application = createEdenApplicationFixture();
 
-    expect(getEdenExample(application.answers, null).context.people).toBe(
-      "Personal use",
+    expect(getEdenExample(application.answers, null).context.organisation).toBe(
+      "Not shared",
     );
   });
 });

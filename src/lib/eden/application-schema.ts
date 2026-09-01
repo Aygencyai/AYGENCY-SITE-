@@ -2,21 +2,21 @@ import { z } from "zod";
 
 export const primaryOutcomeOptions = [
   "protect-time",
-  "close-open-loops",
+  "keep-tasks-moving",
   "improve-follow-through",
   "reduce-inbox-load",
   "improve-meeting-readiness",
   "protect-focus",
   "coordinate-travel",
-  "manage-reservations",
   "coordinate-household",
 ] as const;
 
-export const openLoopVolumeOptions = [
-  "low",
-  "moderate",
-  "high",
-  "overwhelming",
+export const weeklyWorkloadVolumeOptions = [
+  "under-10",
+  "10-25",
+  "26-50",
+  "more-than-50",
+  "hard-to-tell",
 ] as const;
 
 export const meetingLoadOptions = ["low", "moderate", "high", "extreme"] as const;
@@ -48,11 +48,27 @@ export const targetStartWindowOptions = [
   "within_90_days",
   "exploring",
 ] as const;
-export const budgetReadinessOptions = [
-  "approved",
-  "range_known",
-  "needs_business_case",
-  "not_set",
+export const contextReadinessOptions = [
+  "organised",
+  "partly-organised",
+  "scattered",
+  "mostly-in-my-head",
+] as const;
+export const supportScopeOptions = [
+  "just-me",
+  "me-and-assistant",
+  "small-team",
+  "wider-team",
+] as const;
+export const startingAuthorityOptions = [
+  "suggest-only",
+  "prepare-for-approval",
+  "handle-agreed-routine-work",
+] as const;
+export const buyingPriorityOptions = [
+  "best-outcome",
+  "balance-outcome-and-cost",
+  "lowest-price",
 ] as const;
 export const organisationSizeBandOptions = [
   "solo",
@@ -123,15 +139,17 @@ const answersSchema = z
     primaryOutcomes: z
       .array(z.enum(primaryOutcomeOptions))
       .min(1, "Select at least one outcome.")
-      .max(9)
+      .max(8)
       .refine(uniqueArray, "Select each outcome only once."),
+    normalWeekSupport: requiredText("Weekly support", 20, 1_500),
+    desiredWeeklyResult: requiredText("Desired weekly result", 20, 1_500),
     currentFriction: requiredText("Current friction", 20, 1_500),
+    weeklyWorkloadVolume: z.enum(weeklyWorkloadVolumeOptions),
     hoursLostWeekly: z
       .number({ error: "Enter the hours lost in a typical week." })
       .int("Use a whole number of hours.")
       .min(0)
       .max(168),
-    openLoopVolume: z.enum(openLoopVolumeOptions),
     meetingLoad: z.enum(meetingLoadOptions),
     emailLoad: z.enum(emailLoadOptions),
     calendarComplexity: z.enum(calendarComplexityOptions),
@@ -141,9 +159,16 @@ const answersSchema = z
       .min(1, "Select at least one current tool.")
       .max(7)
       .refine(uniqueArray, "Select each tool only once."),
-    targetStartWindow: z.enum(targetStartWindowOptions),
-    budgetReadiness: z.enum(budgetReadinessOptions),
+    contextReadiness: z.enum(contextReadinessOptions),
+    dayOneContext: requiredText("Day-one context", 20, 1_500),
+    supportScope: z.enum(supportScopeOptions),
+    startingAuthority: z.enum(startingAuthorityOptions),
+    decisionBoundaries: requiredText("Decision boundaries", 10, 1_500),
+    briefingPreferences: optionalText("Briefing preferences", 1_000),
+    successMeasure: requiredText("Success measure", 10, 1_000),
     operatedServiceAck: z.boolean({ error: "Choose how you would like Eden to be managed." }),
+    targetStartWindow: z.enum(targetStartWindowOptions),
+    buyingPriority: z.enum(buyingPriorityOptions),
     anythingElse: optionalText("Additional context", 1_000),
   })
   .strict();
@@ -310,12 +335,15 @@ export type EdenContact = EdenApplication["contact"];
 export type EdenOrganisation = EdenApplication["organisation"];
 export type EdenAttribution = EdenApplication["attribution"];
 export type PrimaryOutcome = EdenAnswers["primaryOutcomes"][number];
-export type OpenLoopVolume = EdenAnswers["openLoopVolume"];
+export type WeeklyWorkloadVolume = EdenAnswers["weeklyWorkloadVolume"];
 export type MeetingLoad = EdenAnswers["meetingLoad"];
 export type EmailLoad = EdenAnswers["emailLoad"];
 export type CalendarComplexity = EdenAnswers["calendarComplexity"];
 export type TravelFrequency = EdenAnswers["travelFrequency"];
 export type CurrentTool = EdenAnswers["currentTools"][number];
+export type ContextReadiness = EdenAnswers["contextReadiness"];
+export type SupportScope = EdenAnswers["supportScope"];
+export type StartingAuthority = EdenAnswers["startingAuthority"];
 export type TargetStartWindow = EdenAnswers["targetStartWindow"];
-export type BudgetReadiness = EdenAnswers["budgetReadiness"];
+export type BuyingPriority = EdenAnswers["buyingPriority"];
 export type OrganisationSizeBand = (typeof organisationSizeBandOptions)[number];

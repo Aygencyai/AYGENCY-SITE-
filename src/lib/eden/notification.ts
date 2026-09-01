@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import type { EdenApplication } from "./application-schema";
-import { budgetReadinessLabels, primaryOutcomeLabels } from "./questionnaire";
+import { buyingPriorityLabels, primaryOutcomeLabels } from "./questionnaire";
 
 interface EmailSender {
   emails: {
@@ -66,7 +66,7 @@ export async function sendEdenApplicationNotification(
         `Primary outcomes: ${application.answers.primaryOutcomes
           .map((outcome) => primaryOutcomeLabels[outcome])
           .join(", ")}`,
-        `Investment decision: ${budgetReadinessLabels[application.answers.budgetReadiness]}`,
+        `Buying priority: ${buyingPriorityLabels[application.answers.buyingPriority]}`,
         `Marketing consent: ${application.consent.marketing ? "granted" : "not granted"}`,
         "",
         "Open the CRM record for the complete, authoritative application.",

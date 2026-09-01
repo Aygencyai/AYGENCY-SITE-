@@ -536,7 +536,7 @@ The `CRM-first Eden diagnosis and build draft` phases in this document are the c
 
 **Date:** 1 September 2026
 
-**Status:** Phase 0 planned; implementation pending
+**Status:** Phases 0–1 complete; backward-compatible V3 receiver is Phase 2
 
 This iteration supersedes the earlier 15-question catalogue and any visitor
 copy that describes a capability as parked. It also corrects the handoff model:
@@ -614,6 +614,24 @@ summary, fixtures, unit tests, Playwright, and 375/768/1024/1440 review.
 build, audit, and Eden Playwright journeys pass; reservations and “open loops”
 are absent from visitor copy and payload; original free text renders inertly;
 the local preview is reopened before commit.
+
+**Completed 1 September 2026:** The local funnel now contains exactly 25
+one-question screens and eight useful open-text opportunities. Reservations and
+visitor-facing “open loops” are absent. Household logistics remains a normal
+Eden outcome. The commercial question now asks directly whether the visitor
+prioritises the strongest outcome, a balance of outcome and cost, or the lowest
+possible price. The final Eden summary uses simple language, preserves every
+original answer as inert text, and changes its recommended responsibilities and
+working example from the controlled selections.
+
+The website sender emits the new immutable `eden-application.v3` catalogue and
+has a byte-shared golden fixture ready for the Phase 2 receiver. The gate passed
+58 unit/API tests with one opt-in integration test skipped, strict TypeScript,
+zero-warning lint, all 12 Playwright journeys including Axe and exact retry,
+375/768/1024/1440 overflow and screenshot review, and the production Next.js
+build. The audit has no high or critical advisory; its two moderate advisories
+are outside this release gate. The localhost review remains non-recording until
+the V3 receiver is deployed.
 
 ### Phase 2: add the backward-compatible V3 CRM receiver
 

@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import validGoldenPayload from "../../../tests/fixtures/eden-application-submitted-v2/valid-new.json";
+import validGoldenPayload from "../../../tests/fixtures/eden-application-submitted-v3/valid-new.json";
 import {
   createEdenCrmEvent,
   deliverEdenApplication,
@@ -35,7 +35,7 @@ afterEach(() => {
 });
 
 describe("Eden CRM delivery", () => {
-  it("constructs the byte-shared EdenApplicationSubmitted.v1 V2-form golden", () => {
+  it("constructs the byte-shared EdenApplicationSubmitted.v1 V3-form golden", () => {
     const event = createEdenCrmEvent(createEdenApplicationFixture(), {
       occurredAt: "2026-08-24T10:01:00.000Z",
       environment: "test",
@@ -80,7 +80,7 @@ describe("Eden CRM delivery", () => {
 
     const event = createEdenCrmEvent(application);
 
-    expect(event.source.form_version).toBe("eden-application.v2");
+    expect(event.source.form_version).toBe("eden-application.v3");
     expect(event.application.organisation).toBeNull();
     expect(event.application.answers.map(({ question_id }) => question_id)).not.toEqual(
       expect.arrayContaining([

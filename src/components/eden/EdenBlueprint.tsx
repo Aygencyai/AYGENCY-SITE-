@@ -16,8 +16,9 @@ import {
 import type { EdenApplication } from "@/lib/eden/application-schema";
 import { countryName } from "@/lib/eden/countries";
 import {
-  budgetReadinessLabels,
+  buyingPriorityLabels,
   calendarComplexityLabels,
+  contextReadinessLabels,
   currentToolLabels,
   emailLoadLabels,
   getEdenCapabilityPlan,
@@ -25,11 +26,13 @@ import {
   getEdenBlueprintRecommendation,
   getEdenOperatingMode,
   meetingLoadLabels,
-  openLoopVolumeLabels,
   organisationSizeBandLabels,
   primaryOutcomeLabels,
+  startingAuthorityLabels,
+  supportScopeLabels,
   targetStartWindowLabels,
   travelFrequencyLabels,
+  weeklyWorkloadVolumeLabels,
 } from "@/lib/eden/questionnaire";
 
 interface EdenBlueprintProps {
@@ -224,9 +227,8 @@ export default function EdenBlueprint({
             What Eden can take off your plate
           </h2>
           <p className="mt-3 font-sans text-sm leading-relaxed text-ghost-muted sm:text-base">
-            These recommendations come from the structured workload, priorities,
-            and control preferences you selected. They give the discovery call a
-            practical starting scope rather than a blank page.
+            Based on what you told us, these are three useful responsibilities
+            your Eden could begin with.
           </p>
         </div>
 
@@ -273,9 +275,8 @@ export default function EdenBlueprint({
             See your Eden handle a real working moment
           </h2>
           <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-ghost-muted sm:text-base">
-            Based on the operating shape you described, this is how one of those
-            responsibilities could move from incoming signal to a controlled
-            next action.
+            Here is a simple example of how Eden could notice something that
+            needs attention, prepare the next step, and keep you in control.
           </p>
           <p className="mt-6 max-w-3xl font-heading text-xl font-medium text-ghost sm:text-2xl">
             {example.title}
@@ -284,10 +285,10 @@ export default function EdenBlueprint({
 
         <dl className="grid border-b border-ghost/[0.08] sm:grid-cols-2 lg:grid-cols-4">
           {[
-            ["Weekly rhythm", example.context.volume],
-            ["People involved", example.context.people],
-            ["Tool context", example.context.systems],
-            ["Service model", example.context.serviceModel],
+            ["Work each week", example.context.volume],
+            ["Who Eden supports", example.context.people],
+            ["Where Eden works", example.context.systems],
+            ["Organisation", example.context.organisation],
           ].map(([label, value]) => (
             <div
               key={label}
@@ -356,17 +357,27 @@ export default function EdenBlueprint({
               .join(", ")}
           />
           <AnswerRow
-            label="Current friction"
+            label="What I want help with each week"
+            value={application.answers.normalWeekSupport}
+            preserveWhitespace
+          />
+          <AnswerRow
+            label="The result I want each week"
+            value={application.answers.desiredWeeklyResult}
+            preserveWhitespace
+          />
+          <AnswerRow
+            label="What gets missed and why it matters"
             value={application.answers.currentFriction}
             preserveWhitespace
           />
           <AnswerRow
-            label="Hours lost weekly"
-            value={String(application.answers.hoursLostWeekly)}
+            label="Tasks and follow-ups each week"
+            value={weeklyWorkloadVolumeLabels[application.answers.weeklyWorkloadVolume]}
           />
           <AnswerRow
-            label="Open-loop volume"
-            value={openLoopVolumeLabels[application.answers.openLoopVolume]}
+            label="Hours this takes each week"
+            value={String(application.answers.hoursLostWeekly)}
           />
           <AnswerRow
             label="Meeting load"
@@ -391,18 +402,52 @@ export default function EdenBlueprint({
               .join(", ")}
           />
           <AnswerRow
+            label="How organised the information is"
+            value={contextReadinessLabels[application.answers.contextReadiness]}
+          />
+          <AnswerRow
+            label="What Eden should know from day one"
+            value={application.answers.dayOneContext}
+            preserveWhitespace
+          />
+          <AnswerRow
+            label="Who Eden should support"
+            value={supportScopeLabels[application.answers.supportScope]}
+          />
+          <AnswerRow
+            label="How Eden should begin"
+            value={startingAuthorityLabels[application.answers.startingAuthority]}
+          />
+          <AnswerRow
+            label="Decisions Eden should bring back"
+            value={application.answers.decisionBoundaries}
+            preserveWhitespace
+          />
+          {application.answers.briefingPreferences.trim() && (
+            <AnswerRow
+              label="Briefing preferences"
+              value={application.answers.briefingPreferences}
+              preserveWhitespace
+            />
+          )}
+          <AnswerRow
+            label="How I would know Eden is worthwhile"
+            value={application.answers.successMeasure}
+            preserveWhitespace
+          />
+          <AnswerRow
             label="Target start"
             value={targetStartWindowLabels[application.answers.targetStartWindow]}
           />
           <AnswerRow
             label="What matters most"
-            value={budgetReadinessLabels[application.answers.budgetReadiness]}
+            value={buyingPriorityLabels[application.answers.buyingPriority]}
           />
           <AnswerRow
             label="Service model"
             value={application.answers.operatedServiceAck
-              ? "Aygency configures, operates and improves Eden with me"
-              : "I want to buy Eden and maintain her myself"}
+              ? "Aygency looks after and improves Eden with me"
+              : "I want to maintain Eden myself"}
           />
           <AnswerRow label="Name" value={application.contact.fullName} />
           <AnswerRow label="Work email" value={application.contact.workEmail} />

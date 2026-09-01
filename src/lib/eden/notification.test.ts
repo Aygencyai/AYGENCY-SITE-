@@ -36,7 +36,7 @@ describe("Eden application notification", () => {
     );
     expect(payload.text).toContain("authoritative application");
     expect(payload.text).toContain(
-      "Investment decision: Best fit and outcome; budget is approved",
+      "Buying priority: Getting the strongest outcome, even if it costs more",
     );
     expect(payload.text).not.toContain(application.answers.currentFriction);
     expect(payload.text).not.toContain(application.answers.anythingElse);

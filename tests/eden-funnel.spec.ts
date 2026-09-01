@@ -53,46 +53,91 @@ async function completeQuestionnaire(
   await expect(page.getByRole("progressbar")).toBeVisible();
 
   await page.getByLabel("Work email").fill("alex@example.com");
-  await page.getByLabel(/Send my Blueprint and respond to my inquiry/).check();
+  await page.getByLabel(/Send my Eden summary and respond to my inquiry/).check();
   await expect(page.locator('[data-test-turnstile="rendered"]')).toBeVisible();
   await continueQuestion(page);
 
   await selectOption(page, "Protect my time");
-  await selectOption(page, "Close open loops");
-  await selectOption(page, "Improve meeting readiness");
-  await selectOption(page, "Coordinate travel");
+  await selectOption(page, "Keep tasks and requests moving");
+  await selectOption(page, "Prepare me better for meetings");
+  await selectOption(page, "Coordinate work travel");
+  await continueQuestion(page);
+
+  await page
+    .getByLabel("Weekly support")
+    .fill("Keep track of replies, prepare meetings, and make sure agreed actions happen without me rebuilding context.");
+  await continueQuestion(page);
+
+  await page
+    .getByLabel("Desired weekly result")
+    .fill("I start each day knowing what matters and finish the week with important follow-ups completed.");
   await continueQuestion(page);
 
   await page.getByLabel("Current friction").fill(currentFriction);
   await continueQuestion(page);
 
+  await selectGroupedOption(page, "Weekly tasks, requests, and follow-ups", "About 26 to 50");
+  await continueQuestion(page);
+
   await page.getByLabel("Hours lost weekly").fill("14");
   await continueQuestion(page);
 
-  await selectGroupedOption(page, "Open-loop volume", "High");
+  await selectGroupedOption(page, "Meeting load", "Meetings take up most days");
   await continueQuestion(page);
-  await selectGroupedOption(page, "Meeting load", "High");
+  await selectGroupedOption(page, "Email load", "Important messages are easy to miss");
   await continueQuestion(page);
-  await selectGroupedOption(page, "Email load", "High");
+  await selectGroupedOption(page, "Calendar complexity", "Many people, time zones, or dependencies");
   await continueQuestion(page);
-  await selectGroupedOption(page, "Calendar complexity", "Complex");
-  await continueQuestion(page);
-  await selectGroupedOption(page, "Travel frequency", "About monthly");
+  await selectGroupedOption(page, "Travel frequency", "About once a month");
   await continueQuestion(page);
 
   await selectOption(page, "Microsoft 365");
   await selectOption(page, "Notion");
   await continueQuestion(page);
 
-  await selectOption(page, "Within 30 days");
+  await selectGroupedOption(page, "Information readiness", "It is spread across different places");
   await continueQuestion(page);
-  await selectOption(page, "Best fit and outcome; budget is approved");
+
+  await page
+    .getByLabel("Day-one context")
+    .fill("Client work and running the company compete for time, and mornings should remain protected for focused work.");
+  await continueQuestion(page);
+
+  await selectGroupedOption(page, "Initial support", "A small team");
+  await continueQuestion(page);
+
+  await selectGroupedOption(page, "Starting level of help", "Prepare work for my approval");
+  await continueQuestion(page);
+
+  await page
+    .getByLabel("Decision boundaries")
+    .fill("Always bring back client commitments, spending, important date changes, and messages sent in my name.");
+  await continueQuestion(page);
+
+  await page
+    .getByLabel("Briefing preferences")
+    .fill("A short morning plan, meeting briefs, and one end-of-day list of anything still waiting on me.");
+  await continueQuestion(page);
+
+  await page
+    .getByLabel("Success measure")
+    .fill("I recover focused time, arrive prepared, and people no longer need to chase me for important follow-ups.");
   await continueQuestion(page);
 
   await selectGroupedOption(
     page,
     "Eden service model",
-    "Aygency configures, operates and improves Eden with me",
+    "Aygency looks after and improves Eden with me",
+  );
+  await continueQuestion(page);
+
+  await selectOption(page, "Within 30 days");
+  await continueQuestion(page);
+
+  await selectGroupedOption(
+    page,
+    "Outcome or price priority",
+    "Getting the strongest outcome, even if it costs more",
   );
   await continueQuestion(page);
 
@@ -109,7 +154,7 @@ async function completeQuestionnaire(
     await page.getByLabel("Website").fill("https://northstar.example.com");
     await page.getByLabel("Company number").fill("01234567");
     await page.getByLabel("Country").selectOption("GB");
-    await selectOption(page, "11–50 people");
+    await selectOption(page, "11 to 50 people");
   }
   await onOrganisationStep?.(page);
   await continueQuestion(page);
@@ -117,7 +162,6 @@ async function completeQuestionnaire(
   await page
     .getByLabel("Additional discovery context")
     .fill("A measured first release should focus on follow-through before expanding scope.");
-  await continueQuestion(page);
 
   await expect(page.locator('[data-test-turnstile="rendered"]')).toBeVisible();
 }
@@ -154,7 +198,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
     await expect(
-      page.getByRole("heading", { name: "First, where should we send your Eden Blueprint?" }),
+      page.getByRole("heading", { name: "First, where should we send your Eden summary?" }),
     ).toBeFocused();
 
     await page.getByLabel("Work email").fill("not-an-email");
@@ -162,29 +206,49 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(page.getByText("Enter a valid work email address.")).toBeVisible();
 
     await page.getByLabel("Work email").fill("alex@example.com");
-    await page.getByLabel(/Send my Blueprint and respond to my inquiry/).check();
+    await page.getByLabel(/Send my Eden summary and respond to my inquiry/).check();
     await page.getByLabel("Work email").press("Enter");
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
     await expect(
-      page.getByRole("heading", { name: "What should Eden improve first?" }),
+      page.getByRole("heading", { name: "What should Eden take off your plate first?" }),
     ).toBeFocused();
     await page.keyboard.press("1");
     await expect(page.getByLabel("Protect my time")).toBeChecked();
     await page.keyboard.press("Enter");
 
     await page
+      .getByLabel("Weekly support")
+      .fill("Prepare my meetings and make sure important replies and follow-ups happen each week.");
+    await page.getByLabel("Weekly support").press("Control+Enter");
+    await page
+      .getByLabel("Desired weekly result")
+      .fill("I begin each day with a clear plan and finish the week with important actions completed.");
+    await page.getByLabel("Desired weekly result").press("Control+Enter");
+    await page
       .getByLabel("Current friction")
-      .fill("Open commitments are rebuilt from email and meeting notes every day.");
+      .fill("Important commitments are rebuilt from email and meeting notes, which delays replies and frustrates people.");
     await page.getByLabel("Current friction").press("Control+Enter");
+    await selectGroupedOption(page, "Weekly tasks, requests, and follow-ups", "About 10 to 25");
+    await page.keyboard.press("Enter");
     await page.getByLabel("Hours lost weekly").fill("12");
     await page.getByLabel("Hours lost weekly").press("Enter");
-    await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "5");
+    await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "8");
 
     await page.getByRole("button", { name: "Back" }).click();
     await expect(page.getByLabel("Hours lost weekly")).toHaveValue("12");
     await page.getByRole("button", { name: "Back" }).click();
+    await expect(page.getByLabel("About 10 to 25")).toBeChecked();
+    await page.getByRole("button", { name: "Back" }).click();
     await expect(page.getByLabel("Current friction")).toHaveValue(
-      "Open commitments are rebuilt from email and meeting notes every day.",
+      "Important commitments are rebuilt from email and meeting notes, which delays replies and frustrates people.",
+    );
+    await page.getByRole("button", { name: "Back" }).click();
+    await expect(page.getByLabel("Desired weekly result")).toHaveValue(
+      "I begin each day with a clear plan and finish the week with important actions completed.",
+    );
+    await page.getByRole("button", { name: "Back" }).click();
+    await expect(page.getByLabel("Weekly support")).toHaveValue(
+      "Prepare my meetings and make sure important replies and follow-ups happen each week.",
     );
     await page.getByRole("button", { name: "Back" }).click();
     await expect(page.getByLabel("Protect my time")).toBeChecked();
@@ -258,7 +322,7 @@ test.describe("Eden AI Personal Assistant", () => {
       },
     });
 
-    await expect(page.getByLabel(/Aygency newsletter and Eden updates/)).not.toBeChecked();
+    await expect(page.getByLabel(/Send me useful Eden updates too/)).not.toBeChecked();
     const submitButton = page.getByRole("button", { name: "Show me my Eden Blueprint" });
     await expect(submitButton).toBeEnabled();
     await submitButton.click();
@@ -267,12 +331,12 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(capturedBody).not.toBeNull();
     expect(consoleErrors).toEqual([]);
     expect(pageErrors).toEqual([]);
-    await expect(page.getByText("Executive and travel coordination assistant")).toBeVisible();
+    await expect(page.getByText("Personal assistant for work and travel")).toBeVisible();
     await expect(page.getByRole("heading", { name: "What Eden can take off your plate" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Keep every commitment moving" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Prepare every meeting and close the loop" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Coordinate the moving parts around travel" })).toBeVisible();
-    await expect(page.getByText("High", { exact: true }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Keep tasks, requests, and promises moving" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Prepare meetings and remember what comes next" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Keep work travel organised" })).toBeVisible();
+    await expect(page.getByText("About 26 to 50", { exact: true }).first()).toBeVisible();
     await expect(page.getByText(maliciousButInert, { exact: true })).toBeHidden();
     for (const viewport of [
       { name: "mobile-375", width: 375, height: 812 },
@@ -331,10 +395,11 @@ test.describe("Eden AI Personal Assistant", () => {
     expect(submitted?.answers).toMatchObject({
       primaryOutcomes: [
         "protect-time",
-        "close-open-loops",
+        "keep-tasks-moving",
         "improve-meeting-readiness",
         "coordinate-travel",
       ],
+      weeklyWorkloadVolume: "26-50",
       currentFriction: maliciousButInert,
       hoursLostWeekly: 14,
       operatedServiceAck: true,
@@ -369,9 +434,13 @@ test.describe("Eden AI Personal Assistant", () => {
     await page.getByRole("button", { name: "Show me my Eden Blueprint" }).click();
 
     await expect(page.getByRole("heading", { name: "This is how your Eden can help" })).toBeVisible();
-    expect(submittedBody?.organisation).toBeNull();
+    expect(
+      (submittedBody as unknown as { organisation?: unknown } | null)?.organisation,
+    ).toBeNull();
     await page.getByText("Your original answers").click();
-    await expect(page.getByText("Not shared", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("group").getByText("Not shared", { exact: true }),
+    ).toBeVisible();
   });
 
   test("fails closed when the Turnstile proof is absent", async ({ page }) => {
@@ -387,7 +456,7 @@ test.describe("Eden AI Personal Assistant", () => {
     await page.goto("/design-your-eden");
     await page.getByRole("button", { name: /See what Eden could do for you/i }).click();
     await page.getByLabel("Work email").fill("alex@example.com");
-    await page.getByLabel(/Send my Blueprint and respond to my inquiry/).check();
+    await page.getByLabel(/Send my Eden summary and respond to my inquiry/).check();
     await continueQuestion(page);
 
     await expect(page.getByText("Complete the security check before continuing.")).toBeVisible();
