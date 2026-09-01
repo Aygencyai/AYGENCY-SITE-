@@ -67,7 +67,7 @@ export const edenSteps = [
   },
   {
     id: "anythingElse",
-    fields: ["answers.anythingElse", "consent.marketing", "botToken"],
+    fields: ["answers.anythingElse", "consent.marketing"],
   },
 ] as const satisfies ReadonlyArray<{
   id: string;

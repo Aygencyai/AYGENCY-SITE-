@@ -295,10 +295,6 @@ export const edenQuestionnaireSchema = z
     contact: contactSchema,
     organisation: questionnaireOrganisationSchema,
     consent: consentSchema,
-    botToken: z
-      .string()
-      .min(10, "Complete the security check before submitting.")
-      .max(2_048),
     website: z.string().max(200),
   })
   .strict();
@@ -314,7 +310,6 @@ export const edenApplicationSchema = z
     organisation: applicationOrganisationSchema.nullable(),
     consent: consentSchema,
     attribution: attributionSchema,
-    botToken: z.string().min(10).max(2_048),
     website: z.string().max(200),
   })
   .strict()

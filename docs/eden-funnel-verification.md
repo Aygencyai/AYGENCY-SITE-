@@ -63,11 +63,11 @@ The existing Eden experience now produces the locked
 `EdenApplicationSubmitted.v1` contract through a server-only HMAC boundary. It
 asks rather than infers every required fact, generates application/event UUIDs
 on the dynamic server page, keeps an immutable browser retry snapshot, and uses
-Cloudflare Turnstile with mandatory downstream verification. The obsolete
+Vercel BotID on both same-origin intake routes. The obsolete
 bearer envelope and legacy Eden question model are no longer used by code.
 
-The sender and dashboard commit byte-identical synthetic fixtures with SHA-256
-`a5ee75bb0404407d84dac68e118c577e1951633cfee81b1683fbad5269730ccf`.
+The V3 sender fixture has SHA-256
+`9c4b51efb0032a355fc91ee806589ad00bd7014e4abd35611760ee3963ac5e5b`.
 The event produces application digest `f082cf25…`, deterministic score
 `87 / qualified`, qualification output digest `80748f17…`, and call-brief digest
 `ca6c578f…` in the independently implemented consumers.
@@ -193,7 +193,6 @@ Configure these only in the server deployment environment:
 - `EDEN_LEAD_CAPTURE_SIGNING_SECRET`
 - `EDEN_APPLICATION_INGEST_URL`
 - `EDEN_APPLICATION_SIGNING_SECRET`
-- `EDEN_APPLICATION_TURNSTILE_SITE_KEY`
 - `EDEN_ALLOWED_ORIGINS` when controlled preview origins are required
 - `EDEN_NOTIFICATION_EMAIL` or the existing `CONTACT_EMAIL`
 - `EDEN_NOTIFICATION_FROM` with a verified sender

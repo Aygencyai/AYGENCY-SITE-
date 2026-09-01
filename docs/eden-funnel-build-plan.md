@@ -22,11 +22,11 @@ contact flow, design system, and honest local Blueprint.
 
 ### Scope and exact deliverables
 
-- A dynamic server page generates UUIDv4 `eventId` and `applicationId` and passes
-  only the public Turnstile site key to the client.
+- A dynamic server page generates UUIDv4 `eventId` and `applicationId`.
 - The 18-screen questionnaire captures work email first, then every locked v1
   answer, applicant/organisation facts, two explicit acknowledgements, separate
-  inquiry/marketing consent, and a Turnstile proof.
+  inquiry/marketing consent. Vercel BotID supplies an invisible browser proof
+  at the same-origin API boundary.
 - The browser freezes one immutable snapshot. Retry keeps identical UUIDs and
   bytes; a new visit/application gets a new UUID even for the same email.
 - The same-origin API applies strict schema, 48 KiB, origin, timing, honeypot,
@@ -34,8 +34,9 @@ contact flow, design system, and honest local Blueprint.
 - The server adapter maps to the exact event catalogue, signs
   `timestamp + "." + raw_body` with HMAC-SHA-256, and validates only the locked
   `201`/`200` receipts. A changed-body `409` remains a conflict.
-- Cloudflare Turnstile uses explicit rendering and mandatory downstream
-  Siteverify. No database or service-role credential enters the site.
+- Vercel BotID Basic verifies both high-value form routes before delivery. The
+  HMAC-authenticated receiver accepts that provider proof from the website
+  sender. No database or service-role credential enters the site.
 - The local Blueprint uses controlled deterministic mappings and React text
   rendering. It contains no private Eden/runtime data and does not claim CRM
   storage after failure.
@@ -205,6 +206,7 @@ snapshot. No direct database driver or privileged database credential is added.
 - Bound every string and array, validate enum values and ISO timestamps, require inquiry consent, and reject unknown keys.
 - Permit only whitelisted attribution keys; discard URL queries and fragments client-side before submission.
 - Require a same-origin browser request in production, with optional additional exact origins from `EDEN_ALLOWED_ORIGINS` for controlled previews.
+- Run Vercel BotID Basic on the initial email-capture and final-application routes. The website server verifies the invisible browser proof before constructing an HMAC-authenticated CRM event.
 - Use an off-screen honeypot and a minimum-completion-time heuristic. Honeypot submissions receive a neutral success response but are not forwarded.
 - Apply a process-local, hashed-IP fixed-window limit with `Retry-After` and rate headers. This is a useful application-layer control, not a claim of globally durable limiting; production should also retain Vercel Firewall/rate rules at the edge.
 - Never log answers, email addresses, raw IPs, authorization headers, CRM response bodies, or notification content. Operational logs use the submission reference and coarse status only.
@@ -288,7 +290,6 @@ Set these only in the server deployment environment:
 
 - `EDEN_APPLICATION_INGEST_URL` — exact HTTPS URL for the approved `EdenApplicationSubmitted.v1` ingest endpoint.
 - `EDEN_APPLICATION_SIGNING_SECRET` — server-only exact-byte HMAC secret; never a database service-role credential.
-- `EDEN_APPLICATION_TURNSTILE_SITE_KEY` — public Cloudflare widget site key passed through the server-rendered page.
 - `EDEN_ALLOWED_ORIGINS` — optional comma-separated exact HTTPS preview origins.
 - `EDEN_NOTIFICATION_EMAIL` — optional notification recipient; falls back to `CONTACT_EMAIL`.
 - `EDEN_NOTIFICATION_FROM` — optional verified Resend sender.
@@ -362,7 +363,7 @@ Goal: make question 1 create a CRM intake before the visitor reaches question 2.
 
 Scope:
 
-- integrate the approved HMAC request signing, strict receipt validation, Cloudflare Turnstile verification path, bounded retries, and frozen idempotency behavior;
+- integrate the approved HMAC request signing, strict receipt validation, Vercel BotID verification path, bounded retries, and frozen idempotency behavior;
 - add a same-origin `/api/eden/leads` route that validates and forwards only the early-capture allowlist;
 - put required inquiry permission on the email gate and keep marketing permission optional and off by default at completion;
 - in local preview mode, allow the visitor to continue with an explicit non-recorded state when server credentials are absent; and
@@ -679,7 +680,7 @@ same research/build/provisioning chain.
 **Goal:** Prove the first real founder-observed customer journey using Louis’s
 own answers and no manual stage between Create Eden and onboarding.
 
-**Scope:** production website rollout, live Turnstile submission, dashboard
+**Scope:** production website rollout, live BotID-protected submission, dashboard
 read-back, one Create Eden click, isolated VM and LLM-route verification,
 private Telegram link, automatic conversational onboarding, automatic readiness
 transition, and first normal Eden interaction.

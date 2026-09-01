@@ -33,6 +33,7 @@ function createHandler(
 ) {
   return createEdenApplicationsPostHandler({
     now: () => now,
+    verifyBrowser: async () => true,
     consumeRateLimit: () => allowedRate,
     deliver: async (value) => ({
       outcome: "accepted",
@@ -78,6 +79,18 @@ describe("POST /api/eden/applications", () => {
     expect(deliver).toHaveBeenCalledWith(application);
     expect(notify).toHaveBeenCalledWith(application);
     expect(order).toEqual(["crm", "notification"]);
+  });
+
+  it("blocks a classified bot before parsing or delivery", async () => {
+    const deliver = vi.fn();
+    const response = await createHandler({
+      deliver,
+      verifyBrowser: async () => false,
+    })(createRequest(createEdenApplicationFixture()));
+
+    expect(response.status).toBe(403);
+    expect(await response.json()).toMatchObject({ code: "bot_denied" });
+    expect(deliver).not.toHaveBeenCalled();
   });
 
   it("suppresses notification for a validated exact-retry receipt", async () => {

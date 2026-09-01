@@ -33,6 +33,7 @@ function createHandler(
 ) {
   return createEdenLeadCapturePostHandler({
     now: () => now,
+    verifyBrowser: async () => true,
     consumeRateLimit: () => allowedRate,
     deliver: async (capture) => ({
       outcome: "accepted",
@@ -66,6 +67,18 @@ describe("POST /api/eden/leads", () => {
       recorded: true,
     });
     expect(deliver).toHaveBeenCalledWith(capture);
+  });
+
+  it("blocks a classified bot before parsing or delivery", async () => {
+    const deliver = vi.fn();
+    const response = await createHandler({
+      deliver,
+      verifyBrowser: async () => false,
+    })(createRequest(createEdenLeadCaptureFixture()));
+
+    expect(response.status).toBe(403);
+    expect(await response.json()).toMatchObject({ code: "bot_denied" });
+    expect(deliver).not.toHaveBeenCalled();
   });
 
   it("continues honestly in an unconfigured local preview", async () => {

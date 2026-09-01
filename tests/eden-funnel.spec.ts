@@ -1,22 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-const turnstileRoute = "**/turnstile/v0/api.js?render=explicit";
-
-async function installTurnstileStub(page: Page, outcome: "success" | "idle" = "success") {
-  await page.route(turnstileRoute, async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: "application/javascript",
-      body: `window.turnstile={render:function(container,options){container.setAttribute('data-test-turnstile','rendered');${
-        outcome === "success"
-          ? "queueMicrotask(function(){options.callback('XXXX.DUMMY.TOKEN.XXXX')});"
-          : ""
-      }return 'eden-test-widget';},remove:function(){}};`,
-    });
-  });
-}
-
 async function continueQuestion(page: Page) {
   await page.getByRole("button", { name: "Continue" }).click();
 }
@@ -54,7 +38,6 @@ async function completeQuestionnaire(
 
   await page.getByLabel("Work email").fill("alex@example.com");
   await page.getByLabel(/Send my Eden summary and respond to my inquiry/).check();
-  await expect(page.locator('[data-test-turnstile="rendered"]')).toBeVisible();
   await continueQuestion(page);
 
   await selectOption(page, "Protect my time");
@@ -167,13 +150,11 @@ async function completeQuestionnaire(
     .getByLabel("Additional discovery context")
     .fill("A measured first release should focus on follow-through before expanding scope.");
 
-  await expect(page.locator('[data-test-turnstile="rendered"]')).toBeVisible();
 }
 
 test.describe("Eden AI Personal Assistant", () => {
   test.beforeEach(async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await installTurnstileStub(page);
     await page.route("**/api/eden/leads", async (route) => {
       const body = route.request().postDataJSON() as { applicationId: string };
       await route.fulfill({
@@ -379,7 +360,6 @@ test.describe("Eden AI Personal Assistant", () => {
       };
       consent: { inquiry: boolean; marketing: boolean };
       attribution: Record<string, string>;
-      botToken: string;
       organisation: { countryCode: string; sizeBand: string };
     } | null;
     expect(submitted?.eventId).toMatch(/^[0-9a-f-]{36}$/);
@@ -394,7 +374,6 @@ test.describe("Eden AI Personal Assistant", () => {
         utmCampaign: "blueprint",
         landingPath: "/design-your-eden",
       },
-      botToken: "XXXX.DUMMY.TOKEN.XXXX",
     });
     expect(submitted?.answers).toMatchObject({
       primaryOutcomes: [
@@ -416,7 +395,6 @@ test.describe("Eden AI Personal Assistant", () => {
     });
     expect(submitted?.attribution).not.toHaveProperty("gclid");
     expect(submitted?.attribution).not.toHaveProperty("password");
-    expect(submitted?.botToken).toBe("XXXX.DUMMY.TOKEN.XXXX");
     expect(submitted?.organisation).toMatchObject({ countryCode: "GB", sizeBand: "11-50" });
   });
 
@@ -445,26 +423,6 @@ test.describe("Eden AI Personal Assistant", () => {
     await expect(
       page.getByRole("group").getByText("Not shared", { exact: true }),
     ).toBeVisible();
-  });
-
-  test("fails closed when the Turnstile proof is absent", async ({ page }) => {
-    await page.unroute(turnstileRoute);
-    await page.unroute("**/api/eden/leads");
-    await installTurnstileStub(page, "idle");
-    let apiCalls = 0;
-    await page.route("**/api/eden/leads", async (route) => {
-      apiCalls += 1;
-      await route.abort();
-    });
-
-    await page.goto("/design-your-eden");
-    await page.getByRole("button", { name: /See what Eden could do for you/i }).click();
-    await page.getByLabel("Work email").fill("alex@example.com");
-    await page.getByLabel(/Send my Eden summary and respond to my inquiry/).check();
-    await continueQuestion(page);
-
-    await expect(page.getByText("Complete the security check before continuing.")).toBeVisible();
-    expect(apiCalls).toBe(0);
   });
 
   test("retries one immutable browser snapshot and preserves it after failure", async ({

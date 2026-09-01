@@ -15,7 +15,6 @@ export function createEdenLeadCaptureFixture(): EdenLeadCapture {
       utmMedium: "test",
       utmCampaign: "eden-capture",
     },
-    botToken: "turnstile-response-placeholder",
     website: "",
   };
 }
@@ -89,7 +88,6 @@ export function createEdenApplicationFixture(): EdenApplication {
       utmMedium: "cpc",
       utmCampaign: "eden-launch",
     },
-    botToken: "turnstile-response-placeholder",
     website: "",
   };
 }

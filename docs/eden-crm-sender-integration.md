@@ -109,32 +109,20 @@ notification failure cannot undo the committed CRM transaction.
   coarse failure only, never answers, contact data, bot proof, signature, raw IP,
   or upstream response content.
 
-## Turnstile
+## Browser verification
 
-The widget uses Cloudflare's explicit renderer at `api.js?render=explicit`, with
-`eden_lead_capture` for the email gate and `eden_application_submit` for the
-completed diagnostic. It disables the automatic hidden response field. Expired,
-error, and timeout callbacks clear the relevant token. Each Edge Function
-performs mandatory server-side Siteverify, including exact action and hostname,
-and uses `event_id` as Siteverify's idempotency key.
+Vercel BotID Basic protects `POST /api/eden/leads` and
+`POST /api/eden/applications`. Its client challenge is initialised through the
+official Next.js integration and each route calls `checkBotId()` before reading
+or delivering a body. Local development receives BotID's documented local
+human result, while production performs the real invisible check.
 
-Playwright alone uses Cloudflare's documented public always-pass test site key.
-No production key is committed. The test key is not accepted as evidence of the
-production widget/hostname setup.
+The CRM event records `vercel-botid` as its provider and is accepted only after
+the receiver verifies the server-only HMAC signature. The proof token is
+removed before persistence. Honeypot, timing, origin, application rate limits,
+and durable CRM rate limits remain independent controls.
 
-The repository currently has no site-wide Content Security Policy. Phase 8 did
-not introduce a broad CSP because that would affect every existing page and
-third-party integration. If a CSP is added later, review the complete site and
-include Cloudflare's required `script-src` and `frame-src` sources for
-`https://challenges.cloudflare.com`; follow Cloudflare's current CSP reference
-rather than copying an unreviewed header.
-
-References:
-
-- [Cloudflare explicit rendering](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/widget-configurations/)
-- [Cloudflare server-side validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
-- [Cloudflare test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/)
-- [Cloudflare CSP reference](https://developers.cloudflare.com/turnstile/reference/content-security-policy/)
+Reference: [Vercel BotID setup](https://vercel.com/docs/botid/get-started)
 
 ## Environment names
 
@@ -144,29 +132,30 @@ References:
 | `EDEN_LEAD_CAPTURE_SIGNING_SECRET` | website server only | Separate early-capture HMAC secret, at least 32 characters. |
 | `EDEN_APPLICATION_INGEST_URL` | website server only | Exact approved HTTPS Edge Function URL; loopback HTTP is accepted only outside production. |
 | `EDEN_APPLICATION_SIGNING_SECRET` | website server only | HMAC secret, at least 32 characters. |
-| `EDEN_APPLICATION_TURNSTILE_SITE_KEY` | server page to browser | Public Cloudflare widget site key. |
 | `EDEN_ALLOWED_ORIGINS` | website server only | Optional comma-separated exact HTTPS preview origins. |
 | `EDEN_NOTIFICATION_EMAIL` | website server only | Optional application notification destination. |
 | `EDEN_NOTIFICATION_FROM` | website server only | Optional verified Resend sender. |
 | `RESEND_API_KEY` | website server only | Existing Resend credential. |
 | `NEXT_PUBLIC_CAL_URL` | browser-safe | Existing HTTPS discovery booking link. |
 
-Never add `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_DB_URL`,
-`EDEN_CRM_OPERATOR_SECRET`, or the Turnstile secret to this website environment.
+Never add `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_DB_URL`, or
+`EDEN_CRM_OPERATOR_SECRET` to this website environment. Vercel BotID performs
+the browser check in the two same-origin API routes; the receiver trusts that
+proof only after validating the website's HMAC signature.
 
 ## Golden interoperability evidence
 
 The sender and dashboard each commit the byte-identical synthetic fixture at:
 
 ```text
-tests/fixtures/eden-application-submitted-v1/valid-new.json
+tests/fixtures/eden-application-submitted-v3/valid-new.json
 ```
 
 Locked results:
 
 | Evidence | Value |
 |---|---|
-| Raw fixture SHA-256 | `a5ee75bb0404407d84dac68e118c577e1951633cfee81b1683fbad5269730ccf` |
+| Raw fixture SHA-256 | `9c4b51efb0032a355fc91ee806589ad00bd7014e4abd35611760ee3963ac5e5b` |
 | Application-input digest | `f082cf25d5595ee10347fff0ff37e7461216507253277233d8a649452e69ba35` |
 | Canonical score output SHA-256 | `80748f179173ed0923462abf2af863a55ed9dea6f144d00b535fa78a4e6d5178` |
 | Canonical brief output SHA-256 | `ca6c578fc154e48fe5a44bbce6c2fa9d45c6f9ec60f8105e4c368da9fd076317` |

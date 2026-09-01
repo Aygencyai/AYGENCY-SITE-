@@ -55,10 +55,6 @@ export const edenLeadCaptureSchema = z
       error: "Consent is required so we can send the Blueprint and respond.",
     }),
     attribution: attributionSchema,
-    botToken: z
-      .string()
-      .min(10, "Complete the security check before continuing.")
-      .max(2_048),
     website: z.string().max(200),
   })
   .strict();

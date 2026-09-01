@@ -20,7 +20,6 @@ import EdenBlueprint from "@/components/eden/EdenBlueprint";
 import EdenIntroduction from "@/components/eden/EdenIntroduction";
 import EdenOptionGroup from "@/components/eden/EdenOptionGroup";
 import EdenProgress from "@/components/eden/EdenProgress";
-import EdenTurnstile from "@/components/eden/EdenTurnstile";
 import {
   edenApplicationSchema,
   edenQuestionnaireSchema,
@@ -58,7 +57,6 @@ interface DesignYourEdenClientProps {
   discoveryUrl: string;
   eventId: string;
   localPreview: boolean;
-  turnstileSiteKey: string;
 }
 
 type FunnelPhase = "intro" | "questions" | "submitting" | "error" | "complete";
@@ -274,7 +272,6 @@ export default function DesignYourEdenClient({
   discoveryUrl,
   eventId,
   localPreview,
-  turnstileSiteKey,
 }: DesignYourEdenClientProps) {
   const prefersReducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<FunnelPhase>("intro");
@@ -287,9 +284,6 @@ export default function DesignYourEdenClient({
   const [captureCompleted, setCaptureCompleted] = useState(false);
   const [captureRecorded, setCaptureRecorded] = useState(false);
   const [captureError, setCaptureError] = useState("");
-  const [captureToken, setCaptureToken] = useState(
-    localPreview ? "local-preview-token" : "",
-  );
   const startTimeRef = useRef<string | null>(null);
   const attributionRef = useRef<EdenAttribution>({ landingPath: "/design-your-eden" });
   const captureSnapshotRef = useRef<EdenLeadCapture | null>(null);
@@ -306,7 +300,6 @@ export default function DesignYourEdenClient({
     clearErrors,
     getValues,
     getFieldState,
-    setValue,
     formState: { errors },
   } = useForm<EdenQuestionnaireValues>({
     resolver: zodResolver(edenQuestionnaireSchema),
@@ -340,7 +333,6 @@ export default function DesignYourEdenClient({
         sizeBand: "",
       },
       consent: { inquiry: false, marketing: false },
-      botToken: "",
       website: "",
     },
   });
@@ -407,7 +399,6 @@ export default function DesignYourEdenClient({
       workEmail: getValues("contact.workEmail"),
       inquiryConsent: getValues("consent.inquiry"),
       attribution: attributionRef.current,
-      botToken: captureToken,
       website: getValues("website"),
     });
     if (!parsed.success) {
@@ -478,12 +469,6 @@ export default function DesignYourEdenClient({
     if (isAdvancing || !currentStep) return;
     setIsAdvancing(true);
     try {
-      if (localPreview && currentStep.id === "anythingElse" && !getValues("botToken")) {
-        setValue("botToken", "local-preview-token", {
-          shouldDirty: true,
-          shouldValidate: false,
-        });
-      }
       const currentValid = await trigger([...currentStep.fields], { shouldFocus: true });
       if (!currentValid) return;
       if (currentStep.id === "workEmail" && !(await captureInquiry())) return;
@@ -557,8 +542,6 @@ export default function DesignYourEdenClient({
     setSubmissionSnapshot(null);
     setSubmissionError("");
     setSubmissionRecorded(false);
-    setValue("botToken", "", { shouldDirty: true, shouldValidate: false });
-    clearErrors("botToken");
     setStepIndex(edenSteps.length - 1);
     setPhase("questions");
   };
@@ -666,19 +649,6 @@ export default function DesignYourEdenClient({
                 )}
               />
               <ErrorMessage id="inquiry-consent-error" message={errors.consent?.inquiry?.message} />
-
-              {!captureSnapshotRef.current && !localPreview && (
-                <div className="rounded-xl border border-ghost/[0.08] bg-surface/60 p-4">
-                  <EdenTurnstile
-                    action="eden_lead_capture"
-                    siteKey={turnstileSiteKey}
-                    onToken={(token) => {
-                      setCaptureToken(token);
-                      if (token) setCaptureError("");
-                    }}
-                  />
-                </div>
-              )}
 
               {localPreview && !captureCompleted && (
                 <p className="rounded-xl border border-cyan/15 bg-cyan/[0.04] p-4 font-sans text-xs leading-relaxed text-ghost-muted">
@@ -1235,17 +1205,7 @@ export default function DesignYourEdenClient({
                 />
               </div>
             </fieldset>
-            <input type="hidden" {...register("botToken")} />
-            {!localPreview ? (
-              <div className="mt-6 rounded-xl border border-ghost/[0.08] bg-surface/60 p-4">
-                <EdenTurnstile
-                  action="eden_application_submit"
-                  siteKey={turnstileSiteKey}
-                  error={errors.botToken?.message}
-                  onToken={(token) => setValue("botToken", token, { shouldDirty: true, shouldValidate: true })}
-                />
-              </div>
-            ) : (
+            {localPreview && (
               <p className="mt-6 rounded-xl border border-cyan/15 bg-cyan/[0.04] p-4 font-sans text-xs leading-relaxed text-ghost-muted">
                 Local preview mode: production security verification and CRM recording are intentionally inactive.
               </p>

@@ -26,6 +26,8 @@ The existing Aygency homepage, system story, services, use cases, insights, abou
 
 The browser posts only to the same-origin `/api/eden/applications` route. That route owns strict validation, request-size and origin checks, timing and honeypot controls, application rate limiting, event construction, idempotent delivery, and safe bounded retries to the approved `EdenApplicationSubmitted.v1` endpoint.
 
+Production browser verification uses Vercel BotID Basic on both `/api/eden/leads` and `/api/eden/applications`. The invisible browser challenge is checked by the same-origin Next.js route before any CRM delivery. The CRM receiver accepts the `vercel-botid` proof only from the HMAC-authenticated website sender, while retaining its durable database rate controls. This avoids a browser-to-CRM connection and does not require a public CAPTCHA credential.
+
 CRM and Resend credentials remain server-only. The CRM is the system of record. Resend runs only after CRM acceptance as a best-effort notification. Original validated answers remain in the CRM event and free text is rendered only as escaped React text.
 
 ## Phase 1: provenance and plan
@@ -79,3 +81,16 @@ Exit gate:
 Run the complete unit and browser suites once more, verify the production route table, and start the corrected worktree locally. Stop the obsolete local server before opening the new page so `localhost` unambiguously shows the live-site architecture plus Eden.
 
 No live CRM or Resend request will be made during local verification.
+
+## Phase 5: production release
+
+Replace the credential-dependent Turnstile widget with Vercel BotID Basic, preserving the honeypot, timing, same-origin, HMAC, idempotency, and durable CRM rate controls. Rotate separate lead and application signing secrets into the receiver and Vercel, deploy both receiver functions, then enable intake only after their disabled-boundary probes pass.
+
+Exit gate:
+
+- BotID blocks classified automation before CRM delivery and remains invisible to a human visitor;
+- the receiver accepts only the configured bot-proof provider from an authenticated sender;
+- the initial email capture and final application both return durable CRM receipts;
+- the complete unit, lint, browser, breakpoint, and production build suites pass;
+- the default branch advances only by fast-forward; and
+- the public route and both production form stages are smoke-tested after deployment.

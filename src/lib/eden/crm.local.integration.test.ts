@@ -60,15 +60,6 @@ describe.skipIf(!integrationEnabled)("Eden disposable sender-to-ingress chain", 
       status: 409,
     } satisfies Partial<EdenCrmDeliveryError>);
 
-    const botFailure = structuredClone(application);
-    botFailure.eventId = randomUUID();
-    botFailure.applicationId = randomUUID();
-    botFailure.botToken = "force-bot-failure";
-    await expect(deliverEdenApplication(botFailure, dependencies)).rejects.toMatchObject({
-      kind: "rejected",
-      status: 400,
-    } satisfies Partial<EdenCrmDeliveryError>);
-
     const signatureFailure = structuredClone(application);
     signatureFailure.eventId = randomUUID();
     signatureFailure.applicationId = randomUUID();

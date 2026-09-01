@@ -43,7 +43,7 @@ export interface EdenLeadCapturedEvent {
     };
   };
   bot_protection: {
-    provider: "cloudflare-turnstile";
+    provider: "vercel-botid";
     token: string;
     action: typeof EDEN_LEAD_CAPTURE_ACTION;
   };
@@ -129,8 +129,8 @@ export function createEdenLeadCaptureEvent(
       },
     },
     bot_protection: {
-      provider: "cloudflare-turnstile",
-      token: capture.botToken,
+      provider: "vercel-botid",
+      token: "verified-by-aygency-site",
       action: EDEN_LEAD_CAPTURE_ACTION,
     },
   };

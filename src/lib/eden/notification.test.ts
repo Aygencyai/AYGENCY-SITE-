@@ -40,7 +40,7 @@ describe("Eden application notification", () => {
     );
     expect(payload.text).not.toContain(application.answers.currentFriction);
     expect(payload.text).not.toContain(application.answers.anythingElse);
-    expect(payload.text).not.toContain(application.botToken);
+    expect(payload.text).not.toContain("verified-by-aygency-site");
   });
 
   it("skips cleanly when notification configuration is absent", async () => {

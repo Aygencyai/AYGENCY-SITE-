@@ -67,7 +67,7 @@ export interface EdenApplicationSubmittedEvent {
     };
   };
   bot_protection: {
-    provider: "cloudflare-turnstile";
+    provider: "vercel-botid";
     token: string;
     action: typeof EDEN_CRM_ACTION;
   };
@@ -255,8 +255,8 @@ export function createEdenCrmEvent(
       },
     },
     bot_protection: {
-      provider: "cloudflare-turnstile",
-      token: application.botToken,
+      provider: "vercel-botid",
+      token: "verified-by-aygency-site",
       action: EDEN_CRM_ACTION,
     },
   };

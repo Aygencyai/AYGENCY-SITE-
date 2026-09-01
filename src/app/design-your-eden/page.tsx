@@ -35,14 +35,8 @@ function discoveryUrl() {
   }
 }
 
-function turnstileSiteKey() {
-  const configured = process.env.EDEN_APPLICATION_TURNSTILE_SITE_KEY?.trim() ?? "";
-  return /^[A-Za-z0-9_-]{3,128}$/.test(configured) ? configured : "";
-}
-
 export default function DesignYourEdenPage() {
-  const siteKey = turnstileSiteKey();
-  const localPreview = process.env.NODE_ENV !== "production" && !siteKey;
+  const localPreview = process.env.NODE_ENV !== "production";
 
   return (
     <PageTransition>
@@ -52,7 +46,6 @@ export default function DesignYourEdenPage() {
         discoveryUrl={discoveryUrl()}
         eventId={randomUUID()}
         localPreview={localPreview}
-        turnstileSiteKey={siteKey}
       />
     </PageTransition>
   );

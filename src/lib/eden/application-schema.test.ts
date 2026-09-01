@@ -67,15 +67,12 @@ describe("edenApplicationSchema", () => {
     expect(edenApplicationSchema.safeParse(reversed).success).toBe(false);
   });
 
-  it("requires a bounded Turnstile token and exact country/identity shapes", () => {
-    const shortToken = createEdenApplicationFixture();
-    shortToken.botToken = "short";
+  it("requires exact country and identity shapes", () => {
     const lowerCountry = createEdenApplicationFixture();
     lowerCountry.organisation!.countryCode = "gb";
     const badPhone = createEdenApplicationFixture();
     badPhone.contact.phone = "07700900123";
 
-    expect(edenApplicationSchema.safeParse(shortToken).success).toBe(false);
     expect(edenApplicationSchema.safeParse(lowerCountry).success).toBe(false);
     expect(edenApplicationSchema.safeParse(badPhone).success).toBe(false);
   });

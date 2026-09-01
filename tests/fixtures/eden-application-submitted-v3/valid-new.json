@@ -196,8 +196,8 @@
     }
   },
   "bot_protection": {
-    "provider": "cloudflare-turnstile",
-    "token": "turnstile-response-placeholder",
+    "provider": "vercel-botid",
+    "token": "verified-by-aygency-site",
     "action": "eden_application_submit"
   }
 }
