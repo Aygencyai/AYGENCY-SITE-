@@ -639,6 +639,9 @@ the V3 receiver is deployed.
 
 ### Phase 2: add the backward-compatible V3 CRM receiver
 
+**Status:** Source complete and verified 1 September 2026 in AOS commit
+`5804a10`; production migration and Edge rollout remain gated Phase 4 work.
+
 **Goal:** Accept and store the new exact snapshot without changing V1 or V2.
 
 **Scope:** additive Edge catalogue and derivations, forward-only migration,
@@ -649,6 +652,11 @@ tests, and disabled-first deployment.
 byte-identical; unknown questions and credential-shaped text fail closed; the
 browser still has no database authority; full AOS Python, Deno, SQL, shell, and
 diff gates pass before commit and rollout.
+
+**Verification:** 2,417 Python tests passed with five expected failures, 177
+Deno tests passed, and the fresh PostgreSQL migration/authority/concurrency
+suite proved exact V3 storage, immutable retry, Create Eden queueing, and worker
+claim while retaining V1/V2 compatibility.
 
 ### Phase 3: add cited website research to Create Eden
 
