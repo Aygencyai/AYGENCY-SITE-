@@ -109,20 +109,15 @@ notification failure cannot undo the committed CRM transaction.
   coarse failure only, never answers, contact data, bot proof, signature, raw IP,
   or upstream response content.
 
-## Browser verification
+## Browser abuse controls
 
-Vercel BotID Basic protects `POST /api/eden/leads` and
-`POST /api/eden/applications`. Its client challenge is initialised through the
-official Next.js integration and each route calls `checkBotId()` before reading
-or delivering a body. Local development receives BotID's documented local
-human result, while production performs the real invisible check.
-
-The CRM event records `vercel-botid` as its provider and is accepted only after
-the receiver verifies the server-only HMAC signature. The proof token is
-removed before persistence. Honeypot, timing, origin, application rate limits,
-and durable CRM rate limits remain independent controls.
-
-Reference: [Vercel BotID setup](https://vercel.com/docs/botid/get-started)
+Both same-origin routes enforce strict body bounds, exact schemas, origin
+checks, honeypot neutralisation, and application rate limits before delivery.
+The final application also enforces a plausible completion window. The CRM
+event records `aygency-server-controls` as its provider and is accepted only
+after the receiver verifies the server-only HMAC signature. The proof token is
+removed before persistence, and the receiver independently applies durable
+source/client/email rate limits.
 
 ## Environment names
 
@@ -139,9 +134,8 @@ Reference: [Vercel BotID setup](https://vercel.com/docs/botid/get-started)
 | `NEXT_PUBLIC_CAL_URL` | browser-safe | Existing HTTPS discovery booking link. |
 
 Never add `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_DB_URL`, or
-`EDEN_CRM_OPERATOR_SECRET` to this website environment. Vercel BotID performs
-the browser check in the two same-origin API routes; the receiver trusts that
-proof only after validating the website's HMAC signature.
+`EDEN_CRM_OPERATOR_SECRET` to this website environment. The receiver trusts the
+website's layered-control assertion only after validating its HMAC signature.
 
 ## Golden interoperability evidence
 
@@ -155,7 +149,7 @@ Locked results:
 
 | Evidence | Value |
 |---|---|
-| Raw fixture SHA-256 | `9c4b51efb0032a355fc91ee806589ad00bd7014e4abd35611760ee3963ac5e5b` |
+| Raw fixture SHA-256 | `15f1e62f1d976220633f895a9a4bfb7cca721b30ad1a2a83f8247f7b384995a5` |
 | Application-input digest | `f082cf25d5595ee10347fff0ff37e7461216507253277233d8a649452e69ba35` |
 | Canonical score output SHA-256 | `80748f179173ed0923462abf2af863a55ed9dea6f144d00b535fa78a4e6d5178` |
 | Canonical brief output SHA-256 | `ca6c578fc154e48fe5a44bbce6c2fa9d45c6f9ec60f8105e4c368da9fd076317` |

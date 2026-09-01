@@ -67,7 +67,7 @@ export interface EdenApplicationSubmittedEvent {
     };
   };
   bot_protection: {
-    provider: "vercel-botid";
+    provider: "aygency-server-controls";
     token: string;
     action: typeof EDEN_CRM_ACTION;
   };
@@ -255,7 +255,7 @@ export function createEdenCrmEvent(
       },
     },
     bot_protection: {
-      provider: "vercel-botid",
+      provider: "aygency-server-controls",
       token: "verified-by-aygency-site",
       action: EDEN_CRM_ACTION,
     },

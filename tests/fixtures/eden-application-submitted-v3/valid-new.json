@@ -196,7 +196,7 @@
     }
   },
   "bot_protection": {
-    "provider": "vercel-botid",
+    "provider": "aygency-server-controls",
     "token": "verified-by-aygency-site",
     "action": "eden_application_submit"
   }

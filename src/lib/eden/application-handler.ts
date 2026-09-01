@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { checkBotId } from "botid/server";
 import { edenApplicationSchema, type EdenApplication } from "./application-schema";
 import {
   deliverEdenApplication,
@@ -21,7 +20,6 @@ interface HandlerDependencies {
   deliver: (application: EdenApplication) => Promise<EdenCrmDelivery>;
   notify: (application: EdenApplication) => Promise<unknown>;
   consumeRateLimit: (request: Request) => RateLimitDecision;
-  verifyBrowser: () => Promise<boolean>;
   now: () => number;
 }
 
@@ -140,21 +138,10 @@ export function createEdenApplicationsPostHandler(
   const notify = dependencies.notify ?? sendEdenApplicationNotification;
   const consumeRateLimit =
     dependencies.consumeRateLimit ?? consumeEdenApplicationRateLimit;
-  const verifyBrowser = dependencies.verifyBrowser ?? (async () => {
-    const result = await checkBotId();
-    return !result.isBot;
-  });
   const now = dependencies.now ?? Date.now;
 
   return async function POST(request: Request) {
     const currentTime = now();
-
-    if (!(await verifyBrowser())) {
-      return jsonResponse(
-        { error: "We could not verify this request.", code: "bot_denied" },
-        403,
-      );
-    }
 
     if (!isTrustedEdenOrigin(request)) {
       return jsonResponse(

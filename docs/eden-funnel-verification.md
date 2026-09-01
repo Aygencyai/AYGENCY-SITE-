@@ -38,7 +38,7 @@ Current phase gate:
 | `pnpm test` | PASS, 55 tests; one opt-in local integration test skipped |
 | `pnpm exec tsc --noEmit` | PASS |
 | `pnpm lint` | PASS, zero warnings |
-| `pnpm build` | PASS on Next.js 15.5.21 |
+| `pnpm build` | PASS on the repository-standard Next.js 14.2.35 |
 | `pnpm test:e2e` | PASS, 11 browser tests including Axe and 375/768/1024/1440 screenshots |
 | `pnpm audit --audit-level high` | PASS; two moderate findings remain below the gate |
 
@@ -63,11 +63,12 @@ The existing Eden experience now produces the locked
 `EdenApplicationSubmitted.v1` contract through a server-only HMAC boundary. It
 asks rather than infers every required fact, generates application/event UUIDs
 on the dynamic server page, keeps an immutable browser retry snapshot, and uses
-Vercel BotID on both same-origin intake routes. The obsolete
+layered same-origin, honeypot, timing, application-limit, and durable receiver
+rate controls on both intake stages. The obsolete
 bearer envelope and legacy Eden question model are no longer used by code.
 
 The V3 sender fixture has SHA-256
-`9c4b51efb0032a355fc91ee806589ad00bd7014e4abd35611760ee3963ac5e5b`.
+`15f1e62f1d976220633f895a9a4bfb7cca721b30ad1a2a83f8247f7b384995a5`.
 The event produces application digest `f082cf25…`, deterministic score
 `87 / qualified`, qualification output digest `80748f17…`, and call-brief digest
 `ca6c578f…` in the independently implemented consumers.
@@ -80,7 +81,7 @@ The event produces application digest `f082cf25…`, deterministic score
 | Opt-in local integration test | PASS, 1/1 against the real disposable Edge Function | Accepted write, exact duplicate, changed-body collision, invalid bot proof, active/retired signing secrets, disabled ingress, and a concurrent changed-body race with exactly one winner. |
 | `pnpm exec tsc --noEmit` | PASS | Strict TypeScript after the Next 15 compiler update. |
 | `pnpm lint` | PASS, zero warnings/errors | ESLint CLI over application/tests/config; only generated `next-env.d.ts` is ignored. |
-| `pnpm build` | PASS | Next.js `15.5.21`; dynamic `/design-your-eden` and `/api/eden/applications` compile successfully. |
+| `pnpm build` | PASS | Next.js `14.2.35`; dynamic `/design-your-eden` and `/api/eden/applications` compile successfully. |
 | `pnpm test:e2e` | PASS, 11/11 | Exact outgoing facts, consent, Turnstile failure, frozen retry, honest collision, inert malicious text, critical Axe checks, navigation/contact/sitemap regression, and all four required widths. |
 | `pnpm audit --audit-level high` | PASS | Zero high or critical advisories; two moderate findings remain below the Phase 8 gate. |
 

@@ -43,7 +43,7 @@ export interface EdenLeadCapturedEvent {
     };
   };
   bot_protection: {
-    provider: "vercel-botid";
+    provider: "aygency-server-controls";
     token: string;
     action: typeof EDEN_LEAD_CAPTURE_ACTION;
   };
@@ -129,7 +129,7 @@ export function createEdenLeadCaptureEvent(
       },
     },
     bot_protection: {
-      provider: "vercel-botid",
+      provider: "aygency-server-controls",
       token: "verified-by-aygency-site",
       action: EDEN_LEAD_CAPTURE_ACTION,
     },

@@ -45,7 +45,7 @@ describe("Eden lead-capture CRM sender", () => {
         },
       },
       bot_protection: {
-        provider: "vercel-botid",
+        provider: "aygency-server-controls",
         action: "eden_lead_capture",
         token: "verified-by-aygency-site",
       },

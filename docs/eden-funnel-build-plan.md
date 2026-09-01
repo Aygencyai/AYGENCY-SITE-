@@ -25,8 +25,8 @@ contact flow, design system, and honest local Blueprint.
 - A dynamic server page generates UUIDv4 `eventId` and `applicationId`.
 - The 18-screen questionnaire captures work email first, then every locked v1
   answer, applicant/organisation facts, two explicit acknowledgements, separate
-  inquiry/marketing consent. Vercel BotID supplies an invisible browser proof
-  at the same-origin API boundary.
+  inquiry/marketing consent. Layered browser and server controls protect the
+  same-origin API boundary.
 - The browser freezes one immutable snapshot. Retry keeps identical UUIDs and
   bytes; a new visit/application gets a new UUID even for the same email.
 - The same-origin API applies strict schema, 48 KiB, origin, timing, honeypot,
@@ -34,9 +34,10 @@ contact flow, design system, and honest local Blueprint.
 - The server adapter maps to the exact event catalogue, signs
   `timestamp + "." + raw_body` with HMAC-SHA-256, and validates only the locked
   `201`/`200` receipts. A changed-body `409` remains a conflict.
-- Vercel BotID Basic verifies both high-value form routes before delivery. The
-  HMAC-authenticated receiver accepts that provider proof from the website
-  sender. No database or service-role credential enters the site.
+- Both high-value form routes enforce origin, honeypot, timing, body, and rate
+  controls before delivery. The HMAC-authenticated receiver accepts that
+  control assertion from the website sender. No database or service-role
+  credential enters the site.
 - The local Blueprint uses controlled deterministic mappings and React text
   rendering. It contains no private Eden/runtime data and does not claim CRM
   storage after failure.
@@ -206,7 +207,7 @@ snapshot. No direct database driver or privileged database credential is added.
 - Bound every string and array, validate enum values and ISO timestamps, require inquiry consent, and reject unknown keys.
 - Permit only whitelisted attribution keys; discard URL queries and fragments client-side before submission.
 - Require a same-origin browser request in production, with optional additional exact origins from `EDEN_ALLOWED_ORIGINS` for controlled previews.
-- Run Vercel BotID Basic on the initial email-capture and final-application routes. The website server verifies the invisible browser proof before constructing an HMAC-authenticated CRM event.
+- Apply same-origin, honeypot, timing, bounded-body, and application-rate controls before constructing an HMAC-authenticated CRM event; retain independent durable source/client/email limits at the receiver.
 - Use an off-screen honeypot and a minimum-completion-time heuristic. Honeypot submissions receive a neutral success response but are not forwarded.
 - Apply a process-local, hashed-IP fixed-window limit with `Retry-After` and rate headers. This is a useful application-layer control, not a claim of globally durable limiting; production should also retain Vercel Firewall/rate rules at the edge.
 - Never log answers, email addresses, raw IPs, authorization headers, CRM response bodies, or notification content. Operational logs use the submission reference and coarse status only.
@@ -363,7 +364,7 @@ Goal: make question 1 create a CRM intake before the visitor reaches question 2.
 
 Scope:
 
-- integrate the approved HMAC request signing, strict receipt validation, Vercel BotID verification path, bounded retries, and frozen idempotency behavior;
+- integrate the approved HMAC request signing, strict receipt validation, layered abuse controls, bounded retries, and frozen idempotency behavior;
 - add a same-origin `/api/eden/leads` route that validates and forwards only the early-capture allowlist;
 - put required inquiry permission on the email gate and keep marketing permission optional and off by default at completion;
 - in local preview mode, allow the visitor to continue with an explicit non-recorded state when server credentials are absent; and
@@ -680,7 +681,7 @@ same research/build/provisioning chain.
 **Goal:** Prove the first real founder-observed customer journey using Louis’s
 own answers and no manual stage between Create Eden and onboarding.
 
-**Scope:** production website rollout, live BotID-protected submission, dashboard
+**Scope:** production website rollout, protected live submission, dashboard
 read-back, one Create Eden click, isolated VM and LLM-route verification,
 private Telegram link, automatic conversational onboarding, automatic readiness
 transition, and first normal Eden interaction.

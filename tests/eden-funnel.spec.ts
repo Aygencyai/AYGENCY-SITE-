@@ -544,8 +544,12 @@ test.describe("Eden site integration", () => {
     page,
     request,
   }) => {
+    const clientErrors: string[] = [];
+    page.on("pageerror", (error) => clientErrors.push(error.message));
     await page.setViewportSize({ width: 1440, height: 1000 });
     expect((await page.goto("/"))?.ok()).toBe(true);
+    await expect(page.getByText("Application error", { exact: false })).toHaveCount(0);
+    expect(clientErrors).toEqual([]);
     await expect(page.locator('nav a[href="/design-your-eden"]')).toHaveText(
       "AI Personal Assistant",
     );
