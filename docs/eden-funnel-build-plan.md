@@ -489,7 +489,7 @@ Operational questions must pass both tests: the answer gives Aygency useful leve
 | 3 | What should Eden make reliably true each week? | Defines the desired result and language to return to in discovery. | Supplies a practical acceptance criterion for the first workflow. |
 | 4 | What gets in the way today, and what happens when it slips? | Exposes the present cost, urgency, and consequence of inaction. | Captures the current process and failure modes that the design must address. |
 | 5 | How much of this work appears in a normal week? | Makes the opportunity and likely return easier to size. | Establishes frequency, capacity, and trigger volume using goal-specific wording. |
-| 6 | Who should Eden support first? | Reveals rollout scope and the stakeholders affected. | Informs access, permissions, onboarding, and escalation design. |
+| 6 | When Eden needs your decision, how should she present it? | Reveals the principal’s preferred way to review choices. | Shapes one person’s briefings and decision hand-offs; every other person receives a separate Eden. |
 | 7 | Where would Eden need to work? | Surfaces integration complexity early. | Identifies the initial tool categories and context sources. |
 | 8 | How ready is the context Eden would need? | Reveals onboarding effort and a likely implementation objection. | Establishes whether to connect, consolidate, document, or create context first. |
 | 9 | How much authority should Eden start with? | Makes trust and risk preferences discussable. | Sets the first approval gates, guardrails, and escalation boundary. |
@@ -570,7 +570,7 @@ the created Eden a meaningful head start.
 | 12 | Where would Eden need to work with you? | Multi-select tool categories. |
 | 13 | How ready is the information Eden would need? | Organised, partly organised, scattered, or mostly in the visitor’s head. |
 | 14 | What should Eden understand about you or your work from day one? | Required open text for the initial Brain. |
-| 15 | Who should Eden support first? | Personal and team scope. |
+| 15 | When Eden needs your decision, how should she present it? | One clear recommendation, a short list with trade-offs, full context, or questions first. |
 | 16 | How should Eden begin helping? | Suggest only, prepare for approval, or handle agreed routine work. |
 | 17 | Which decisions should Eden always bring back to you? | Required open text defining the customer’s boundaries. |
 | 18 | What would you like Eden to brief you on, and how often? | Optional open text for useful proactive rhythms. |
@@ -587,6 +587,10 @@ advances to `eden-application.v3`. V1 and V2 snapshots remain immutable and
 valid under their original catalogues. V3 stores all original answers exactly,
 labels every free-text answer as untrusted, and never turns applicant prose
 into commands, permissions, schedules, HTML, or executable configuration.
+
+Eden is a one-person product: each Eden supports one named principal through
+one isolated VM and Brain. If another person needs Eden, they receive their own
+Eden rather than sharing the first person’s assistant.
 
 If an organisation website is supplied, **Create Eden** may start a separate
 least-privileged public-research step. The browser never performs that research.

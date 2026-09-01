@@ -103,7 +103,11 @@ async function completeQuestionnaire(
     .fill("Client work and running the company compete for time, and mornings should remain protected for focused work.");
   await continueQuestion(page);
 
-  await selectGroupedOption(page, "Initial support", "A small team");
+  await selectGroupedOption(
+    page,
+    "Decision presentation style",
+    "Give me a short list of options and trade-offs",
+  );
   await continueQuestion(page);
 
   await selectGroupedOption(page, "Starting level of help", "Prepare work for my approval");

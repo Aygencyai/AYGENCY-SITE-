@@ -4,6 +4,7 @@ import type {
   CalendarComplexity,
   ContextReadiness,
   CurrentTool,
+  DecisionStyle,
   EdenAnswers,
   EdenQuestionnaireValues,
   EmailLoad,
@@ -11,7 +12,6 @@ import type {
   OrganisationSizeBand,
   PrimaryOutcome,
   StartingAuthority,
-  SupportScope,
   TargetStartWindow,
   TravelFrequency,
   WeeklyWorkloadVolume,
@@ -38,7 +38,7 @@ export const edenSteps = [
   { id: "currentTools", fields: ["answers.currentTools"] },
   { id: "contextReadiness", fields: ["answers.contextReadiness"] },
   { id: "dayOneContext", fields: ["answers.dayOneContext"] },
-  { id: "supportScope", fields: ["answers.supportScope"] },
+  { id: "decisionStyle", fields: ["answers.decisionStyle"] },
   { id: "startingAuthority", fields: ["answers.startingAuthority"] },
   { id: "decisionBoundaries", fields: ["answers.decisionBoundaries"] },
   { id: "briefingPreferences", fields: ["answers.briefingPreferences"] },
@@ -147,11 +147,14 @@ export const contextReadinessOptionList: ReadonlyArray<
   { value: "mostly-in-my-head", label: "Most of it is still in my head" },
 ];
 
-export const supportScopeOptionList: ReadonlyArray<EdenOption<SupportScope>> = [
-  { value: "just-me", label: "Just me" },
-  { value: "me-and-assistant", label: "Me and an assistant or close colleague" },
-  { value: "small-team", label: "A small team" },
-  { value: "wider-team", label: "Several people across the organisation" },
+export const decisionStyleOptionList: ReadonlyArray<EdenOption<DecisionStyle>> = [
+  { value: "clear-recommendation", label: "Give me one clear recommendation" },
+  {
+    value: "short-options",
+    label: "Give me a short list of options and trade-offs",
+  },
+  { value: "full-context", label: "Give me the full context before I decide" },
+  { value: "questions-first", label: "Ask me a few questions first" },
 ];
 
 export const startingAuthorityOptionList: ReadonlyArray<
@@ -207,7 +210,7 @@ export const serviceModelOptionList: ReadonlyArray<
   },
   {
     value: "self_maintained",
-    label: "I want to maintain Eden myself",
+    label: "I want to buy Eden and maintain her myself",
   },
 ];
 
@@ -237,7 +240,7 @@ export const calendarComplexityLabels = labelsFrom(calendarComplexityOptionList)
 export const travelFrequencyLabels = labelsFrom(travelFrequencyOptionList);
 export const currentToolLabels = labelsFrom(currentToolOptionList);
 export const contextReadinessLabels = labelsFrom(contextReadinessOptionList);
-export const supportScopeLabels = labelsFrom(supportScopeOptionList);
+export const decisionStyleLabels = labelsFrom(decisionStyleOptionList);
 export const startingAuthorityLabels = labelsFrom(startingAuthorityOptionList);
 export const targetStartWindowLabels = labelsFrom(targetStartWindowOptionList);
 export const buyingPriorityLabels = labelsFrom(buyingPriorityOptionList);
@@ -488,7 +491,7 @@ export function getEdenExample(
     ...scenario,
     context: {
       volume: weeklyWorkloadVolumeLabels[answers.weeklyWorkloadVolume],
-      people: supportScopeLabels[answers.supportScope],
+      decisionStyle: decisionStyleLabels[answers.decisionStyle],
       organisation: sizeBand ? organisationSizeBandLabels[sizeBand] : "Not shared",
       systems: answers.currentTools.map((tool) => currentToolLabels[tool]).join(", "),
     },

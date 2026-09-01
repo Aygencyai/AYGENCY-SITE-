@@ -18,7 +18,7 @@ describe("Eden Blueprint example", () => {
     expect(example).toMatchObject({
       context: {
         volume: "About 26 to 50",
-        people: "A small team",
+        decisionStyle: "Give me a short list of options and trade-offs",
         systems: "Microsoft 365, Todoist, Notion, Telegram",
         organisation: "11 to 50 people",
       },

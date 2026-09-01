@@ -20,6 +20,7 @@ import {
   calendarComplexityLabels,
   contextReadinessLabels,
   currentToolLabels,
+  decisionStyleLabels,
   emailLoadLabels,
   getEdenCapabilityPlan,
   getEdenExample,
@@ -29,7 +30,6 @@ import {
   organisationSizeBandLabels,
   primaryOutcomeLabels,
   startingAuthorityLabels,
-  supportScopeLabels,
   targetStartWindowLabels,
   travelFrequencyLabels,
   weeklyWorkloadVolumeLabels,
@@ -286,7 +286,7 @@ export default function EdenBlueprint({
         <dl className="grid border-b border-ghost/[0.08] sm:grid-cols-2 lg:grid-cols-4">
           {[
             ["Work each week", example.context.volume],
-            ["Who Eden supports", example.context.people],
+            ["How Eden asks", example.context.decisionStyle],
             ["Where Eden works", example.context.systems],
             ["Organisation", example.context.organisation],
           ].map(([label, value]) => (
@@ -411,8 +411,8 @@ export default function EdenBlueprint({
             preserveWhitespace
           />
           <AnswerRow
-            label="Who Eden should support"
-            value={supportScopeLabels[application.answers.supportScope]}
+            label="How Eden should present decisions"
+            value={decisionStyleLabels[application.answers.decisionStyle]}
           />
           <AnswerRow
             label="How Eden should begin"
@@ -447,7 +447,7 @@ export default function EdenBlueprint({
             label="Service model"
             value={application.answers.operatedServiceAck
               ? "Aygency looks after and improves Eden with me"
-              : "I want to maintain Eden myself"}
+              : "I want to buy Eden and maintain her myself"}
           />
           <AnswerRow label="Name" value={application.contact.fullName} />
           <AnswerRow label="Work email" value={application.contact.workEmail} />

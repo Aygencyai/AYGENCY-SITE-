@@ -50,7 +50,7 @@ export function createEdenApplicationFixture(): EdenApplication {
       contextReadiness: "scattered",
       dayOneContext:
         "Client work and company leadership compete for time, and mornings should remain protected for focused work.",
-      supportScope: "small-team",
+      decisionStyle: "short-options",
       startingAuthority: "prepare-for-approval",
       decisionBoundaries:
         "Bring back client commitments, spending, important date changes, and anything sent in my name.",

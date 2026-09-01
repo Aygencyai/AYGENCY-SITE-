@@ -39,6 +39,7 @@ import {
   calendarComplexityOptionList,
   contextReadinessOptionList,
   currentToolOptionList,
+  decisionStyleOptionList,
   edenSteps,
   emailLoadOptionList,
   meetingLoadOptionList,
@@ -46,7 +47,6 @@ import {
   primaryOutcomeOptionList,
   serviceModelOptionList,
   startingAuthorityOptionList,
-  supportScopeOptionList,
   targetStartWindowOptionList,
   travelFrequencyOptionList,
   weeklyWorkloadVolumeOptionList,
@@ -578,7 +578,7 @@ export default function DesignYourEdenClient({
       | "answers.calendarComplexity"
       | "answers.travelFrequency"
       | "answers.contextReadiness"
-      | "answers.supportScope"
+      | "answers.decisionStyle"
       | "answers.startingAuthority"
       | "answers.targetStartWindow"
       | "answers.buyingPriority",
@@ -952,14 +952,18 @@ export default function DesignYourEdenClient({
           </QuestionFrame>
         );
 
-      case "supportScope":
+      case "decisionStyle":
         return (
           <QuestionFrame
             number={questionNumber}
-            title="Who should Eden support first?"
-            description="Start with the smallest group that would feel useful. Eden can expand later as responsibilities become clear."
+            title="When Eden needs your decision, how should she present it?"
+            description="Your Eden supports you alone. This tells her how to bring choices back in the way you find easiest to act on."
           >
-            {renderSingleChoice("answers.supportScope", "Initial support", supportScopeOptionList)}
+            {renderSingleChoice(
+              "answers.decisionStyle",
+              "Decision presentation style",
+              decisionStyleOptionList,
+            )}
           </QuestionFrame>
         );
 

@@ -54,11 +54,11 @@ export const contextReadinessOptions = [
   "scattered",
   "mostly-in-my-head",
 ] as const;
-export const supportScopeOptions = [
-  "just-me",
-  "me-and-assistant",
-  "small-team",
-  "wider-team",
+export const decisionStyleOptions = [
+  "clear-recommendation",
+  "short-options",
+  "full-context",
+  "questions-first",
 ] as const;
 export const startingAuthorityOptions = [
   "suggest-only",
@@ -161,7 +161,7 @@ const answersSchema = z
       .refine(uniqueArray, "Select each tool only once."),
     contextReadiness: z.enum(contextReadinessOptions),
     dayOneContext: requiredText("Day-one context", 20, 1_500),
-    supportScope: z.enum(supportScopeOptions),
+    decisionStyle: z.enum(decisionStyleOptions),
     startingAuthority: z.enum(startingAuthorityOptions),
     decisionBoundaries: requiredText("Decision boundaries", 10, 1_500),
     briefingPreferences: optionalText("Briefing preferences", 1_000),
@@ -342,7 +342,7 @@ export type CalendarComplexity = EdenAnswers["calendarComplexity"];
 export type TravelFrequency = EdenAnswers["travelFrequency"];
 export type CurrentTool = EdenAnswers["currentTools"][number];
 export type ContextReadiness = EdenAnswers["contextReadiness"];
-export type SupportScope = EdenAnswers["supportScope"];
+export type DecisionStyle = EdenAnswers["decisionStyle"];
 export type StartingAuthority = EdenAnswers["startingAuthority"];
 export type TargetStartWindow = EdenAnswers["targetStartWindow"];
 export type BuyingPriority = EdenAnswers["buyingPriority"];

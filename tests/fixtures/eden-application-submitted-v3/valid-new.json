@@ -111,10 +111,10 @@
         "value": "Client work and company leadership compete for time, and mornings should remain protected for focused work."
       },
       {
-        "question_id": "eden-support-scope",
+        "question_id": "eden-decision-style",
         "question_version": 1,
         "kind": "single_select",
-        "value": "small-team"
+        "value": "short-options"
       },
       {
         "question_id": "eden-starting-authority",

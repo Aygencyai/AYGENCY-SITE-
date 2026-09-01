@@ -164,7 +164,7 @@ export function createEdenCrmEvent(
     answer("eden-current-tools", "multi_select", [...application.answers.currentTools]),
     answer("eden-context-readiness", "single_select", application.answers.contextReadiness),
     answer("eden-day-one-context", "text", application.answers.dayOneContext),
-    answer("eden-support-scope", "single_select", application.answers.supportScope),
+    answer("eden-decision-style", "single_select", application.answers.decisionStyle),
     answer("eden-starting-authority", "single_select", application.answers.startingAuthority),
     answer("eden-decision-boundaries", "text", application.answers.decisionBoundaries),
     ...(application.answers.briefingPreferences.trim()
