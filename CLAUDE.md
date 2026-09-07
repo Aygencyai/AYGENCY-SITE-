@@ -165,6 +165,7 @@ src/
 | EDEN_ALLOWED_ORIGINS | Optional exact HTTPS preview origins, comma-separated |
 | EDEN_NOTIFICATION_EMAIL | Optional post-acceptance Eden notification recipient |
 | EDEN_NOTIFICATION_FROM | Optional verified Eden notification sender |
+| EDEN_ACCOUNT_SERVICE_URL | Server-only HTTPS origin for the managed customer connection API |
 
 ## Verification
 
