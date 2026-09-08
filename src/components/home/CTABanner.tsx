@@ -8,18 +8,22 @@ import GlowOrb from "@/components/effects/GlowOrb";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 function Particles() {
-  const dots = useMemo(
-    () =>
-      Array.from({ length: 12 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 3 + 1,
-        duration: Math.random() * 8 + 12,
-        delay: Math.random() * 5,
-      })),
-    []
-  );
+  const dots = useMemo(() => {
+    // Keep the decorative layout identical during server render and hydration.
+    let seed = 47021;
+    const next = () => {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+    return Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      x: next() * 100,
+      y: next() * 100,
+      size: next() * 3 + 1,
+      duration: next() * 8 + 12,
+      delay: next() * 5,
+    }));
+  }, []);
 
   return (
     <motion.div

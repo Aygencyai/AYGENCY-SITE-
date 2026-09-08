@@ -79,7 +79,7 @@ function Connector({ active }: { active: boolean }) {
       className="flex items-center justify-center"
     >
       <span className="w-11 h-11 rounded-full border border-cyan/30 bg-cyan/[0.06] flex items-center justify-center shadow-glow-sm">
-        <ArrowLeftRight className="w-5 h-5 text-cyan rotate-90 md:rotate-0" strokeWidth={1.5} />
+        <ArrowLeftRight className="w-5 h-5 text-cyan rotate-90 lg:rotate-0" strokeWidth={1.5} />
       </span>
     </motion.div>
   );
@@ -126,7 +126,7 @@ export default function OperationsEngine() {
 
         <div
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 md:gap-4 mt-14 items-stretch"
+          className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 lg:gap-4 mt-14 items-stretch"
         >
           <StageCard stage={stages[0]} active={isInView} />
           <Connector active={isInView} />

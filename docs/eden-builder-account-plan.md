@@ -28,6 +28,14 @@ Deliverables: Matched release instructions and retained feature gate.
 Dependencies: Phase 1 plus Eden production transfer/activation workers and staging infrastructure.
 Exit criteria: Actual account-to-private-chat-to-interview staging journey; no synthetic readiness or implicit live invite.
 
+## Phase 2a — Restore a compatible supported website dependency set
+
+Goal: clear the dependency release gate while preserving the existing homepage and account flow.
+Scope: Next.js 15 patch release, React 19 and matching React Three Fiber/Drei/postprocessing versions, matching types and patched transitive dependencies. Fix only compatibility issues found by the existing checks; preserve the design and contact/funnel behavior.
+Deliverables: locked compatible dependency set and a browser regression that exercises the actual homepage canvas, plus the account page at all four required widths.
+Dependencies: Phase 1 and the verified production rollback baseline (`84a5679`).
+Exit criteria: unit tests, strict typing, lint, production build, four-width browser checks including an error-free live canvas, and no high/critical dependency audit findings.
+
 ## Connection contract
 
 The account URL uses `#connection=<opaque ref>&state=<one-time token>`. Strip the fragment immediately on mount. Retain only the non-authorizing connection reference in session storage; derive stable request identities from the exact connection/action/token digest and never persist access/refresh tokens. Account opening is one-time with exact retry. The invitation returns a short-lived access token in the fragment; post it to the server-side verifier and discard it after success. The API verifies the exact invited provider user remotely before it issues a Telegram link. No name/email field can reveal prior funnel answers.
@@ -46,3 +54,20 @@ Phase 1 is implemented locally. The same-origin proxy validates origins, bounds 
 Set `EDEN_ACCOUNT_SERVICE_URL` to the operated HTTPS account-service origin; it is server-only. Set the managed worker's `EDEN_CUSTOMER_ACCOUNT_BASE_URL` to `https://aygency.ai/eden/connect` and allowlist that redirect path in the managed identity project. Open the personal connection link before the invitation callback; the server retains that opening across browser tabs. Invitation redirects carry only the opaque connection reference in the query; access/refresh tokens arrive in the fragment and are immediately stripped. A new browser still requires the original connection link to have been opened.
 
 Phase 2 is held. The page is not deployed and no invitation was sent. The remaining product dependencies are real private bootstrap/key/context delivery, Telegram webhook-to-gateway takeover and genuine activation readiness, plus the dependency release gate above. See the canonical cross-repository plan rather than treating browser fixtures as staging proof.
+
+Phase 2a dependency set: Next 15.5.25, React 19.2.8, Fiber 9.7.0, Drei 10.7.8,
+react-three/postprocessing 3.1.1, postprocessing 6.39.4 and Three 0.185.1. React and
+the 3D reconciler must move together; do not repeat the React 18/Fiber 8 mismatch
+with the Next 15 App Router runtime. CLAUDE's older patch version is historical.
+The browser regression also found the operations cards overflow at 768px; they
+now stack through tablet widths, with horizontal connectors from 1024px onward.
+
+Phase 2a verified (2026-09-08): 67 unit tests pass (one existing skip), strict
+TypeScript, lint and production build pass, and all 20 browser journeys pass.
+The homepage regression now captures console hydration errors as well as uncaught
+errors and checks an actual WebGL canvas after the heading text animation.
+A pre-existing random particle layout caused hydration mismatches; a fixed seeded
+layout preserves the decoration while making server/client markup agree. Four
+viewport screenshots were inspected. The dependency audit now has zero high and
+critical findings (two moderate, one low remain). No customer account service URL
+is configured, and production publication still depends on the complete journey.
