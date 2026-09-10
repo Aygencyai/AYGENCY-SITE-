@@ -97,6 +97,23 @@ describe("customer account forwarding", () => {
     expect(await response.json()).toEqual({ error: "connection_unavailable" });
   });
 
+  it.each(["matching", "other-bot", "other-token"])(
+    "validates a group link against the private Builder link: %s",
+    async (kind) => {
+      const deep_link = `https://t.me/SyntheticBuilderBot?start=${"t".repeat(48)}`;
+      let group_deep_link = deep_link.replace("?start=", "?startgroup=");
+      if (kind === "other-bot") group_deep_link = group_deep_link.replace("SyntheticBuilderBot", "OtherBuilderBot");
+      if (kind === "other-token") group_deep_link = group_deep_link.replace("t".repeat(48), "u".repeat(48));
+      const result = { status: "connect_telegram", deep_link, group_deep_link, expires_at: new Date(Date.now() + 600000).toISOString() };
+      const response = await createAccountHandler("verify", {
+        fetch: vi.fn<typeof fetch>().mockResolvedValue(Response.json(result)),
+        serviceUrl: "https://account.example.test",
+      })(request({ connection_ref, request_id, access_token }));
+      expect(response.status).toBe(kind === "matching" ? 200 : 409);
+      expect(await response.json()).toEqual(kind === "matching" ? result : { error: "connection_unavailable" });
+    },
+  );
+
   it("never echoes a provider error or transport exception", async () => {
     for (
       const response of [

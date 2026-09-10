@@ -27,7 +27,11 @@ const telegram = z.object({
     /^https:\/\/t\.me\/[A-Za-z][A-Za-z0-9_]{1,28}[Bb][Oo][Tt]\?start=[A-Za-z0-9_-]{43,64}$/,
   ),
   expires_at: z.string().datetime({ offset: true }),
-});
+  group_deep_link: z.string().regex(
+    /^https:\/\/t\.me\/[A-Za-z][A-Za-z0-9_]{1,28}[Bb][Oo][Tt]\?startgroup=[A-Za-z0-9_-]{43,64}$/,
+  ).optional(),
+}).refine((value) => !value.group_deep_link ||
+  value.group_deep_link === value.deep_link.replace("?start=", "?startgroup="));
 
 async function boundedJson(
   body: ReadableStream<Uint8Array> | null,

@@ -25,6 +25,7 @@ const button =
 export function EdenConnection() {
   const [stage, setStage] = useState<Stage>("opening");
   const [telegram, setTelegram] = useState("");
+  const [groupTelegram, setGroupTelegram] = useState("");
   const started = useRef(false);
   const pending = useRef<Attempt | null>(null);
   const running = useRef(false);
@@ -61,6 +62,11 @@ export function EdenConnection() {
           .test(result.deep_link)
       ) {
         setTelegram(result.deep_link);
+        setGroupTelegram(
+          "group_deep_link" in result && typeof result.group_deep_link === "string" &&
+          result.group_deep_link === result.deep_link.replace("?start=", "?startgroup=")
+            ? result.group_deep_link : "",
+        );
         setStage("telegram");
       } else throw new Error();
       pending.current = null;
@@ -144,9 +150,9 @@ export function EdenConnection() {
     email:
       "Open the invitation from Aygency and follow the email verification link. Then we’ll connect your private Builder chat.",
     telegram:
-      "The Builder will get to know you, learn what you want help with, and tailor Eden around your day.",
+      "The Builder will get to know you and tailor Eden around your day. When you’re finished, you’ll get a link to your personal Eden conversation.",
     connected:
-      "Return to your private Telegram chat. Your onboarding continues there once your connection is prepared.",
+      "Continue in your personal Eden chat. Eden will let you know when setup is complete.",
     missing:
       "Open the personal connection link shared with you by Aygency to begin.",
     error:
@@ -178,9 +184,26 @@ export function EdenConnection() {
             </div>
           )}
           {stage === "telegram" && (
-            <a className={`${button} mt-8`} href={telegram} rel="noreferrer">
-              Open your Builder chat <ArrowUpRight size={18} aria-hidden />
-            </a>
+            <div className="mt-8 flex flex-col items-start gap-4">
+              <a className={button} href={telegram} rel="noreferrer">
+                Open your Builder chat <ArrowUpRight size={18} aria-hidden />
+              </a>
+              {groupTelegram && (
+                <>
+                  <a
+                    className="inline-flex items-center gap-3 rounded-lg border border-cyan/30 px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition hover:border-cyan hover:bg-cyan/5 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+                    href={groupTelegram}
+                    rel="noreferrer"
+                  >
+                    Add Builder to a group <ArrowUpRight size={18} aria-hidden />
+                  </a>
+                  <p className="max-w-xl text-sm leading-relaxed text-ghost-muted">
+                    Choose where you’d like to answer the questions. In a group,
+                    everyone there can see your onboarding conversation.
+                  </p>
+                </>
+              )}
+            </div>
           )}
           {stage === "connected" && (
             <p className="mt-8 flex items-center gap-3 text-ghost">
@@ -211,8 +234,8 @@ export function EdenConnection() {
             </Link>.
           </p>
           <p className="mt-2">
-            Your Builder conversation and personal assistant share the same
-            private chat.
+            Your Builder passes your answers to your personal Eden, so you can
+            pick up where you left off.
           </p>
         </div>
       </motion.div>

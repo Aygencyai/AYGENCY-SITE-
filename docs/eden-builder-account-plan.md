@@ -71,3 +71,22 @@ layout preserves the decoration while making server/client markup agree. Four
 viewport screenshots were inspected. The dependency audit now has zero high and
 critical findings (two moderate, one low remain). No customer account service URL
 is configured, and production publication still depends on the complete journey.
+
+
+## Phase 3 — Separate Builder entry and personal Eden handoff (10 September, complete)
+
+Goal: offer private/group entry to the shared Builder and explain the later link
+into personal Eden. Scope: account proxy's optional group URL, account page links
+and copy, unit and responsive browser verification. Deliverables: both links share
+one bot/token, group visibility is explicit, original retry/token privacy remains.
+Dependencies: Eden's separate Builder account route and authenticated handoff.
+Exit criteria: unit tests, strict TypeScript, lint, build and 1440/1024/768/375px
+account journeys pass; no live publication.
+
+Verified: 70 unit tests pass, one existing local CRM integration skipped; strict
+TypeScript, lint and production build pass. Five account browser cases pass across
+all four sizes; desktop/mobile layouts inspected and the obsolete same-chat footer
+corrected. Crossed group bot/token responses are rejected by the proxy. Backend
+journey and deployment boundaries are recorded in
+`../eden-builder-onboarding-worktree/docs/eden-separate-builder-handoff-plan.md`.
+Live enablement is deferred by the user; this phase is source and isolated tests.

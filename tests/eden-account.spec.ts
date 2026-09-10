@@ -39,6 +39,7 @@ for (const width of [1440, 1024, 768, 375]) {
         body: JSON.stringify({
           status: "connect_telegram",
           deep_link: `https://t.me/SyntheticEdenBot?start=${"t".repeat(48)}`,
+          group_deep_link: `https://t.me/SyntheticEdenBot?startgroup=${"t".repeat(48)}`,
           expires_at: new Date(Date.now() + 600000).toISOString(),
         }),
       });
@@ -47,6 +48,12 @@ for (const width of [1440, 1024, 768, 375]) {
       `/eden/connect?connection=${connection}#access_token=${access}&refresh_token=must-discard`,
     );
     await expect(page.getByRole("link", { name: "Open your Builder chat" }))
+      .toBeVisible();
+    await expect(page.getByRole("link", { name: "Add Builder to a group" }))
+      .toHaveAttribute("href", `https://t.me/SyntheticEdenBot?startgroup=${"t".repeat(48)}`);
+    await expect(page.getByText("everyone there can see your onboarding conversation.", { exact: false }))
+      .toBeVisible();
+    await expect(page.getByText("Your Builder passes your answers", { exact: false }))
       .toBeVisible();
     const persisted = await page.evaluate(() =>
       JSON.stringify({
