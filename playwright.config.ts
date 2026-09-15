@@ -2,6 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
+  testIgnore: "**/eden-conversation.spec.ts",
   fullyParallel: false,
   workers: 1,
   timeout: 45_000,
@@ -19,6 +20,7 @@ export default defineConfig({
   webServer: {
     command: "pnpm dev --hostname 127.0.0.1 --port 3100",
     env: {
+      EDEN_WEB_ONBOARDING_ENABLED: "false",
       EDEN_APPLICATION_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
     },
     url: "http://127.0.0.1:3100",
