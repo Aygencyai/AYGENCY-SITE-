@@ -33,6 +33,7 @@ export function EdenConversation() {
   const bootstrap = useRef<Promise<ConversationView> | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const hasView = Boolean(view);
+  const waitingForReply = Boolean(view?.pending && !view.retry_available);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export function EdenConversation() {
   }, [view?.messages.length, reducedMotion]);
 
   useEffect(() => {
-    if (!busy || !hasView || codeSent) return;
+    if ((!busy && !waitingForReply) || !hasView || codeSent) return;
     let active = true;
     const timer = setInterval(() => {
       void chat({ action: "get" }).then((saved) => {
@@ -58,7 +59,7 @@ export function EdenConversation() {
       }).catch(() => { /* The active request or retry control reports a failure. */ });
     }, 1800);
     return () => { active = false; clearInterval(timer); };
-  }, [busy, hasView, codeSent]); // Saved state does not restart the polling clock.
+  }, [busy, waitingForReply, hasView, codeSent]); // Saved state does not restart the polling clock.
 
   const perform = useCallback(async (action: ConversationAction) => {
     setBusy(true); setError(""); setNotice("");
@@ -118,7 +119,7 @@ export function EdenConversation() {
               <p className="font-heading text-base font-medium text-ghost">Eden Builder</p>
               <p role="status" className="mt-0.5 text-xs text-ghost-muted">
                 {!view ? "Opening your conversation" : busy ? (view.pending ? "Message saved. Thinking…" : "Saving…") :
-                  view.pending ? "Message saved. Reply waiting." : view.confirmed ? "Setup confirmed" :
+                  view.pending ? (waitingForReply ? "Message saved. Thinking…" : "Message saved. Reply waiting.") : view.confirmed ? "Setup confirmed" :
                     view.email_verified ? "Progress saved to your email" : "Progress saved for this visit"}
               </p>
             </div>

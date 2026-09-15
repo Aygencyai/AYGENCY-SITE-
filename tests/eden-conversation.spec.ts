@@ -40,3 +40,25 @@ test("a real model answer survives reload", async ({ page }) => {
   await expect(page.getByRole("log")).toContainText(answer);
   expect(await page.getByRole("log").innerText()).toBe(transcript);
 });
+
+test("a reloaded saved reply follows progress and offers recovery after a failure", async ({ page }) => {
+  const user = {id:crypto.randomUUID(),role:"user",text:"Keep my client commitments visible.",created_at:new Date().toISOString()};
+  const initial = {revision:2,messages:[{id:crypto.randomUUID(),role:"assistant",text:"What would you like help with?",created_at:user.created_at},user],facts:[],summary:"",ready:false,email_verified:false,pending:true,confirmed:false,created:false,updated_at:user.created_at,retry_available:false};
+  let reads = 0;
+  let retried = false;
+  await page.route("**/api/eden/conversation", async route => {
+    const input = route.request().postDataJSON() as {action:string};
+    if (input.action === "get") reads++;
+    if (input.action === "retry") retried = true;
+    expect(input.action).not.toBe("message"); // Reuse the saved input, never send another user turn.
+    const value = retried ? {...initial,revision:3,pending:false,retry_available:false,messages:[...initial.messages,{...user,id:crypto.randomUUID(),role:"assistant",text:"I have your saved request. Where do those commitments arrive?"}]} : {...initial,retry_available:reads>=2};
+    await route.fulfill({json:value});
+  });
+  await page.goto("/design-your-eden");
+  await expect(page.getByRole("status").filter({hasText:"Message saved. Thinking"})).toBeVisible();
+  await expect(page.getByRole("status").filter({hasText:"Message saved. Reply waiting."})).toBeVisible({timeout:15000});
+  await page.getByRole("button",{name:"Continue with my saved message"}).click();
+  await expect(page.getByRole("textbox",{name:"Your message to Eden Builder"})).toBeEnabled();
+  await expect(page.getByRole("log").locator(":scope > div")).toHaveCount(3);
+  await expect(page.getByRole("log")).toContainText("I have your saved request.");
+});
