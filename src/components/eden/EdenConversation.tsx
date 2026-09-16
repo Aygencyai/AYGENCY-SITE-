@@ -32,9 +32,20 @@ export function EdenConversation() {
   const [codeSent, setCodeSent] = useState(false);
   const bootstrap = useRef<Promise<ConversationView> | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
+  const emailForm = useRef<HTMLFormElement>(null);
+  const emailInput = useRef<HTMLInputElement>(null);
+  const codeInput = useRef<HTMLInputElement>(null);
   const hasView = Boolean(view);
   const waitingForReply = Boolean(view?.pending && !view.retry_available);
   const reducedMotion = useReducedMotion();
+  const focusEmail = useCallback(() => {
+    (codeSent ? codeInput : emailInput).current?.focus({ preventScroll: true });
+    emailForm.current?.scrollIntoView({ block: "center", behavior: reducedMotion ? "instant" : "smooth" });
+  }, [codeSent, reducedMotion]);
+
+  useEffect(() => {
+    if (emailOpen) focusEmail();
+  }, [emailOpen, focusEmail]);
 
   useEffect(() => {
     let active = true;
@@ -130,17 +141,17 @@ export function EdenConversation() {
           </button>}
         </div>
 
-        {emailOpen && <form onSubmit={(event) => { event.preventDefault(); void emailAction(); }}
+        {emailOpen && <form ref={emailForm} onSubmit={(event) => { event.preventDefault(); void emailAction(); }}
           className="border-b border-cyan/20 bg-surface px-4 py-6 sm:px-7">
           <h2 className="font-heading text-lg text-ghost">Pick up wherever you left off.</h2>
           <p className="mt-2 text-sm leading-relaxed">We&apos;ll send a sign-in code to your email. It lets you return to your conversation on any device.</p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
             <label className="flex-1 text-sm text-ghost">Email address
-              <input className={`${field} mt-2`} type="email" autoComplete="email" required value={email}
+              <input ref={emailInput} className={`${field} mt-2`} type="email" autoComplete="email" required value={email}
                 disabled={busy || codeSent} onChange={(event) => setEmail(event.target.value)} />
             </label>
             {codeSent && <label className="flex-1 text-sm text-ghost">Sign-in code
-              <input className={`${field} mt-2`} inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6,8}"
+              <input ref={codeInput} className={`${field} mt-2`} inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6,8}"
                 required value={code} onChange={(event) => setCode(event.target.value)} maxLength={8} />
             </label>}
             <button className={primary} disabled={busy} type="submit">{codeSent ? "Verify email" : "Send code"}</button>
@@ -210,7 +221,7 @@ export function EdenConversation() {
         </> : <>
           <p className="mt-5 text-sm leading-relaxed">Anything to change? Tell the Builder above. When it feels right, confirm your setup so Aygency can prepare your Eden.</p>
           <button className={`${primary} mt-5`} type="button" disabled={busy || view.pending} onClick={() => {
-            if (!view.email_verified) { setEmailOpen(true); setNotice("Verify your email above to finish saving your setup."); }
+            if (!view.email_verified) { setEmailOpen(true); if (emailOpen) focusEmail(); setNotice("Verify your email above to finish saving your setup."); }
             else void perform({ action: "confirm", revision: view.revision });
           }}>{view.email_verified ? "Confirm my setup" : "Verify email to finish"}</button>
         </>}

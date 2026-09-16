@@ -1,6 +1,35 @@
 import { expect, test } from "@playwright/test";
 
 for (const width of [1440, 1024, 768, 375]) {
+  test(`finish brings email verification into view at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 850 });
+    const now = new Date().toISOString();
+    const ready = { revision: 3, messages: [{ id: crypto.randomUUID(), role: "assistant",
+      text: "Your starting setup is ready to review. ".repeat(20), created_at: now }],
+      facts: [], summary: "Prepare a weekday morning follow-up list.", ready: true,
+      email_verified: false, pending: false, confirmed: false, created: false,
+      updated_at: now, retry_available: false };
+    await page.route("**/api/eden/conversation", async route => {
+      const input = route.request().postDataJSON() as { action: string };
+      await route.fulfill({ json: input.action === "email" ? { code_sent: true } : ready });
+    });
+    await page.goto("/design-your-eden");
+    const finish = page.getByRole("button", { name: "Verify email to finish" });
+    await finish.click();
+    const email = page.getByRole("textbox", { name: "Email address" });
+    await expect(email).toBeFocused();
+    await expect(email).toBeInViewport({ ratio: 1 });
+    // Returning to the finish button must also reveal an already-open form.
+    await finish.click();
+    await expect(email).toBeFocused();
+    await expect(email).toBeInViewport({ ratio: 1 });
+    await email.fill("focus-customer@example.test");
+    await page.getByRole("button", { name: "Send code", exact: true }).click();
+    const code = page.getByRole("textbox", { name: "Sign-in code" });
+    await expect(code).toBeFocused();
+    await expect(code).toBeInViewport({ ratio: 1 });
+  });
+
   test(`conversation opens and resumes at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 950 });
     const errors: string[] = [];
