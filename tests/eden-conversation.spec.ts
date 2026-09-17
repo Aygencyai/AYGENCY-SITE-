@@ -57,6 +57,8 @@ for (const width of [1440, 1024, 768, 375]) {
     expect(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length })))
       .toEqual({ local: 0, session: 0 });
     expect(errors).toEqual([]);
+    await expect(page.locator("#main-content > div")).toHaveCSS("opacity", "1");
+    await expect(page.locator("main header")).toHaveCSS("opacity", "1");
     await page.screenshot({ path: `/private/tmp/eden-web-20260915/email-first-${width}.png`, fullPage: true });
   });
 }
