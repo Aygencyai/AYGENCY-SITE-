@@ -10,7 +10,7 @@ test("real interview, correction, verified email resume and confirmation", async
   const email = `web-journey-${crypto.randomUUID()}@example.test`;
   async function open(target: Page) {
     await target.goto("http://127.0.0.1:3118/design-your-eden");
-    await expect(target.getByRole("textbox", { name: "Your message to Eden Builder" })).toBeEnabled();
+    await expect(target.getByRole("heading", { name: "Sign in to meet Ava." })).toBeVisible();
   }
   async function state(target: Page) {
     return conversationView.parse(await target.evaluate(async () => {
@@ -21,7 +21,7 @@ test("real interview, correction, verified email resume and confirmation", async
     }));
   }
   async function send(target: Page, text: string, reloadDuringReply = false) {
-    const input = target.getByRole("textbox", { name: "Your message to Eden Builder" });
+    const input = target.getByRole("textbox", { name: "Your message to Ava" });
     await input.fill(text);
     await target.getByRole("button", { name: "Send message", exact: true }).click();
     if (reloadDuringReply) {
@@ -35,7 +35,6 @@ test("real interview, correction, verified email resume and confirmation", async
     return saved;
   }
   async function verify(target: Page, api: APIRequestContext) {
-    await target.getByRole("button", { name: "Save and return later" }).click();
     await target.getByLabel("Email address", { exact: true }).fill(email);
     await target.getByRole("button", { name: "Send code", exact: true }).click();
     await expect(target.getByLabel("Sign-in code", { exact: true })).toBeVisible();
@@ -65,7 +64,7 @@ test("real interview, correction, verified email resume and confirmation", async
   expect(ready.ready).toBe(true);
   expect(ready.confirmed).toBe(false);
   await page.reload();
-  await expect(page.getByRole("textbox", { name: "Your message to Eden Builder" })).toBeEnabled();
+  await expect(page.getByRole("textbox", { name: "Your message to Ava" })).toBeEnabled();
   expect((await state(page)).messages).toEqual(ready.messages);
   const corrected = await send(page, "Actually change the weekday morning brief to 9:15am Europe/London. Keep everything else the same and show me the updated setup.");
   expect(corrected.ready).toBe(true);
@@ -77,7 +76,7 @@ test("real interview, correction, verified email resume and confirmation", async
   const other = await browser.newContext();
   const resumed = await other.newPage();
   await open(resumed);
-  expect((await state(resumed)).messages).toHaveLength(1);
+  await expect(resumed.getByRole("log")).toHaveCount(0);
   await verify(resumed, request);
   expect((await state(resumed)).messages).toEqual(corrected.messages);
   await resumed.getByRole("button", { name: "Confirm my setup", exact: true }).click();

@@ -2,19 +2,22 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUp, Check, LoaderCircle, Mail, RotateCcw } from "lucide-react";
-import { conversationView, topicLabels, type ConversationAction, type ConversationView } from "@/lib/eden/conversation-schema";
+import { ArrowUp, Check, LoaderCircle, LogOut, RotateCcw } from "lucide-react";
+import { conversationState, topicLabels, type ConversationAction, type ConversationState, type ConversationView } from "@/lib/eden/conversation-schema";
+
+class SignInRequired extends Error {}
 
 async function call(action: ConversationAction): Promise<unknown> {
   const response = await fetch("/api/eden/conversation", {
     method: "POST", headers: { "content-type": "application/json" },
     body: JSON.stringify(action), cache: "no-store",
   });
+  if (response.status === 401) throw new SignInRequired();
   if (!response.ok) throw new Error("unavailable");
   return response.json() as Promise<unknown>;
 }
-async function chat(action: ConversationAction): Promise<ConversationView> {
-  return conversationView.parse(await call(action));
+async function chat(action: ConversationAction): Promise<ConversationState> {
+  return conversationState.parse(await call(action));
 }
 const secondary = "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-cyan/30 px-4 py-2 text-sm text-cyan transition hover:bg-cyan/10 active:scale-[0.98] disabled:opacity-50";
 const primary = "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan px-6 py-3 font-heading text-xs font-semibold uppercase tracking-[0.12em] text-void transition hover:brightness-110 active:scale-[0.98] disabled:opacity-50";
@@ -26,34 +29,66 @@ export function EdenConversation() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const [emailOpen, setEmailOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
-  const bootstrap = useRef<Promise<ConversationView> | null>(null);
+  const bootstrap = useRef<Promise<ConversationState> | null>(null);
+  const epoch = useRef(0);
+  const account = useRef<string | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const emailForm = useRef<HTMLFormElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
   const codeInput = useRef<HTMLInputElement>(null);
   const hasView = Boolean(view);
+  const accountEmail = view?.email;
   const waitingForReply = Boolean(view?.pending && !view.retry_available);
   const reducedMotion = useReducedMotion();
-  const focusEmail = useCallback(() => {
-    (codeSent ? codeInput : emailInput).current?.focus({ preventScroll: true });
-    emailForm.current?.scrollIntoView({ block: "center", behavior: reducedMotion ? "instant" : "smooth" });
-  }, [codeSent, reducedMotion]);
+  const accept = useCallback((saved: ConversationState) => {
+    const owner = saved.email_verified ? saved.email : null;
+    if (account.current !== owner) {
+      ++epoch.current;
+      account.current = owner;
+      setText(""); setBusy(false);
+    }
+    setLoaded(true);
+    setView((current) => {
+      if (!saved.email_verified) return null;
+      if (current?.email === saved.email && (saved.revision < current.revision ||
+        (saved.revision === current.revision && saved.updated_at < current.updated_at))) return current;
+      return saved;
+    });
+  }, []);
 
-  useEffect(() => {
-    if (emailOpen) focusEmail();
-  }, [emailOpen, focusEmail]);
+  const signInAgain = useCallback(async () => {
+    const generation = ++epoch.current;
+    setView(null); setText(""); setCode(""); setCodeSent(false); setEmail("");
+    setLoaded(false); setBusy(false); setError(""); setNotice("Please sign in to return to your saved conversation.");
+    try {
+      const saved = await chat({ action: "open" });
+      if (epoch.current === generation) accept(saved);
+    } catch { if (epoch.current === generation) setError("I couldn't open sign-in. Please try again."); }
+  }, [accept]);
 
   useEffect(() => {
     let active = true;
     bootstrap.current ??= chat({ action: "open" });
-    void bootstrap.current.then((saved) => { if (active) setView(saved); })
-      .catch(() => { if (active) setError("I couldn't open your conversation. Please try again."); });
+    void bootstrap.current.then((saved) => { if (active) accept(saved); })
+      .catch((failure: unknown) => {
+        if (!active) return;
+        if (failure instanceof SignInRequired) void signInAgain();
+        else setError("I couldn't open sign-in. Please try again.");
+      });
     return () => { active = false; };
-  }, []);
+  }, [accept, signInAgain]);
+
+  useEffect(() => {
+    if (loaded && !hasView) {
+      (codeSent ? codeInput : emailInput).current?.focus({ preventScroll: true });
+      if (codeSent) emailForm.current?.scrollIntoView({ block: "center", behavior: reducedMotion ? "instant" : "smooth" });
+    }
+  }, [loaded, hasView, codeSent, reducedMotion]);
 
   useEffect(() => {
     const container = transcript.current;
@@ -62,50 +97,94 @@ export function EdenConversation() {
   }, [view?.messages.length, reducedMotion]);
 
   useEffect(() => {
-    if ((!busy && !waitingForReply) || !hasView || codeSent) return;
+    if (!hasView) return;
     let active = true;
-    const timer = setInterval(() => {
-      void chat({ action: "get" }).then((saved) => {
-        if (active) setView((current) => !current || saved.revision >= current.revision ? saved : current);
-      }).catch(() => { /* The active request or retry control reports a failure. */ });
-    }, 1800);
-    return () => { active = false; clearInterval(timer); };
-  }, [busy, waitingForReply, hasView, codeSent]); // Saved state does not restart the polling clock.
+    const generation = epoch.current;
+    let reading = false;
+    const refresh = async () => {
+      if (reading || document.visibilityState === "hidden") return;
+      reading = true;
+      try {
+        const saved = await chat({ action: "get" });
+        if (active && epoch.current === generation) accept(saved);
+      } catch (failure) {
+        if (active && epoch.current === generation && failure instanceof SignInRequired) void signInAgain();
+      } finally { reading = false; }
+    };
+    // Both devices follow the same saved history, including confirmation elsewhere.
+    const timer = setInterval(() => void refresh(), busy || waitingForReply ? 1800 : 5000);
+    window.addEventListener("focus", refresh);
+    window.addEventListener("pageshow", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      active = false; clearInterval(timer);
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("pageshow", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, [busy, waitingForReply, hasView, accountEmail, accept, signInAgain]);
 
   const perform = useCallback(async (action: ConversationAction) => {
+    const generation = epoch.current;
     setBusy(true); setError(""); setNotice("");
     try {
       const saved = await chat(action);
-      setView(saved);
-      if (saved.retry_available) setNotice("Your message is saved. Try the reply again when you're ready.");
-      return saved;
-    } catch {
+      if (generation !== epoch.current) return null;
+      accept(saved);
+      if (saved.email_verified && saved.retry_available) setNotice("Your message is saved. Try the reply again when you're ready.");
+      return saved.email_verified ? saved : null;
+    } catch (failure) {
+      if (generation !== epoch.current) return null;
+      if (failure instanceof SignInRequired) { await signInAgain(); return null; }
       setError("The connection was interrupted. Check your saved conversation and try again.");
-      try { const saved = await chat({ action: "get" }); setView(saved); return saved; } catch { return null; }
-    } finally { setBusy(false); }
-  }, []);
+      try {
+        const saved = await chat({ action: "get" });
+        if (generation === epoch.current) { accept(saved); return saved.email_verified ? saved : null; }
+      } catch { /* The saved-message retry remains available after a connection failure. */ }
+      return null;
+    } finally { if (generation === epoch.current) setBusy(false); }
+  }, [accept, signInAgain]);
+
+  async function signOut() {
+    const generation = ++epoch.current;
+    setView(null); setText(""); setCode(""); setEmail(""); setCodeSent(false);
+    setLoaded(false); setSigningOut(true); setBusy(true); setError(""); setNotice("");
+    try {
+      try { await chat({ action: "logout" }); }
+      catch (failure) { if (!(failure instanceof SignInRequired)) throw failure; }
+      const saved = await chat({ action: "open" });
+      if (generation === epoch.current) { accept(saved); setSigningOut(false); setNotice("You're signed out. Your progress is saved to your email."); }
+    } catch { if (generation === epoch.current) setError("Sign-out couldn't be completed. Please try again."); }
+    finally { if (generation === epoch.current) setBusy(false); }
+  }
 
   async function send() {
     if (!view || busy || view.pending || !text.trim()) return;
     const request = { action: "message" as const, request_id: crypto.randomUUID(),
       revision: view.revision, text: text.trim() };
     setText("");
+    const generation = epoch.current;
     const saved = await perform(request);
+    if (generation !== epoch.current) return;
     if (!saved?.messages.some((message) => message.id === request.request_id)) setText(request.text);
   }
 
   async function emailAction() {
+    const generation = epoch.current;
     setBusy(true); setError(""); setNotice("");
     try {
       if (codeSent) {
         const saved = await chat({ action: "verify", email, code });
-        setView(saved); setEmailOpen(false); setCode(""); setCodeSent(false);
-        setNotice(saved.resumed ? "You're back in your saved conversation." : "Your progress is now linked to your email.");
-      } else { await call({ action: "email", email }); setCodeSent(true); }
-    } catch {
+        if (generation !== epoch.current || !saved.email_verified) return;
+        accept(saved); setCode(""); setCodeSent(false);
+        setNotice(saved.resumed ? "You're back in your saved conversation." : "You’re signed in. Your conversation will be saved as you go.");
+      } else { await call({ action: "email", email }); if (generation === epoch.current) setCodeSent(true); }
+    } catch (failure) {
+      if (generation !== epoch.current) return;
+      if (failure instanceof SignInRequired) { await signInAgain(); setBusy(false); return; }
       setError(codeSent ? "That code couldn't be verified. Check it or request a new one." :
         "I couldn't send a code just now. Please check your email address and try again shortly.");
-    } finally { setBusy(false); }
+    } finally { if (generation === epoch.current) setBusy(false); }
   }
 
   return (
@@ -117,66 +196,69 @@ export function EdenConversation() {
           Find out what your Eden can do for you.
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-ghost-muted">
-          Tell Eden Builder about your day, the work that piles up, and what you wish someone would take care of.
+          Tell Ava about your day, the work that piles up, and what you wish someone would take care of.
           Together, you&apos;ll shape your personal assistant.
         </p>
       </motion.header>
 
-      <section aria-label="Your conversation with Eden Builder" className="overflow-hidden rounded-2xl border border-ghost/10 bg-void-light">
+      <section aria-label="Your conversation with Ava" className="overflow-hidden rounded-2xl border border-ghost/10 bg-void-light">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ghost/10 px-4 py-4 sm:px-7">
           <div className="flex items-center gap-3">
-            <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan/25 font-heading text-lg text-cyan">E</span>
+            <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan/25 font-heading text-lg text-cyan">A</span>
             <div>
-              <p className="font-heading text-base font-medium text-ghost">Eden Builder</p>
+              <p className="font-heading text-base font-medium text-ghost">Ava</p>
               <p role="status" className="mt-0.5 text-xs text-ghost-muted">
-                {!view ? "Opening your conversation" : busy ? (view.pending ? "Message saved. Thinking…" : "Saving…") :
+                {!view ? (loaded ? "Your personal onboarding conversation" : "Opening sign-in") : busy ? (view.pending ? "Message saved. Thinking…" : "Saving…") :
                   view.pending ? (waitingForReply ? "Message saved. Thinking…" : "Message saved. Reply waiting.") : view.confirmed ? "Setup confirmed" :
-                    view.email_verified ? "Progress saved to your email" : "Progress saved for this visit"}
+                    "Progress saved to your email"}
               </p>
             </div>
           </div>
-          {view && !view.email_verified && <button type="button" onClick={() => setEmailOpen(!emailOpen)}
-            className="flex min-h-11 items-center gap-2 text-sm text-cyan transition hover:text-ghost active:opacity-70">
-            <Mail size={16} aria-hidden="true" /> Save and return later
-          </button>}
+          {view && <div className="flex min-w-0 max-w-full flex-wrap items-center gap-3">
+            <p className="break-all text-xs text-ghost-muted">Signed in as {view.email}</p>
+            <button type="button" onClick={() => void signOut()} className="flex min-h-11 items-center gap-2 text-sm text-cyan transition hover:text-ghost active:opacity-70">
+              <LogOut size={16} aria-hidden="true" /> Sign out
+            </button>
+          </div>}
         </div>
 
-        {emailOpen && <form ref={emailForm} onSubmit={(event) => { event.preventDefault(); void emailAction(); }}
-          className="border-b border-cyan/20 bg-surface px-4 py-6 sm:px-7">
-          <h2 className="font-heading text-lg text-ghost">Pick up wherever you left off.</h2>
-          <p className="mt-2 text-sm leading-relaxed">We&apos;ll send a sign-in code to your email. It lets you return to your conversation on any device.</p>
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
-            <label className="flex-1 text-sm text-ghost">Email address
+        {!view && loaded && <form ref={emailForm} onSubmit={(event) => { event.preventDefault(); void emailAction(); }}
+          className="bg-surface px-4 py-7 sm:px-7">
+          <h2 className="font-heading text-xl text-ghost">Sign in to meet Ava.</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ghost-muted">Use your email to start your own conversation. If you&apos;ve been here before, we&apos;ll pick up where you left off, on any device.</p>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end">
+            <label className="min-w-0 flex-1 text-sm text-ghost">Email address
               <input ref={emailInput} className={`${field} mt-2`} type="email" autoComplete="email" required value={email}
                 disabled={busy || codeSent} onChange={(event) => setEmail(event.target.value)} />
             </label>
-            {codeSent && <label className="flex-1 text-sm text-ghost">Sign-in code
+            {codeSent && <label className="min-w-0 flex-1 text-sm text-ghost">Sign-in code
               <input ref={codeInput} className={`${field} mt-2`} inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6,8}"
-                required value={code} onChange={(event) => setCode(event.target.value)} maxLength={8} />
+                required value={code} onChange={(event) => setCode(event.target.value)} maxLength={8} disabled={busy} />
             </label>}
-            <button className={primary} disabled={busy} type="submit">{codeSent ? "Verify email" : "Send code"}</button>
+            <button className={`${primary} shrink-0`} disabled={busy} type="submit">{codeSent ? "Verify email" : "Send code"}</button>
           </div>
-          {codeSent && <p className="mt-3 text-sm">Check your inbox for your code. <button type="button" className="text-cyan underline underline-offset-4 hover:text-ghost"
+          {codeSent && <p className="mt-4 text-sm">Check your inbox for your code. <button type="button" className="text-cyan underline underline-offset-4 hover:text-ghost"
             onClick={() => { setCodeSent(false); setCode(""); }} disabled={busy}>Use another email or resend</button></p>}
+          <p className="mt-5 text-xs leading-relaxed text-ghost-muted">Your answers are saved to your account and used by Aygency to prepare your Eden.</p>
         </form>}
+        {!view && !loaded && !error && <div className="p-7"><LoaderCircle className="animate-spin text-cyan" aria-label="Opening sign-in" size={22} /></div>}
 
-        <div ref={transcript} role="log" aria-label="Conversation" aria-live="polite"
+        {view && <div ref={transcript} role="log" aria-label="Conversation" aria-live="polite"
           className="max-h-[60dvh] min-h-[280px] space-y-7 overflow-y-auto overscroll-contain px-4 py-7 sm:min-h-[330px] sm:px-7">
           {view?.messages.map((message) => (
             <div key={message.id} className={message.role === "user" ? "ml-auto max-w-[90%] sm:max-w-[78%]" : "max-w-[92%] sm:max-w-[85%]"}>
               <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-ghost-muted">
-                {message.role === "user" ? "You" : "Eden Builder"}
+                {message.role === "user" ? "You" : "Ava"}
               </p>
               <p className={`whitespace-pre-wrap break-words text-base leading-relaxed ${message.role === "user" ? "rounded-xl bg-surface-light px-4 py-3 text-ghost" : "text-ghost"}`}>{message.text}</p>
             </div>
           ))}
-          {!view && !error && <LoaderCircle className="animate-spin text-cyan" aria-label="Opening conversation" size={22} />}
-        </div>
+        </div>}
 
         {(error || notice) && <div className="border-t border-ghost/10 px-4 py-4 sm:px-7">
           {error && <p role="alert" className="text-sm text-error">{error}</p>}
           {notice && <p role="status" className="text-sm text-ghost-muted">{notice}</p>}
-          {!view && <button className={`${secondary} mt-3`} disabled={busy} onClick={() => void perform({ action: "open" })}>Try again</button>}
+          {!view && error && <button className={`${secondary} mt-3`} disabled={busy} onClick={() => void (signingOut ? signOut() : signInAgain())}>Try again</button>}
         </div>}
 
         {view?.pending && !busy && <div className="px-4 pb-5 sm:px-7">
@@ -185,9 +267,9 @@ export function EdenConversation() {
           </button>
         </div>}
 
-        {!view?.confirmed && <form className="border-t border-ghost/10 bg-surface p-4 sm:px-7 sm:py-5"
+        {view && !view.confirmed && <form className="border-t border-ghost/10 bg-surface p-4 sm:px-7 sm:py-5"
           onSubmit={(event) => { event.preventDefault(); void send(); }}>
-          <label htmlFor="eden-message" className="sr-only">Your message to Eden Builder</label>
+          <label htmlFor="eden-message" className="sr-only">Your message to Ava</label>
           <div className="flex items-end gap-3">
             <textarea id="eden-message" className={`${field} min-h-14 resize-none`} rows={2} maxLength={4096}
               placeholder="Tell me a little about your world…" value={text} disabled={!view || busy || view.pending}
@@ -219,11 +301,10 @@ export function EdenConversation() {
             {view.created ? "Aygency is creating your Eden with this setup." : "Your setup is saved and ready for Aygency to create your Eden. You can return here with your email."}</p>
           {!view.created && <button className={`${secondary} mt-5`} disabled={busy} type="button" onClick={() => void perform({ action: "reopen", revision: view.revision })}>Change my setup</button>}
         </> : <>
-          <p className="mt-5 text-sm leading-relaxed">Anything to change? Tell the Builder above. When it feels right, confirm your setup so Aygency can prepare your Eden.</p>
+          <p className="mt-5 text-sm leading-relaxed">Anything to change? Tell Ava above. When it feels right, confirm your setup so Aygency can prepare your Eden.</p>
           <button className={`${primary} mt-5`} type="button" disabled={busy || view.pending} onClick={() => {
-            if (!view.email_verified) { setEmailOpen(true); if (emailOpen) focusEmail(); setNotice("Verify your email above to finish saving your setup."); }
-            else void perform({ action: "confirm", revision: view.revision });
-          }}>{view.email_verified ? "Confirm my setup" : "Verify email to finish"}</button>
+            void perform({ action: "confirm", revision: view.revision });
+          }}>Confirm my setup</button>
         </>}
       </section>}
     </div>

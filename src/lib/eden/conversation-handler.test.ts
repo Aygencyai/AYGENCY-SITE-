@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { createConversationHandler } from "./conversation-handler";
 
 const view = { revision: 1, messages: [], facts: [], summary: "", ready: false,
-  email_verified: false, pending: false, confirmed: false, created: false,
+  email_verified: true, email: "customer@example.test", pending: false, confirmed: false, created: false,
   updated_at: "2026-09-15T10:00:00Z" };
 const key = "isolated-test-ingress-key-long-enough-for-test";
 function request(body: object, headers: Record<string, string> = {}) {
@@ -70,4 +70,30 @@ describe("website conversation boundary", () => {
     expect((await run(request({ action: "retry" }, { cookie: "__Host-eden-conversation=" + token }))).status).toBe(200);
     expect(new Headers(upstream.mock.calls[0][1]?.headers).get("x-eden-session")).toBe(token);
   });
+  it("accepts only a content-free gate before email verification", async () => {
+    const { run } = handler({ email_verified: false });
+    expect(await (await run(request({ action: "open" }))).json()).toEqual({ email_verified: false });
+    const leaking = handler({ ...view, email_verified: false });
+    expect((await leaking.run(request({ action: "open" }))).status).toBe(503);
+  });
+  it("clears an expired or revoked cookie so sign-in can recover", async () => {
+    const upstream = vi.fn<typeof fetch>(async () => new Response("{}", { status: 401 }));
+    const run = createConversationHandler({ fetch: upstream, enabled: true, url: "https://builder.example", key });
+    const response = await run(request({ action: "get" }, { cookie: "__Host-eden-conversation=" + "a".repeat(64) }));
+    expect(response.status).toBe(401);
+    expect(response.headers.get("set-cookie")).toContain("Max-Age=0");
+  });
+  it("rotates the browser session when signing out and rejects content in the logout response", async () => {
+    let value: object = { email_verified: false };
+    const upstream = vi.fn<typeof fetch>(async () => new Response(JSON.stringify(value), {
+      headers: { "x-eden-session": "b".repeat(64) },
+    }));
+    const run = createConversationHandler({ fetch: upstream, enabled: true, url: "https://builder.example", key });
+    const response = await run(request({ action: "logout" }, { cookie: "__Host-eden-conversation=" + "a".repeat(64) }));
+    expect(response.status).toBe(200);
+    expect(response.headers.get("set-cookie")).toContain("b".repeat(64));
+    value = view;
+    expect((await run(request({ action: "logout" }, { cookie: "__Host-eden-conversation=" + "a".repeat(64) }))).status).toBe(503);
+  });
+
 });

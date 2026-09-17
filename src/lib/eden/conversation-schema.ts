@@ -7,13 +7,20 @@ export const conversationView = z.object({
     text: z.string().min(1).max(4096), created_at: z.string(),
   }).strict()).max(97),
   facts: z.array(z.object({ topic: z.string().max(40), text: z.string().max(320) }).strict()).max(19),
-  summary: z.string().max(1800), ready: z.boolean(), email_verified: z.boolean(),
+  summary: z.string().max(1800), ready: z.boolean(), email_verified: z.literal(true),
+  email: z.string().email().max(254),
   pending: z.boolean(), confirmed: z.boolean(), created: z.boolean(), updated_at: z.string(),
   resumed: z.boolean().optional(), retry_available: z.boolean().optional(),
 }).strict();
 
+export const conversationState = z.union([
+  conversationView,
+  z.object({ email_verified: z.literal(false) }).strict(),
+]);
+export type ConversationState = z.infer<typeof conversationState>;
+
 export const conversationAction = z.discriminatedUnion("action", [
-  z.object({ action: z.enum(["open", "get", "retry"]) }).strict(),
+  z.object({ action: z.enum(["open", "get", "retry", "logout"]) }).strict(),
   z.object({ action: z.literal("message"), request_id: z.string().uuid(),
     revision: z.number().int().positive(), text: z.string().trim().min(1).max(4096) }).strict(),
   z.object({ action: z.literal("email"), email: z.string().trim().email().max(254) }).strict(),
