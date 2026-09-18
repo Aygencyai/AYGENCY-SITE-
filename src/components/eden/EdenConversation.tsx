@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUp, Check, LoaderCircle, LogOut, RotateCcw } from "lucide-react";
 import { conversationState, topicLabels, type ConversationAction, type ConversationState, type ConversationView } from "@/lib/eden/conversation-schema";
+import { retryIsWorthOffering, savedMessageNotice } from "@/lib/eden/conversation-notice";
 
 class SignInRequired extends Error {}
 
@@ -131,7 +132,7 @@ export function EdenConversation() {
       const saved = await chat(action);
       if (generation !== epoch.current) return null;
       accept(saved);
-      if (saved.email_verified && saved.retry_available) setNotice("Your message is saved. Try the reply again when you're ready.");
+      if (saved.email_verified) setNotice(savedMessageNotice(saved));
       return saved.email_verified ? saved : null;
     } catch (failure) {
       if (generation !== epoch.current) return null;
@@ -261,7 +262,7 @@ export function EdenConversation() {
           {!view && error && <button className={`${secondary} mt-3`} disabled={busy} onClick={() => void (signingOut ? signOut() : signInAgain())}>Try again</button>}
         </div>}
 
-        {view?.pending && !busy && <div className="px-4 pb-5 sm:px-7">
+        {view?.pending && !busy && retryIsWorthOffering(view) && <div className="px-4 pb-5 sm:px-7">
           <button className={secondary} type="button" onClick={() => void perform({ action: "retry" })}>
             <RotateCcw size={16} aria-hidden="true" /> Continue with my saved message
           </button>
