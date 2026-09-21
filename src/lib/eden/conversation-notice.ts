@@ -19,3 +19,14 @@ export function savedMessageNotice(view: ConversationView): string {
   }
   return "Your message is saved. Try the reply again when you're ready.";
 }
+
+// What happens after a customer confirms. The funnel is lead capture: a person
+// reads the setup and speaks to the customer before any Eden is built, so the
+// confirmed state has to set that expectation rather than imply an automatic
+// handover. Once the build has actually been started, stop promising contact.
+export function confirmedStateMessage(view: ConversationView): string {
+  if (view.created) {
+    return "We're building your Eden with this setup.";
+  }
+  return "Your setup is saved. We'll be in touch by email to talk it through, and your Eden gets built once the plan is right. You can come back to this page any time with your email.";
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { conversationView } from "./conversation-schema";
-import { savedMessageNotice, retryIsWorthOffering } from "./conversation-notice";
+import { savedMessageNotice, retryIsWorthOffering, confirmedStateMessage } from "./conversation-notice";
 
 const base = {
   revision: 2, messages: [], facts: [], summary: "", ready: false,
@@ -42,5 +42,26 @@ describe("conversation schema", () => {
   it("rejects a reason outside the fixed vocabulary", () => {
     expect(() => conversationView.parse({ ...base, unavailable_reason: "429 quota for acct" }))
       .toThrow();
+  });
+});
+
+describe("confirmed state", () => {
+  const settled = { ...base, pending: false, retry_available: false, confirmed: true };
+
+  it("tells the customer a human will be in touch once their setup is saved", () => {
+    const message = confirmedStateMessage({ ...settled, created: false });
+    expect(message).toContain("in touch");
+    expect(message).toContain("come back");
+  });
+
+  it("stops promising contact once the founders have started the build", () => {
+    const message = confirmedStateMessage({ ...settled, created: true });
+    expect(message).toContain("building");
+    expect(message).not.toContain("in touch");
+  });
+
+  it("uses no em dash, per the site copy rules", () => {
+    expect(confirmedStateMessage({ ...settled, created: false })).not.toContain("\u2014");
+    expect(confirmedStateMessage({ ...settled, created: true })).not.toContain("\u2014");
   });
 });

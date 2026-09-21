@@ -144,3 +144,36 @@ describe("founder alert on a completed onboarding", () => {
     expect(notify).not.toHaveBeenCalled();
   });
 });
+
+describe("sign-in abuse limits", () => {
+  const token = "__Host-eden-conversation=" + "a".repeat(64);
+
+  function limited() {
+    const upstream = vi.fn<typeof fetch>(async (_url, options) =>
+      new Response(JSON.stringify({ code_sent: true }), {
+        headers: { "x-eden-session": new Headers(options?.headers).get("x-eden-session") ?? "" },
+      }));
+    return createConversationHandler({ fetch: upstream, enabled: true,
+      url: "https://builder.example", key,
+      signInLimit: { limit: 3, windowMs: 60_000 } });
+  }
+
+  it("stops one visitor from mailing codes to an address over and over", async () => {
+    const run = limited();
+    const send = () => run(request({ action: "email", email: "target@example.test" },
+      { cookie: token }));
+    expect((await send()).status).toBe(200);
+    expect((await send()).status).toBe(200);
+    expect((await send()).status).toBe(200);
+    expect((await send()).status).toBe(429);
+  });
+
+  it("does not spend the sign-in budget on ordinary conversation", async () => {
+    const run = limited();
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      await run(request({ action: "email", email: "target@example.test" }, { cookie: token }));
+    }
+    const chatting = await run(request({ action: "get" }, { cookie: token }));
+    expect(chatting.status).not.toBe(429);
+  });
+});

@@ -5,6 +5,15 @@ import { createFixedWindowRateLimiter, getHashedRequestIdentifier } from "./rate
 import { sendEdenOnboardingLeadNotification, type OnboardingLead } from "./onboarding-lead-notification";
 
 const consume = createFixedWindowRateLimiter({ limit: 90, windowMs: 60_000 });
+// Requesting a sign-in code sends mail to an address the visitor chose, so it
+// is the one action on this endpoint an abuser can point at somebody else.
+// It gets its own, much smaller budget: enough for a mistyped address and a
+// couple of resends, not enough to bomb an inbox or drain the project's mail
+// allowance for real customers.
+const consumeSignIn = createFixedWindowRateLimiter({ limit: 6, windowMs: 15 * 60_000 });
+// A verification attempt is cheap for us and free for an attacker, so it is
+// capped well above ordinary typo correction and well below useful guessing.
+const consumeVerify = createFixedWindowRateLimiter({ limit: 20, windowMs: 15 * 60_000 });
 const privateHeaders = { "cache-control": "no-store, max-age=0", "referrer-policy": "no-referrer" };
 
 async function boundedJson(body: ReadableStream<Uint8Array> | null, limit: number): Promise<unknown> {
@@ -27,7 +36,10 @@ async function boundedJson(body: ReadableStream<Uint8Array> | null, limit: numbe
 export function createConversationHandler(deps: {
   fetch?: typeof fetch; enabled?: boolean; url?: string; key?: string; local?: boolean;
   notify?: (lead: OnboardingLead) => Promise<unknown>;
+  signInLimit?: { limit: number; windowMs: number };
 } = {}) {
+  const signIn = deps.signInLimit ? createFixedWindowRateLimiter(deps.signInLimit) : consumeSignIn;
+  const verify = deps.signInLimit ? createFixedWindowRateLimiter(deps.signInLimit) : consumeVerify;
   return async (request: NextRequest): Promise<NextResponse> => {
     let cookieName = "__Host-eden-conversation";
     const fail = (status: number) => {
@@ -53,6 +65,8 @@ export function createConversationHandler(deps: {
     try {
       if (request.headers.get("content-type")?.split(";")[0] !== "application/json") return fail(415);
       const input = conversationAction.parse(await boundedJson(request.body, 16_384));
+      if (input.action === "email" && !signIn(getHashedRequestIdentifier(request)).allowed) return fail(429);
+      if (input.action === "verify" && !verify(getHashedRequestIdentifier(request)).allowed) return fail(429);
       const url = new URL(deps.url ?? process.env.EDEN_WEB_SERVICE_URL ?? "");
       const local = (deps.local ?? process.env.EDEN_WEB_ALLOW_LOCAL === "true") &&
         process.env.NODE_ENV !== "production" && !process.env.VERCEL;

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUp, Check, LoaderCircle, LogOut, RotateCcw } from "lucide-react";
 import { conversationState, topicLabels, type ConversationAction, type ConversationState, type ConversationView } from "@/lib/eden/conversation-schema";
-import { retryIsWorthOffering, savedMessageNotice } from "@/lib/eden/conversation-notice";
+import { confirmedStateMessage, retryIsWorthOffering, savedMessageNotice } from "@/lib/eden/conversation-notice";
 
 class SignInRequired extends Error {}
 
@@ -299,7 +299,7 @@ export function EdenConversation() {
         </details>
         {view.confirmed ? <>
           <p className="mt-5 flex items-start gap-2 text-sm leading-relaxed text-ghost"><Check size={18} className="mt-0.5 shrink-0 text-cyan" />
-            {view.created ? "Aygency is creating your Eden with this setup." : "Your setup is saved and ready for Aygency to create your Eden. You can return here with your email."}</p>
+            {confirmedStateMessage(view)}</p>
           {!view.created && <button className={`${secondary} mt-5`} disabled={busy} type="button" onClick={() => void perform({ action: "reopen", revision: view.revision })}>Change my setup</button>}
         </> : <>
           <p className="mt-5 text-sm leading-relaxed">Anything to change? Tell Ava above. When it feels right, confirm your setup so Aygency can prepare your Eden.</p>
