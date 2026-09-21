@@ -1,16 +1,15 @@
-import { expect, test, type Page, type APIRequestContext } from "@playwright/test";
-import { z } from "zod";
+import { expect, test, type Page } from "@playwright/test";
 import { conversationView } from "../src/lib/eden/conversation-schema";
 
-// Opt-in: actual subscription model and disposable local Supabase/Mailpit only.
+// Opt-in: actual subscription model and disposable local Supabase only.
 test.use({ screenshot: "off", trace: "off" });
 test("two isolated accounts, cross-device resume and confirmed personalized setup", async ({ browser, page, request }) => {
-  test.skip(process.env.EDEN_WEB_FULL_JOURNEY !== "true", "Requires the isolated local Builder and mail capture");
+  test.skip(process.env.EDEN_WEB_FULL_JOURNEY !== "true", "Requires the isolated local Builder with password accounts");
   test.setTimeout(360_000);
   const email = `web-journey-${crypto.randomUUID()}@example.test`;
   async function open(target: Page) {
     await target.goto("http://127.0.0.1:3118/design-your-eden");
-    await expect(target.getByRole("heading", { name: "Sign in to meet Ava." })).toBeVisible();
+    await expect(target.getByRole("heading", { name: "Create your account to meet Ava." })).toBeVisible();
   }
   async function state(target: Page) {
     return conversationView.parse(await target.evaluate(async () => {
@@ -34,29 +33,22 @@ test("two isolated accounts, cross-device resume and confirmed personalized setu
     expect(saved.messages.at(-2)?.text).toBe(text);
     return saved;
   }
-  async function verify(target: Page, api: APIRequestContext, address = email) {
+  const password = `Test-only-${crypto.randomUUID()}`;
+  const registered = new Set<string>();
+  async function signIn(target: Page, address = email) {
+    const returning = registered.has(address);
+    if (returning) await target.getByRole("button", { name: "Sign in", exact: true }).click();
     await target.getByLabel("Email address", { exact: true }).fill(address);
-    await target.getByRole("button", { name: "Send code", exact: true }).click();
-    await expect(target.getByLabel("Sign-in code", { exact: true })).toBeVisible();
-    const list = z.object({ messages: z.array(z.object({ ID: z.string(), To: z.array(z.object({ Address: z.string() })) })) });
-    let id: string | undefined;
-    await expect.poll(async () => {
-      const result = list.parse(await (await api.get("http://127.0.0.1:55424/api/v1/messages")).json());
-      id = result.messages.find(message => message.To.some(recipient => recipient.Address === address))?.ID;
-      return Boolean(id);
-    }).toBe(true);
-    const mail = z.object({ Text: z.string(), HTML: z.string() }).parse(
-      await (await api.get(`http://127.0.0.1:55424/api/v1/message/${id}`)).json());
-    const code = `${mail.Text} ${mail.HTML}`.match(/\b\d{6,8}\b/)?.[0];
-    if (!code) throw new Error("Local OTP email did not include a code");
-    await target.getByLabel("Sign-in code", { exact: true }).fill(code);
-    await target.getByRole("button", { name: "Verify email", exact: true }).click();
-    await expect(target.getByLabel("Sign-in code", { exact: true })).not.toBeVisible();
-    expect((await state(target)).email_verified).toBe(true);
+    await target.getByLabel("Password", { exact: true }).fill(password);
+    await target.getByRole("button", { name: returning ? "Sign in" : "Create account", exact: true }).click();
+    await expect(target.getByLabel("Password", { exact: true })).not.toBeVisible();
+    const account = await state(target);
+    expect(account.authenticated).toBe(true);
+    expect(account.email_verified).toBe(false);
+    registered.add(address);
   }
   await open(page);
-  await verify(page, request);
-  const verifiedAt = Date.now();
+  await signIn(page);
   const first = await send(page, "I'm Sam and I run a small design studio. Client tasks slip between messages and meetings. Could Eden help keep a Kanban board up to date, and would I have to connect Outlook?", true);
   expect(first.messages.at(-1)?.text.toLowerCase()).toContain("outlook");
   await send(page, "We use a Notion Kanban with Inbox, Planned, Doing, Waiting on client and Done. Outlook email and meeting notes are where tasks arrive; Notion wins if statuses disagree. I own client communication and my delivery lead Mia owns design work. Every card needs an owner and due date. First job: every Monday to Friday at 8:30am UK time, prepare a short Telegram brief of promises due today, overdue work and missing owners using Notion and Outlook. Within two weeks every client promise should be assigned with no missed follow-ups.");
@@ -76,7 +68,7 @@ test("two isolated accounts, cross-device resume and confirmed personalized setu
   const louis = await separate.newPage();
   const louisEmail = `web-separate-${crypto.randomUUID()}@example.test`;
   await open(louis);
-  await verify(louis, request, louisEmail);
+  await signIn(louis, louisEmail);
   expect((await state(louis)).messages).toHaveLength(1);
   const louisState = await send(louis, "I'm Morgan and I run a dog-walking business. I need help remembering which customers need a renewal reminder. What could Eden do for me?");
   expect(louisState.messages.at(-1)?.text).not.toContain("Sam");
@@ -87,14 +79,11 @@ test("two isolated accounts, cross-device resume and confirmed personalized setu
   await louis.reload();
   await expect(louis.getByText(`Signed in as ${louisEmail}`)).toBeVisible();
   expect((await state(louis)).messages).toEqual(louisState.messages);
-  // GoTrue's resend cooldown still applies to this synthetic address.
-  const remaining = 61_000 - (Date.now() - verifiedAt);
-  if (remaining > 0) await page.waitForTimeout(Math.min(remaining, 60_000));
   const other = await browser.newContext({viewport:{width:375,height:850}});
   const resumed = await other.newPage();
   await open(resumed);
   await expect(resumed.getByRole("log")).toHaveCount(0);
-  await verify(resumed, request);
+  await signIn(resumed);
   expect((await state(resumed)).messages).toEqual(corrected.messages);
   await resumed.getByRole("button", { name: "Confirm my setup", exact: true }).click();
   await expect(resumed.getByRole("heading", { name: "Your Eden starts here." })).toBeVisible();
@@ -108,7 +97,7 @@ test("two isolated accounts, cross-device resume and confirmed personalized setu
   const oldCookie = (await separate.cookies()).find(cookie => cookie.name === "eden-conversation");
   if (!oldCookie) throw new Error("Expected a private local session cookie");
   await louis.getByRole("button", {name:"Sign out",exact:true}).click();
-  await expect(louis.getByRole("heading", {name:"Sign in to meet Ava."})).toBeVisible();
+  await expect(louis.getByRole("heading", {name:"Create your account to meet Ava."})).toBeVisible();
   await expect(louis.getByRole("log")).toHaveCount(0);
   const revoked = await request.post("http://127.0.0.1:3118/api/eden/conversation", {
     headers:{origin:"http://127.0.0.1:3118",cookie:`eden-conversation=${oldCookie.value}`},

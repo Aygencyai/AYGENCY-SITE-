@@ -4,7 +4,7 @@ import { savedMessageNotice, retryIsWorthOffering, confirmedStateMessage } from 
 
 const base = {
   revision: 2, messages: [], facts: [], summary: "", ready: false,
-  email_verified: true as const, email: "customer@example.test",
+  authenticated: true as const, email_verified: true as const, email: "customer@example.test",
   pending: true, confirmed: false, created: false, updated_at: "2026-09-18T10:00:00Z",
   retry_available: true,
 };

@@ -7,7 +7,7 @@ export const conversationView = z.object({
     text: z.string().min(1).max(4096), created_at: z.string(),
   }).strict()).max(97),
   facts: z.array(z.object({ topic: z.string().max(40), text: z.string().max(320) }).strict()).max(19),
-  summary: z.string().max(1800), ready: z.boolean(), email_verified: z.literal(true),
+  summary: z.string().max(1800), ready: z.boolean(), authenticated: z.literal(true), email_verified: z.boolean(),
   email: z.string().email().max(254),
   pending: z.boolean(), confirmed: z.boolean(), created: z.boolean(), updated_at: z.string(),
   resumed: z.boolean().optional(), retry_available: z.boolean().optional(),
@@ -17,7 +17,7 @@ export const conversationView = z.object({
 
 export const conversationState = z.union([
   conversationView,
-  z.object({ email_verified: z.literal(false) }).strict(),
+  z.object({ authenticated: z.literal(false), email_verified: z.literal(false) }).strict(),
 ]);
 export type ConversationState = z.infer<typeof conversationState>;
 
@@ -25,6 +25,10 @@ export const conversationAction = z.discriminatedUnion("action", [
   z.object({ action: z.enum(["open", "get", "retry", "logout"]) }).strict(),
   z.object({ action: z.literal("message"), request_id: z.string().uuid(),
     revision: z.number().int().positive(), text: z.string().trim().min(1).max(4096) }).strict(),
+  z.object({ action: z.literal("signup"), email: z.string().trim().email().max(254),
+    password: z.string().min(12).max(72).refine(value => new TextEncoder().encode(value).length <= 72) }).strict(),
+  z.object({ action: z.literal("signin"), email: z.string().trim().email().max(254),
+    password: z.string().min(1).max(256) }).strict(),
   z.object({ action: z.literal("email"), email: z.string().trim().email().max(254) }).strict(),
   z.object({ action: z.literal("verify"), email: z.string().trim().email().max(254),
     code: z.string().regex(/^[0-9]{6,8}$/) }).strict(),

@@ -33,21 +33,20 @@ export function EdenConversation() {
   const [loaded, setLoaded] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
-  const [codeSent, setCodeSent] = useState(false);
+  const [password, setPassword] = useState("");
+  const [creatingAccount, setCreatingAccount] = useState(true);
   const bootstrap = useRef<Promise<ConversationState> | null>(null);
   const epoch = useRef(0);
   const account = useRef<string | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const emailForm = useRef<HTMLFormElement>(null);
   const emailInput = useRef<HTMLInputElement>(null);
-  const codeInput = useRef<HTMLInputElement>(null);
   const hasView = Boolean(view);
   const accountEmail = view?.email;
   const waitingForReply = Boolean(view?.pending && !view.retry_available);
   const reducedMotion = useReducedMotion();
   const accept = useCallback((saved: ConversationState) => {
-    const owner = saved.email_verified ? saved.email : null;
+    const owner = saved.authenticated ? saved.email : null;
     if (account.current !== owner) {
       ++epoch.current;
       account.current = owner;
@@ -55,7 +54,7 @@ export function EdenConversation() {
     }
     setLoaded(true);
     setView((current) => {
-      if (!saved.email_verified) return null;
+      if (!saved.authenticated) return null;
       if (current?.email === saved.email && (saved.revision < current.revision ||
         (saved.revision === current.revision && saved.updated_at < current.updated_at))) return current;
       // Polling has no provider/admission result. Keep the known outage for this
@@ -71,7 +70,7 @@ export function EdenConversation() {
 
   const signInAgain = useCallback(async () => {
     const generation = ++epoch.current;
-    setView(null); setText(""); setCode(""); setCodeSent(false); setEmail("");
+    setView(null); setText(""); setPassword(""); setEmail("");
     setLoaded(false); setBusy(false); setError(""); setNotice("Please sign in to return to your saved conversation.");
     try {
       const saved = await chat({ action: "open" });
@@ -93,10 +92,9 @@ export function EdenConversation() {
 
   useEffect(() => {
     if (loaded && !hasView) {
-      (codeSent ? codeInput : emailInput).current?.focus({ preventScroll: true });
-      if (codeSent) emailForm.current?.scrollIntoView({ block: "center", behavior: reducedMotion ? "instant" : "smooth" });
+      emailInput.current?.focus({ preventScroll: true });
     }
-  }, [loaded, hasView, codeSent, reducedMotion]);
+  }, [loaded, hasView]);
 
   useEffect(() => {
     const container = transcript.current;
@@ -139,15 +137,15 @@ export function EdenConversation() {
       const saved = await chat(action);
       if (generation !== epoch.current) return null;
       accept(saved);
-      if (saved.email_verified) setNotice(savedMessageNotice(saved));
-      return saved.email_verified ? saved : null;
+      if (saved.authenticated) setNotice(savedMessageNotice(saved));
+      return saved.authenticated ? saved : null;
     } catch (failure) {
       if (generation !== epoch.current) return null;
       if (failure instanceof SignInRequired) { await signInAgain(); return null; }
       setError("The connection was interrupted. Check your saved conversation and try again.");
       try {
         const saved = await chat({ action: "get" });
-        if (generation === epoch.current) { accept(saved); return saved.email_verified ? saved : null; }
+        if (generation === epoch.current) { accept(saved); return saved.authenticated ? saved : null; }
       } catch { /* The saved-message retry remains available after a connection failure. */ }
       return null;
     } finally { if (generation === epoch.current) setBusy(false); }
@@ -155,13 +153,13 @@ export function EdenConversation() {
 
   async function signOut() {
     const generation = ++epoch.current;
-    setView(null); setText(""); setCode(""); setEmail(""); setCodeSent(false);
+    setView(null); setText(""); setPassword(""); setEmail("");
     setLoaded(false); setSigningOut(true); setBusy(true); setError(""); setNotice("");
     try {
       try { await chat({ action: "logout" }); }
       catch (failure) { if (!(failure instanceof SignInRequired)) throw failure; }
       const saved = await chat({ action: "open" });
-      if (generation === epoch.current) { accept(saved); setSigningOut(false); setNotice("You're signed out. Your progress is saved to your email."); }
+      if (generation === epoch.current) { accept(saved); setSigningOut(false); setNotice("You're signed out. Your progress is saved to your account."); }
     } catch { if (generation === epoch.current) setError("Sign-out couldn't be completed. Please try again."); }
     finally { if (generation === epoch.current) setBusy(false); }
   }
@@ -177,21 +175,19 @@ export function EdenConversation() {
     if (!saved?.messages.some((message) => message.id === request.request_id)) setText(request.text);
   }
 
-  async function emailAction() {
+  async function accountAction() {
     const generation = epoch.current;
     setBusy(true); setError(""); setNotice("");
     try {
-      if (codeSent) {
-        const saved = await chat({ action: "verify", email, code });
-        if (generation !== epoch.current || !saved.email_verified) return;
-        accept(saved); setCode(""); setCodeSent(false);
-        setNotice(saved.resumed ? "You're back in your saved conversation." : "You’re signed in. Your conversation will be saved as you go.");
-      } else { await call({ action: "email", email }); if (generation === epoch.current) setCodeSent(true); }
+      const saved = await chat({ action: creatingAccount ? "signup" : "signin", email, password });
+      if (generation !== epoch.current || !saved.authenticated) return;
+      accept(saved); setPassword("");
+      setNotice(saved.resumed ? "You're back in your saved conversation." : "You’re signed in. Your conversation will be saved as you go.");
     } catch (failure) {
       if (generation !== epoch.current) return;
       if (failure instanceof SignInRequired) { await signInAgain(); setBusy(false); return; }
-      setError(codeSent ? "That code couldn't be verified. Check it or request a new one." :
-        "I couldn't send a code just now. Please check your email address and try again shortly.");
+      setError(creatingAccount ? "I couldn't create that account. If you've registered before, sign in. Otherwise, check your details and try again shortly." :
+        "I couldn't sign you in. Check your email and password, then try again shortly.");
     } finally { if (generation === epoch.current) setBusy(false); }
   }
 
@@ -218,7 +214,7 @@ export function EdenConversation() {
               <p role="status" className="mt-0.5 text-xs text-ghost-muted">
                 {!view ? (loaded ? "Your personal onboarding conversation" : "Opening sign-in") : busy ? (view.pending ? "Message saved. Thinking…" : "Saving…") :
                   view.pending ? (waitingForReply ? "Message saved. Thinking…" : "Message saved. Reply waiting.") : view.confirmed ? "Setup confirmed" :
-                    "Progress saved to your email"}
+                    "Progress saved to your account"}
               </p>
             </div>
           </div>
@@ -230,24 +226,31 @@ export function EdenConversation() {
           </div>}
         </div>
 
-        {!view && loaded && <form ref={emailForm} onSubmit={(event) => { event.preventDefault(); void emailAction(); }}
+        {!view && loaded && <form ref={emailForm} onSubmit={(event) => { event.preventDefault(); void accountAction(); }}
           className="bg-surface px-4 py-7 sm:px-7">
-          <h2 className="font-heading text-xl text-ghost">Sign in to meet Ava.</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ghost-muted">Use your email to start your own conversation. If you&apos;ve been here before, we&apos;ll pick up where you left off, on any device.</p>
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end">
-            <label className="min-w-0 flex-1 text-sm text-ghost">Email address
+          <h2 className="font-heading text-xl text-ghost">{creatingAccount ? "Create your account to meet Ava." : "Sign in to meet Ava."}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ghost-muted">Your account keeps your conversation together. Come back on any device and pick up where you left off.</p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <label className="min-w-0 text-sm text-ghost">Email address
               <input ref={emailInput} className={`${field} mt-2`} type="email" autoComplete="email" required value={email}
-                disabled={busy || codeSent} onChange={(event) => setEmail(event.target.value)} />
+                disabled={busy} onChange={(event) => setEmail(event.target.value)} />
             </label>
-            {codeSent && <label className="min-w-0 flex-1 text-sm text-ghost">Sign-in code
-              <input ref={codeInput} className={`${field} mt-2`} inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6,8}"
-                required value={code} onChange={(event) => setCode(event.target.value)} maxLength={8} disabled={busy} />
-            </label>}
-            <button className={`${primary} shrink-0`} disabled={busy} type="submit">{codeSent ? "Verify email" : "Send code"}</button>
+            <label className="min-w-0 text-sm text-ghost">Password
+              <input className={`${field} mt-2`} type="password" autoComplete={creatingAccount ? "new-password" : "current-password"}
+                required value={password} minLength={creatingAccount ? 12 : 1} maxLength={creatingAccount ? 72 : 256}
+                aria-describedby={creatingAccount ? "eden-password-help" : undefined}
+                onChange={(event) => setPassword(event.target.value)} disabled={busy} />
+            </label>
           </div>
-          {codeSent && <p className="mt-4 text-sm">Check your inbox for your code. <button type="button" className="text-cyan underline underline-offset-4 hover:text-ghost"
-            onClick={() => { setCodeSent(false); setCode(""); }} disabled={busy}>Use another email or resend</button></p>}
-          <p className="mt-5 text-xs leading-relaxed text-ghost-muted">Your answers are saved to your account and used by Aygency to prepare your Eden.</p>
+          {creatingAccount && <p id="eden-password-help" className="mt-3 text-xs text-ghost-muted">Use at least 12 characters for your password.</p>}
+          <button className={`${primary} mt-5`} disabled={busy} type="submit">{creatingAccount ? "Create account" : "Sign in"}</button>
+          <p className="mt-5 text-sm text-ghost-muted">{creatingAccount ? "Already have an account? " : "New to Eden? "}
+            <button type="button" className="min-h-11 text-cyan underline underline-offset-4 transition hover:text-ghost active:opacity-70"
+              onClick={() => { setCreatingAccount(!creatingAccount); setPassword(""); setError(""); }} disabled={busy}>
+              {creatingAccount ? "Sign in" : "Create an account"}
+            </button>
+          </p>
+          <p className="mt-3 text-xs leading-relaxed text-ghost-muted">Your answers are saved to your account and used by Aygency to prepare your Eden.</p>
         </form>}
         {!view && !loaded && !error && <div className="p-7"><LoaderCircle className="animate-spin text-cyan" aria-label="Opening sign-in" size={22} /></div>}
 

@@ -5,14 +5,11 @@ import { createFixedWindowRateLimiter, getHashedRequestIdentifier } from "./rate
 import { sendEdenOnboardingLeadNotification, type OnboardingLead } from "./onboarding-lead-notification";
 
 const consume = createFixedWindowRateLimiter({ limit: 90, windowMs: 60_000 });
-// Requesting a sign-in code sends mail to an address the visitor chose, so it
-// is the one action on this endpoint an abuser can point at somebody else.
-// It gets its own, much smaller budget: enough for a mistyped address and a
-// couple of resends, not enough to bomb an inbox or drain the project's mail
-// allowance for real customers.
+// Account creation and legacy code requests get a smaller visitor budget.
+// The operated service also enforces durable per-address and shared limits.
 const consumeSignIn = createFixedWindowRateLimiter({ limit: 6, windowMs: 15 * 60_000 });
-// A verification attempt is cheap for us and free for an attacker, so it is
-// capped well above ordinary typo correction and well below useful guessing.
+// Password and legacy code attempts allow ordinary typo correction while
+// bounding guessing independently of the account-creation budget.
 const consumeVerify = createFixedWindowRateLimiter({ limit: 20, windowMs: 15 * 60_000 });
 const privateHeaders = { "cache-control": "no-store, max-age=0", "referrer-policy": "no-referrer" };
 
@@ -65,8 +62,8 @@ export function createConversationHandler(deps: {
     try {
       if (request.headers.get("content-type")?.split(";")[0] !== "application/json") return fail(415);
       const input = conversationAction.parse(await boundedJson(request.body, 16_384));
-      if (input.action === "email" && !signIn(getHashedRequestIdentifier(request)).allowed) return fail(429);
-      if (input.action === "verify" && !verify(getHashedRequestIdentifier(request)).allowed) return fail(429);
+      if (["email", "signup"].includes(input.action) && !signIn(getHashedRequestIdentifier(request)).allowed) return fail(429);
+      if (["verify", "signin"].includes(input.action) && !verify(getHashedRequestIdentifier(request)).allowed) return fail(429);
       const url = new URL(deps.url ?? process.env.EDEN_WEB_SERVICE_URL ?? "");
       const local = (deps.local ?? process.env.EDEN_WEB_ALLOW_LOCAL === "true") &&
         process.env.NODE_ENV !== "production" && !process.env.VERCEL;
@@ -89,8 +86,9 @@ export function createConversationHandler(deps: {
       });
       if (!upstream.ok) { await upstream.body?.cancel(); return fail([401, 409, 429].includes(upstream.status) ? upstream.status : 503); }
       const rotated = upstream.headers.get("x-eden-session");
+      const rotatesSession = ["verify", "signup", "signin", "logout"].includes(input.action);
       if (!rotated || !/^[a-f0-9]{64}$/.test(rotated) ||
-        (!["verify", "logout"].includes(input.action) && rotated !== token)) return fail(503);
+        (rotatesSession ? rotated === token : rotated !== token)) return fail(503);
       const result = await boundedJson(upstream.body, 262_144);
       let view: object;
       if (input.action === "email") {
@@ -98,10 +96,10 @@ export function createConversationHandler(deps: {
         view = { code_sent: true };
       } else {
         const saved = conversationState.parse(result);
-        if ((input.action === "verify" && !saved.email_verified) ||
-          (input.action === "logout" && saved.email_verified)) return fail(503);
+        if ((["verify", "signup", "signin"].includes(input.action) && !saved.authenticated) ||
+          (input.action === "logout" && saved.authenticated)) return fail(503);
         view = saved;
-        if (input.action === "confirm" && saved.email_verified && saved.confirmed) {
+        if (input.action === "confirm" && saved.authenticated && saved.confirmed) {
           // A lead nobody is told about is not lead capture. The alert must never
           // decide whether the customer's confirmation succeeded: that is already
           // durable in the Builder by the time we get here.
