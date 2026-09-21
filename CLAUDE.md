@@ -163,7 +163,7 @@ src/
 | EDEN_APPLICATION_SIGNING_SECRET | Server-only HMAC signing secret, at least 32 characters |
 | EDEN_APPLICATION_TURNSTILE_SITE_KEY | Public Cloudflare Turnstile widget site key passed through the server page |
 | EDEN_ALLOWED_ORIGINS | Optional exact HTTPS preview origins, comma-separated |
-| EDEN_NOTIFICATION_EMAIL | Optional post-acceptance Eden notification recipient |
+| EDEN_NOTIFICATION_EMAIL | Optional recipient for Eden application and completed-onboarding lead alerts |
 | EDEN_NOTIFICATION_FROM | Optional verified Eden notification sender |
 | EDEN_ACCOUNT_SERVICE_URL | Server-only HTTPS origin for the managed customer connection API |
 

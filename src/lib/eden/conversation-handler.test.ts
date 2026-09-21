@@ -97,3 +97,50 @@ describe("website conversation boundary", () => {
   });
 
 });
+
+describe("founder alert on a completed onboarding", () => {
+  const token = "__Host-eden-conversation=" + "a".repeat(64);
+  const confirmed = { ...view, confirmed: true, revision: 7,
+    summary: "Eden will chase supplier lead times and draft client proposals." };
+
+  function withNotifier(result: object, notify: ReturnType<typeof vi.fn>) {
+    const upstream = vi.fn<typeof fetch>(async (_url, options) => new Response(JSON.stringify(result), {
+      headers: { "x-eden-session": new Headers(options?.headers).get("x-eden-session") ?? "" },
+    }));
+    return createConversationHandler({ fetch: upstream, enabled: true,
+      url: "https://builder.example", key, notify });
+  }
+
+  it("tells the founders a lead is waiting once the customer confirms", async () => {
+    const notify = vi.fn(async () => "sent" as const);
+    const run = withNotifier(confirmed, notify);
+    const response = await run(request({ action: "confirm", revision: 7 }, { cookie: token }));
+    expect(response.status).toBe(200);
+    expect(notify).toHaveBeenCalledWith(expect.objectContaining({
+      email: "customer@example.test", revision: 7,
+      summary: "Eden will chase supplier lead times and draft client proposals.",
+    }));
+  });
+
+  it("still confirms for the customer when the founder alert fails", async () => {
+    const notify = vi.fn(async () => { throw new Error("resend is down"); });
+    const run = withNotifier(confirmed, notify);
+    const response = await run(request({ action: "confirm", revision: 7 }, { cookie: token }));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ confirmed: true });
+  });
+
+  it("does not alert on ordinary polling of an already confirmed setup", async () => {
+    const notify = vi.fn(async () => "sent" as const);
+    const run = withNotifier(confirmed, notify);
+    await run(request({ action: "get" }, { cookie: token }));
+    expect(notify).not.toHaveBeenCalled();
+  });
+
+  it("does not alert when the builder rejects the confirmation", async () => {
+    const notify = vi.fn(async () => "sent" as const);
+    const run = withNotifier({ ...view, confirmed: false }, notify);
+    await run(request({ action: "confirm", revision: 7 }, { cookie: token }));
+    expect(notify).not.toHaveBeenCalled();
+  });
+});

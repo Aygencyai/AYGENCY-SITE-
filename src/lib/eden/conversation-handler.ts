@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { conversationAction, conversationState } from "./conversation-schema";
 import { createFixedWindowRateLimiter, getHashedRequestIdentifier } from "./rate-limit";
+import { sendEdenOnboardingLeadNotification, type OnboardingLead } from "./onboarding-lead-notification";
 
 const consume = createFixedWindowRateLimiter({ limit: 90, windowMs: 60_000 });
 const privateHeaders = { "cache-control": "no-store, max-age=0", "referrer-policy": "no-referrer" };
@@ -25,6 +26,7 @@ async function boundedJson(body: ReadableStream<Uint8Array> | null, limit: numbe
 
 export function createConversationHandler(deps: {
   fetch?: typeof fetch; enabled?: boolean; url?: string; key?: string; local?: boolean;
+  notify?: (lead: OnboardingLead) => Promise<unknown>;
 } = {}) {
   return async (request: NextRequest): Promise<NextResponse> => {
     let cookieName = "__Host-eden-conversation";
@@ -85,6 +87,16 @@ export function createConversationHandler(deps: {
         if ((input.action === "verify" && !saved.email_verified) ||
           (input.action === "logout" && saved.email_verified)) return fail(503);
         view = saved;
+        if (input.action === "confirm" && saved.email_verified && saved.confirmed) {
+          // A lead nobody is told about is not lead capture. The alert must never
+          // decide whether the customer's confirmation succeeded: that is already
+          // durable in the Builder by the time we get here.
+          try {
+            await (deps.notify ?? sendEdenOnboardingLeadNotification)({
+              email: saved.email, revision: saved.revision, summary: saved.summary,
+            });
+          } catch { /* Founders can still see the lead in the dashboard. */ }
+        }
       }
       const response = NextResponse.json(view, { headers: privateHeaders });
       if (!existing || rotated !== existing) response.cookies.set(cookieName, rotated, {
