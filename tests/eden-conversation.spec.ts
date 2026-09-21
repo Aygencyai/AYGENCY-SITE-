@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { homedir } from "node:os";
+import { join } from "node:path";
 
 for (const width of [1440, 1024, 768, 375]) {
   test(`email is required before chatting at ${width}px`, async ({ page }) => {
@@ -59,7 +61,7 @@ for (const width of [1440, 1024, 768, 375]) {
     expect(errors).toEqual([]);
     await expect(page.locator("#main-content > div")).toHaveCSS("opacity", "1");
     await expect(page.locator("main header")).toHaveCSS("opacity", "1");
-    await page.screenshot({ path: `/private/tmp/eden-web-20260915/email-first-${width}.png`, fullPage: true });
+    await page.screenshot({ path: join(homedir(), ".eden-web-local/evidence", `email-first-${width}.png`), fullPage: true });
   });
 }
 
@@ -84,6 +86,33 @@ test("a reloaded saved reply follows progress and offers recovery after a failur
   await expect(page.getByRole("log").locator(":scope > div")).toHaveCount(3);
   await expect(page.getByRole("log")).toContainText("I have your saved request.");
 });
+
+for (const reason of ["rate_limit", "usage_limit", "provider_auth"]) {
+  test(`${reason} retry stays hidden across background reads and recovers on a new visit`, async ({ page }) => {
+    const now = new Date().toISOString();
+    const message = { id: crypto.randomUUID(), role: "user", text: "Help with my email", created_at: now };
+    const pending = { revision: 2, messages: [message], facts: [], summary: "", ready: false,
+      email_verified: true, email: "waiting@example.test", pending: true, confirmed: false,
+      created: false, updated_at: now, retry_available: true };
+    let opened = false;
+    let reads = 0;
+    await page.route("**/api/eden/conversation", async route => {
+      const input = route.request().postDataJSON() as { action: string };
+      if (input.action === "get") reads++;
+      const first = !opened;
+      opened = true;
+      await route.fulfill({ json: first ? { ...pending, unavailable_reason: reason } : pending });
+    });
+    await page.goto("/design-your-eden");
+    const retry = page.getByRole("button", { name: "Continue with my saved message" });
+    await expect(page.getByRole("log")).toContainText(message.text);
+    await expect(retry).toHaveCount(0);
+    await expect.poll(() => reads, { timeout: 16000 }).toBeGreaterThanOrEqual(2);
+    await expect(retry).toHaveCount(0);
+    await page.reload();
+    await expect(retry).toBeVisible();
+  });
+}
 
 
 test("a delayed reply cannot restore content after sign-out", async ({ page }) => {

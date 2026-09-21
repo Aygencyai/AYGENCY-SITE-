@@ -28,6 +28,13 @@ describe("saved-message notice", () => {
     expect(retryIsWorthOffering(view)).toBe(false);
   });
 
+  it("preserves a capacity-limited message without inviting an immediate retry", () => {
+    const view = conversationView.parse({ ...base, unavailable_reason: "rate_limit" });
+    expect(savedMessageNotice(view)).toContain("message is saved");
+    expect(savedMessageNotice(view)).toContain("come back later");
+    expect(retryIsWorthOffering(view)).toBe(false);
+  });
+
   it("says nothing when no saved message is waiting", () => {
     expect(savedMessageNotice({ ...base, pending: false, retry_available: false })).toBe("");
   });

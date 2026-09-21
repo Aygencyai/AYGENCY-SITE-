@@ -2,7 +2,7 @@ import type { ConversationView } from "./conversation-schema";
 
 // An exhausted plan or a failed provider sign-in will not clear on the customer's
 // next click, so we never invite a retry that is certain to fail again.
-const OUTAGE_REASONS = new Set(["usage_limit", "provider_auth"]);
+const OUTAGE_REASONS = new Set(["usage_limit", "provider_auth", "rate_limit"]);
 
 function waitingOnASavedMessage(view: ConversationView): boolean {
   return Boolean(view.pending && view.retry_available);
@@ -14,6 +14,9 @@ export function retryIsWorthOffering(view: ConversationView): boolean {
 
 export function savedMessageNotice(view: ConversationView): string {
   if (!waitingOnASavedMessage(view)) return "";
+  if (view.unavailable_reason === "rate_limit") {
+    return "Your message is saved. Ava has reached her conversation limit for now. Please come back later to continue.";
+  }
   if (!retryIsWorthOffering(view)) {
     return "Ava can't reply just now. Your message is saved, and your conversation will be waiting when you come back.";
   }

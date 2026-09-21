@@ -58,6 +58,13 @@ export function EdenConversation() {
       if (!saved.email_verified) return null;
       if (current?.email === saved.email && (saved.revision < current.revision ||
         (saved.revision === current.revision && saved.updated_at < current.updated_at))) return current;
+      // Polling has no provider/admission result. Keep the known outage for this
+      // exact pending turn until a new attempt, a completed reply or a fresh visit.
+      if (current?.email === saved.email && current.pending && saved.pending &&
+        current.revision === saved.revision && current.unavailable_reason &&
+        !saved.unavailable_reason) {
+        return { ...saved, unavailable_reason: current.unavailable_reason };
+      }
       return saved;
     });
   }, []);

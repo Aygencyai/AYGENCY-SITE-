@@ -87,7 +87,7 @@ export function createConversationHandler(deps: {
         body: JSON.stringify(input), cache: "no-store", redirect: "error",
         signal: AbortSignal.timeout(55_000),
       });
-      if (!upstream.ok) { await upstream.body?.cancel(); return fail([401, 409].includes(upstream.status) ? upstream.status : 503); }
+      if (!upstream.ok) { await upstream.body?.cancel(); return fail([401, 409, 429].includes(upstream.status) ? upstream.status : 503); }
       const rotated = upstream.headers.get("x-eden-session");
       if (!rotated || !/^[a-f0-9]{64}$/.test(rotated) ||
         (!["verify", "logout"].includes(input.action) && rotated !== token)) return fail(503);

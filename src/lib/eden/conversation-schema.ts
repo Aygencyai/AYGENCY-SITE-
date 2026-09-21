@@ -12,7 +12,7 @@ export const conversationView = z.object({
   pending: z.boolean(), confirmed: z.boolean(), created: z.boolean(), updated_at: z.string(),
   resumed: z.boolean().optional(), retry_available: z.boolean().optional(),
   // Fixed vocabulary from the Builder. Never provider prose.
-  unavailable_reason: z.enum(["unavailable", "usage_limit", "provider_auth"]).optional(),
+  unavailable_reason: z.enum(["unavailable", "usage_limit", "provider_auth", "rate_limit"]).optional(),
 }).strict();
 
 export const conversationState = z.union([

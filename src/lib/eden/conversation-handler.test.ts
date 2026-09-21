@@ -21,6 +21,18 @@ function handler(result: object = view) {
 }
 
 describe("website conversation boundary", () => {
+  it("preserves a durable upstream rate limit across separate website handlers", async () => {
+    const upstream = vi.fn<typeof fetch>(async () => new Response("{}", { status: 429 }));
+    for (let i = 0; i < 2; i++) {
+      const run = createConversationHandler({ fetch: upstream, enabled: true,
+        url: "https://builder.example", key });
+      const response = await run(request({ action: "email", email: "customer@example.test" },
+        { cookie: "__Host-eden-conversation=" + "a".repeat(64) }));
+      expect(response.status).toBe(429);
+      expect(response.headers.get("cache-control")).toContain("no-store");
+    }
+    expect(upstream).toHaveBeenCalledTimes(2);
+  });
   it("keeps the session in a private secure cookie and server credential upstream", async () => {
     const { run, upstream } = handler();
     const response = await run(request({ action: "open" }));
