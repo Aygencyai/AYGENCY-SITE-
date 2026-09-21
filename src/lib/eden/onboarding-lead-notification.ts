@@ -68,6 +68,7 @@ export async function sendEdenOnboardingLeadNotification(
         "",
         "Open the agency dashboard to read the full conversation and press Create Eden",
         "once you have spoken to them.",
+        "https://aygencyapp.aygency.ai/eden",
       ].join("\n"),
     },
     { idempotencyKey: `eden-onboarding-${identity}-${lead.revision}` }

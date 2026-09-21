@@ -32,6 +32,7 @@ describe("onboarding lead notification", () => {
     expect(payload.replyTo).toBe("nadia@studio.example");
     expect(payload.text).toContain("nadia@studio.example");
     expect(payload.text).toContain("chase supplier lead times");
+    expect(payload.text).toContain("https://aygencyapp.aygency.ai/eden");
   });
 
   it("cannot alert twice for the same confirmed revision", async () => {
