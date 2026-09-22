@@ -29,3 +29,26 @@ with a regression test, while continuing to reject cross-origin requests.
 
 Full email-resume, correction, confirmation and founder-to-runtime qualification
 continue in Phase 4. No rollout has been performed.
+
+## Customer Outlook browser increment (22 September)
+
+Canonical plan: `../../eden-web-onboarding-worktree/docs/eden-personal-acceptance-plan.md`,
+Phase 2.2b. Goal: use the existing password account before Outlook consent and
+authenticate it again on return. Scope: `/eden/connections`, its private proxy,
+server-only proof cookie and return UI. Provider credentials remain in operated
+custody. The proof/session URI never enters browser storage; the callback query
+is removed before account or verification requests. Dependencies: the managed
+website owner lookup and control-plane Outlook custody. Exit: proxy isolation,
+callback/retry and four-width browser checks, TypeScript/lint/build pass.
+
+`EDEN_CUSTOMER_CONNECTIONS_ENABLED` defaults false. The page needs a persistent
+Composio verifier pointing to `https://<website>/eden/connections` and the private
+service URL/key in `eden-web.env.example`. These are deployment dependencies,
+not configuration performed by this source change. Tests use deterministic
+provider/identity boundaries and do not qualify a live Eden or a source-backed job.
+Run UI checks with `pnpm exec playwright test --config playwright.connections.config.ts`.
+
+Local result: 125 unit checks pass (one opt-in skip), ten browser cases pass at
+1440/1024/768/375; strict TypeScript, lint and production build pass. Visuals
+inspected after entrance animation completion. Run Next browser/dev checks and
+build/type checks sequentially: they share generated `.next` output. No deployment.
