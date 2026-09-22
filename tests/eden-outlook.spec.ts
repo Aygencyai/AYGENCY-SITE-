@@ -93,3 +93,32 @@ test("missing and duplicated callback parameters cannot trigger verification", a
   }
   expect(calls).toBe(0);
 });
+
+test("a fresh chat link replaces a completed connection in the same tab", async ({ page }) => {
+  let accountChecks = 0;
+  await page.route("**/api/eden/conversation", route => {
+    accountChecks++;
+    return route.fulfill({ json: { authenticated: true } });
+  });
+  await page.route("**/api/eden/connections", async route => {
+    const body = route.request().postDataJSON();
+    if (body.action === "complete") {
+      expect(body).toEqual({ action: "complete", session_uri: callback });
+      return route.fulfill({ json: { status: "active", reason: "verified" } });
+    }
+    expect(body).toEqual({ action: "start", connection_ref: connection, link_id: link });
+    return route.fulfill({ json: { url: "https://connect.composio.dev/link/reconnect-only" } });
+  });
+  await page.route("https://connect.composio.dev/**", route => route.fulfill({
+    contentType: "text/html", body: "<h1>Fresh connection consent</h1>",
+  }));
+  await page.goto(`/eden/connections?session_uri=${callback}`);
+  await expect(page.getByRole("heading", { name: "Outlook is connected" })).toBeVisible();
+  await page.evaluate(fragment => { window.location.hash = fragment; },
+    `connection=${connection}&link=${link}`);
+  await expect(page.getByRole("heading", { name: "Connect Outlook", exact: true })).toBeVisible();
+  expect(accountChecks).toBe(2);
+  expect(new URL(page.url()).hash).toBe("");
+  await page.getByRole("button", { name: "Continue to Microsoft" }).click();
+  await expect(page.getByRole("heading", { name: "Fresh connection consent" })).toBeVisible();
+});

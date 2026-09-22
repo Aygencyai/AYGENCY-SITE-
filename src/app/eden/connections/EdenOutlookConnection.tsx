@@ -31,6 +31,14 @@ export function EdenOutlookConnection() {
   const selected = useRef<Link | null>(null);
   const callback = useRef<string | null>(null);
 
+  useEffect(() => {
+    // A new chat link can reuse this tab after a previous connection completed.
+    // Reload so the fresh link gets its own account check and browser proof.
+    const reopen = () => { if (window.location.hash) window.location.reload(); };
+    window.addEventListener("hashchange", reopen);
+    return () => window.removeEventListener("hashchange", reopen);
+  }, []);
+
   async function complete() {
     if (!callback.current) return;
     setStage("checking");
