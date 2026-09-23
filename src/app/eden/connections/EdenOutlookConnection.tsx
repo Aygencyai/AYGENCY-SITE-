@@ -93,25 +93,25 @@ export function EdenOutlookConnection() {
       const result = z.object({ url: z.string().url() }).parse(await call("/api/eden/connections",
         { action: "start", ...selected.current }));
       const url = new URL(result.url);
-      if (url.protocol !== "https:" || url.host !== "connect.composio.dev" || url.username || url.password ||
-        !url.pathname.startsWith("/link/")) throw new Error();
+      if (url.protocol !== "https:" || !["connect.composio.dev", "app.composio.dev"].includes(url.host) || url.username || url.password ||
+        !url.pathname.startsWith("/link/") || url.hash) throw new Error();
       window.location.assign(result.url);
     } catch { setStage("error"); setBusy(false); }
   }
 
   const title: Record<Stage, string> = {
-    opening: "Opening your connection", signin: "Sign in to your Eden account", ready: "Connect Outlook",
-    checking: "Checking your connection", pending: "Microsoft sign-in is still processing",
-    active: "Outlook is connected", missing: "Open the link from Eden", error: "We couldn’t verify this connection",
+    opening: "Opening your connection", signin: "Sign in to your Eden account", ready: "Connect your account",
+    checking: "Checking your connection", pending: "Your sign-in is still processing",
+    active: "Your account is connected", missing: "Open the link from Eden", error: "We couldn’t verify this connection",
   };
   const description: Record<Stage, string> = {
     opening: "We’re checking your account.", signin: "Use the account you created with Ava to continue.",
-    ready: "Let Eden read your email and calendar to help with your day. Continue to Microsoft to choose your account and review access.",
-    checking: "We’re checking the account and read access before Eden uses this connection.",
-    pending: "You can check again in a moment. Eden will use Outlook once the account and access checks have finished.",
-    active: "Your email and calendar passed the read-access checks. Return to your Eden chat to continue.",
-    missing: "Ask Eden to connect Outlook, then open the personal link in your chat.",
-    error: "Return to the Outlook link in your Eden chat and use the Eden account you signed up with. If the problem continues, contact build@aygency.ai.",
+    ready: "Choose the account you want Eden to use. The service’s sign-in page will explain the access you’re granting.",
+    checking: "We’re checking your account connection before Eden uses it.",
+    pending: "You can check again in a moment. Eden can use this connection once verification is complete.",
+    active: "Return to your Eden chat and tell Eden what you’d like to do with this account.",
+    missing: "Tell Eden which service you’d like to connect, then open the personal link in your chat.",
+    error: "Return to the connection link in your Eden chat and use the Eden account you signed up with. If the problem continues, contact build@aygency.ai.",
   };
   return <section className="mx-auto min-h-[75vh] max-w-5xl px-6 pb-24 pt-36 sm:px-10 sm:pt-44">
     <motion.div className="max-w-2xl" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
@@ -127,7 +127,7 @@ export function EdenOutlookConnection() {
         <button className={button} disabled={busy}>{busy ? "Signing in…" : "Sign in"}</button>
         {error && <p role="alert" className="text-sm text-error">{error}</p>}
       </form>}
-      {stage === "ready" && <button className={`${button} mt-8`} disabled={busy} onClick={() => void connect()}>{busy ? "Opening Microsoft…" : "Continue to Microsoft"}</button>}
+      {stage === "ready" && <button className={`${button} mt-8`} disabled={busy} onClick={() => void connect()}>{busy ? "Opening sign-in…" : "Continue to sign in"}</button>}
       {stage === "pending" && <button className={`${button} mt-8`} onClick={() => void complete()}>Check connection</button>}
       {stage === "error" && <button className={`${button} mt-8`} onClick={() => { setPassword(""); setStage("signin"); }}>Use my Eden account</button>}
     </motion.div>

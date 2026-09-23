@@ -22,12 +22,13 @@ function handler(value: object = started()) {
     url: "https://connections.example", key }) };
 }
 
-describe("customer Outlook website boundary", () => {
-  it("keeps the browser proof in a secure HttpOnly cookie and forwards the existing session privately", async () => {
-    const { run, upstream } = handler();
+describe("customer connection website boundary", () => {
+  it.each(["connect.composio.dev", "app.composio.dev"])("keeps the browser proof private for approved host %s", async (host) => {
+    const url = `https://${host}/link/test`;
+    const { run, upstream } = handler({ ...started(), url });
     const response = await run(request({ action: "start", ...ref }));
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ url: "https://connect.composio.dev/link/test" });
+    expect(await response.json()).toEqual({ url });
     expect(response.headers.get("set-cookie")).toContain("HttpOnly");
     expect(response.headers.get("set-cookie")).toContain("Secure");
     expect(response.headers.get("set-cookie")).toContain("SameSite=lax");
@@ -86,6 +87,10 @@ describe("customer Outlook website boundary", () => {
     { url: "https://connect.composio.dev.evil.example/link/test" },
     { url: "https://user:pass@connect.composio.dev/link/test" },
     { url: "http://connect.composio.dev/link/test" },
+    { url: "https://app.composio.dev.evil.example/link/test" },
+    { url: "https://user:pass@app.composio.dev/link/test" },
+    { url: "https://app.composio.dev/dashboard" },
+    { url: "https://app.composio.dev/link/test#unexpected" },
     { expires_at: new Date(Date.now() - 1000).toISOString() },
     { expires_at: new Date(Date.now() + 1800_000).toISOString() },
   ])("rejects unsafe or expired upstream links", async (change) => {

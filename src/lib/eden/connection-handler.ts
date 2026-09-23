@@ -90,8 +90,8 @@ export function createConnectionHandler(deps: {
         const result = started.parse(raw);
         const redirect = new URL(result.url);
         const ttl = Math.floor((Date.parse(result.expires_at) - Date.now()) / 1000);
-        if (redirect.protocol !== "https:" || redirect.host !== "connect.composio.dev" ||
-          redirect.username || redirect.password || !redirect.pathname.startsWith("/link/") ||
+        if (redirect.protocol !== "https:" || !["connect.composio.dev", "app.composio.dev"].includes(redirect.host) ||
+          redirect.username || redirect.password || !redirect.pathname.startsWith("/link/") || redirect.hash ||
           ttl < 1 || ttl > 900) return fail(409);
         const response = NextResponse.json({ url: result.url }, { headers });
         response.cookies.set(cookieName, Buffer.from(JSON.stringify({
