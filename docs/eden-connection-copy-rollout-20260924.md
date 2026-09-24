@@ -68,3 +68,35 @@ The customer was told to leave Composio unchanged. This copy fix keeps the exist
 working tester callback; the optional stable Vercel alias is not selected.
 
 Routing reference: https://vercel.com/docs/routing/project-routing-rules .
+
+## Phase 2 result — live
+
+Published routing version `71120fcd-4f05-4dcc-b0ca-80a788863834` for the original
+`aygency-site-h2pzm1e0x-wazzalouis-projects.vercel.app` hostname only. Normal
+browser traffic now renders the generic `1167678` page. Four-width opening and
+success-state checks passed again without the probe header. A separate unmocked
+browser check opened the real account session and rendered Eden's sign-in form;
+its sole API call remained on the original origin. No credentials were entered.
+
+Rules:
+- `5d52f41f-267c-4db7-8afb-50b801ffe3d4`: `/eden/connections`.
+- `f6db7a6d-8b7a-46d7-9b67-043d35438d10`: exact `3586-3bf1a6e478cab321.js` chunk.
+- `fcac537c-2d82-402b-b0d6-1e5b926711d8`: exact `8237-b9be2d2cb45605a7.js` chunk.
+- `e6723816-f5fc-49e7-ae62-414cee3ae32a`: exact connection page `page-b86d20c41bdce274.js` chunk.
+
+Private evidence: `~/.eden-web-local/evidence/generic-connection-copy-20260924/`.
+It contains the empty routing preimage, exact private active configuration,
+sanitary receipt, browser evidence and screenshots. Keep both immutable
+deployments available while these rules are selected. Rotating the upstream
+Vercel automation credential requires updating the private request-header
+transforms and rerunning the cookie-only browser proof. It is not customer OAuth.
+
+Rollback: remove only the four rule IDs above through the project routes API,
+then promote the returned staging version. Do not overwrite other project rules
+that may have been added since this release. This restores the original page;
+provider settings, session cookies and website APIs were never moved.
+
+The main `aygency.ai` site was not promoted. Production publication must supply
+both the connection page and authenticated API/session routes before selecting
+`https://aygency.ai/eden/connections` as the callback. The user does not need to
+change Composio for the completed tester copy fix.
