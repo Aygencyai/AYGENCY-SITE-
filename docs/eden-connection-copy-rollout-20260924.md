@@ -44,3 +44,27 @@ Deliverable: live generic page with the existing callback and browser cookies.
 Dependencies: Phase 1 pass.
 Exit: live browser check at 1440, 1024, 768 and 375px; mocked provider boundaries
 clearly separated from actual delivery; no claim of a new real OAuth connection.
+
+## Phase 1 result
+
+Qualified the existing origin using four narrowly scoped project routing rules:
+one page rule and three exact static-asset rules. The original website APIs stay
+on their original deployment. A private, server-side project automation credential
+is injected only into the upstream rewrite request because the candidate itself
+retains Vercel deployment protection. It is never shipped in page code, response
+headers or repository configuration. Normal ingress protection remains enabled.
+
+Cookie-only browser qualification passed at 1440, 1024, 768 and 375px, with no
+JavaScript errors, missing assets or horizontal overflow. Opening and callback
+states render generic copy; hash/query cleanup and the original browser origin
+are preserved. Account/connection API responses were mocked for those UI checks;
+no real provider connection or write was performed. Unmarked normal traffic still
+used the original page during this phase.
+
+Production route check: `https://aygency.ai/eden/connections` and its connection
+API both currently return 404. The intended product URL remains that branded
+route, but moving the verifier there before the website release would break it.
+The customer was told to leave Composio unchanged. This copy fix keeps the existing
+working tester callback; the optional stable Vercel alias is not selected.
+
+Routing reference: https://vercel.com/docs/routing/project-routing-rules .
