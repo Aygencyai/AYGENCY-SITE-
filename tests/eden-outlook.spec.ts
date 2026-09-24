@@ -5,6 +5,7 @@ import { join } from "node:path";
 const connection = "eden-connection-" + "a".repeat(24);
 const link = "connect-" + "b".repeat(24);
 const callback = "synthetic-provider-session-uri";
+const providerHost = (width: number) => width === 375 ? "app.composio.dev" : "connect.composio.dev";
 
 for (const width of [1440, 1024, 768, 375]) {
   test(`password account and provider handoff at ${width}px`, async ({ page }) => {
@@ -25,9 +26,9 @@ for (const width of [1440, 1024, 768, 375]) {
       expect(authenticated).toBe(true);
       expect(route.request().postDataJSON()).toEqual({ action: "start", connection_ref: connection, link_id: link });
       expect(page.url()).not.toContain(connection);
-      await route.fulfill({ json: { url: "https://connect.composio.dev/link/synthetic-only" } });
+      await route.fulfill({ json: { url: `https://${providerHost(width)}/link/synthetic-only` } });
     });
-    await page.route("https://connect.composio.dev/**", route => route.fulfill({
+    await page.route(`https://${providerHost(width)}/**`, route => route.fulfill({
       contentType: "text/html", body: "<h1>Synthetic provider handoff</h1>",
     }));
     await page.goto(`/eden/connections#connection=${connection}&link=${link}`);
@@ -36,12 +37,12 @@ for (const width of [1440, 1024, 768, 375]) {
     await page.getByLabel("Email address", { exact: true }).fill("customer@example.test");
     await page.getByLabel("Password", { exact: true }).fill("synthetic-password-only");
     await expect(page.locator("section > div").filter({ has: page.getByRole("heading", { name: "Sign in to your Eden account" }) })).toHaveCSS("opacity", "1");
-    await page.screenshot({ path: join(homedir(), ".eden-web-local/evidence", `outlook-account-${width}.png`), fullPage: true });
+    await page.screenshot({ path: join(homedir(), ".eden-web-local/evidence", `generic-connection-account-${width}.png`), fullPage: true });
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
-    await expect(page.getByRole("heading", { name: "Connect Outlook", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Connect your account", exact: true })).toBeVisible();
     expect(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length,
       fits: document.documentElement.scrollWidth <= innerWidth }))).toEqual({ local: 0, session: 0, fits: true });
-    await page.getByRole("button", { name: "Continue to Microsoft" }).click();
+    await page.getByRole("button", { name: "Continue to sign in" }).click();
     await expect(page.getByRole("heading", { name: "Synthetic provider handoff" })).toBeVisible();
     expect(errors).toEqual([]);
   });
@@ -57,9 +58,9 @@ for (const width of [1440, 1024, 768, 375]) {
         { status: "active", reason: "verified" } });
     });
     await page.goto(`/eden/connections?session_uri=${callback}`);
-    await expect(page.getByRole("heading", { name: "Microsoft sign-in is still processing" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Your sign-in is still processing" })).toBeVisible();
     await page.getByRole("button", { name: "Check connection" }).click();
-    await expect(page.getByRole("heading", { name: "Outlook is connected" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Your account is connected" })).toBeVisible();
     expect(calls).toBe(2);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
@@ -80,7 +81,7 @@ test("wrong account can sign in again without storing the provider session", asy
   await page.getByLabel("Email address").fill("correct@example.test");
   await page.getByLabel("Password", { exact: true }).fill("synthetic-password-only");
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Outlook is connected" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Your account is connected" })).toBeVisible();
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 });
 
@@ -113,12 +114,12 @@ test("a fresh chat link replaces a completed connection in the same tab", async 
     contentType: "text/html", body: "<h1>Fresh connection consent</h1>",
   }));
   await page.goto(`/eden/connections?session_uri=${callback}`);
-  await expect(page.getByRole("heading", { name: "Outlook is connected" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Your account is connected" })).toBeVisible();
   await page.evaluate(fragment => { window.location.hash = fragment; },
     `connection=${connection}&link=${link}`);
-  await expect(page.getByRole("heading", { name: "Connect Outlook", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Connect your account", exact: true })).toBeVisible();
   expect(accountChecks).toBe(2);
   expect(new URL(page.url()).hash).toBe("");
-  await page.getByRole("button", { name: "Continue to Microsoft" }).click();
+  await page.getByRole("button", { name: "Continue to sign in" }).click();
   await expect(page.getByRole("heading", { name: "Fresh connection consent" })).toBeVisible();
 });
