@@ -147,6 +147,16 @@ src/
   by the CRM Edge Function. Only `EDEN_APPLICATION_TURNSTILE_SITE_KEY` may reach
   the rendered page. Never add Supabase/service-role, signing, operator, or
   Turnstile secret values to browser code.
+- `/audit` is the AI Growth Audit (pre-meeting questionnaire, `noindex`). Questions live in
+  `src/lib/growth-audit/questions.ts`; bump `QUESTION_SET_VERSION` whenever an option value
+  changes, because stored answers are read against it. The browser calls only `/api/audit`;
+  the server signs each request with an Ed25519 private key (`GROWTH_AUDIT_SIGNING_KEY`) and
+  `supabase/functions/growth-audit-ingest` verifies it with the public key in its source, then
+  writes to `crm.growth_audits` in Aygency-internal. Rotating the key means redeploying that
+  function with the new public key. Personal links are rows in `crm.growth_audit_invites`
+  (`/audit?c=<code>`). How it works: `docs/growth-audit.md`.
+- `supabase/functions/` is Deno code deployed to Supabase, not part of the Next build; it is
+  excluded from `tsconfig.json`.
 - The repository has no existing site-wide CSP. Do not add one only for Eden
   without auditing all existing third-party site integrations.
 
@@ -165,6 +175,10 @@ src/
 | EDEN_ALLOWED_ORIGINS | Optional exact HTTPS preview origins, comma-separated |
 | EDEN_NOTIFICATION_EMAIL | Optional post-acceptance Eden notification recipient |
 | EDEN_NOTIFICATION_FROM | Optional verified Eden notification sender |
+| GROWTH_AUDIT_INGEST_URL | Server-only URL of the `growth-audit-ingest` Edge Function |
+| GROWTH_AUDIT_SIGNING_KEY | Server-only Ed25519 private key (base64 PKCS#8 DER) that signs audit writes |
+| GROWTH_AUDIT_NOTIFICATION_EMAIL | Optional completed-audit email recipient (falls back to CONTACT_EMAIL) |
+| GROWTH_AUDIT_NOTIFICATION_FROM | Optional sender on a Resend-verified domain |
 
 ## Verification
 
