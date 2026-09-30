@@ -19,7 +19,9 @@ import {
   limitOptions,
   packs,
   peopleOptions,
+  picksOther,
   type AuditAnswers,
+  type OtherKey,
   type AuditOption,
   type Pack,
   type TaskDetail,
@@ -68,7 +70,7 @@ function buildSteps(pack: Pack, answers: Draft): Step[] {
     },
     ...(answers.tasks ?? []).map((task) => ({
       id: `detail:${task}`,
-      title: taskLabel.get(task) ?? task,
+      title: task === "other" && answers.otherText?.tasks ? answers.otherText.tasks : taskLabel.get(task) ?? task,
       description: "Who does it, how often, and how long it takes. Roughly is fine.",
     })),
     { id: "retyping", title: "Where does your team type the same information twice?", description: "Tick all that apply." },
@@ -79,19 +81,31 @@ function buildSteps(pack: Pack, answers: Draft): Step[] {
     ...(answers.aiUse && answers.aiUse !== "none"
       ? [{ id: "aiWhere", title: "Where are you using it?", description: "Tick all that apply." }]
       : []),
-    { id: "limits", title: "Is there anything AI should never do in your business?", description: "Pick any that apply." },
     {
-      id: "goneTomorrow",
-      title: "If one of these disappeared tomorrow, which would you pick?",
-      description: "Just one.",
-      autoAdvance: true,
+      id: "limits",
+      title: "How would you want AI to start out in your business?",
+      description: "Pick any that apply. Most businesses start small and give it more as it proves itself.",
     },
-    { id: "wastesTime", title: "In your own words, what wastes the most time?", description: "Optional. A sentence is plenty." },
+    {
+      id: "oneThing",
+      title: "Off the top of your head, if we could take one thing off your team's plate, what would it be?",
+      description: "In your own words. A sentence or two is plenty.",
+    },
+    {
+      id: "wastesTime",
+      title: "What's costing your business the most time right now?",
+      description: "Optional. Anything we haven't asked about.",
+    },
     { id: "contact", title: "Last thing: who are we talking to?", description: "So we can prepare for our conversation." },
   ];
 }
 
+const OTHER_KEYS: readonly string[] = ["tasks", "tools", "crm", "aiWhere"];
+
 function isStepAnswered(step: Step, answers: Draft, contact: Contact, consent: boolean) {
+  if (OTHER_KEYS.includes(step.id) && picksOther(answers, step.id as OtherKey) && !answers.otherText?.[step.id as OtherKey]?.trim()) {
+    return false;
+  }
   if (step.id.startsWith("detail:")) {
     const d = answers.taskDetails?.[step.id.slice(7)];
     return Boolean(d?.people && d?.who && d?.frequency && d?.duration);
@@ -106,6 +120,8 @@ function isStepAnswered(step: Step, answers: Draft, contact: Contact, consent: b
       return ((answers[step.id] as string[] | undefined)?.length ?? 0) > 0;
     case "wastesTime":
       return true;
+    case "oneThing":
+      return Boolean(answers.oneThing?.trim());
     case "contact":
       return contactSchema.safeParse(contact).success && consent;
     default:
@@ -241,7 +257,8 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
     const next = { ...answers, [key]: value } as Draft;
     if (key === "aiUse" && value === "none") delete next.aiWhere;
     setAnswers(next);
-    if (step?.autoAdvance && !advancing.current) {
+    // "Another CRM" opens a text box, so it waits for Continue.
+    if (step?.autoAdvance && value !== "other" && !advancing.current) {
       advancing.current = true;
       window.setTimeout(() => {
         advancing.current = false;
@@ -260,9 +277,24 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
       ...answers,
       tasks,
       taskDetails,
-      goneTomorrow: answers.goneTomorrow && tasks.includes(answers.goneTomorrow) ? answers.goneTomorrow : undefined,
       aiWhere: answers.aiWhere?.filter((t) => t === "other" || tasks.includes(t)),
     });
+  }
+
+  function setOtherText(key: OtherKey, text: string) {
+    setAnswers({ ...answers, otherText: { ...answers.otherText, [key]: text } });
+  }
+
+  function otherField(key: OtherKey, label: string) {
+    if (!picksOther(answers, key)) return null;
+    return (
+      <div className="mt-5">
+        <label htmlFor={`other-${key}`} className="mb-2 block font-sans text-sm font-medium text-ghost">{label}</label>
+        <input id={`other-${key}`} type="text" maxLength={300} autoFocus value={answers.otherText?.[key] ?? ""}
+          onChange={(e) => setOtherText(key, e.target.value)}
+          className="w-full rounded-xl border border-cyan/30 bg-surface/80 px-4 py-3 font-sans text-[15px] text-ghost placeholder:text-ghost-dim focus:border-cyan/50 focus:outline-none focus:ring-2 focus:ring-cyan/20" />
+      </div>
+    );
   }
 
   function setDetail(task: string, patch: Partial<TaskDetail>) {
@@ -292,7 +324,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
           action: "complete",
           auditId,
           inviteCode,
-          answers: { ...answers, wastesTime: answers.wastesTime?.trim() || undefined },
+          answers: { ...answers, oneThing: answers.oneThing?.trim(), wastesTime: answers.wastesTime?.trim() || undefined },
           contact: parsedContact.data,
           consent: true,
           lastStep: "contact",
@@ -352,38 +384,52 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
         return <EdenOptionGroup name="scaleSize" legend={step.title} options={p.scaleSize.options} value={answers.scaleSize} onChange={(v) => choose("scaleSize", v)} />;
       case "tasks":
         return (
-          <EdenOptionGroup name="tasks" legend={step.title} options={p.tasks} value={answers.tasks} multiple
-            onChange={(v) => setTasks(toggle(answers.tasks, v))} />
+          <>
+            <EdenOptionGroup name="tasks" legend={step.title} options={p.tasks} value={answers.tasks} multiple
+              onChange={(v) => setTasks(toggle(answers.tasks, v))} />
+            {otherField("tasks", "What else does your team do by hand?")}
+          </>
         );
       case "retyping":
         return multi("retyping", p.retyping, step.title);
       case "channels":
         return multi("channels", channelOptions, step.title);
       case "crm":
-        return <EdenOptionGroup name="crm" legend={step.title} options={crmOptions} value={answers.crm} onChange={(v) => choose("crm", v)} />;
+        return (
+          <>
+            <EdenOptionGroup name="crm" legend={step.title} options={crmOptions} value={answers.crm} onChange={(v) => choose("crm", v)} />
+            {otherField("crm", "Which CRM?")}
+          </>
+        );
       case "tools":
-        return multi("tools", p.tools, step.title);
+        return (
+          <>
+            {multi("tools", p.tools, step.title)}
+            {otherField("tools", "What else do you use?")}
+          </>
+        );
       case "aiUse":
         return <EdenOptionGroup name="aiUse" legend={step.title} options={aiUseOptions} value={answers.aiUse} onChange={(v) => choose("aiUse", v)} />;
       case "aiWhere":
-        return multi("aiWhere", [...chosenTasks, { value: "other", label: "Somewhere else" }], step.title);
+        return (
+          <>
+            {multi("aiWhere", [...chosenTasks.filter((t) => t.value !== "other"), { value: "other", label: "Somewhere else" }], step.title)}
+            {otherField("aiWhere", "Where else are you using it?")}
+          </>
+        );
       case "limits":
         return multi("limits", limitOptions, step.title);
-      case "goneTomorrow":
+      case "oneThing":
         return (
-          <EdenOptionGroup name="goneTomorrow" legend={step.title} options={chosenTasks} value={answers.goneTomorrow}
-            onChange={(v) => choose("goneTomorrow", v)} columns={1} />
+          <TextArea id="oneThing" label={step.title} value={answers.oneThing ?? ""}
+            onChange={(oneThing) => setAnswers({ ...answers, oneThing })}
+            placeholder={pack === "construction" ? "Pulling together the weekly client report for every project." : "Chasing the same information from three different people every week."} />
         );
       case "wastesTime":
         return (
-          <div>
-            <label htmlFor="wastesTime" className="sr-only">{step.title}</label>
-            <textarea id="wastesTime" rows={4} maxLength={600} value={answers.wastesTime ?? ""}
-              onChange={(e) => setAnswers({ ...answers, wastesTime: e.target.value })}
-              placeholder={pack === "construction" ? "Rebuilding the same client report every Friday from WhatsApp photos." : "Re-typing every new enquiry into three different places."}
-              className="w-full rounded-xl border border-ghost/[0.1] bg-surface/80 px-4 py-4 font-sans text-[15px] text-ghost placeholder:text-ghost-dim focus:border-cyan/40 focus:outline-none focus:ring-2 focus:ring-cyan/20" />
-            <p className="mt-2 text-right font-mono text-[10px] text-ghost-dim">{(answers.wastesTime ?? "").length} / 600</p>
-          </div>
+          <TextArea id="wastesTime" label={step.title} value={answers.wastesTime ?? ""}
+            onChange={(wastesTime) => setAnswers({ ...answers, wastesTime })}
+            placeholder={pack === "construction" ? "Information living in WhatsApp, email and spreadsheets, and no one place to see where a job stands." : "Information spread across too many places to find quickly."} />
         );
       case "contact":
         return (
@@ -475,7 +521,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-cyan/20 px-5 py-3 font-heading text-xs font-semibold uppercase tracking-[0.13em] text-cyan transition-colors hover:border-cyan/40 hover:bg-cyan/[0.04]">
                   <ArrowLeft size={15} aria-hidden="true" /> Back
                 </button>
-                {!step.autoAdvance && (
+                {(!step.autoAdvance || (step.id === "crm" && answers.crm === "other")) && (
                   <button type="button" onClick={() => goNext()} disabled={!answered}
                     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan px-7 py-3 font-heading text-xs font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40">
                     {step.id === "contact" ? "Finish" : step.id === "wastesTime" && !answers.wastesTime?.trim() ? "Skip" : "Continue"}
@@ -520,30 +566,12 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
               <Check size={14} aria-hidden="true" /> Received
             </p>
             <h1 className="mt-5 font-heading text-[30px] font-bold uppercase leading-[1] text-white sm:text-[44px]">
-              Thank you. Here&apos;s what we&apos;ll look at.
+              Thank you.
             </h1>
-            <ul className="mt-10 space-y-3">
-              {chosenTasks.map((task) => {
-                const top = task.value === answers.goneTomorrow;
-                return (
-                  <li key={task.value}
-                    className={cn(
-                      "flex items-start gap-3 rounded-xl border px-5 py-4 font-sans text-[15px]",
-                      top ? "border-cyan/40 bg-cyan/[0.06] text-ghost" : "border-ghost/[0.08] bg-surface/70 text-ghost-muted"
-                    )}>
-                    <Check size={16} className={cn("mt-0.5 flex-none", top ? "text-cyan" : "text-ghost-dim")} aria-hidden="true" />
-                    <span>
-                      {task.label}
-                      {top && <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.16em] text-cyan">First</span>}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="mt-10 max-w-xl font-sans text-base leading-relaxed text-ghost-muted">
+            <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
               {invite
-                ? "We'll bring a plan for these to our meeting: what we'd build, and what it takes off your team."
-                : "We'll come back to you with a plan for these: what we'd build, and what it takes off your team."}
+                ? "We'll go through your answers and come to our meeting with a plan built around your business."
+                : "We'll go through your answers and come back to you with a plan built around your business."}
             </p>
             {!invite && (
               <a href={discoveryUrl}
@@ -589,6 +617,30 @@ function PillRow<T extends string>({
         })}
       </div>
     </fieldset>
+  );
+}
+
+function TextArea({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="sr-only">{label}</label>
+      <textarea id={id} rows={4} maxLength={600} value={value} placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-ghost/[0.1] bg-surface/80 px-4 py-4 font-sans text-[15px] text-ghost placeholder:text-ghost-dim focus:border-cyan/40 focus:outline-none focus:ring-2 focus:ring-cyan/20" />
+      <p className="mt-2 text-right font-mono text-[10px] text-ghost-dim">{value.length} / 600</p>
+    </div>
   );
 }
 

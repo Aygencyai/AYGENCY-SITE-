@@ -34,7 +34,9 @@ export function formatAuditSummary(pack: Pack, answers: AuditAnswers, contact: A
   const p = packs[pack];
   const estimates = estimateTasks(pack, answers);
   const weekly = weeklyTotal(estimates);
-  const agents = suggestAgents(estimates, answers.goneTomorrow);
+  const agents = suggestAgents(estimates);
+  const other = (key: "tools" | "crm" | "aiWhere") =>
+    answers.otherText?.[key] ? ` (other: ${singleLine(answers.otherText[key])})` : "";
 
   const taskLines = estimates.map((e) => {
     const d = e.detail;
@@ -52,7 +54,7 @@ export function formatAuditSummary(pack: Pack, answers: AuditAnswers, contact: A
     "",
     "DIAGNOSIS (internal)",
     `Suggested system: ${agents.join(" + ")}`,
-    `Job they want gone tomorrow: ${label(p.tasks, answers.goneTomorrow)}`,
+    `One thing to take off their plate: "${singleLine(answers.oneThing)}"`,
     `Recurring team time on these tasks: ~${weekly.toFixed(0)} hrs/week`,
     `At UK median loaded pay (£${LOADED_HOURLY_RATE.toFixed(2)}/hr × ${WORKING_WEEKS} wks): ~${gbp(
       weekly * LOADED_HOURLY_RATE * WORKING_WEEKS
@@ -66,13 +68,13 @@ export function formatAuditSummary(pack: Pack, answers: AuditAnswers, contact: A
     `Where decisions and updates happen: ${list(channelOptions, answers.channels)}`,
     "",
     "SYSTEMS",
-    `CRM: ${label(crmOptions, answers.crm)}`,
-    `Tools: ${list(p.tools, answers.tools)}`,
+    `CRM: ${label(crmOptions, answers.crm)}${other("crm")}`,
+    `Tools: ${list(p.tools, answers.tools)}${other("tools")}`,
     `AI today: ${label(aiUseOptions, answers.aiUse)}${
-      answers.aiWhere?.length ? ` (${list([...p.tasks, { value: "other", label: "other" }], answers.aiWhere)})` : ""
+      answers.aiWhere?.length ? ` (${list(p.tasks, answers.aiWhere)})${other("aiWhere")}` : ""
     }`,
     `Hard limits: ${list(limitOptions, answers.limits)}`,
-    answers.wastesTime ? `\nIn their words: "${singleLine(answers.wastesTime)}"` : null,
+    answers.wastesTime ? `\nWhat's costing them the most time: "${singleLine(answers.wastesTime)}"` : null,
     "",
     `Record: crm.growth_audits id ${auditId}`,
   ]

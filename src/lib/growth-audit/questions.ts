@@ -10,7 +10,7 @@ import { z } from "zod";
  * task/role/tool lists so a construction firm and a clinic each see their own
  * world. The pack is set on the invite; public visitors get "general".
  */
-export const QUESTION_SET_VERSION = "growth-audit.v2" as const;
+export const QUESTION_SET_VERSION = "growth-audit.v3" as const;
 
 export interface AuditOption<T extends string> {
   value: T;
@@ -35,6 +35,15 @@ interface PackDefinition {
   retyping: ReadonlyArray<AuditOption<string>>;
   tools: ReadonlyArray<AuditOption<string>>;
 }
+
+/** Data and document work every business has. Listed first in every pack. */
+const dataTasks = [
+  { value: "moving_data", label: "Moving data between systems", description: "Copying the same details from one place into another.", agent: "Operations" },
+  { value: "centralising", label: "Pulling scattered information into one place", description: "Emails, spreadsheets, shared drives and people's heads.", agent: "Analyst" },
+  { value: "sharing_updates", label: "Getting the right updates and numbers to the right people", agent: "Analyst" },
+] as const;
+
+const otherTask = { value: "other", label: "Something else", agent: "To assess" } as const;
 
 const commonTools = [
   { value: "google", label: "Gmail / Google Workspace" },
@@ -70,17 +79,19 @@ export const packs: Record<Pack, PackDefinition> = {
       ],
     },
     tasks: [
+      ...dataTasks,
+      { value: "contracts", label: "Drafting contracts and repeat documents", description: "The same clauses and details, over and over.", agent: "Operations" },
       { value: "enquiries", label: "Answering enquiries, calls and messages", agent: "Front Desk" },
       { value: "bookings", label: "Booking, rescheduling and reminders", agent: "Front Desk" },
       { value: "quotes", label: "Writing quotes and proposals", agent: "Operations" },
       { value: "follow_up", label: "Following up quotes and enquiries", agent: "Outreach" },
-      { value: "data_entry", label: "Copying information between systems", agent: "Operations" },
       { value: "invoicing", label: "Invoicing and chasing payments", agent: "Operations" },
       { value: "reporting", label: "Pulling together reports and numbers", agent: "Analyst" },
       { value: "customer_updates", label: "Keeping customers updated", agent: "Front Desk" },
       { value: "scheduling_staff", label: "Rotas and scheduling the team", agent: "Coordinator" },
       { value: "content", label: "Social posts, newsletters and marketing", agent: "Producer" },
       { value: "internal_chasing", label: "Chasing people internally", agent: "Coordinator" },
+      otherTask,
     ],
     roles: [
       { value: "owner", label: "Owner or director" },
@@ -122,6 +133,8 @@ export const packs: Record<Pack, PackDefinition> = {
       ],
     },
     tasks: [
+      ...dataTasks,
+      { value: "contracts", label: "Subcontract orders, contracts and repeat documents", description: "The same clauses and details, over and over.", agent: "Operations" },
       { value: "tender_pricing", label: "Pricing tenders from drawings and specs", agent: "Analyst" },
       { value: "quote_levelling", label: "Getting and levelling trade quotes", agent: "Operations" },
       { value: "procurement", label: "Chasing suppliers and lead times", agent: "Operations" },
@@ -133,6 +146,7 @@ export const packs: Record<Pack, PackDefinition> = {
       { value: "handover", label: "O&M manuals and handover packs", agent: "Operations" },
       { value: "aftercare", label: "Aftercare and client requests", agent: "Front Desk" },
       { value: "timesheets_invoices", label: "Timesheets and matching invoices", agent: "Operations" },
+      otherTask,
     ],
     roles: [
       { value: "director", label: "A director" },
@@ -208,11 +222,12 @@ export const aiUseOptions = [
 ] as const satisfies ReadonlyArray<AuditOption<string>>;
 
 export const limitOptions = [
-  { value: "no_client_contact", label: "Never talks to our clients" },
-  { value: "no_money", label: "Never touches costs or payments" },
-  { value: "human_approves", label: "A person approves before anything goes out" },
+  { value: "start_small", label: "Start small and give it more as it proves itself" },
+  { value: "human_approves", label: "A person approves anything before it goes out" },
+  { value: "no_client_contact", label: "Keep it away from our clients at first" },
+  { value: "no_money", label: "Keep it away from costs and payments at first" },
   { value: "data_in_uk", label: "Our data stays in the UK" },
-  { value: "none", label: "No hard limits" },
+  { value: "none", label: "No particular limits" },
 ] as const satisfies ReadonlyArray<AuditOption<string>>;
 
 function enumOf<T extends string>(options: ReadonlyArray<AuditOption<T>>) {
@@ -240,9 +255,27 @@ export const answersSchema = z.object({
   aiUse: enumOf(aiUseOptions),
   aiWhere: z.array(optionKey).max(20).optional(),
   limits: z.array(enumOf(limitOptions)).min(1),
-  goneTomorrow: optionKey,
+  oneThing: z.string().trim().min(1).max(600),
   wastesTime: z.string().trim().max(600).optional(),
+  /** What they wrote when they picked "Something else" / "Another CRM". */
+  otherText: z
+    .object({
+      tasks: z.string().trim().max(300),
+      tools: z.string().trim().max(300),
+      crm: z.string().trim().max(300),
+      aiWhere: z.string().trim().max(300),
+    })
+    .partial()
+    .optional(),
 });
+
+/** Questions whose "other" answer opens a text box. */
+export type OtherKey = "tasks" | "tools" | "crm" | "aiWhere";
+
+export function picksOther(answers: Partial<Pick<AuditAnswers, OtherKey>>, key: OtherKey) {
+  const value = answers[key];
+  return Array.isArray(value) ? value.includes("other") : value === "other";
+}
 
 export type AuditAnswers = z.infer<typeof answersSchema>;
 export type TaskDetail = z.infer<typeof taskDetailSchema>;
@@ -263,7 +296,9 @@ export function completeAnswersSchema(pack: Pack) {
     a.retyping.forEach((r, i) => !values(p.retyping).has(r) && bad(["retyping", i]));
     a.tools.forEach((t, i) => !values(p.tools).has(t) && bad(["tools", i]));
     (a.aiWhere ?? []).forEach((t, i) => !tasks.has(t) && t !== "other" && bad(["aiWhere", i]));
-    if (!a.tasks.includes(a.goneTomorrow)) bad(["goneTomorrow"]);
+    for (const key of ["tasks", "tools", "crm", "aiWhere"] as const) {
+      if (picksOther(a, key) && !a.otherText?.[key]) bad(["otherText", key]);
+    }
     for (const task of a.tasks) {
       const detail = a.taskDetails[task];
       if (!detail) bad(["taskDetails", task]);

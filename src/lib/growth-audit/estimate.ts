@@ -38,7 +38,10 @@ export interface TaskEstimate {
   detail: TaskDetail;
 }
 
-export function estimateTasks(pack: Pack, answers: Pick<AuditAnswers, "tasks" | "taskDetails">): TaskEstimate[] {
+export function estimateTasks(
+  pack: Pack,
+  answers: Pick<AuditAnswers, "tasks" | "taskDetails" | "otherText">
+): TaskEstimate[] {
   const byValue = new Map(packs[pack].tasks.map((t) => [t.value, t]));
   return answers.tasks
     .map((task) => {
@@ -47,7 +50,8 @@ export function estimateTasks(pack: Pack, answers: Pick<AuditAnswers, "tasks" | 
       if (!option || !detail) return null;
       const hoursEachTime = peopleMidpoint[detail.people] * durationHours[detail.duration];
       const weeklyHours = detail.frequency === "per_job" ? null : hoursEachTime * perWeek[detail.frequency];
-      return { task, label: option.label, agent: option.agent, weeklyHours, hoursEachTime, detail };
+      const label = task === "other" && answers.otherText?.tasks ? `Something else: ${answers.otherText.tasks}` : option.label;
+      return { task, label, agent: option.agent, weeklyHours, hoursEachTime, detail };
     })
     .filter((e): e is TaskEstimate => e !== null)
     .sort((a, b) => (b.weeklyHours ?? -1) - (a.weeklyHours ?? -1));
@@ -59,21 +63,15 @@ export function weeklyTotal(estimates: TaskEstimate[]) {
 
 /**
  * A basic diagnosis: which agents fit, ranked by the weekly hours of the work
- * they would take on. The task they want gone tomorrow always makes the cut.
- * The Coordinator is included in every system.
+ * they would take on. The Coordinator is included in every system. Work they
+ * described as "something else" is left for us to assess by hand.
  */
-export function suggestAgents(estimates: TaskEstimate[], goneTomorrow?: string, max = 4) {
+export function suggestAgents(estimates: TaskEstimate[], max = 4) {
   const hoursByAgent = new Map<string, number>();
   for (const e of estimates) {
+    if (e.agent === "To assess") continue;
     hoursByAgent.set(e.agent, (hoursByAgent.get(e.agent) ?? 0) + (e.weeklyHours ?? e.hoursEachTime / 4));
   }
   const ranked = [...hoursByAgent.entries()].sort((a, b) => b[1] - a[1]).map(([agent]) => agent);
-  const must = estimates.find((e) => e.task === goneTomorrow)?.agent;
-  const specialists = ranked.filter((a) => a !== "Coordinator");
-  const chosen = specialists.slice(0, max);
-  if (must && must !== "Coordinator" && !chosen.includes(must)) {
-    if (chosen.length < max) chosen.push(must);
-    else chosen[chosen.length - 1] = must;
-  }
-  return ["Coordinator", ...chosen];
+  return ["Coordinator", ...ranked.filter((a) => a !== "Coordinator").slice(0, max)];
 }
