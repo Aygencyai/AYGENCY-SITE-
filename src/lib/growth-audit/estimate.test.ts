@@ -18,7 +18,7 @@ const answers: AuditAnswers = {
   aiUse: "individuals",
   aiWhere: ["site_reports"],
   limits: ["no_client_contact"],
-  goneTomorrow: "handover",
+  oneThing: "The Friday client report.",
 };
 
 describe("estimateTasks", () => {
@@ -39,10 +39,20 @@ describe("estimateTasks", () => {
 });
 
 describe("suggestAgents", () => {
-  it("always leads with the Coordinator and keeps the job they want gone", () => {
-    const agents = suggestAgents(estimateTasks("construction", answers), "handover", 2);
-    expect(agents[0]).toBe("Coordinator");
-    expect(agents).toContain("Operations");
+  it("leads with the Coordinator, then the agents with the most team hours", () => {
+    expect(suggestAgents(estimateTasks("construction", answers), 1)).toEqual(["Coordinator", "Operations"]);
+  });
+
+  it("leaves 'something else' work out of the suggestion and labels it with their words", () => {
+    const withOther: AuditAnswers = {
+      ...answers,
+      tasks: ["other"],
+      taskDetails: { other: { people: "1", who: "office", frequency: "daily", duration: "2-4h" } },
+      otherText: { tasks: "Planning applications" },
+    };
+    const estimates = estimateTasks("construction", withOther);
+    expect(estimates[0].label).toBe("Something else: Planning applications");
+    expect(suggestAgents(estimates)).toEqual(["Coordinator"]);
   });
 });
 
@@ -53,6 +63,14 @@ describe("completeAnswersSchema", () => {
 
   it("rejects options from the wrong pack", () => {
     expect(completeAnswersSchema("general").safeParse(answers).success).toBe(false);
+  });
+
+  it("requires the text box when they pick 'Something else'", () => {
+    const withOther = { ...answers, tools: ["other"] };
+    expect(completeAnswersSchema("construction").safeParse(withOther).success).toBe(false);
+    expect(
+      completeAnswersSchema("construction").safeParse({ ...withOther, otherText: { tools: "Buildertrend" } }).success
+    ).toBe(true);
   });
 
   it("rejects a ticked task with no detail", () => {

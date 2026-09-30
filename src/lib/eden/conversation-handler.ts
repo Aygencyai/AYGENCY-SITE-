@@ -1,0 +1,120 @@
+import { randomBytes } from "node:crypto";
+import { NextRequest, NextResponse } from "next/server";
+import { conversationAction, conversationState } from "./conversation-schema";
+import { createFixedWindowRateLimiter, getHashedRequestIdentifier } from "./rate-limit";
+import { sendEdenOnboardingLeadNotification, type OnboardingLead } from "./onboarding-lead-notification";
+
+const consume = createFixedWindowRateLimiter({ limit: 90, windowMs: 60_000 });
+// Account creation and legacy code requests get a smaller visitor budget.
+// The operated service also enforces durable per-address and shared limits.
+const consumeSignIn = createFixedWindowRateLimiter({ limit: 6, windowMs: 15 * 60_000 });
+// Password and legacy code attempts allow ordinary typo correction while
+// bounding guessing independently of the account-creation budget.
+const consumeVerify = createFixedWindowRateLimiter({ limit: 20, windowMs: 15 * 60_000 });
+const privateHeaders = { "cache-control": "no-store, max-age=0", "referrer-policy": "no-referrer" };
+
+async function boundedJson(body: ReadableStream<Uint8Array> | null, limit: number): Promise<unknown> {
+  if (!body) throw new Error();
+  const reader = body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const next = await reader.read();
+      if (next.done) break;
+      size += next.value.length;
+      if (size > limit) throw new Error();
+      chunks.push(next.value);
+    }
+    return JSON.parse(Buffer.concat(chunks).toString("utf8")) as unknown;
+  } finally { await reader.cancel(); reader.releaseLock(); }
+}
+
+export function createConversationHandler(deps: {
+  fetch?: typeof fetch; enabled?: boolean; url?: string; key?: string; local?: boolean;
+  notify?: (lead: OnboardingLead) => Promise<unknown>;
+  signInLimit?: { limit: number; windowMs: number };
+} = {}) {
+  const signIn = deps.signInLimit ? createFixedWindowRateLimiter(deps.signInLimit) : consumeSignIn;
+  const verify = deps.signInLimit ? createFixedWindowRateLimiter(deps.signInLimit) : consumeVerify;
+  return async (request: NextRequest): Promise<NextResponse> => {
+    let cookieName = "__Host-eden-conversation";
+    const fail = (status: number) => {
+      const response = NextResponse.json({ error: "conversation_unavailable" },
+        { status, headers: privateHeaders });
+      if (status === 401) response.cookies.set(cookieName, "", {
+        httpOnly: true, secure: cookieName.startsWith("__Host-"), sameSite: "lax", path: "/", maxAge: 0,
+      });
+      return response;
+    };
+    if (!(deps.enabled ?? process.env.EDEN_WEB_ONBOARDING_ENABLED === "true")) return fail(503);
+    const originHeader = request.headers.get("origin");
+    let origin: URL;
+    try { origin = new URL(originHeader ?? ""); } catch { return fail(403); }
+    // Next's local server can normalize request.url to localhost. Host retains
+    // the actual browser destination; compare exact origins without allowing
+    // arbitrary loopback origins or trusting a forwarded host.
+    const host = request.headers.get("host") ?? new URL(request.url).host;
+    if (originHeader !== origin.origin || origin.host !== host ||
+      !["http:", "https:"].includes(origin.protocol) ||
+      ![null, "same-origin", "none"].includes(request.headers.get("sec-fetch-site"))) return fail(403);
+    if (!consume(getHashedRequestIdentifier(request)).allowed) return fail(429);
+    try {
+      if (request.headers.get("content-type")?.split(";")[0] !== "application/json") return fail(415);
+      const input = conversationAction.parse(await boundedJson(request.body, 16_384));
+      if (["email", "signup"].includes(input.action) && !signIn(getHashedRequestIdentifier(request)).allowed) return fail(429);
+      if (["verify", "signin"].includes(input.action) && !verify(getHashedRequestIdentifier(request)).allowed) return fail(429);
+      const url = new URL(deps.url ?? process.env.EDEN_WEB_SERVICE_URL ?? "");
+      const local = (deps.local ?? process.env.EDEN_WEB_ALLOW_LOCAL === "true") &&
+        process.env.NODE_ENV !== "production" && !process.env.VERCEL;
+      if (url.username || url.password || url.pathname !== "/" || url.search || url.hash ||
+        (url.protocol !== "https:" && !(local && url.protocol === "http:" &&
+          ["127.0.0.1", "localhost"].includes(url.hostname)))) return fail(503);
+      const key = deps.key ?? process.env.EDEN_WEB_SERVICE_KEY ?? "";
+      if (key.length < 32) return fail(503);
+      const secure = origin.protocol === "https:";
+      cookieName = secure ? "__Host-eden-conversation" : "eden-conversation";
+      const existing = request.cookies.get(cookieName)?.value;
+      if (existing && !/^[a-f0-9]{64}$/.test(existing)) return fail(401);
+      if (!existing && input.action !== "open") return fail(401);
+      const token = existing ?? randomBytes(32).toString("hex");
+      const upstream = await (deps.fetch ?? fetch)(new URL("/v1/onboarding", url), {
+        method: "POST", headers: { "content-type": "application/json",
+          "x-eden-web-key": key, "x-eden-session": token },
+        body: JSON.stringify(input), cache: "no-store", redirect: "error",
+        signal: AbortSignal.timeout(55_000),
+      });
+      if (!upstream.ok) { await upstream.body?.cancel(); return fail([401, 409, 429].includes(upstream.status) ? upstream.status : 503); }
+      const rotated = upstream.headers.get("x-eden-session");
+      const rotatesSession = ["verify", "signup", "signin", "logout"].includes(input.action);
+      if (!rotated || !/^[a-f0-9]{64}$/.test(rotated) ||
+        (rotatesSession ? rotated === token : rotated !== token)) return fail(503);
+      const result = await boundedJson(upstream.body, 262_144);
+      let view: object;
+      if (input.action === "email") {
+        if (JSON.stringify(result) !== JSON.stringify({ code_sent: true })) return fail(503);
+        view = { code_sent: true };
+      } else {
+        const saved = conversationState.parse(result);
+        if ((["verify", "signup", "signin"].includes(input.action) && !saved.authenticated) ||
+          (input.action === "logout" && saved.authenticated)) return fail(503);
+        view = saved;
+        if (input.action === "confirm" && saved.authenticated && saved.confirmed) {
+          // A lead nobody is told about is not lead capture. The alert must never
+          // decide whether the customer's confirmation succeeded: that is already
+          // durable in the Builder by the time we get here.
+          try {
+            await (deps.notify ?? sendEdenOnboardingLeadNotification)({
+              email: saved.email, revision: saved.revision, summary: saved.summary,
+            });
+          } catch { /* Founders can still see the lead in the dashboard. */ }
+        }
+      }
+      const response = NextResponse.json(view, { headers: privateHeaders });
+      if (!existing || rotated !== existing) response.cookies.set(cookieName, rotated, {
+        httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: 30 * 24 * 60 * 60,
+      });
+      return response;
+    } catch { return fail(503); }
+  };
+}

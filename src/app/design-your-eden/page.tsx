@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { randomUUID } from "node:crypto";
 import PageTransition from "@/components/ui/PageTransition";
 import DesignYourEdenClient from "./DesignYourEdenClient";
+import { EdenConversation } from "@/components/eden/EdenConversation";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,9 @@ function discoveryUrl() {
 }
 
 export default function DesignYourEdenPage() {
+  if (process.env.EDEN_WEB_ONBOARDING_ENABLED === "true") {
+    return <PageTransition><EdenConversation /></PageTransition>;
+  }
   const localPreview = process.env.NODE_ENV !== "production";
 
   return (

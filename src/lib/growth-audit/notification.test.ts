@@ -18,7 +18,7 @@ const answers: AuditAnswers = {
   aiUse: "individuals",
   aiWhere: ["site_reports"],
   limits: ["no_client_contact"],
-  goneTomorrow: "site_reports",
+  oneThing: "The Friday client report.",
   wastesTime: "Friday reports rebuilt from WhatsApp photos.",
 };
 
@@ -27,7 +27,7 @@ describe("formatAuditSummary", () => {
     const text = formatAuditSummary("construction", answers, { name: "Sam", email: "sam@example.com", company: "Test Co" }, "id-1");
     if (process.env.PRINT_SUMMARY) console.log(text);
     expect(text).toContain("Suggested system: Coordinator + ");
-    expect(text).toContain("Job they want gone tomorrow: Site diaries and weekly client reports");
+    expect(text).toContain('One thing to take off their plate: "The Friday client report."');
     expect(text).toContain("~20 team hrs each project");
     expect(text).toContain("CRM: No, it's in email and our heads");
   });
