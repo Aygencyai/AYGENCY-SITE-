@@ -1,17 +1,42 @@
 import type { Metadata } from "next";
 import { randomUUID } from "node:crypto";
+import { cache } from "react";
 import PageTransition from "@/components/ui/PageTransition";
-import { lookupInvite } from "@/lib/growth-audit/ingest";
+import { lookupInvite as lookupInviteUncached } from "@/lib/growth-audit/ingest";
 import AuditClient from "./AuditClient";
 
 export const dynamic = "force-dynamic";
 
-// Unlisted until we choose to run it as a public funnel.
-export const metadata: Metadata = {
-  title: "AI Growth Audit | Aygency",
-  description: "A three-minute audit of where AI can help your business grow and what it can take off your team.",
-  robots: { index: false, follow: false },
-};
+// One invite lookup per request, shared by the metadata and the page.
+const lookupInvite = cache(lookupInviteUncached);
+
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+function inviteCode(params: Record<string, string | string[] | undefined>) {
+  return typeof params.c === "string" ? params.c : null;
+}
+
+// Unlisted until we choose to run it as a public funnel. The link preview is
+// personalised with the invited company (see ./preview/route.tsx).
+export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
+  const code = inviteCode(await searchParams);
+  const invite = code ? await lookupInvite(code) : null;
+  const title = invite ? `AI Growth Audit for ${invite.company} | Aygency` : "AI Growth Audit | Aygency";
+  const description = "A few quick questions about where your team's time goes. About 5 minutes.";
+  const image = {
+    url: invite && code ? `/audit/preview?c=${encodeURIComponent(code)}` : "/audit/preview",
+    width: 1200,
+    height: 630,
+    alt: title,
+  };
+  return {
+    title,
+    description,
+    robots: { index: false, follow: false },
+    openGraph: { title, description, type: "website", siteName: "Aygency", images: [image] },
+    twitter: { card: "summary_large_image", title, description, images: [image.url] },
+  };
+}
 
 function discoveryUrl() {
   const configured = process.env.NEXT_PUBLIC_CAL_URL?.trim();
@@ -24,13 +49,8 @@ function discoveryUrl() {
   }
 }
 
-export default async function AuditPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const params = await searchParams;
-  const code = typeof params.c === "string" ? params.c : null;
+export default async function AuditPage({ searchParams }: { searchParams: SearchParams }) {
+  const code = inviteCode(await searchParams);
   const invite = code ? await lookupInvite(code) : null;
 
   return (
