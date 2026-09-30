@@ -1,8 +1,15 @@
 # AI Growth Audit
 
 A click-through questionnaire at `aygency.ai/audit` that a prospect fills in before our first meeting.
-It tells us where the business is trying to grow, where its capacity runs out, and where the team's
-week goes, so we arrive with the plan. Research and reasoning behind the questions:
+It finds the repetitive manual work in their week: what it is, who does it, how often and how long it
+takes, where information gets typed twice, what systems they use and where they already use AI. We get
+the answers plus a basic diagnosis (agents ranked by team hours, and an hours/£ estimate for our pricing).
+The prospect only sees the list of tasks we'll look at.
+
+Every business gets the same questions. A **pack** swaps the task, role and tool lists for their world:
+`general` or `construction` (see `packs` in `src/lib/growth-audit/questions.ts`). The pack is set on the
+invite; the public page uses `general`. To add a pack, add it to `PACKS` and `packs`, and to the check
+constraint on both tables. Research and reasoning behind the questions:
 `~/aygency/docs/discovery-funnel/discovery-funnel-research.md`.
 
 ## How it works
@@ -27,18 +34,20 @@ browser /audit ──► POST /api/audit (validates with Zod, rate-limited, same
   either: it has the public half of the key only.
 - Unfinished answers also sit in the visitor's browser (`localStorage`), so a refresh or a return visit
   offers to carry on.
-- On completion the server emails a summary via Resend if `RESEND_API_KEY` and a recipient are set.
-  The row is the record; the email is only a nudge.
+- On completion the server emails us a summary via Resend if `RESEND_API_KEY` and a recipient are set:
+  the diagnosis, each task with its hours, and their answers. The row is the record; the email is a nudge.
+  The hours and £ figures are internal, for pricing; they come from band midpoints and UK median pay, so
+  check them in the room.
 
 ## Sending a personal link
 
 Create an invite (Supabase SQL editor, Aygency-internal):
 
 ```sql
-insert into crm.growth_audit_invites (code, company, contact_name, contact_email, notes)
+insert into crm.growth_audit_invites (code, company, contact_name, contact_email, pack, notes)
 values (
   replace(replace(encode(gen_random_bytes(18), 'base64'), '+', '-'), '/', '_'),
-  'Company Ltd', 'First Last', 'them@company.com', 'Meeting 6 Oct'
+  'Company Ltd', 'First Last', 'them@company.com', 'construction', 'Meeting 6 Oct'
 )
 returning 'https://www.aygency.ai/audit?c=' || code as link;
 ```
@@ -68,9 +77,9 @@ Generate a new Ed25519 pair, put the private half (base64 PKCS#8 DER) in Vercel 
 
 ## Not built yet
 
-- **The meeting brief.** A completed audit should turn into a one-page plan: the agents ranked, a
-  suggested tier, and £ ranges from ONS pay rates × 1.17 × 46 weeks × recovery %. Until then, write it by
-  hand from the row. The maths and assumptions are in the research doc.
+- **Pay rates by role.** The £ estimate uses the UK median for every role. Senior roles (directors, QS)
+  cost more; per-role ONS rates would sharpen it.
+- **Voice notes.** The free-text answer could take a voice note instead.
 - **A view in the Aygency dashboard.** For now, the Supabase table view.
 - **Public use.** The page is `noindex` and not linked from the site. Making it a public funnel is a
   choice to make once a few real audits show which questions earn their place.

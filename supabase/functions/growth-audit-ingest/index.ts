@@ -79,12 +79,12 @@ Deno.serve(async (req) => {
       const code = boundedString(body.code, 64);
       if (!code || !CODE.test(code)) return json(200, { invite: null });
       const [row] = await sql`
-        select company, contact_name, contact_email
+        select company, contact_name, contact_email, pack
         from crm.growth_audit_invites
         where code = ${code} and revoked_at is null`;
       return json(200, {
         invite: row
-          ? { company: row.company, contactName: row.contact_name, contactEmail: row.contact_email }
+          ? { company: row.company, contactName: row.contact_name, contactEmail: row.contact_email, pack: row.pack }
           : null,
       });
     }
@@ -107,11 +107,13 @@ Deno.serve(async (req) => {
     }
 
     let inviteId: string | null = null;
+    let pack = "general";
     const inviteCode = boundedString(body.inviteCode, 64);
     if (inviteCode && CODE.test(inviteCode)) {
       const [invite] = await sql`
-        select id from crm.growth_audit_invites where code = ${inviteCode} and revoked_at is null`;
+        select id, pack from crm.growth_audit_invites where code = ${inviteCode} and revoked_at is null`;
       inviteId = invite?.id ?? null;
+      pack = invite?.pack ?? "general";
     }
     const source = inviteId ? "invite" : "public";
 
@@ -127,10 +129,10 @@ Deno.serve(async (req) => {
     // A completed audit is final: later saves or repeat completes change nothing.
     const [row] = await sql`
       insert into crm.growth_audits as a (
-        id, invite_id, source, question_set_version, answers, last_step, steps_completed,
+        id, invite_id, source, pack, question_set_version, answers, last_step, steps_completed,
         landing_path, contact_name, contact_email, company, consent_at, completed_at
       ) values (
-        ${auditId}, ${inviteId}, ${source}, ${version}, ${sql.json(answers as never)}, ${lastStep},
+        ${auditId}, ${inviteId}, ${source}, ${pack}, ${version}, ${sql.json(answers as never)}, ${lastStep},
         ${stepsCompleted}, ${landingPath}, ${name}, ${email}, ${company},
         ${complete ? sql`now()` : null}, ${complete ? sql`now()` : null}
       )
@@ -139,6 +141,7 @@ Deno.serve(async (req) => {
         last_step = excluded.last_step,
         steps_completed = greatest(a.steps_completed, excluded.steps_completed),
         invite_id = coalesce(a.invite_id, excluded.invite_id),
+        pack = case when a.invite_id is not null then a.pack else excluded.pack end,
         source = case when a.invite_id is not null then a.source else excluded.source end,
         contact_name = coalesce(excluded.contact_name, a.contact_name),
         contact_email = coalesce(excluded.contact_email, a.contact_email),

@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createFixedWindowRateLimiter, getHashedRequestIdentifier } from "@/lib/eden/rate-limit";
-import { IngestUnavailableError, sendAuditRecord } from "@/lib/growth-audit/ingest";
+import { IngestUnavailableError, lookupInvite, sendAuditRecord } from "@/lib/growth-audit/ingest";
 import { sendAuditNotification } from "@/lib/growth-audit/notification";
 import {
   QUESTION_SET_VERSION,
   completeAnswersSchema,
   contactSchema,
   draftAnswersSchema,
+  type AuditAnswers,
+  type Pack,
 } from "@/lib/growth-audit/questions";
 
 // Drafts save on every step (about 20 per audit), so the window is generous.
@@ -27,7 +29,8 @@ const saveRequest = envelope.extend({
 
 const completeRequest = envelope.extend({
   action: z.literal("complete"),
-  answers: completeAnswersSchema,
+  // Checked against the invite's pack below, once we know which pack that is.
+  answers: z.record(z.string(), z.unknown()),
   contact: contactSchema,
   consent: z.literal(true),
 });
@@ -65,22 +68,34 @@ export async function POST(request: Request) {
   }
   const data = parsed.data;
 
+  // On completion the pack comes from the invite on the server, never from the browser.
+  let pack: Pack = "general";
+  let completeAnswers: AuditAnswers | null = null;
+  if (data.action === "complete") {
+    if (data.inviteCode) pack = (await lookupInvite(data.inviteCode))?.pack ?? "general";
+    const checked = completeAnswersSchema(pack).safeParse(data.answers);
+    if (!checked.success) {
+      return NextResponse.json({ error: "Some answers are missing or invalid." }, { status: 400 });
+    }
+    completeAnswers = checked.data;
+  }
+
   try {
     const { outcome } = await sendAuditRecord({
       action: data.action,
       auditId: data.auditId,
       inviteCode: data.inviteCode,
       version: QUESTION_SET_VERSION,
-      answers: data.answers,
+      answers: completeAnswers ?? data.answers,
       lastStep: data.lastStep,
       stepsCompleted: data.stepsCompleted,
       landingPath: "/audit",
       contact: data.action === "complete" ? data.contact : undefined,
     });
 
-    if (data.action === "complete" && outcome === "completed") {
+    if (data.action === "complete" && completeAnswers && outcome === "completed") {
       // The answers are already stored; a failed email must not fail the audit.
-      await sendAuditNotification(data.answers, data.contact, data.auditId).catch((error) =>
+      await sendAuditNotification(pack, completeAnswers, data.contact, data.auditId).catch((error) =>
         console.error("Growth audit notification failed:", error)
       );
     }

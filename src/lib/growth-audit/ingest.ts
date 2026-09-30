@@ -1,4 +1,5 @@
 import { createPrivateKey, sign, type KeyObject } from "node:crypto";
+import { PACKS, type Pack } from "./questions";
 
 /**
  * Server-only client for the `growth-audit-ingest` Supabase Edge Function.
@@ -29,6 +30,7 @@ export interface InvitePrefill {
   company: string;
   contactName: string | null;
   contactEmail: string | null;
+  pack: Pack;
 }
 
 export class IngestUnavailableError extends Error {}
@@ -80,8 +82,10 @@ export async function lookupInvite(code: string): Promise<InvitePrefill | null> 
   if (!/^[A-Za-z0-9_-]{16,64}$/.test(code)) return null;
   try {
     const result = await post({ action: "invite", code });
-    const invite = result.invite as InvitePrefill | null | undefined;
-    return invite ?? null;
+    const invite = result.invite as (Omit<InvitePrefill, "pack"> & { pack?: string }) | null | undefined;
+    if (!invite) return null;
+    const pack = (PACKS as readonly string[]).includes(invite.pack ?? "") ? (invite.pack as Pack) : "general";
+    return { ...invite, pack };
   } catch (error) {
     // A failed lookup must not block the audit: the prospect fills in their
     // own details instead, and the answers still save against a public row.

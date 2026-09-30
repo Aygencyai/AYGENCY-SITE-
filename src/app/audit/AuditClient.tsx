@@ -7,31 +7,27 @@ import AnimatedGrid from "@/components/effects/AnimatedGrid";
 import GlowOrb from "@/components/effects/GlowOrb";
 import EdenOptionGroup from "@/components/eden/EdenOptionGroup";
 import { cn } from "@/lib/utils";
-import { growthLever, leverCopy, weeklyHoursRange } from "@/lib/growth-audit/estimate";
 import type { InvitePrefill } from "@/lib/growth-audit/ingest";
 import {
   QUESTION_SET_VERSION,
-  areaOptions,
-  blockerOptions,
+  aiUseOptions,
+  channelOptions,
   contactSchema,
-  directionOptions,
-  doerOptions,
-  doubledOptions,
-  enquiryVolumeOptions,
-  hoursOptions,
+  crmOptions,
+  durationOptions,
+  frequencyOptions,
+  limitOptions,
+  packs,
   peopleOptions,
-  replySpeedOptions,
-  roleOptions,
-  systemOptions,
-  teamSizeOptions,
-  type Area,
-  type AreaDetail,
   type AuditAnswers,
   type AuditOption,
+  type Pack,
+  type TaskDetail,
 } from "@/lib/growth-audit/questions";
 
-type Draft = Partial<AuditAnswers>;
+type Draft = Omit<Partial<AuditAnswers>, "taskDetails"> & { taskDetails?: Record<string, Partial<TaskDetail>> };
 type Phase = "intro" | "questions" | "submitting" | "error" | "done";
+type MultiKey = "retyping" | "channels" | "tools" | "aiWhere" | "limits";
 
 interface Contact {
   name: string;
@@ -41,7 +37,6 @@ interface Contact {
 
 interface Step {
   id: string;
-  part: "Your business" | "Your team's time" | "About you";
   title: string;
   description: string;
   /** Single-choice steps move on as soon as an answer is picked. */
@@ -60,46 +55,56 @@ interface Stored {
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const areaLabel = Object.fromEntries(areaOptions.map((o) => [o.value, o.label])) as Record<Area, string>;
-
-function buildSteps(areas: readonly Area[] | undefined): Step[] {
-  const business: Step[] = [
-    { id: "role", part: "Your business", title: "What's your role?", description: "So we know who we're talking to.", autoAdvance: true },
-    { id: "teamSize", part: "Your business", title: "How big is the team?", description: "Everyone who works in the business, you included.", autoAdvance: true },
-    { id: "direction", part: "Your business", title: "What does the next 12 months look like?", description: "Pick the one that matters most.", autoAdvance: true },
-    { id: "blockers", part: "Your business", title: "What's holding growth back?", description: "Pick up to two." },
-    { id: "doubled", part: "Your business", title: "If enquiries doubled next month, what happens?", description: "Be honest. This is the question that tells us the most.", autoAdvance: true },
-    { id: "enquiryVolume", part: "Your business", title: "Roughly how many new enquiries a month?", description: "Calls, emails, forms and messages together.", autoAdvance: true },
-    { id: "replySpeed", part: "Your business", title: "How quickly does a new enquiry usually get a reply?", description: "On a normal week, not your best one.", autoAdvance: true },
-    { id: "areas", part: "Your team's time", title: "Which of these take up your team's week?", description: "Tick everything that eats real time." },
+function buildSteps(pack: Pack, answers: Draft): Step[] {
+  const p = packs[pack];
+  const taskLabel = new Map(p.tasks.map((t) => [t.value, t.label]));
+  return [
+    { id: "scaleLive", title: p.scaleLive.title, description: "A rough answer is fine.", autoAdvance: true },
+    { id: "scaleSize", title: p.scaleSize.title, description: p.scaleSize.description, autoAdvance: true },
+    {
+      id: "tasks",
+      title: "Which of these does your team do by hand, again and again?",
+      description: "Tick everything that's repetitive and done manually.",
+    },
+    ...(answers.tasks ?? []).map((task) => ({
+      id: `detail:${task}`,
+      title: taskLabel.get(task) ?? task,
+      description: "Who does it, how often, and how long it takes. Roughly is fine.",
+    })),
+    { id: "retyping", title: "Where does your team type the same information twice?", description: "Tick all that apply." },
+    { id: "channels", title: "Where do decisions and updates actually happen?", description: "Tick all that apply." },
+    { id: "crm", title: "Do you use a CRM to keep track of clients and new work?", description: "Pick the closest.", autoAdvance: true },
+    { id: "tools", title: "Which of these do you use day to day?", description: "Tick all that apply." },
+    { id: "aiUse", title: "Are you using AI in the business today?", description: "Pick the closest.", autoAdvance: true },
+    ...(answers.aiUse && answers.aiUse !== "none"
+      ? [{ id: "aiWhere", title: "Where are you using it?", description: "Tick all that apply." }]
+      : []),
+    { id: "limits", title: "Is there anything AI should never do in your business?", description: "Pick any that apply." },
+    {
+      id: "goneTomorrow",
+      title: "If one of these disappeared tomorrow, which would you pick?",
+      description: "Just one.",
+      autoAdvance: true,
+    },
+    { id: "wastesTime", title: "In your own words, what wastes the most time?", description: "Optional. A sentence is plenty." },
+    { id: "contact", title: "Last thing: who are we talking to?", description: "So we can prepare for our conversation." },
   ];
-  const details: Step[] = (areas ?? []).map((area) => ({
-    id: `detail:${area}`,
-    part: "Your team's time",
-    title: areaLabel[area],
-    description: "A rough answer is fine. We only need the shape of it.",
-  }));
-  const rest: Step[] = [
-    { id: "systems", part: "Your team's time", title: "Where does your information live?", description: "Tick everything you use day to day." },
-    { id: "oneThing", part: "Your team's time", title: "If AI could take one thing off your plate tomorrow, what would it be?", description: "Optional. A sentence is plenty." },
-    { id: "contact", part: "About you", title: "Where should we send it?", description: "We'll use your answers to prepare for our conversation." },
-  ];
-  return [...business, ...details, ...rest];
 }
 
 function isStepAnswered(step: Step, answers: Draft, contact: Contact, consent: boolean) {
   if (step.id.startsWith("detail:")) {
-    const detail = answers.areaDetails?.[step.id.slice(7) as Area];
-    return Boolean(detail?.people && detail?.hours && detail?.doer);
+    const d = answers.taskDetails?.[step.id.slice(7)];
+    return Boolean(d?.people && d?.who && d?.frequency && d?.duration);
   }
   switch (step.id) {
-    case "blockers":
-      return (answers.blockers?.length ?? 0) > 0;
-    case "areas":
-      return (answers.areas?.length ?? 0) > 0;
-    case "systems":
-      return (answers.systems?.length ?? 0) > 0;
-    case "oneThing":
+    case "tasks":
+    case "retyping":
+    case "channels":
+    case "tools":
+    case "aiWhere":
+    case "limits":
+      return ((answers[step.id] as string[] | undefined)?.length ?? 0) > 0;
+    case "wastesTime":
       return true;
     case "contact":
       return contactSchema.safeParse(contact).success && consent;
@@ -131,11 +136,12 @@ function writeStored(inviteCode: string | null, stored: Stored) {
   }
 }
 
-function toggle<T extends string>(list: readonly T[] | undefined, value: T, max?: number): T[] {
+/** Toggle a value in a multi-select. "none" clears the rest, and anything else clears "none". */
+function toggle(list: readonly string[] | undefined, value: string): string[] {
   const current = [...(list ?? [])];
   if (current.includes(value)) return current.filter((item) => item !== value);
-  if (max !== undefined && current.length >= max) return current;
-  return [...current, value];
+  if (value === "none") return ["none"];
+  return [...current.filter((item) => item !== "none"), value];
 }
 
 interface AuditClientProps {
@@ -146,10 +152,12 @@ interface AuditClientProps {
 }
 
 export default function AuditClient({ auditId: freshAuditId, inviteCode, invite, discoveryUrl }: AuditClientProps) {
+  const pack: Pack = invite?.pack ?? "general";
+  const p = packs[pack];
   const prefersReducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<Phase>("intro");
   const [auditId, setAuditId] = useState(freshAuditId);
-  const [answers, setAnswers] = useState<Draft>({ areaDetails: {} });
+  const [answers, setAnswers] = useState<Draft>({ taskDetails: {} });
   const [contact, setContact] = useState<Contact>({
     name: invite?.contactName ?? "",
     email: invite?.contactEmail ?? "",
@@ -163,7 +171,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
   const hydrated = useRef(false);
   const advancing = useRef(false);
 
-  const steps = useMemo(() => buildSteps(answers.areas), [answers.areas]);
+  const steps = useMemo(() => buildSteps(pack, answers), [pack, answers]);
   const step = steps[Math.min(stepIndex, steps.length - 1)];
 
   // Resume an unfinished audit from this browser.
@@ -171,7 +179,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
     const stored = readStored(inviteCode);
     if (stored) {
       setAuditId(stored.auditId);
-      setAnswers({ areaDetails: {}, ...stored.answers });
+      setAnswers({ taskDetails: {}, ...stored.answers });
       setContact((current) => ({
         name: stored.contact.name || current.name,
         email: stored.contact.email || current.email,
@@ -180,7 +188,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
       setConsent(stored.consent);
       if (stored.done) setPhase("done");
       else if (stored.stepId) {
-        const index = buildSteps(stored.answers.areas).findIndex((s) => s.id === stored.stepId);
+        const index = buildSteps(pack, stored.answers).findIndex((s) => s.id === stored.stepId);
         if (index > 0) {
           setStepIndex(index);
           setResumable(true);
@@ -188,7 +196,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
       }
     }
     hydrated.current = true;
-  }, [inviteCode]);
+  }, [inviteCode, pack]);
 
   useEffect(() => {
     if (!hydrated.current) return;
@@ -213,10 +221,9 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
   }
 
   function goNext(nextAnswers: Draft = answers) {
-    const currentSteps = buildSteps(nextAnswers.areas);
+    const currentSteps = buildSteps(pack, nextAnswers);
     const current = currentSteps[stepIndex];
-    if (!current) return;
-    if (!isStepAnswered(current, nextAnswers, contact, consent)) return;
+    if (!current || !isStepAnswered(current, nextAnswers, contact, consent)) return;
     if (current.id === "contact") {
       void submit();
       return;
@@ -230,8 +237,9 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
     else setStepIndex(stepIndex - 1);
   }
 
-  function choose<K extends keyof AuditAnswers>(key: K, value: AuditAnswers[K]) {
-    const next = { ...answers, [key]: value };
+  function choose(key: keyof Draft, value: string) {
+    const next = { ...answers, [key]: value } as Draft;
+    if (key === "aiUse" && value === "none") delete next.aiWhere;
     setAnswers(next);
     if (step?.autoAdvance && !advancing.current) {
       advancing.current = true;
@@ -242,18 +250,25 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
     }
   }
 
-  function setAreas(areas: Area[]) {
-    const areaDetails = Object.fromEntries(
-      Object.entries(answers.areaDetails ?? {}).filter(([area]) => areas.includes(area as Area))
-    ) as Draft["areaDetails"];
-    setAnswers({ ...answers, areas, areaDetails });
+  function toggleIn(key: MultiKey, value: string) {
+    setAnswers({ ...answers, [key]: toggle(answers[key], value) });
   }
 
-  function setDetail(area: Area, patch: Partial<AreaDetail>) {
-    const existing = answers.areaDetails?.[area] ?? {};
+  function setTasks(tasks: string[]) {
+    const taskDetails = Object.fromEntries(Object.entries(answers.taskDetails ?? {}).filter(([t]) => tasks.includes(t)));
     setAnswers({
       ...answers,
-      areaDetails: { ...answers.areaDetails, [area]: { ...existing, ...patch } as AreaDetail },
+      tasks,
+      taskDetails,
+      goneTomorrow: answers.goneTomorrow && tasks.includes(answers.goneTomorrow) ? answers.goneTomorrow : undefined,
+      aiWhere: answers.aiWhere?.filter((t) => t === "other" || tasks.includes(t)),
+    });
+  }
+
+  function setDetail(task: string, patch: Partial<TaskDetail>) {
+    setAnswers({
+      ...answers,
+      taskDetails: { ...answers.taskDetails, [task]: { ...answers.taskDetails?.[task], ...patch } },
     });
   }
 
@@ -277,7 +292,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
           action: "complete",
           auditId,
           inviteCode,
-          answers: { ...answers, oneThing: answers.oneThing?.trim() || undefined },
+          answers: { ...answers, wastesTime: answers.wastesTime?.trim() || undefined },
           contact: parsedContact.data,
           consent: true,
           lastStep: "contact",
@@ -292,7 +307,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
     }
   }
 
-  // Enter continues on multi-select steps.
+  // Enter continues on steps with a Continue button.
   useEffect(() => {
     if (phase !== "questions") return;
     function onKey(event: KeyboardEvent) {
@@ -307,57 +322,67 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
 
   const enter = prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 };
   const transition = { duration: prefersReducedMotion ? 0 : 0.6, ease: EASE };
+  const chosenTasks = p.tasks.filter((t) => answers.tasks?.includes(t.value));
+
+  function multi(name: MultiKey, options: ReadonlyArray<AuditOption<string>>, legend: string) {
+    return (
+      <EdenOptionGroup name={name} legend={legend} options={options} value={answers[name]} multiple
+        onChange={(v) => toggleIn(name, v)} />
+    );
+  }
 
   function renderStep(): ReactNode {
     if (!step) return null;
     if (step.id.startsWith("detail:")) {
-      const area = step.id.slice(7) as Area;
-      const detail = answers.areaDetails?.[area];
+      const task = step.id.slice(7);
+      const d = answers.taskDetails?.[task];
       return (
-        <div className="space-y-8">
-          <PillRow legend="How many people do it?" options={peopleOptions} value={detail?.people} onChange={(people) => setDetail(area, { people })} />
-          <PillRow legend="Hours each, per week?" options={hoursOptions} value={detail?.hours} onChange={(hours) => setDetail(area, { hours })} />
-          <PillRow legend="Who mostly does it?" options={doerOptions} value={detail?.doer} onChange={(doer) => setDetail(area, { doer })} />
+        <div className="space-y-7">
+          <PillRow legend="Who mostly does it?" options={p.roles} value={d?.who} onChange={(who) => setDetail(task, { who })} />
+          <PillRow legend="How many people?" options={peopleOptions} value={d?.people} onChange={(people) => setDetail(task, { people })} />
+          <PillRow legend="How often?" options={frequencyOptions} value={d?.frequency} onChange={(frequency) => setDetail(task, { frequency })} />
+          <PillRow legend="How long each time?" options={durationOptions} value={d?.duration} onChange={(duration) => setDetail(task, { duration })} />
         </div>
       );
     }
     switch (step.id) {
-      case "role":
-        return <EdenOptionGroup name="role" legend={step.title} options={roleOptions} value={answers.role} onChange={(v) => choose("role", v)} columns={1} />;
-      case "teamSize":
-        return <EdenOptionGroup name="teamSize" legend={step.title} options={teamSizeOptions} value={answers.teamSize} onChange={(v) => choose("teamSize", v)} />;
-      case "direction":
-        return <EdenOptionGroup name="direction" legend={step.title} options={directionOptions} value={answers.direction} onChange={(v) => choose("direction", v)} />;
-      case "blockers":
+      case "scaleLive":
+        return <EdenOptionGroup name="scaleLive" legend={step.title} options={p.scaleLive.options} value={answers.scaleLive} onChange={(v) => choose("scaleLive", v)} />;
+      case "scaleSize":
+        return <EdenOptionGroup name="scaleSize" legend={step.title} options={p.scaleSize.options} value={answers.scaleSize} onChange={(v) => choose("scaleSize", v)} />;
+      case "tasks":
         return (
-          <EdenOptionGroup name="blockers" legend={step.title} options={blockerOptions} value={answers.blockers} multiple maxSelections={2}
-            onChange={(v) => setAnswers({ ...answers, blockers: toggle(answers.blockers, v, 2) })} />
+          <EdenOptionGroup name="tasks" legend={step.title} options={p.tasks} value={answers.tasks} multiple
+            onChange={(v) => setTasks(toggle(answers.tasks, v))} />
         );
-      case "doubled":
-        return <EdenOptionGroup name="doubled" legend={step.title} options={doubledOptions} value={answers.doubled} onChange={(v) => choose("doubled", v)} />;
-      case "enquiryVolume":
-        return <EdenOptionGroup name="enquiryVolume" legend={step.title} options={enquiryVolumeOptions} value={answers.enquiryVolume} onChange={(v) => choose("enquiryVolume", v)} />;
-      case "replySpeed":
-        return <EdenOptionGroup name="replySpeed" legend={step.title} options={replySpeedOptions} value={answers.replySpeed} onChange={(v) => choose("replySpeed", v)} />;
-      case "areas":
+      case "retyping":
+        return multi("retyping", p.retyping, step.title);
+      case "channels":
+        return multi("channels", channelOptions, step.title);
+      case "crm":
+        return <EdenOptionGroup name="crm" legend={step.title} options={crmOptions} value={answers.crm} onChange={(v) => choose("crm", v)} />;
+      case "tools":
+        return multi("tools", p.tools, step.title);
+      case "aiUse":
+        return <EdenOptionGroup name="aiUse" legend={step.title} options={aiUseOptions} value={answers.aiUse} onChange={(v) => choose("aiUse", v)} />;
+      case "aiWhere":
+        return multi("aiWhere", [...chosenTasks, { value: "other", label: "Somewhere else" }], step.title);
+      case "limits":
+        return multi("limits", limitOptions, step.title);
+      case "goneTomorrow":
         return (
-          <EdenOptionGroup name="areas" legend={step.title} options={areaOptions} value={answers.areas} multiple
-            onChange={(v) => setAreas(toggle(answers.areas, v))} />
+          <EdenOptionGroup name="goneTomorrow" legend={step.title} options={chosenTasks} value={answers.goneTomorrow}
+            onChange={(v) => choose("goneTomorrow", v)} columns={1} />
         );
-      case "systems":
-        return (
-          <EdenOptionGroup name="systems" legend={step.title} options={systemOptions} value={answers.systems} multiple
-            onChange={(v) => setAnswers({ ...answers, systems: toggle(answers.systems, v) })} />
-        );
-      case "oneThing":
+      case "wastesTime":
         return (
           <div>
-            <label htmlFor="oneThing" className="sr-only">{step.title}</label>
-            <textarea id="oneThing" rows={4} maxLength={600} value={answers.oneThing ?? ""}
-              onChange={(e) => setAnswers({ ...answers, oneThing: e.target.value })}
-              placeholder="Chasing unpaid invoices every Friday afternoon."
+            <label htmlFor="wastesTime" className="sr-only">{step.title}</label>
+            <textarea id="wastesTime" rows={4} maxLength={600} value={answers.wastesTime ?? ""}
+              onChange={(e) => setAnswers({ ...answers, wastesTime: e.target.value })}
+              placeholder={pack === "construction" ? "Rebuilding the same client report every Friday from WhatsApp photos." : "Re-typing every new enquiry into three different places."}
               className="w-full rounded-xl border border-ghost/[0.1] bg-surface/80 px-4 py-4 font-sans text-[15px] text-ghost placeholder:text-ghost-dim focus:border-cyan/40 focus:outline-none focus:ring-2 focus:ring-cyan/20" />
-            <p className="mt-2 text-right font-mono text-[10px] text-ghost-dim">{(answers.oneThing ?? "").length} / 600</p>
+            <p className="mt-2 text-right font-mono text-[10px] text-ghost-dim">{(answers.wastesTime ?? "").length} / 600</p>
           </div>
         );
       case "contact":
@@ -395,17 +420,17 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
               {invite ? `Prepared for ${invite.company}` : "AI Growth Audit"}
             </p>
             <h1 className="mt-5 font-heading text-[34px] font-bold uppercase leading-[0.98] text-white sm:text-[48px] lg:text-[60px]">
-              Where can AI take your business next?
+              Where does your team&apos;s time go?
             </h1>
             <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-ghost-muted sm:text-lg">
-              A few quick questions about where the business is heading and where your team&apos;s week goes.
-              We use your answers to arrive with a plan built around your business.
+              A few quick questions about the repetitive work in your week: what it is, who does it and how often.
+              We use your answers to come to our conversation with a plan for your business.
             </p>
-            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ghost-dim">About 3 minutes · mostly taps</p>
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ghost-dim">About 5 minutes · mostly taps</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <button type="button" onClick={() => setPhase("questions")}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97]">
-                {resumable ? "Carry on where you left off" : "Start the audit"} <ArrowRight size={15} aria-hidden="true" />
+                {resumable ? "Carry on where you left off" : "Start"} <ArrowRight size={15} aria-hidden="true" />
               </button>
               {resumable && (
                 <button type="button" onClick={() => { setStepIndex(0); setResumable(false); setPhase("questions"); }}
@@ -421,7 +446,9 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
           <div>
             <div aria-live="polite">
               <div className="mb-3 flex items-end justify-between gap-4">
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan">{step.part}</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan">
+                  {invite ? invite.company : "AI Growth Audit"}
+                </p>
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ghost-dim">{progress}%</p>
               </div>
               <div role="progressbar" aria-label="Audit progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}
@@ -451,7 +478,7 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
                 {!step.autoAdvance && (
                   <button type="button" onClick={() => goNext()} disabled={!answered}
                     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan px-7 py-3 font-heading text-xs font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40">
-                    {step.id === "contact" ? "Finish" : step.id === "oneThing" && !answers.oneThing?.trim() ? "Skip" : "Continue"}
+                    {step.id === "contact" ? "Finish" : step.id === "wastesTime" && !answers.wastesTime?.trim() ? "Skip" : "Continue"}
                     <ArrowRight size={15} aria-hidden="true" />
                   </button>
                 )}
@@ -487,71 +514,47 @@ export default function AuditClient({ auditId: freshAuditId, inviteCode, invite,
           </motion.div>
         )}
 
-        {phase === "done" && <Result answers={answers} invited={Boolean(invite)} discoveryUrl={discoveryUrl} enter={enter} transition={transition} />}
+        {phase === "done" && (
+          <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={transition} className="pt-4 md:pt-10">
+            <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan">
+              <Check size={14} aria-hidden="true" /> Received
+            </p>
+            <h1 className="mt-5 font-heading text-[30px] font-bold uppercase leading-[1] text-white sm:text-[44px]">
+              Thank you. Here&apos;s what we&apos;ll look at.
+            </h1>
+            <ul className="mt-10 space-y-3">
+              {chosenTasks.map((task) => {
+                const top = task.value === answers.goneTomorrow;
+                return (
+                  <li key={task.value}
+                    className={cn(
+                      "flex items-start gap-3 rounded-xl border px-5 py-4 font-sans text-[15px]",
+                      top ? "border-cyan/40 bg-cyan/[0.06] text-ghost" : "border-ghost/[0.08] bg-surface/70 text-ghost-muted"
+                    )}>
+                    <Check size={16} className={cn("mt-0.5 flex-none", top ? "text-cyan" : "text-ghost-dim")} aria-hidden="true" />
+                    <span>
+                      {task.label}
+                      {top && <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.16em] text-cyan">First</span>}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-10 max-w-xl font-sans text-base leading-relaxed text-ghost-muted">
+              {invite
+                ? "We'll bring a plan for these to our meeting: what we'd build, and what it takes off your team."
+                : "We'll come back to you with a plan for these: what we'd build, and what it takes off your team."}
+            </p>
+            {!invite && (
+              <a href={discoveryUrl}
+                className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all hover:brightness-110 hover:shadow-glow-sm">
+                Book a call <ArrowRight size={15} aria-hidden="true" />
+              </a>
+            )}
+          </motion.div>
+        )}
       </div>
     </section>
-  );
-}
-
-function Result({
-  answers,
-  invited,
-  discoveryUrl,
-  enter,
-  transition,
-}: {
-  answers: Draft;
-  invited: boolean;
-  discoveryUrl: string;
-  enter: { opacity: number; y: number };
-  transition: { duration: number; ease: typeof EASE };
-}) {
-  const lever =
-    answers.blockers && answers.doubled && answers.replySpeed
-      ? leverCopy[growthLever({ blockers: answers.blockers, doubled: answers.doubled, replySpeed: answers.replySpeed })]
-      : null;
-  const range = answers.areas ? weeklyHoursRange({ areas: answers.areas, areaDetails: answers.areaDetails ?? {} }) : null;
-
-  return (
-    <motion.div initial={enter} animate={{ opacity: 1, y: 0 }} transition={transition} className="pt-4 md:pt-10">
-      <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan">
-        <Check size={14} aria-hidden="true" /> Audit received
-      </p>
-      <h1 className="mt-5 font-heading text-[30px] font-bold uppercase leading-[1] text-white sm:text-[44px]">
-        Here&apos;s what stands out
-      </h1>
-      <div className="mt-10 grid gap-4 md:grid-cols-2">
-        {lever && (
-          <div className="rounded-2xl border border-cyan/20 bg-cyan/[0.04] p-6">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">Your biggest lever</p>
-            <p className="mt-3 font-heading text-xl font-semibold uppercase leading-tight text-ghost">{lever.headline}</p>
-            <p className="mt-3 font-sans text-sm leading-relaxed text-ghost-muted">{lever.body}</p>
-          </div>
-        )}
-        {range && (
-          <div className="rounded-2xl border border-ghost/[0.08] bg-surface/70 p-6">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-muted">Your team&apos;s time</p>
-            <p className="mt-3 font-heading text-3xl font-bold text-ghost">
-              {range.low}–{range.high} <span className="text-base font-semibold uppercase text-ghost-muted">hours a week</span>
-            </p>
-            <p className="mt-3 font-sans text-sm leading-relaxed text-ghost-muted">
-              From your answers, that&apos;s roughly how much of the week goes on work our system can take on.
-            </p>
-          </div>
-        )}
-      </div>
-      <p className="mt-10 max-w-xl font-sans text-base leading-relaxed text-ghost-muted">
-        {invited
-          ? "We'll bring the full plan to our meeting: what we'd build, what it takes off your team, and what it's worth to the business."
-          : "We'll come back to you with a plan: what we'd build, what it takes off your team, and what it's worth to the business."}
-      </p>
-      {!invited && (
-        <a href={discoveryUrl}
-          className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all hover:brightness-110 hover:shadow-glow-sm">
-          Book a call <ArrowRight size={15} aria-hidden="true" />
-        </a>
-      )}
-    </motion.div>
   );
 }
 
@@ -563,7 +566,7 @@ function PillRow<T extends string>({
 }: {
   legend: string;
   options: ReadonlyArray<AuditOption<T>>;
-  value: T | undefined;
+  value: string | undefined;
   onChange: (value: T) => void;
 }) {
   return (
