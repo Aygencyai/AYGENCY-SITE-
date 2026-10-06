@@ -46,12 +46,31 @@ bounded launch assessment, not a claim that the entire audit is clean.
 - Dependencies: Phase 1; live account journeys require owner sign-in and completed email configuration.
 - Exit criteria: isolated tests pass; actual owner journey remains distinct from mocks; each production variable has a verified owning service and purpose. Existing unrelated production variables are preserved.
 
+Browser qualification: 21 existing mocked tests pass on an isolated localhost
+server, covering 1440, 1024, 768 and 375 pixel widths, pending/recovered replies,
+sign-out races, expired sessions, connection handoff/return, wrong-account
+recovery and invalid callbacks. Original test source was copied to a temporary
+runner only to give screenshots a dated private destination; no existing
+historical screenshot was overwritten. Mobile connection screenshot inspected.
+The four unmocked cookie tests and real two-account Ava journey remain pending
+live service/email configuration. These passes do not establish real sign-in,
+provider consent or useful Ava replies.
+
 Required website settings: EDEN_WEB_ONBOARDING_ENABLED, EDEN_WEB_SERVICE_URL,
 EDEN_WEB_SERVICE_KEY, EDEN_CUSTOMER_CONNECTIONS_ENABLED,
 EDEN_CONNECTION_SERVICE_URL, EDEN_CONNECTION_WEBSITE_KEY,
 EDEN_ACCOUNT_SERVICE_URL. Service URLs must be HTTPS origins, without path,
 query, fragment or embedded credentials. Backend web keys must be at least 32
 characters and stay server-side. Never enable EDEN_WEB_ALLOW_LOCAL in production.
+
+Private production candidate prepared at
+~/.eden-web-local/launch-production-candidate-20261006.json (mode 0600), with
+six existing Ava/connection settings only. Both ingress-key hashes match the
+currently operated services, and both HTTPS health endpoints return 200. The
+checkout is locally bound to the existing aygency-site Vercel project. No setting
+has been applied. Account-service HTTPS origin and email settings remain
+unresolved; do not substitute the connection origin without checking routing.
+Phase 2 remains partial until those inputs and the real owner journey qualify.
 
 Email settings: RESEND_API_KEY, EDEN_NOTIFICATION_EMAIL,
 EDEN_NOTIFICATION_FROM and CONTACT_EMAIL. Supabase Auth SMTP belongs on its
