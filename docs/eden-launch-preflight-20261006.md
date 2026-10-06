@@ -92,6 +92,34 @@ owning backend, not automatically in this website environment.
 - Dependencies: explicit owner website go-ahead, backend qualification, email setup, pool stock, privacy notice and owner sign-ins as required by the canonical launch plan.
 - Exit criteria: every customer link works outside an authenticated Vercel session, and the owner completes the full fresh-customer journey. A green local build is not launch acceptance.
 
+Owner approval update, 6 Oct: the owner requested getting Eden live, with a newly
+created template Eden inheriting the tested runtime and default capabilities.
+Publication approval is now recorded; do not ask for it again. Complete the
+remaining qualification, email, pool-stock and fresh-customer requirements before
+publishing. Browser control remains paused at the owner's separate request.
+
+### Owner scope clarification: launch intake now
+
+The owner clarified that a third live test Eden is not required before publishing
+Ava and collecting onboarding leads in the Eden CRM. Proceed with the public
+conversation/lead-capture launch. A dedicated Telegram bot and DeepSeek key are
+supplied during customer fulfilment; empty provisioning stock is not an intake
+blocker. Existing customer confirmations promise team review/contact, not an
+immediate active bot. Browser control remains paused.
+
+Current sign-in is password-based with scoped account creation, so the unfinished
+Resend/SMTP work does not block this entry path. Founder email alerts are optional
+and currently skipped; durable confirmation/CRM state remains the operational
+record. Do not describe email notifications, a new live customer, or unresolved
+Tester 2 behaviours as qualified by this narrower launch.
+
+Release action: preserve current main 5715209, merge this verified candidate via
+a feature-branch PR, add only the six privately staged Ava/connection production
+settings, deploy the merged main revision with Vercel CLI, then check public pages
+and unauthenticated entry responses. Owner account sign-in and a real conversation
+remain an owner browser check; never type credentials or work around an approval
+rejection on a server-side model turn.
+
 ## Advisory sources
 
 - [Tinypool worker option advisory](https://github.com/advisories/GHSA-85c8-ppgw-ccpr): development test dependency; a prior prototype-pollution primitive and affected worker options are required. Upgrade the owning test runner rather than force an incompatible pool version.
