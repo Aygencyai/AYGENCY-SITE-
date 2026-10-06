@@ -56,10 +56,10 @@ The four unmocked cookie tests and real two-account Ava journey remain pending
 live service/email configuration. These passes do not establish real sign-in,
 provider consent or useful Ava replies.
 
-Required website settings: EDEN_WEB_ONBOARDING_ENABLED, EDEN_WEB_SERVICE_URL,
+Current-flow website settings: EDEN_WEB_ONBOARDING_ENABLED, EDEN_WEB_SERVICE_URL,
 EDEN_WEB_SERVICE_KEY, EDEN_CUSTOMER_CONNECTIONS_ENABLED,
-EDEN_CONNECTION_SERVICE_URL, EDEN_CONNECTION_WEBSITE_KEY,
-EDEN_ACCOUNT_SERVICE_URL. Service URLs must be HTTPS origins, without path,
+EDEN_CONNECTION_SERVICE_URL and EDEN_CONNECTION_WEBSITE_KEY.
+EDEN_ACCOUNT_SERVICE_URL belongs only to the legacy /eden/connect route. Service URLs must be HTTPS origins, without path,
 query, fragment or embedded credentials. Backend web keys must be at least 32
 characters and stay server-side. Never enable EDEN_WEB_ALLOW_LOCAL in production.
 
@@ -68,8 +68,16 @@ Private production candidate prepared at
 six existing Ava/connection settings only. Both ingress-key hashes match the
 currently operated services, and both HTTPS health endpoints return 200. The
 checkout is locally bound to the existing aygency-site Vercel project. No setting
-has been applied. Account-service HTTPS origin and email settings remain
-unresolved; do not substitute the connection origin without checking routing.
+has been applied. Read-only control inventory confirms account and invitation are STOPPED and
+explicitly disabled, with no account.json. The historical account path is not a
+currently configured service. Current app consent uses /eden/connections; the
+website legacy /eden/connect route still expects an account origin. Keep that
+route unqualified and outside the current launch path. Product tests explicitly
+require the direct Builder bundle to work without legacy account/webhook/email
+services; current connection link generators target /eden/connections, and the
+Ava UI has no account-route reference. The fresh-customer rehearsal must confirm
+that no old link is issued. Do not reactivate legacy services or substitute the
+connection origin just to fill this variable.
 Phase 2 remains partial until those inputs and the real owner journey qualify.
 
 Email settings: RESEND_API_KEY, EDEN_NOTIFICATION_EMAIL,
