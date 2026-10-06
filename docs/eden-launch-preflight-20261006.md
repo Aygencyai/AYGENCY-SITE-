@@ -18,10 +18,25 @@ eden-launch-readiness-plan-20261005.md.
 ## Phase 1: resolve dependency release findings
 
 - Goal: remove available affected dependencies without changing customer behavior.
-- Scope: package.json and pnpm-lock.yaml; Vitest upgrade removing its affected worker dependency; patched brace-expansion and source-map-js resolutions; document any advisory lacking a published patch and its reachable input boundary.
+- Scope: package.json, pnpm-lock.yaml and one notification test helper type annotation required by Vitest 4; Vitest upgrade removing its affected worker dependency; patched brace-expansion and source-map-js resolutions; document any advisory lacking a published patch and its reachable input boundary.
 - Deliverables: locked dependency update and advisory assessment.
 - Dependencies: Phase 0 baseline and publisher advisory/package metadata.
 - Exit criteria: tests, lint, TypeScript and production build pass; no unresolved applicable high or critical finding. Run audit again after the update. No blind major override of a dependency API.
+
+Phase 1 result: Vitest 4.1.11, patched brace-expansion versions and source-map-js
+1.2.2 are locked. 139 tests pass, one opt-in integration test is skipped; lint,
+TypeScript and the 38-page production build pass with both Eden flags enabled.
+The test helper now accepts the actual notification callback signature instead
+of Vitest's widened generic mock type; customer behavior is unchanged.
+
+Audit after repair: zero critical, one high, three moderate and one low. The
+remaining high is unpatched braces 3.0.3, reached by development-only Tailwind
+and ESLint globbing. Their patterns are repository configuration, not customer
+request input. No braces path appears in any production NFT dependency trace.
+This finding remains recorded and requires reassessment if build patterns accept
+untrusted input. Production audit has zero high/critical and two moderate
+findings (uuid buffer bounds and fflate malformed ZIP64 parsing). This is a
+bounded launch assessment, not a claim that the entire audit is clean.
 
 ## Phase 2: qualify customer pages and prepare settings
 
