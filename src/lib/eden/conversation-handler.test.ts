@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { createConversationHandler } from "./conversation-handler";
+import type { OnboardingLead } from "./onboarding-lead-notification";
 
 const view = { revision: 1, messages: [], facts: [], summary: "", ready: false,
   authenticated: true, email_verified: true, email: "customer@example.test", pending: false, confirmed: false, created: false,
@@ -139,7 +140,7 @@ describe("founder alert on a completed onboarding", () => {
   const confirmed = { ...view, confirmed: true, revision: 7,
     summary: "Eden will chase supplier lead times and draft client proposals." };
 
-  function withNotifier(result: object, notify: ReturnType<typeof vi.fn>) {
+  function withNotifier(result: object, notify: (lead: OnboardingLead) => Promise<unknown>) {
     const upstream = vi.fn<typeof fetch>(async (_url, options) => new Response(JSON.stringify(result), {
       headers: { "x-eden-session": new Headers(options?.headers).get("x-eden-session") ?? "" },
     }));
