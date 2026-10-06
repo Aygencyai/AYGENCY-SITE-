@@ -120,6 +120,21 @@ and unauthenticated entry responses. Owner account sign-in and a real conversati
 remain an owner browser check; never type credentials or work around an approval
 rejection on a server-side model turn.
 
+Publication result, 6 Oct 13:03 London: PR #10 merged as bd0f19c and
+design/migration-v2 fast-forwarded to match. Six verified Ava/connection variables
+were added to production. Vercel deployment dpl_3Ly7XJ2WXhy9uaYQHQErrnXTwMU2 is
+READY. The first cached build failed in next/font's Google loader; rebuilding
+without cache passed with unchanged source, fonts and layout. No code workaround.
+The previous deployment dpl_DsnK61EPCEaiRLPNM8Zqc9P9v8wM is retained as rollback.
+
+Cookie-less public GETs to /, /design-your-eden, /eden/connections, /audit and /trust
+return 200 after the normal www redirect. Conversation open returns 200 with
+authenticated false, Secure HttpOnly session cookie and no-store. No credentials,
+model turn or customer confirmation submitted. Owner public conversation and CRM
+read-back remain unqualified. The control broker's public link origin now uses
+aygency.ai and passed configuration/restart/health checks. Private receipts are
+in ~/.eden-web-local/evidence/site-preflight-20261006/.
+
 ## Advisory sources
 
 - [Tinypool worker option advisory](https://github.com/advisories/GHSA-85c8-ppgw-ccpr): development test dependency; a prior prototype-pollution primitive and affected worker options are required. Upgrade the owning test runner rather than force an incompatible pool version.
