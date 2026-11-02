@@ -8,6 +8,7 @@ import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import GlassCard from "@/components/ui/GlassCard";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Faq from "@/components/ui/Faq";
 import type { UseCase } from "@/types";
 
 export default function UseCaseDetailClient({
@@ -172,6 +173,8 @@ export default function UseCaseDetailClient({
           </div>
         </SectionContainer>
       </section>
+
+      <Faq items={useCase.faqs} />
 
       {/* E. CTA */}
       <section className="bg-void section-padding">

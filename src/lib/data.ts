@@ -41,6 +41,28 @@ export const services: Service[] = [
     ctaHeading: "Every manual process is a cost you’ve stopped noticing",
     ctaBody:
       "30 minutes. We’ll find the work that’s quietly bleeding time and money, and show you what a system would do about it.",
+    faqs: [
+      {
+        q: "What back-office work can AI agents take over?",
+        a: "The repetitive admin that slows a business down and stops it scaling: document processing and data entry, invoice processing and reconciliation, inventory monitoring, reporting, and scheduling. If people do the same thing over and over, it is usually a good candidate.",
+      },
+      {
+        q: "How is this different from a simple automation tool?",
+        a: "Automation follows fixed steps and breaks or quietly goes wrong when the input changes. An agent system reads the situation, handles the exceptions, and pulls in a person when something genuinely needs one.",
+      },
+      {
+        q: "Do we have to change how we work?",
+        a: "No. We design the agents around the way your business already runs and connect them to the systems you already use, so your team keeps working the way it does today.",
+      },
+      {
+        q: "How do the agents know how our business works?",
+        a: "We start by learning your real workflows and pain points, then design each agent to do its part the way an employee would, but faster and to a better standard.",
+      },
+      {
+        q: "How do you find where the savings are?",
+        a: "We start by mapping the process the way it actually runs, including the handoffs and workarounds nobody mentions. That shows where the cost really lives and which agents to build first.",
+      },
+    ],
   },
   {
     slug: "revenue-operations",
@@ -83,6 +105,24 @@ export const services: Service[] = [
       "What would your revenue look like if your pipeline never stopped moving?",
     ctaBody:
       "30 minutes. We’ll look at how you sell today and show you where an agent system would outwork it.",
+    faqs: [
+      {
+        q: "What does a revenue operations system do?",
+        a: "It runs the work that brings revenue in: prospecting and enrichment, outreach across email, LinkedIn, and calls, lead qualification, pipeline management and follow-up, and campaign management.",
+      },
+      {
+        q: "Will the outreach sound like us?",
+        a: "Yes. Outreach agents write in your voice, read the replies, and pass your team the warm conversations.",
+      },
+      {
+        q: "Do we still need salespeople?",
+        a: "Your people stay on the conversations and deals that matter. The agents take on the prospecting, follow-ups, and pipeline admin that usually slip when the team is busy.",
+      },
+      {
+        q: "Do we have to change how our sales team works?",
+        a: "No. The agents plug into the platforms you already use and fit around how your team sells today.",
+      },
+    ],
   },
   {
     slug: "intelligence",
@@ -125,6 +165,24 @@ export const services: Service[] = [
       "What would you do if you could see your entire operation in real time?",
     ctaBody:
       "30 minutes. We’ll look at your data and show you what an intelligence system would surface.",
+    faqs: [
+      {
+        q: "What is the CEO Agent?",
+        a: "A dedicated agent that sits above every other agent, reads across the whole operation, and tells you what is working, what is breaking, and what to do next. It is included in every system we build.",
+      },
+      {
+        q: "What data does an intelligence system use?",
+        a: "The data you already have across sales, marketing, operations, and finance. We connect those sources so the system can spot patterns and anomalies no single team can see.",
+      },
+      {
+        q: "Is this just another dashboard?",
+        a: "No. It includes real-time dashboards and alerts, but the point is recommendations. Over time it learns what matters to you, flags less noise, and surfaces the signals that move the needle.",
+      },
+      {
+        q: "Where does our data go?",
+        a: "It stays in your environment. Your data never trains external models and is handled to UK GDPR standards.",
+      },
+    ],
   },
   {
     slug: "full-department",
@@ -165,6 +223,28 @@ export const services: Service[] = [
     ctaHeading: "You know that department you’ve been meaning to build?",
     ctaBody:
       "30 minutes. We’ll look at the function you’re trying to scale and show you what a system to run it would look like.",
+    faqs: [
+      {
+        q: "Which departments can be run by agents?",
+        a: "Marketing, operations, customer support, and back-office work such as finance processing, HR admin, and compliance. Any function that depends on a team doing repeatable, structured work is a candidate.",
+      },
+      {
+        q: "Who stays in control?",
+        a: "You do. Agents do the work, edge cases escalate, and high-impact actions come to a person for approval before they happen, so you stay in control from one place.",
+      },
+      {
+        q: "Can we add more agents later?",
+        a: "Yes. We start with the agents that remove your biggest bottlenecks, then add more as your business grows and new work comes into view.",
+      },
+      {
+        q: "Do you build the whole department at once?",
+        a: "No. We build and deploy in phases: core agents first, then more as the system proves itself on live work.",
+      },
+      {
+        q: "What happens after it goes live?",
+        a: "We keep operating it. We monitor, tune, and catch edge cases every month, and the system takes on more of the work as it learns.",
+      },
+    ],
   },
 ];
 
@@ -210,6 +290,20 @@ export const useCases: UseCase[] = [
     ctaHeading: "Pipeline only when someone finds the time?",
     ctaBody:
       "Tell us about your desk and we’ll map the outbound engine that would keep it full. You keep the plan whether you build it with us or not.",
+    faqs: [
+      {
+        q: "Can AI agents run outbound for a recruitment agency?",
+        a: "Yes. A Lead Gen agent watches for signals that a company is about to hire and finds the decision-maker, and an Outreach agent approaches them in the partners' voice across email and LinkedIn.",
+      },
+      {
+        q: "Will it replace our consultants?",
+        a: "No. It keeps the pipeline moving so the partners can stay on billing. The team gets the warm conversations, not a list to work through.",
+      },
+      {
+        q: "How quickly can it be running?",
+        a: "Live within weeks, and sharper every month as it learns which messages, sectors, and triggers convert.",
+      },
+    ],
   },
   {
     slug: "estate-agency-growth",
@@ -252,6 +346,20 @@ export const useCases: UseCase[] = [
     ctaHeading: "Growing only as fast as you win instructions?",
     ctaBody:
       "Tell us your patch and we’ll map the engine that wins you more sellers and stops the buyers leaking. You keep the plan whether you build it with us or not.",
+    faqs: [
+      {
+        q: "How can AI agents help an estate agency win more instructions?",
+        a: "By watching for seller signals, such as homes withdrawn or expired with another agent, owners selling privately, and landlords getting out, then nurturing those sellers in the agency's voice.",
+      },
+      {
+        q: "Can it answer buyer enquiries quickly?",
+        a: "Yes, with Front-Desk added. Every inbound enquiry gets answered and booked the moment it lands, so portal buyers are not lost to a slow callback.",
+      },
+      {
+        q: "Do we keep the plan if we do not go ahead?",
+        a: "Yes. We map the engine for your patch, and you keep the plan whether you build it with us or not.",
+      },
+    ],
   },
   {
     slug: "membership-operations",
@@ -294,6 +402,20 @@ export const useCases: UseCase[] = [
     ctaHeading: "Admin growing faster than the team?",
     ctaBody:
       "Tell us how your community runs today and we’ll map the system that would operate it. You keep the plan whether you build it with us or not.",
+    faqs: [
+      {
+        q: "What can agents handle for a membership community?",
+        a: "Member questions on any channel, renewals, event logistics, the waitlist, and new-member onboarding, end to end.",
+      },
+      {
+        q: "What happens with questions that need a person?",
+        a: "Front-Desk answers the everyday questions instantly and only escalates what genuinely needs someone on the team.",
+      },
+      {
+        q: "Can it spot members who are about to leave?",
+        a: "Yes. An Analyst agent tracks engagement and churn risk and flags who is about to lapse while there is still time to act.",
+      },
+    ],
   },
   {
     slug: "professional-services-backoffice",
@@ -331,6 +453,20 @@ export const useCases: UseCase[] = [
     ctaHeading: "Paying fee-earners to do admin?",
     ctaBody:
       "Tell us where the manual work piles up and we’ll map the system that would absorb it, and what it would save you. You keep the plan whether you build it with us or not.",
+    faqs: [
+      {
+        q: "What back-office work can agents take on at an accountancy or advisory firm?",
+        a: "Client onboarding, document chasing, approvals, syncing data between tools, invoice follow-up, reconciliation, and the reports partners used to build by hand.",
+      },
+      {
+        q: "Is client data safe?",
+        a: "Every system runs inside your own infrastructure. Your data never trains external models, it is handled to UK GDPR standards, and high-impact actions route to a person first.",
+      },
+      {
+        q: "Do we need to hire someone to manage it?",
+        a: "No. We operate the system for you, and it is designed to absorb the admin so the next back-office hire can be deferred or avoided.",
+      },
+    ],
   },
 ];
 
