@@ -70,6 +70,20 @@ const jsonLd = {
         addressLocality: "Borehamwood",
         addressCountry: "GB",
       },
+      founder: { "@type": "Person", name: "Louis Rosenberg" },
+      areaServed: { "@type": "Country", name: "GB" },
+      knowsAbout: [
+        "AI agents",
+        "AI agent systems",
+        "AI automation",
+        "Business process automation",
+        "Revenue operations",
+        "Lead generation",
+        "Customer support automation",
+        "Business intelligence",
+      ],
+      // Companies House listing for AYGENCY LTD (17139454, Borehamwood).
+      sameAs: ["https://find-and-update.company-information.service.gov.uk/company/17139454"],
     },
     {
       "@type": "WebSite",

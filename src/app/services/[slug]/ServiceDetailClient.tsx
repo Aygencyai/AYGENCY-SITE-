@@ -6,6 +6,7 @@ import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import GlassCard from "@/components/ui/GlassCard";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Faq from "@/components/ui/Faq";
 import type { Service } from "@/types";
 
 const numberMap: Record<string, string> = {
@@ -90,6 +91,8 @@ export default function ServiceDetailClient({
           </div>
         </SectionContainer>
       </section>
+
+      <Faq items={service.faqs} />
 
       {/* D. CTA */}
       <section className="bg-void section-padding">
