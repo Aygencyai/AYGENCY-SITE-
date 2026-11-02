@@ -5,11 +5,12 @@ export const metadata: Metadata = {
   title: "Our Services | Aygency",
   description:
     "Custom agent systems built around your problem. Cost reduction, revenue operations, intelligence, and full department systems.",
+  alternates: { canonical: "/services" },
   openGraph: {
     title: "Our Services | Aygency",
     description:
       "Custom agent systems built around your problem. Cost reduction, revenue operations, intelligence, and full department systems.",
-    url: "https://aygency.ai/services",
+    url: "/services",
   },
   twitter: {
     card: "summary_large_image",

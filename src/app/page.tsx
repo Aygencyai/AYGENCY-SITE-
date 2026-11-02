@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import SystemTeaser from "@/components/home/SystemTeaser";
@@ -11,6 +12,11 @@ import Compounding from "@/components/home/Compounding";
 import DataSecurity from "@/components/home/DataSecurity";
 import CTABanner from "@/components/home/CTABanner";
 import PageTransition from "@/components/ui/PageTransition";
+
+// Canonical lives here, not in the root layout, so other pages never inherit "/".
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (

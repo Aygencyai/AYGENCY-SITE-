@@ -7,10 +7,11 @@ const description =
 export const metadata: Metadata = {
   title: "The Brain | Aygency",
   description,
+  alternates: { canonical: "/brain" },
   openGraph: {
     title: "The Brain | Aygency",
     description,
-    url: "https://aygency.ai/brain",
+    url: "/brain",
   },
   twitter: {
     card: "summary_large_image",

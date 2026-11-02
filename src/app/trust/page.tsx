@@ -7,10 +7,11 @@ const description =
 export const metadata: Metadata = {
   title: "Trust & Security | Aygency",
   description,
+  alternates: { canonical: "/trust" },
   openGraph: {
     title: "Trust & Security | Aygency",
     description,
-    url: "https://aygency.ai/trust",
+    url: "/trust",
   },
   twitter: {
     card: "summary_large_image",

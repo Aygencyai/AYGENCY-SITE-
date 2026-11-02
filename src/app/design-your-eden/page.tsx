@@ -10,11 +10,12 @@ export const metadata: Metadata = {
   title: "Eden: Your AI Personal Assistant | Aygency",
   description:
     "Meet Eden, your dedicated AI personal assistant. She handles recurring work, prepares decisions, and keeps your working life connected.",
+  alternates: { canonical: "/design-your-eden" },
   openGraph: {
     title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:
       "Meet the dedicated AI personal assistant that handles recurring work and adapts to how you operate.",
-    url: "https://aygency.ai/design-your-eden",
+    url: "/design-your-eden",
   },
   twitter: {
     card: "summary_large_image",

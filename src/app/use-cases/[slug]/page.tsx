@@ -19,10 +19,11 @@ export async function generateMetadata({
   return {
     title: `${useCase.title} | Aygency`,
     description: useCase.subtext,
+    alternates: { canonical: `/use-cases/${slug}` },
     openGraph: {
       title: `${useCase.title} | Aygency`,
       description: useCase.subtext,
-      url: `https://aygency.ai/use-cases/${slug}`,
+      url: `/use-cases/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,

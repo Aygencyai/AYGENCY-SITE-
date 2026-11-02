@@ -3,6 +3,7 @@ import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/ui/MotionProvider";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -27,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aygency.ai"),
+  metadataBase: new URL(SITE_URL),
   title: "Aygency | AI Agent Systems That Run Your Business Operations",
   description:
     "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     description:
       "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
     type: "website",
-    url: "https://aygency.ai",
+    url: "/",
     siteName: "Aygency",
   },
   twitter: {
@@ -49,6 +50,35 @@ export const metadata: Metadata = {
     icon: "/icon.png",
     apple: "/apple-icon.png",
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Aygency",
+      legalName: "AYGENCY LTD",
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.png`,
+      email: "build@aygency.ai",
+      description:
+        "Aygency designs, builds, deploys, and operates AI agent systems that run business operations and compound in value over time.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Borehamwood",
+        addressCountry: "GB",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "Aygency",
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -64,21 +94,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-void text-ghost-muted">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "Aygency",
-              url: "https://aygency.ai",
-              description:
-                "Aygency designs, builds, deploys, and operates AI agent systems that run business operations and compound in value over time.",
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "London",
-                addressCountry: "GB",
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
           href="#main-content"

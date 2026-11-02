@@ -6,11 +6,12 @@ export const metadata: Metadata = {
   title: "Contact | Aygency",
   description:
     "Get in touch with Aygency. Tell us what's slowing your operation down and we'll show you where agent systems would make the biggest impact.",
+  alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact | Aygency",
     description:
       "Get in touch with Aygency. Tell us what's slowing your operation down and we'll show you where agent systems would make the biggest impact.",
-    url: "https://aygency.ai/contact",
+    url: "/contact",
   },
   twitter: {
     card: "summary_large_image",

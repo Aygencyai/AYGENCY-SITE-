@@ -19,10 +19,11 @@ export async function generateMetadata({
   return {
     title: `${service.title} | Aygency`,
     description: service.longDescription,
+    alternates: { canonical: `/services/${slug}` },
     openGraph: {
       title: `${service.title} | Aygency`,
       description: service.longDescription,
-      url: `https://aygency.ai/services/${slug}`,
+      url: `/services/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,
