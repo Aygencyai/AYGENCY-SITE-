@@ -1,3 +1,4 @@
+import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { insightPosts } from "@/lib/insights";
@@ -60,6 +61,7 @@ export default async function InsightPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
+      <BreadcrumbJsonLd trail={[["Insights", "/insights"], [post.title, `/insights/${slug}`]]} />
       <InsightPostClient post={post} />
     </PageTransition>
   );

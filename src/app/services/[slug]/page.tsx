@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { services } from "@/lib/data";
 import ServiceDetailClient from "./ServiceDetailClient";
 import PageTransition from "@/components/ui/PageTransition";
+import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -44,6 +45,7 @@ export default async function ServiceDetailPage({
 
   return (
     <PageTransition>
+      <BreadcrumbJsonLd trail={[["Services", "/services"], [service.title, `/services/${service.slug}`]]} />
       <ServiceDetailClient service={service} />
     </PageTransition>
   );
