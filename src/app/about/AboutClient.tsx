@@ -21,19 +21,96 @@ export default function AboutClient() {
             </p>
           </Reveal>
           <h1 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6">
-            <TypewriterText text={"We build it. Then we run it."} delay={300} speed={40} />
+            <TypewriterText text={"We clear the way for businesses to scale."} delay={300} speed={40} />
           </h1>
           <Reveal delay={0.1}>
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-              Aygency is an AI automation agency. We design, build, and run agent systems
-              that take over the work a business would otherwise do by hand, and that get
-              sharper the longer they run.
+              Aygency builds AI agents that take on the work slowing a business down. We
+              learn how you run, build agents around it, and keep improving them. You stay
+              in control, and the business grows further than you thought it could.
             </p>
           </Reveal>
         </SectionContainer>
       </section>
 
-      {/* From the founders */}
+      {/* Why we exist */}
+      <section className="blend-surface section-padding">
+        <SectionContainer>
+          <div className="max-w-3xl">
+            <Reveal>
+              <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
+                {`// why we exist`}
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
+                Good businesses get stuck on the wrong work
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
+                Most businesses don&rsquo;t stall for lack of ideas or demand. They stall
+                because the admin grows with every new client. Invoices, documents,
+                follow-ups and reports pile up, and the only answer has been to hire.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
+                We started Aygency to remove those bottlenecks. Clear the back office
+                first, then put agents to work bringing in new business. Growth stops
+                waiting on headcount.
+              </p>
+            </Reveal>
+          </div>
+        </SectionContainer>
+      </section>
+
+      {/* How we work */}
+      <section className="blend-void section-padding">
+        <SectionContainer>
+          <div className="max-w-3xl">
+            <Reveal>
+              <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
+                {`// how we work`}
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
+                Built around your business, not the other way round
+              </h2>
+            </Reveal>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-10">
+            {[
+              {
+                title: "We learn the business",
+                body: "We sit with you and your team to understand the real workflows, the handoffs, and where time quietly disappears.",
+              },
+              {
+                title: "We build agents around it",
+                body: "Each agent works like a dedicated employee, only faster and to a higher standard. It fits the way you already work, using the tools you already have.",
+              },
+              {
+                title: "You stay in control",
+                body: "Everything runs through one command centre. Agents act, and anything high-impact comes to you for approval first.",
+              },
+              {
+                title: "We keep improving it",
+                body: "We don’t hand it over and walk away. We run the system, tune it, and add agents as the business grows.",
+              },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={0.05 * i}>
+                <div>
+                  <h3 className="font-heading text-xl font-semibold text-white">{item.title}</h3>
+                  <p className="font-sans text-ghost-muted leading-relaxed mt-3">{item.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </SectionContainer>
+      </section>
+
+      {/* The founders */}
       <section className="blend-surface section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
@@ -44,18 +121,15 @@ export default function AboutClient() {
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
-                A word from the founders
+                Who&rsquo;s behind Aygency
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                Over a year ago, the two of us first sat down to argue about where AI was
-                really heading. We kept circling the same idea from opposite directions.
-                Then the infrastructure for genuinely autonomous agents arrived, we finally
-                had the conversation that mattered, and Erik quit his job that same day.
-                Aygency has been the whole focus since. Most days have run long, a fair few
-                of them past fourteen hours, because getting the foundations right is the
-                part that matters most.
+                Louis and Erik spent over a year debating where AI was really heading. When
+                the technology for reliable, autonomous agents arrived, they stopped talking
+                and started building. Erik handed in his notice the same day. Aygency has
+                had their full focus ever since.
               </p>
             </Reveal>
           </div>
@@ -63,25 +137,17 @@ export default function AboutClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-12">
             <Reveal delay={0.1}>
               <div>
-                <h3 className="font-heading text-xl font-semibold text-white">Louis</h3>
+                <h3 className="font-heading text-xl font-semibold text-white">Louis Rosenberg</h3>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cyan mt-1">
-                  Co-founder
+                  Co-founder and CEO
                 </p>
                 <p className="font-sans text-ghost-muted leading-relaxed mt-4">
-                  I grew up surrounded by it. My father and both my brothers run their own
-                  businesses, so a houseful of entrepreneurs was just normal. I went to
-                  Haberdashers&rsquo; Aske&rsquo;s, one of the country&rsquo;s most academic
-                  schools, where most of my year was set on Oxford, Cambridge and the rest of
-                  the Russell Group. I took a different leap and went straight into the
-                  markets, trading AI and crypto and watching a genuine revolution play out in
-                  real time. The more obsessed I got, the more I saw the same problem back in
-                  my family&rsquo;s businesses: sharp people losing whole days to work a
-                  machine should have been doing. The intelligence moving the markets could
-                  take that weight off a business entirely, and once I saw it the opportunity
-                  was impossible to ignore. I think in openings and a few moves ahead, probably
-                  the chess habit showing, and Aygency is that instinct pointed at businesses:
-                  find the move that quietly changes the whole board. AI completely
-                  transformed my life. I want to help it transform yours, too.
+                  Louis grew up in a family of business owners. His father and both his
+                  brothers run their own companies. He went from Haberdashers&rsquo;
+                  Aske&rsquo;s straight into the markets, trading AI and crypto, and kept
+                  seeing the same thing at home: sharp people losing whole days to work a
+                  machine should do. Aygency is his answer to that. He leads strategy, client
+                  work and how each system is designed.
                 </p>
               </div>
             </Reveal>
@@ -89,22 +155,13 @@ export default function AboutClient() {
               <div>
                 <h3 className="font-heading text-xl font-semibold text-white">Erik</h3>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cyan mt-1">
-                  Co-founder
+                  Co-founder and CTO
                 </p>
                 <p className="font-sans text-ghost-muted leading-relaxed mt-4">
-                  My background is aerospace engineering, a field where approximately right
-                  is not a thing. That is exactly how I treat an agent system: every part has
-                  one job, and every part has to hold under load. AI took over my interest
-                  completely, and after that first conversation with Louis I handed in my
-                  notice that same day. We are both perfectionists, and both a little too fond
-                  of chess, which turns out to be the right kind of obsession for this. You
-                  read the whole board, you protect what matters, and you keep improving the
-                  position long after the game looks won. That is how we build, and how we
-                  run what we build. AI shouldn&rsquo;t just hand you a pasta recipe. Used
-                  properly it takes the weight off your life, clears the obstacles out of
-                  your business, and accelerates everything you set out to do. That is the
-                  part I want to play: helping people step into this new world of AI, and the
-                  freedom that comes with it.
+                  Erik trained in aerospace engineering, where &ldquo;roughly right&rdquo;
+                  isn&rsquo;t good enough. He builds agent systems the same way: every part
+                  has one job, and every part has to hold under load. He leads the technical
+                  build and the platform every Aygency system runs on.
                 </p>
               </div>
             </Reveal>
@@ -112,101 +169,51 @@ export default function AboutClient() {
 
           <Reveal delay={0.2}>
             <p className="font-sans text-ghost text-lg leading-relaxed mt-12 max-w-3xl">
-              Between us, that is the whole philosophy: build it properly, and never stop
-              improving it.
+              Both are perfectionists, and both a little too fond of chess. Read the whole
+              board, protect what matters, and keep improving the position. That&rsquo;s
+              how we build.
             </p>
           </Reveal>
         </SectionContainer>
       </section>
 
-      {/* The compounding effect */}
+      {/* What we stand for */}
       <section className="blend-void section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
+              <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
+                {`// what we stand for`}
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
               <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
-                Built once. Compounding forever.
+                Three things we won&rsquo;t compromise on
               </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                Almost everything a business spends money on is worth the most the day it
-                arrives, and a little less every day after. People, software, equipment,
-                all of it. Agent systems run the other way.
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                Day one, the system runs the workflow. By month three it runs it better
-                than any person could. By month six it&rsquo;s surfacing opportunities no
-                one asked it to find. The cost you pay stays flat while the thing you own
-                keeps getting more valuable.
-              </p>
             </Reveal>
           </div>
-        </SectionContainer>
-      </section>
-
-      {/* Stewardship, not the cause */}
-      <section className="blend-surface section-padding">
-        <SectionContainer>
-          <div className="max-w-3xl">
-            <Reveal>
-              <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
-                We don&rsquo;t ship it and walk away.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                The compounding is the system&rsquo;s own doing. It learns from how your
-                business runs and gets sharper without being asked. What it needs from us
-                is stewardship. We keep it safe, keep it honest, and keep tuning it as the
-                business changes around it.
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                So we don&rsquo;t hand it over and move on. We run it for as long as you
-                do. That&rsquo;s why a system we build keeps earning its place instead of
-                quietly going stale, and it&rsquo;s why we price and contract the way we
-                do.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                We prove it on ourselves. The agents behind Aygency&rsquo;s own outreach,
-                research, and reporting are the same ones we&rsquo;d build for you. We use
-                what we sell.
-              </p>
-            </Reveal>
-          </div>
-        </SectionContainer>
-      </section>
-
-      {/* Why we exist */}
-      <section className="blend-void section-padding">
-        <SectionContainer>
-          <div className="max-w-3xl">
-            <Reveal>
-              <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
-                Why we exist
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="font-sans text-ghost-muted text-lg mt-6 leading-relaxed">
-                Every business has work that should run itself, and a list of things it
-                would do if it could afford to hire for them. The old answer was to
-                recruit a department, wait half a year, and hope it worked out. We think
-                that&rsquo;s the wrong trade.
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p className="font-sans text-ghost-muted text-lg mt-5 leading-relaxed">
-                We built Aygency to give a business the capability of a department without
-                the department. Shaped around how it actually works, running around the
-                clock, and looked after by us.
-              </p>
-            </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-10">
+            {[
+              {
+                title: "Privacy first",
+                body: "Your data stays in your environment and never trains external models. It is handled to UK GDPR standards.",
+              },
+              {
+                title: "A human signs off",
+                body: "Agents do the work. High-impact actions wait for a person to approve them, and every system can be paused or rolled back.",
+              },
+              {
+                title: "Built to last",
+                body: "A system should get better every month, not go stale. So we stay on to run it, and it keeps learning how your business works.",
+              },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={0.05 * i}>
+                <div>
+                  <h3 className="font-heading text-xl font-semibold text-white">{item.title}</h3>
+                  <p className="font-sans text-ghost-muted leading-relaxed mt-3">{item.body}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </SectionContainer>
       </section>
@@ -228,8 +235,8 @@ export default function AboutClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                30 minutes. We&rsquo;ll show you where agents would hit hardest in your
-                operation, and you keep the plan either way.
+                30 minutes. We&rsquo;ll find the bottlenecks holding you back and show you
+                what agents would take off your plate. You keep the plan either way.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

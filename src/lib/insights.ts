@@ -1,6 +1,10 @@
+import type { Faq } from "@/types";
+import { answerPosts } from "@/lib/answers";
+
 export interface InsightSection {
   heading?: string;
   paragraphs: string[];
+  links?: { href: string; label: string }[];
 }
 
 export interface InsightPost {
@@ -10,9 +14,10 @@ export interface InsightPost {
   date: string;
   readTime: string;
   content: InsightSection[];
+  faqs?: Faq[];
 }
 
-export const insightPosts: InsightPost[] = [
+const articlePosts: InsightPost[] = [
   {
     slug: "automation-vs-agent-systems",
     title: "Automation runs a task. Agent systems run an operation.",
@@ -92,3 +97,6 @@ export const insightPosts: InsightPost[] = [
     ],
   },
 ];
+
+// Newest first: answer pages, then the original articles.
+export const insightPosts: InsightPost[] = [...answerPosts, ...articlePosts];

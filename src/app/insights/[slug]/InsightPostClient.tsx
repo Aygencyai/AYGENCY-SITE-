@@ -6,6 +6,7 @@ import SectionContainer from "@/components/ui/SectionContainer";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Faq from "@/components/ui/Faq";
 import type { InsightPost } from "@/lib/insights";
 
 export default function InsightPostClient({ post }: { post: InsightPost }) {
@@ -66,12 +67,31 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
                       {paragraph}
                     </p>
                   ))}
+                  {section.links && (
+                    <div className="flex flex-wrap gap-x-8 gap-y-3">
+                      {section.links.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className="group inline-flex items-center gap-2 text-cyan font-sans font-medium"
+                        >
+                          <span>{link.label}</span>
+                          <ArrowRight
+                            size={16}
+                            className="transition-transform duration-300 group-hover:translate-x-1"
+                          />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </Reveal>
             ))}
           </article>
         </SectionContainer>
       </section>
+
+      <Faq items={post.faqs} />
 
       {/* CTA */}
       <section className="blend-surface section-padding">
