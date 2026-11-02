@@ -3,10 +3,16 @@
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LetterBlocks from "./LetterBlocks";
 
-function Scene({ isMobile }: { isMobile: boolean }) {
+// Mounts once everything above it in the scene has loaded.
+function Ready({ onReady }: { onReady?: () => void }) {
+  useEffect(() => onReady?.(), [onReady]);
+  return null;
+}
+
+function Scene({ onReady }: { onReady?: () => void }) {
   return (
     <>
       <ambientLight intensity={0.3} />
@@ -17,36 +23,26 @@ function Scene({ isMobile }: { isMobile: boolean }) {
       <Environment preset="city" />
 
       <LetterBlocks />
+      <Ready onReady={onReady} />
 
-      {!isMobile && (
-        <EffectComposer>
-          <Bloom
-            luminanceThreshold={0.6}
-            luminanceSmoothing={0.9}
-            intensity={0.8}
-          />
-        </EffectComposer>
-      )}
+      <EffectComposer>
+        <Bloom luminanceThreshold={0.6} luminanceSmoothing={0.9} intensity={0.8} />
+      </EffectComposer>
     </>
   );
 }
 
-export default function LetterScene() {
-  const [isMobile, setIsMobile] = useState(true);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
+// Desktop only. LetterSceneLoader shows a static poster everywhere else.
+export default function LetterScene({ onReady }: { onReady?: () => void }) {
   return (
-    <div className="w-full h-full min-h-[280px] sm:min-h-[350px]">
+    <div className="w-full h-full">
       <Canvas
-        camera={{ position: [0, 0, isMobile ? 14 : 12], fov: 40 }}
+        camera={{ position: [0, 0, 12], fov: 40 }}
         gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-        dpr={isMobile ? [1, 1.5] : [1, 2]}
+        dpr={[1, 2]}
         style={{ background: "transparent" }}
       >
-        <Scene isMobile={isMobile} />
+        <Scene onReady={onReady} />
       </Canvas>
     </div>
   );
