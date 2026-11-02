@@ -21,22 +21,22 @@ const pillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Search,
     title: "Ask it anything, get it right",
-    body: "Every process, policy, decision, and quirk of how your business runs, held in one place an AI can search in an instant. Your team asks in plain language and gets the right answer, not a guess. Onboarding, handovers, the endless how do we usually do this, all answered in seconds.",
+    body: "Every process, policy, decision, and quirk of how your business runs, held in one place an AI can search in an instant. Your team asks in plain language and gets the right answer. Onboarding, handovers, the endless how do we usually do this, all answered in seconds.",
   },
   {
     icon: RefreshCw,
     title: "It keeps itself current",
-    body: "A knowledge base goes stale the moment people stop maintaining it. This one doesn’t. We keep it up to date, and so do the agents: every system you run writes back what it learns, so the Brain always reflects how the business works today, not how it worked last year.",
+    body: "We keep it up to date, and so do the agents. Every system you run writes back what it learns, so the Brain always reflects how the business works today.",
   },
   {
     icon: TrendingUp,
     title: "It compounds for years",
-    body: "The longer it runs, the more it holds. What is a handy reference this year is irreplaceable in five, and in twenty it is the entire memory of how your business was built. Knowledge that used to leave with people now stays, and the value only moves one way.",
+    body: "The longer it runs, the more it holds. What is a handy reference this year is irreplaceable in five, and in twenty it is the entire memory of how your business was built. Knowledge stays in the business as it grows, and the value only moves one way.",
   },
   {
     icon: Download,
     title: "It’s yours, and it travels",
-    body: "This is your asset, not ours. It is built around your business, and you keep it. Even if you ever moved on from us, you would walk away years ahead, holding a brain no competitor can buy and no new hire has to rebuild.",
+    body: "This is your asset. It is built around your business, and you keep it. Wherever the business goes next, you hold a brain that took years to build and that every new hire can learn from on day one.",
   },
 ];
 
@@ -70,9 +70,8 @@ export default function BrainClient() {
             <Reveal>
               <p className="font-sans text-ghost-muted text-lg leading-[1.7]">
                 Every business runs on knowledge that lives in people&rsquo;s heads and
-                scattered across documents nobody can find. When someone leaves, it leaves
-                with them. When you need an answer fast, it takes an afternoon and three
-                phone calls.
+                across a spread of documents. As the business grows, finding the right
+                answer takes longer, and every new hire has to learn it all again.
               </p>
             </Reveal>
             <Reveal delay={0.05}>

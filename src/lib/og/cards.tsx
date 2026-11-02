@@ -34,7 +34,7 @@ export function SiteCard() {
           <div style={{ fontFamily: "Space Grotesk", fontWeight: 700, fontSize: 96, color: c.white, marginTop: 20, letterSpacing: "0.02em" }}>
             AYGENCY
           </div>
-          <div style={{ fontSize: 38, color: c.ghostMuted, marginTop: 20, maxWidth: 600 }}>Built once, compounding forever.</div>
+          <div style={{ fontSize: 38, color: c.ghostMuted, marginTop: 20, maxWidth: 600 }}>AI agents that clear the way to scale.</div>
         </div>
         <Mark height={300} />
       </div>

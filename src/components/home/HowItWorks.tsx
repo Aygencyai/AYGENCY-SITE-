@@ -5,33 +5,33 @@ import { motion, useInView } from "framer-motion";
 const steps = [
   {
     number: "01",
-    title: "Prescribe",
+    title: "Learn",
     description:
-      "It starts with a call. We learn how your operation actually runs, then prescribe the agents that fit it.",
+      "We go into your business and learn how it really runs: the workflows, the handoffs and the exact points where things slow down.",
   },
   {
     number: "02",
-    title: "Tailor",
+    title: "Design",
     description:
-      "We tailor each specialist to how you work, shaping its skills to the exact jobs you need it doing: the leads it chases, the reports it produces, the conversations it handles. Every agent is shaped around your operation.",
+      "We design agents around those workflows. Each one has a clear job and works like a dedicated employee, only faster and to a higher standard.",
   },
   {
     number: "03",
     title: "Build",
     description:
-      "We build every agent and wire it into your live tools and data. You watch the system come together, piece by piece.",
+      "We build every agent and connect it to the tools and data you already use. You see the system come together, piece by piece.",
   },
   {
     number: "04",
-    title: "Deploy",
+    title: "Slot in",
     description:
-      "It goes live in your business, on real data, doing real work. You start seeing results inside the first few weeks.",
+      "It goes live inside the way you already work, so the day-to-day carries on as normal. You approve anything high-impact from one command centre.",
   },
   {
     number: "05",
-    title: "Compound",
+    title: "Improve",
     description:
-      "From there we operate it. It sharpens itself every cycle, we keep it tuned, and it’s worth more to you every month it runs.",
+      "From there we operate it for as long as you run it. It sharpens every cycle, we keep tuning it, and we add agents as the business grows.",
   },
 ];
 
@@ -60,8 +60,8 @@ export default function HowItWorks() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl"
         >
-          From the first call to a system that runs your operation on its own, here is the
-          path we take you down. Five steps, and we carry the build the whole way.
+          From the first call to agents working inside your business, here is the path.
+          Five steps, and we carry the work the whole way.
         </motion.p>
 
         {/* Desktop: horizontal layout */}

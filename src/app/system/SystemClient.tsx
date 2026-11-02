@@ -20,7 +20,7 @@ import TypewriterText from "@/components/effects/TypewriterText";
 import GlowOrb from "@/components/effects/GlowOrb";
 import AnimatedGrid from "@/components/effects/AnimatedGrid";
 import MagneticButton from "@/components/ui/MagneticButton";
-import { agents, tiers } from "@/lib/data";
+import { agents, tiers, inclusions } from "@/lib/data";
 import type { Agent } from "@/types";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -81,8 +81,9 @@ export default function SystemClient() {
           </h1>
           <Reveal delay={0.1}>
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-              A coordinated team of AI agents that runs your operation. We prescribe it
-              to your business, tailor it to how you work, and operate it for you.
+              A coordinated team of AI agents that clears the bottlenecks holding your
+              business back. We design it around how you already work, run it from one
+              command centre with you approving what matters, and keep improving it.
             </p>
           </Reveal>
         </SectionContainer>
@@ -139,9 +140,8 @@ export default function SystemClient() {
                 <div className="max-w-2xl">
                   <AgentCard agent={frontDesk} highlight />
                   <p className="font-sans text-sm text-ghost-dim mt-4 leading-relaxed">
-                    Customer-facing and inbound, Front-Desk doesn&rsquo;t depend on
-                    the operation core. It stands alone as its own system, or bolts
-                    onto any other.
+                    Customer-facing and inbound, Front-Desk works on its own as a
+                    complete system, or bolts onto any other.
                   </p>
                 </div>
               </Reveal>
@@ -161,8 +161,8 @@ export default function SystemClient() {
           <Reveal delay={0.1}>
             <p className="font-sans text-ghost-muted text-lg max-w-2xl mt-4 leading-relaxed">
               Every system starts with the CEO Agent and the specialists that fit.
-              Most start with a few and grow. There&rsquo;s no fixed package.
-              You run as much system as your operation needs.
+              Most start with a few and add agents as the business grows, so you run
+              exactly as much system as you need.
             </p>
           </Reveal>
 
@@ -190,28 +190,37 @@ export default function SystemClient() {
 
           <Reveal delay={0.1}>
             <p className="font-sans text-ghost-dim text-sm mt-8">
-              Pricing is tailored to your operation. We give you the number on the
-              call, with no gate and no guesswork.
+              Every system is scoped to your business. We set out exactly what it
+              includes on the call.
             </p>
           </Reveal>
         </SectionContainer>
       </section>
 
-      {/* We prescribe. You don't architect. */}
+      {/* What every system includes */}
       <section className="blend-void section-padding">
         <SectionContainer>
           <div className="max-w-3xl">
             <Reveal>
               <h2 className="font-heading text-2xl md:text-3xl text-ghost uppercase font-semibold">
-                We prescribe. You don&rsquo;t architect.
+                What every system includes
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 leading-relaxed">
-                You shouldn&rsquo;t have to design your own AI department. We show you
-                what a business like yours runs, prescribe the agents that fit, and
-                tailor what each one does inside your operation. You decide; we build.
+                We go into your business, learn how it works and design the agents for
+                you. You decide what goes ahead, and we build, run and improve it.
               </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <ul className="mt-6 space-y-3">
+                {inclusions.map((item) => (
+                  <li key={item} className="flex gap-3 font-sans text-ghost-muted leading-relaxed">
+                    <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-cyan flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           </div>
         </SectionContainer>
@@ -229,14 +238,14 @@ export default function SystemClient() {
           <div className="relative z-10 text-center">
             <Reveal>
               <h2 className="font-heading text-2xl md:text-3xl text-white uppercase font-semibold">
-                See exactly what we&rsquo;d build for you
+                See what we&rsquo;d build for your business
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                30 minutes. We&rsquo;ll prescribe the system that fits your operation and
-                show you where it would hit hardest. You keep the plan whether you build
-                it with us or not.
+                30 minutes. We&rsquo;ll find the bottlenecks holding you back and show you
+                the agents that would clear them. You keep the plan whether you build it
+                with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

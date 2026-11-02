@@ -100,7 +100,7 @@ export default function OperationsEngine() {
             transition={{ duration: 0.6 }}
             className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6"
           >
-            {`// operations`}
+            {`// back office first`}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -109,7 +109,7 @@ export default function OperationsEngine() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
           >
-            Reclaim the hours your operation wastes.
+            Clear the back office. Make room to grow.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -118,9 +118,10 @@ export default function OperationsEngine() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            Three agents take the repetitive operation off your team. One runs the work,
-            one keeps the numbers honest, one fields the questions, and together they hand
-            your people their hours back.
+            The back office is where growth usually gets stuck. Three agents take it on,
+            working inside the tools and processes you already use. One runs the admin, one
+            keeps the numbers straight and one fields the questions, so your people can put
+            their time into the work that grows the business.
           </motion.p>
         </div>
 
@@ -143,14 +144,14 @@ export default function OperationsEngine() {
           className="mt-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
         >
           <p className="font-sans text-lg leading-[1.7] text-ghost max-w-2xl">
-            It runs around the clock and absorbs more every month. The admin that used to
-            mean another hire just gets handled, at a fraction of the cost.
+            It runs around the clock and takes on more every month. As the business grows,
+            the work keeps getting handled, and you add agents rather than headcount.
           </p>
           <Link
             href="/services/cost-reduction"
             className="inline-flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:text-cyan-muted whitespace-nowrap"
           >
-            See the cost-reduction system
+            See the back-office system
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

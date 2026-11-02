@@ -541,7 +541,7 @@ export const answerPosts: InsightPost[] = [
       {
         heading: "Once it is live",
         paragraphs: [
-          "Hosting in an environment dedicated to your business. Monitoring, fixing anything that breaks, and handling new edge cases. Changes to live workflows as your business changes. Regular tuning so the system keeps improving. Training for your team and a direct line to us for support. Agents can be added as the business grows.",
+          "Hosting and running the system for you. Monitoring, fixing anything that breaks, and handling new edge cases. Changes to live workflows as your business changes. Regular tuning so the system keeps improving. Training for your team and a direct line to us for support. Agents can be added as the business grows.",
         ],
       },
       {

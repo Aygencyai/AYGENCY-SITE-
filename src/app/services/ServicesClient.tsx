@@ -34,14 +34,14 @@ export default function ServicesClient() {
             </Reveal>
             <h2 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6 whitespace-pre-line">
               <TypewriterText
-                text={"Cut the Cost.\nCapture the Revenue."}
+                text={"Clear the Back Office.\nThen Fill the Pipeline."}
                 delay={300}
                 speed={35}
               />
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                Every system is the same eight-agent system, tailored to the job. These are the four places they land hardest: cut cost, drive revenue, see the whole operation, or run an entire function.
+                Every system draws on the same eight specialist agents, designed around how your business already works. Most start in the back office, then move on to new business, a view across the whole operation, or an entire function.
               </p>
             </Reveal>
           </div>
@@ -124,7 +124,7 @@ export default function ServicesClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                Most clients start with a conversation. Tell us where it hurts and we&rsquo;ll map the system that fits and where it would save you most. You keep the plan whether you build it with us or not.
+                Most clients start with a conversation. Tell us where things slow down and we&rsquo;ll map the system that would clear the way. You keep the plan whether you build it with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

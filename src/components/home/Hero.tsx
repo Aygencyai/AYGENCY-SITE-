@@ -8,8 +8,8 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import LetterSceneLoader from "./LetterSceneLoader";
 
 const headingLines = [
-  ["BUILT", "ONCE,"],
-  ["COMPOUND", "FOREVER"],
+  ["CLEAR", "THE", "WAY."],
+  ["SCALE", "FURTHER."],
 ];
 
 const wordVariants = {
@@ -38,7 +38,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-8"
               >
-                {`// AI agent systems`}
+                {`// AI agents for growing businesses`}
               </motion.p>
 
               <h1 className="font-heading text-[28px] min-[400px]:text-[36px] sm:text-[48px] lg:text-[68px] font-bold uppercase leading-[0.95] text-white">
@@ -69,9 +69,9 @@ export default function Hero() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 1.2 }}
                 >
-                  <p className="font-mono text-lg leading-[1.3] text-cyan whitespace-pre-line">
+                  <p className="font-mono text-lg leading-[1.3] min-h-[2.6em] text-cyan whitespace-pre-line">
                     <TypewriterText
-                      text={"How much could you grow\nif the work ran itself?"}
+                      text={"How far could you scale\nif nothing held you back?"}
                       delay={1800}
                       speed={30}
                     />
@@ -83,9 +83,10 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 2.8, ease: "easeOut" }}
                   className="font-sans text-base font-normal leading-[1.7] text-ghost-muted mt-4"
                 >
-                  We replace the manual work running your operation with agent systems
-                  that work around the clock, never drop a task, and improve the longer
-                  they run.
+                  We build AI agents that take on the back-office work holding your
+                  business back. They slot into the way you already work, do the job
+                  like your best people only faster, and bring anything high-impact to
+                  you to approve.
                 </motion.p>
               </div>
 

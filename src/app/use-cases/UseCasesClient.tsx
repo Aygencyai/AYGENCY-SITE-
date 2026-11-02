@@ -33,7 +33,7 @@ export default function UseCasesClient() {
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                How we&rsquo;d architect an agent system for an operation like yours. Real shapes, drawn from the work across different sectors. Blueprints, not case studies.
+                How we&rsquo;d design an agent system for a business like yours, sector by sector. Each blueprint shows the bottlenecks holding growth back and the agents we&rsquo;d build to clear them.
               </p>
             </Reveal>
           </div>
@@ -110,13 +110,13 @@ export default function UseCasesClient() {
           <div className="relative z-10 text-center">
             <Reveal>
               <h2 className="font-heading text-2xl md:text-3xl text-white uppercase font-semibold">
-                Your Operation Is Different. That&rsquo;s The Point.
+                Every Business Is Different. Yours Gets Its Own.
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                These examples show how we think. Your system would be designed
-                around your specific operation, your data, and your problems.
+                These blueprints show how we think. Your system would be designed
+                around your workflows, your data and your bottlenecks.
                 Book 30 minutes and we&rsquo;ll show you what we&rsquo;d build
                 for you.
               </p>

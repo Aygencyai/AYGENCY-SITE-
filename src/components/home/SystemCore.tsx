@@ -159,7 +159,7 @@ export default function SystemCore() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="blend-surface section-padding relative overflow-hidden">
+    <section className="blend-void section-padding relative overflow-hidden">
       <GlowOrb
         size={500}
         opacity={0.06}
@@ -175,7 +175,7 @@ export default function SystemCore() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            Every System Ships With a CEO and a Brain
+            One Command Centre. You Stay in Control.
           </h2>
         </motion.div>
 
@@ -186,8 +186,8 @@ export default function SystemCore() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          A CEO agent on top, reading across every other agent. A private brain underneath,
-          holding everything your business knows.
+          Your agents act. Anything high-impact comes to you to approve first, all from
+          one place.
         </motion.p>
 
         <div className="mt-14">
@@ -201,9 +201,10 @@ export default function SystemCore() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-base leading-relaxed text-ghost-muted"
           >
-            The CEO Agent catches what no single agent can see and brings it straight to
-            you. The Brain remembers how your business runs, kept current by the agents as
-            they work. You talk to one; everything runs on the other.
+            The CEO Agent reads across every other agent, catches what no single agent can
+            see and brings it straight to you. The Brain underneath holds how your business
+            runs, kept current by the agents as they work. You talk to one, and everything
+            runs on the other.
           </motion.p>
 
           <motion.p
@@ -212,7 +213,7 @@ export default function SystemCore() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-mono text-sm tracking-wide uppercase text-cyan mt-6"
           >
-            Included with every system we build, always.
+            The CEO Agent, the Brain and the command centre come with every system we build.
           </motion.p>
         </div>
       </div>

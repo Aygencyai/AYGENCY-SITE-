@@ -29,22 +29,22 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Aygency | AI Agent Systems That Run Your Business Operations",
+  title: "Aygency | AI Agents That Clear the Way for Your Business to Scale",
   description:
-    "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
+    "We build AI agents that take on the back office and fill the pipeline, slot into how you already work, and keep improving, so your business can scale further.",
   openGraph: {
-    title: "Aygency | AI Agent Systems That Run Your Business Operations",
+    title: "Aygency | AI Agents That Clear the Way for Your Business to Scale",
     description:
-      "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
+      "We build AI agents that take on the back office and fill the pipeline, slot into how you already work, and keep improving, so your business can scale further.",
     type: "website",
     url: "/",
     siteName: "Aygency",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency | AI Agent Systems That Run Your Business Operations",
+    title: "Aygency | AI Agents That Clear the Way for Your Business to Scale",
     description:
-      "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
+      "We build AI agents that take on the back office and fill the pipeline, slot into how you already work, and keep improving, so your business can scale further.",
   },
   icons: {
     icon: "/icon.png",
@@ -64,7 +64,7 @@ const jsonLd = {
       logo: `${SITE_URL}/icon.png`,
       email: "build@aygency.ai",
       description:
-        "Aygency designs, builds, deploys, and operates AI agent systems that run business operations and compound in value over time.",
+        "Aygency designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Borehamwood",

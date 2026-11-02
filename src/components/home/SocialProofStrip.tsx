@@ -42,7 +42,7 @@ export default function SocialProofStrip() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="font-mono text-xs text-ghost-dim mt-7 text-center tracking-[0.18em] uppercase"
       >
-        The Aygency System. Eight specialist agents, composed around your operation.
+        The Aygency System. Specialist agents that slot into how your business already runs.
       </motion.p>
     </section>
   );

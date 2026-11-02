@@ -6,9 +6,9 @@ export const services: Service[] = [
     title: "Cost Reduction Systems",
     shortTitle: "Cost Reduction",
     description:
-      "Agent systems that take over the expensive manual work draining your operation. The cost is fixed. The savings keep stacking up.",
+      "Agents that take on the back-office work holding your business back, so it can scale without adding headcount for every new task.",
     longDescription:
-      "Every business has work that costs too much because it depends on people doing the same repetitive thing over and over. We build agent systems that take those workflows off your plate for good, at a fraction of the cost, running around the clock.",
+      "AI agents that take on your back office: admin, data entry, invoices and reporting. Built around how you already work, so your business can scale further.",
     icon: "cost-reduction",
     useCases: [
       "Document processing, data extraction, and routing at any volume",
@@ -19,7 +19,7 @@ export const services: Service[] = [
       "Invoice processing, reconciliation, and financial data entry",
     ],
     problem:
-      "You already know which jobs are expensive. The stock counted by hand, the report stitched together from five spreadsheets, the same figures keyed into two systems that don’t talk, the invoices worked through one by one. You’ve lived with the cost because the alternative, building software or hiring more people, felt worse. It isn’t anymore.",
+      "Every growing business reaches the point where the back office sets the pace. The stock counted by hand, the report stitched together from five spreadsheets, the same figures keyed into two systems, the invoices worked through one by one. Each new customer adds more of it, so growth means hiring just to keep up. Agents take that work on inside the tools you already use, so the business can keep scaling while your people focus on the work that grows it.",
     approach: [
       {
         title: "Map",
@@ -35,12 +35,12 @@ export const services: Service[] = [
       },
       {
         title: "Compound",
-        desc: "It gets more efficient on its own. It learns your patterns, catches the exceptions faster, and turns up savings you didn’t know were there.",
+        desc: "We keep operating it. It learns your patterns, handles the exceptions faster, and takes on more of the back office as the business grows.",
       },
     ],
-    ctaHeading: "Every manual process is a cost you’ve stopped noticing",
+    ctaHeading: "Find out what your back office could run on its own",
     ctaBody:
-      "30 minutes. We’ll find the work that’s quietly bleeding time and money, and show you what a system would do about it.",
+      "30 minutes. We’ll find the work that slows your business down and show you the agents that would take it on.",
     faqs: [
       {
         q: "What back-office work can AI agents take over?",
@@ -69,9 +69,9 @@ export const services: Service[] = [
     title: "Revenue Operations Systems",
     shortTitle: "Revenue Ops",
     description:
-      "Agent systems that don’t just save money, they go and find it. Pipeline, outreach, qualification, conversion, run by agents that never clock off.",
+      "Once the back office runs itself, agents fill the pipeline. Prospecting, outreach, qualification and follow-up, running every day.",
     longDescription:
-      "Agent systems that find, qualify, and convert revenue across your business. They run the outreach, manage the pipeline, tune the pricing, and scale campaigns without you adding headcount.",
+      "AI agents for lead generation: prospecting, personalised outreach, qualification and pipeline follow-up, built into the tools your team already uses.",
     icon: "revenue-operations",
     useCases: [
       "Lead prospecting and enrichment from market signals, social data, and intent data",
@@ -82,7 +82,7 @@ export const services: Service[] = [
       "Marketing campaigns across Meta, Google, TikTok, and LinkedIn, from creative to targeting to budget and reporting",
     ],
     problem:
-      "Your revenue engine runs on people, and people take holidays, miss follow-ups, forget to update the CRM, and only have so many hours. Your competitors are scaling their outreach and their conversion with systems instead of headcount. The businesses growing fastest right now aren’t hiring more salespeople. They’re deploying agents.",
+      "New business usually grows at the pace of the people chasing it. They have only so many hours, and the prospecting, follow-ups and CRM updates compete with the deals already on the table. Agents take on that groundwork every day, so your pipeline keeps moving and your people spend their time on the conversations that close.",
     approach: [
       {
         title: "Audit",
@@ -102,9 +102,9 @@ export const services: Service[] = [
       },
     ],
     ctaHeading:
-      "What would your revenue look like if your pipeline never stopped moving?",
+      "What could your business win with a pipeline that keeps moving?",
     ctaBody:
-      "30 minutes. We’ll look at how you sell today and show you where an agent system would outwork it.",
+      "30 minutes. We’ll look at how you win business today and show you where agents would add the most.",
     faqs: [
       {
         q: "What does a revenue operations system do?",
@@ -129,9 +129,9 @@ export const services: Service[] = [
     title: "Intelligence & Oversight Systems",
     shortTitle: "Intelligence",
     description:
-      "A system that sits above the whole operation, sees every number, and finds the openings nobody has time to look for. This is where the CEO Agent lives.",
+      "A system that reads across the whole business, sees every number, and brings you the openings worth acting on. This is where the CEO Agent lives.",
     longDescription:
-      "Most businesses already have the data to make better decisions. The problem isn’t getting at it. It’s that nobody has the time to read all of it, join the dots, and act before the moment’s gone. This is the system that does.",
+      "AI agents that read across your sales, operations and finance data, join the dots and tell you what to do next, led by the CEO Agent in every system.",
     icon: "intelligence",
     useCases: [
       "Cross-department data aggregation and pattern detection",
@@ -142,7 +142,7 @@ export const services: Service[] = [
       "The CEO Agent, a dedicated agent that thinks at the business level and tells you what’s working, what’s breaking, and what to do next",
     ],
     problem:
-      "Your data sits in silos. Sales knows its numbers, marketing knows its metrics, operations knows its costs, and nobody sees all of it at once. Nobody’s joining the spike in complaints to the supplier you switched last month to the margin drop this quarter. That isn’t a people problem. There’s simply too much moving too fast for anyone to track by hand. A system built for oversight watches all of it, in real time, and tells you what matters.",
+      "As a business grows, its data spreads out. Sales knows its numbers, marketing knows its metrics, operations knows its costs, and the full picture lives across all of them. The spike in complaints, the supplier you switched last month and the margin drop this quarter are often one story. There is simply too much moving too fast to track by hand. A system built for oversight watches all of it, in real time, and tells you what matters.",
     approach: [
       {
         title: "Immerse",
@@ -191,7 +191,7 @@ export const services: Service[] = [
     description:
       "A whole function, marketing, operations, or support, run by a coordinated team of agents, with people in the loop only where it counts.",
     longDescription:
-      "For businesses that don’t want to automate one workflow. They want a whole department’s worth of manual work handled by a system that runs on its own, scales without hiring, and gets better the longer it operates.",
+      "A whole department run by a coordinated team of AI agents, from marketing to operations to support. It scales with your business and improves as it runs.",
     icon: "full-department",
     useCases: [
       "Full marketing departments, from creative to targeting to buying to reporting",
@@ -201,7 +201,7 @@ export const services: Service[] = [
       "Any function that currently depends on a team doing repeatable, structured work",
     ],
     problem:
-      "Building a department is slow and expensive. Six months or more to recruit, £150K and up per senior hire, another three months to onboard, then the running cost of managing, tooling, and turnover. Even fully staffed it’s capped by headcount, so it can’t grow without you hiring again. A full department system runs the same work with a coordinated team of agents. Each one owns a role. They talk to each other, hand off work, escalate the edge cases, and improve as they go. People where it matters, agents everywhere else.",
+      "When a business grows, whole functions need to grow with it. Building a department the traditional way means recruiting, onboarding and managing a team before it can take on more work. A full department system runs the same work with a coordinated team of agents. Each one owns a role. They talk to each other, hand off work, bring the edge cases to a person and improve as they go. Your people lead, and the agents carry the volume.",
     approach: [
       {
         title: "Diagnose",
@@ -220,7 +220,7 @@ export const services: Service[] = [
         desc: "The department gets better every month. The agents learn from every cycle, take on adjacent work, and the CEO Agent watches the whole thing from above.",
       },
     ],
-    ctaHeading: "You know that department you’ve been meaning to build?",
+    ctaHeading: "Ready to build the department your growth needs?",
     ctaBody:
       "30 minutes. We’ll look at the function you’re trying to scale and show you what a system to run it would look like.",
     faqs: [
@@ -249,6 +249,113 @@ export const services: Service[] = [
 ];
 
 export const useCases: UseCase[] = [
+  {
+    slug: "professional-services-backoffice",
+    title: "A Back Office That Runs Itself",
+    sector: "Professional Services",
+    systemType: "Cost Reduction",
+    subtext:
+      "An accountancy and advisory firm whose back office grows with every new client, and wants that time back for client work.",
+    problem:
+      "Every new client adds admin. Onboarding, chasing documents, keying data across systems that don’t talk to each other, following up invoices, answering the same questions again and again. It’s necessary work that wins no new business, and it’s either eating the team’s billable hours or forcing another back-office hire that’s pure cost. Most of what’s needed to handle it already lives in the firm’s systems. Nobody has the time to move it around.",
+    agents: [
+      {
+        name: "Operations",
+        description:
+          "Runs onboarding, document chasing, approvals, data syncing between tools, and invoice follow-up end to end. The admin that happens between people and systems.",
+      },
+      {
+        name: "Analyst",
+        description:
+          "Reconciles the numbers, flags what’s overdue or off, and produces the reports the partners used to put together by hand.",
+      },
+      {
+        name: "Front-Desk",
+        description:
+          "Answers the routine client questions about status, documents, and billing instantly, and routes everything else to the right person with the full context attached.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Sits above it and shows the partners where time and margin are actually going, and which processes are quietly costing the most.",
+      },
+    ],
+    estimatedImpact:
+      "The repetitive back office handled around the clock, billable hours handed back to the fee-earners, and the next admin hire deferred or avoided. Live within weeks, with more of the work absorbed every month.",
+    ctaHeading: "Paying fee-earners to do admin?",
+    ctaBody:
+      "Tell us where the manual work piles up and we’ll map the system that would absorb it, and what it would save you. You keep the plan whether you build it with us or not.",
+    faqs: [
+      {
+        q: "What back-office work can agents take on at an accountancy or advisory firm?",
+        a: "Client onboarding, document chasing, approvals, syncing data between tools, invoice follow-up, reconciliation, and the reports partners used to build by hand.",
+      },
+      {
+        q: "Is client data safe?",
+        a: "Every system is built privacy-first. Your data never trains external models, data handling is GDPR-aligned with a DPA available, and high-impact actions route to a person first.",
+      },
+      {
+        q: "Do we need to hire someone to manage it?",
+        a: "No. We operate the system for you, and it is designed to absorb the admin so the next back-office hire can be deferred or avoided.",
+      },
+    ],
+  },
+  {
+    slug: "membership-operations",
+    title: "Membership & Community Operations",
+    sector: "Membership & Community",
+    systemType: "Full Department",
+    subtext:
+      "A growing membership community where every new member adds admin, from renewals and events to the questions members ask every day.",
+    problem:
+      "The community is the product, and the work of running it grows with every member you add. Answering people across every channel, handling renewals, organising events, managing the waitlist, onboarding new joiners. It lives across email, WhatsApp, an app, and a few people’s heads. Members wait hours for answers that should take seconds, renewals slip because nobody chased them, and the founder spends the week on operational detail when they could be growing the community.",
+    agents: [
+      {
+        name: "Front-Desk",
+        description:
+          "Answers members on whatever channel they use, about access, billing, events, the things they ask every day. It replies instantly, around the clock, and only escalates what genuinely needs a person.",
+      },
+      {
+        name: "Operations",
+        description:
+          "Runs renewals, event logistics, the waitlist, and new-member onboarding end to end, so nothing depends on someone remembering to do it.",
+      },
+      {
+        name: "Outreach",
+        description:
+          "Runs new-member and partner acquisition in the brand’s voice, so growth doesn’t stall every time the team is busy operating.",
+      },
+      {
+        name: "Analyst",
+        description:
+          "Tracks engagement, churn risk, and what members actually use, and flags who’s about to lapse while there’s still time to act.",
+      },
+      {
+        name: "CEO Agent",
+        description:
+          "Sits above the whole operation and tells the founder what’s working, what’s slipping, and where the next bit of growth is hiding.",
+      },
+    ],
+    estimatedImpact:
+      "Members answered in seconds, renewals that chase themselves, events and onboarding that run without the founder in the loop, and an early warning on who’s about to lapse. Live within weeks, more capable every month.",
+    ctaHeading: "Admin growing faster than the team?",
+    ctaBody:
+      "Tell us how your community runs today and we’ll map the system that would operate it. You keep the plan whether you build it with us or not.",
+    faqs: [
+      {
+        q: "What can agents handle for a membership community?",
+        a: "Member questions on any channel, renewals, event logistics, the waitlist, and new-member onboarding, end to end.",
+      },
+      {
+        q: "What happens with questions that need a person?",
+        a: "Front-Desk answers the everyday questions instantly and only escalates what genuinely needs someone on the team.",
+      },
+      {
+        q: "Can it spot members who are about to leave?",
+        a: "Yes. An Analyst agent tracks engagement and churn risk and flags who is about to lapse while there is still time to act.",
+      },
+    ],
+  },
   {
     slug: "recruitment-outbound",
     title: "Recruitment Outbound Lead Engine",
@@ -311,7 +418,7 @@ export const useCases: UseCase[] = [
     sector: "Estate Agency",
     systemType: "Revenue Operations",
     subtext:
-      "A high-street sales agency that grows only when it wins more instructions, and quietly loses the buyers it already attracts.",
+      "A high-street sales agency that grows by winning more instructions and answering every buyer enquiry fast.",
     problem:
       "The agency earns on what it lists, and instructions are the bottleneck. You can’t sell a home you were never asked to sell. The sellers worth winning are out there: a house that came off the market unsold with another agent, an owner trying to sell privately, a landlord getting out. Nobody has time to watch for them and be first to the valuation. And the buyer enquiries that do come in off the portals go cold, because a lead that isn’t called back within minutes is usually gone before anyone books the viewing.",
     agents: [
@@ -361,145 +468,38 @@ export const useCases: UseCase[] = [
       },
     ],
   },
-  {
-    slug: "membership-operations",
-    title: "Membership & Community Operations",
-    sector: "Membership & Community",
-    systemType: "Full Department",
-    subtext:
-      "A growing membership community whose admin scales faster than the small team running it.",
-    problem:
-      "The community is the product, and the work of running it grows with every member you add. Answering people across every channel, handling renewals, organising events, managing the waitlist, onboarding new joiners. It lives across email, WhatsApp, an app, and a few people’s heads. Members wait hours for answers that should take seconds, renewals slip because nobody chased them, and the founder ends up buried in operational detail instead of growing the thing.",
-    agents: [
-      {
-        name: "Front-Desk",
-        description:
-          "Answers members on whatever channel they use, about access, billing, events, the things they ask every day. It replies instantly, around the clock, and only escalates what genuinely needs a person.",
-      },
-      {
-        name: "Operations",
-        description:
-          "Runs renewals, event logistics, the waitlist, and new-member onboarding end to end, so nothing depends on someone remembering to do it.",
-      },
-      {
-        name: "Outreach",
-        description:
-          "Runs new-member and partner acquisition in the brand’s voice, so growth doesn’t stall every time the team is busy operating.",
-      },
-      {
-        name: "Analyst",
-        description:
-          "Tracks engagement, churn risk, and what members actually use, and flags who’s about to lapse while there’s still time to act.",
-      },
-      {
-        name: "CEO Agent",
-        description:
-          "Sits above the whole operation and tells the founder what’s working, what’s slipping, and where the next bit of growth is hiding.",
-      },
-    ],
-    estimatedImpact:
-      "Members answered in seconds, renewals that chase themselves, events and onboarding that run without the founder in the loop, and an early warning on who’s about to lapse. Live within weeks, more capable every month.",
-    ctaHeading: "Admin growing faster than the team?",
-    ctaBody:
-      "Tell us how your community runs today and we’ll map the system that would operate it. You keep the plan whether you build it with us or not.",
-    faqs: [
-      {
-        q: "What can agents handle for a membership community?",
-        a: "Member questions on any channel, renewals, event logistics, the waitlist, and new-member onboarding, end to end.",
-      },
-      {
-        q: "What happens with questions that need a person?",
-        a: "Front-Desk answers the everyday questions instantly and only escalates what genuinely needs someone on the team.",
-      },
-      {
-        q: "Can it spot members who are about to leave?",
-        a: "Yes. An Analyst agent tracks engagement and churn risk and flags who is about to lapse while there is still time to act.",
-      },
-    ],
-  },
-  {
-    slug: "professional-services-backoffice",
-    title: "A Back Office That Runs Itself",
-    sector: "Professional Services",
-    systemType: "Cost Reduction",
-    subtext:
-      "An accountancy and advisory firm carrying a back office that grows with every client but adds nothing to the top line.",
-    problem:
-      "Every new client adds admin. Onboarding, chasing documents, keying data across systems that don’t talk to each other, following up invoices, answering the same questions again and again. It’s necessary work that wins no new business, and it’s either eating the team’s billable hours or forcing another back-office hire that’s pure cost. Most of what’s needed to handle it already lives in the firm’s systems. Nobody has the time to move it around.",
-    agents: [
-      {
-        name: "Operations",
-        description:
-          "Runs onboarding, document chasing, approvals, data syncing between tools, and invoice follow-up end to end. The admin that happens between people and systems.",
-      },
-      {
-        name: "Analyst",
-        description:
-          "Reconciles the numbers, flags what’s overdue or off, and produces the reports the partners used to put together by hand.",
-      },
-      {
-        name: "Front-Desk",
-        description:
-          "Answers the routine client questions about status, documents, and billing instantly, and routes everything else to the right person with the full context attached.",
-      },
-      {
-        name: "CEO Agent",
-        description:
-          "Sits above it and shows the partners where time and margin are actually going, and which processes are quietly costing the most.",
-      },
-    ],
-    estimatedImpact:
-      "The repetitive back office handled around the clock, billable hours handed back to the fee-earners, and the next admin hire deferred or avoided. Live within weeks, with more of the work absorbed every month.",
-    ctaHeading: "Paying fee-earners to do admin?",
-    ctaBody:
-      "Tell us where the manual work piles up and we’ll map the system that would absorb it, and what it would save you. You keep the plan whether you build it with us or not.",
-    faqs: [
-      {
-        q: "What back-office work can agents take on at an accountancy or advisory firm?",
-        a: "Client onboarding, document chasing, approvals, syncing data between tools, invoice follow-up, reconciliation, and the reports partners used to build by hand.",
-      },
-      {
-        q: "Is client data safe?",
-        a: "Every system is built privacy-first. Your data never trains external models, data handling is GDPR-aligned with a DPA available, and high-impact actions route to a person first.",
-      },
-      {
-        q: "Do we need to hire someone to manage it?",
-        a: "No. We operate the system for you, and it is designed to absorb the admin so the next back-office hire can be deferred or avoided.",
-      },
-    ],
-  },
 ];
 
 export const processSteps: ProcessStep[] = [
   {
     number: 1,
-    title: "Prescribe",
+    title: "Learn",
     description:
-      "We learn how your operation actually runs and prescribe the agents that fit it.",
+      "We go into your business and learn its real workflows and the points where things slow down.",
   },
   {
     number: 2,
-    title: "Tailor",
+    title: "Design",
     description:
-      "We tailor each specialist to how you work, shaping its skills to the exact jobs you need it doing.",
+      "We design agents around those workflows, each working like a dedicated employee, only faster.",
   },
   {
     number: 3,
     title: "Build",
     description:
-      "We build every agent and connect it to your live tools and data. You watch it come together.",
+      "We build every agent and connect it to the tools and data you already use. You watch it come together.",
   },
   {
     number: 4,
-    title: "Deploy",
+    title: "Slot in",
     description:
-      "The system goes live in your business, on real data, making real decisions. Results in the first weeks.",
+      "The system goes live inside the way you already work. You approve anything high-impact.",
   },
   {
     number: 5,
-    title: "Compound",
+    title: "Improve",
     description:
-      "We operate it from here. It learns from every cycle on its own, we keep tuning it, and it gets more valuable the longer it runs.",
+      "We operate it from here, keep tuning it and add agents as the business grows.",
   },
 ];
 
@@ -588,7 +588,7 @@ export const tiers: Tier[] = [
     name: "Grow",
     composition: "CEO Agent + 4 specialists",
     blurb:
-      "More of the operation handed over to the system as it proves itself.",
+      "More of the back office and new business handed to agents as the system proves itself.",
   },
   {
     name: "Full operation",
@@ -596,4 +596,16 @@ export const tiers: Tier[] = [
     blurb:
       "The whole operation running as one coordinated system. Add Front-Desk when you want customer-facing front of house.",
   },
+];
+
+// What every system comes with. Shown on /system in place of prices.
+export const inclusions: string[] = [
+  "Discovery inside your business to find the bottlenecks worth removing first",
+  "Agents designed around your real workflows and connected to your existing tools",
+  "The CEO Agent, reading across every agent and telling you what to do next",
+  "Your Brain, a private knowledge layer that is yours to keep",
+  "A command centre where you see what agents did and approve high-impact actions",
+  "Ongoing running, monitoring and improvement, for as long as you run the system",
+  "Training for your team and a direct line to us",
+  "GDPR-aligned data handling with a DPA available",
 ];

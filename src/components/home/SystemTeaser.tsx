@@ -7,7 +7,7 @@ import { agents } from "@/lib/data";
 
 export default function SystemTeaser() {
   return (
-    <section className="blend-void section-padding">
+    <section className="blend-surface section-padding">
       <div className="max-w-5xl mx-auto px-6 md:px-8 text-center">
         <motion.p
           initial={{ opacity: 0 }}
@@ -25,7 +25,7 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
         >
-          Eight agents. Any system your operation needs.
+          Agents that work like your best people.
         </motion.h2>
 
         <motion.p
@@ -35,9 +35,9 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          We didn&rsquo;t build a different agency for every client. We handpicked eight
-          agents that, between them, cover what almost any business needs to run and grow.
-          They&rsquo;re the template we design from.
+          We start inside your business. We learn your workflows, your handoffs and the
+          exact points where things slow down, then design agents around them. Each one
+          works like a dedicated employee, only faster and to a higher standard.
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -46,10 +46,10 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl mx-auto"
         >
-          From those eight we compose your system: a coordinated team of specialists, each
-          tailored to the workflows you actually run. Every job gets its own expert agent,
-          so each one becomes the best at the single thing it does. We start with the few
-          that move the needle first and add the rest as they earn their place.
+          They slot into the way you already work, using the tools you already have, so
+          your team&rsquo;s day carries on as normal with the bottlenecks gone. We draw on
+          eight specialist agents, start with the few that make the biggest difference and
+          add more as the business grows.
         </motion.p>
 
         <motion.div
@@ -81,9 +81,8 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.25 }}
           className="font-sans text-sm leading-relaxed text-ghost-dim mt-8 max-w-xl mx-auto"
         >
-          Need something none of the eight cover? We either fold the capability into one of
-          them or build you a new agent on request. The eight are where we start, not the
-          ceiling.
+          Need something more specific? We fold the capability into one of the eight or
+          build a new agent around it. The eight are where every system starts.
         </motion.p>
 
         <motion.div
