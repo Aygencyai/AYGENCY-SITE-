@@ -43,16 +43,20 @@ export const services: Service[] = [
       "30 minutes. We’ll find the work that’s quietly bleeding time and money, and show you what a system would do about it.",
     faqs: [
       {
-        q: "What work can a cost reduction system take over?",
-        a: "Repetitive, manual work that costs time and money: document processing and data entry, invoice processing and reconciliation, inventory monitoring, reporting, and scheduling. If people do the same thing over and over, it is usually a good candidate.",
+        q: "What back-office work can AI agents take over?",
+        a: "The repetitive admin that slows a business down and stops it scaling: document processing and data entry, invoice processing and reconciliation, inventory monitoring, reporting, and scheduling. If people do the same thing over and over, it is usually a good candidate.",
       },
       {
         q: "How is this different from a simple automation tool?",
         a: "Automation follows fixed steps and breaks or quietly goes wrong when the input changes. An agent system reads the situation, handles the exceptions, and pulls in a person when something genuinely needs one.",
       },
       {
-        q: "Do we have to replace our existing software?",
-        a: "No. We connect the agents to the systems you already use and deploy into your own environment, with monitoring from day one.",
+        q: "Do we have to change how we work?",
+        a: "No. We design the agents around the way your business already runs and connect them to the systems you already use, so your team keeps working the way it does today.",
+      },
+      {
+        q: "How do the agents know how our business works?",
+        a: "We start by learning your real workflows and pain points, then design each agent to do its part the way an employee would, but faster and to a better standard.",
       },
       {
         q: "How do you find where the savings are?",
@@ -115,8 +119,8 @@ export const services: Service[] = [
         a: "Your people stay on the conversations and deals that matter. The agents take on the prospecting, follow-ups, and pipeline admin that usually slip when the team is busy.",
       },
       {
-        q: "Does it work with the tools we already use?",
-        a: "We plug into your existing platforms and build the system around them, rather than asking you to switch.",
+        q: "Do we have to change how our sales team works?",
+        a: "No. The agents plug into the platforms you already use and fit around how your team sells today.",
       },
     ],
   },
@@ -225,8 +229,12 @@ export const services: Service[] = [
         a: "Marketing, operations, customer support, and back-office work such as finance processing, HR admin, and compliance. Any function that depends on a team doing repeatable, structured work is a candidate.",
       },
       {
-        q: "Do people stay involved?",
-        a: "Yes. Agents escalate edge cases, and high-impact actions route to a person before they happen. People where it matters, agents everywhere else.",
+        q: "Who stays in control?",
+        a: "You do. Agents do the work, edge cases escalate, and high-impact actions come to a person for approval before they happen, so you stay in control from one place.",
+      },
+      {
+        q: "Is there a limit on how many agents we can have?",
+        a: "No. We start with the agents that remove your biggest bottlenecks, then add more as the system proves itself.",
       },
       {
         q: "Do you build the whole department at once?",
