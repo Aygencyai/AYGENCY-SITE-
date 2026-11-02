@@ -233,8 +233,8 @@ export const services: Service[] = [
         a: "You do. Agents do the work, edge cases escalate, and high-impact actions come to a person for approval before they happen, so you stay in control from one place.",
       },
       {
-        q: "Is there a limit on how many agents we can have?",
-        a: "No. We start with the agents that remove your biggest bottlenecks, then add more as the system proves itself.",
+        q: "Can we add more agents later?",
+        a: "Yes. We start with the agents that remove your biggest bottlenecks, then add more as your business grows and new work comes into view.",
       },
       {
         q: "Do you build the whole department at once?",
