@@ -14,8 +14,8 @@ import MagneticButton from "@/components/ui/MagneticButton";
 const pillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Lock,
-    title: "Your data, your environment",
-    body: "Every system runs inside your own infrastructure. Your data never trains external models, and never leaves your environment unless you say so. Handled to UK GDPR standards.",
+    title: "Your data, handled with care",
+    body: "Every system is built privacy-first. Your data never trains external models and is used only to run your system. GDPR-aligned data handling, with a data processing agreement (DPA) available.",
   },
   {
     icon: ShieldCheck,
@@ -100,7 +100,7 @@ export default function TrustClient() {
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
                 Tell us your requirements and we&rsquo;ll walk you through exactly how
-                a system would run inside your environment.
+                a system would handle your data.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

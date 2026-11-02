@@ -31,7 +31,7 @@ export const services: Service[] = [
       },
       {
         title: "Build & Ship",
-        desc: "We build every agent, connect them to your live systems, and put it into your environment with full monitoring from day one.",
+        desc: "We build every agent, connect them to your live systems, and put it live in your business with full monitoring from day one.",
       },
       {
         title: "Compound",
@@ -94,7 +94,7 @@ export const services: Service[] = [
       },
       {
         title: "Build & Ship",
-        desc: "We plug into your platforms, build every agent, and deploy the full system into your environment.",
+        desc: "We plug into your platforms, build every agent, and deploy the full system into your workflows.",
       },
       {
         title: "Compound",
@@ -180,7 +180,7 @@ export const services: Service[] = [
       },
       {
         q: "Where does our data go?",
-        a: "It stays in your environment. Your data never trains external models and is handled to UK GDPR standards.",
+        a: "It is used only to run your system and never trains external models. Data handling is GDPR-aligned, with a data processing agreement (DPA) available.",
       },
     ],
   },
@@ -460,7 +460,7 @@ export const useCases: UseCase[] = [
       },
       {
         q: "Is client data safe?",
-        a: "Every system runs inside your own infrastructure. Your data never trains external models, it is handled to UK GDPR standards, and high-impact actions route to a person first.",
+        a: "Every system is built privacy-first. Your data never trains external models, data handling is GDPR-aligned with a DPA available, and high-impact actions route to a person first.",
       },
       {
         q: "Do we need to hire someone to manage it?",
@@ -493,7 +493,7 @@ export const processSteps: ProcessStep[] = [
     number: 4,
     title: "Deploy",
     description:
-      "The system goes live in your environment, on real data, making real decisions. Results in the first weeks.",
+      "The system goes live in your business, on real data, making real decisions. Results in the first weeks.",
   },
   {
     number: 5,
@@ -505,7 +505,7 @@ export const processSteps: ProcessStep[] = [
 
 export const metrics: Metric[] = [
   { value: "24/7", label: "Operated around the clock", numericValue: 24 },
-  { value: "100%", label: "Runs in your environment", numericValue: 100 },
+  { value: "100%", label: "Human approval on high-impact actions", numericValue: 100 },
   { value: "Weeks", label: "From build to live", numericValue: 0 },
   { value: "Every month", label: "It gets more valuable", numericValue: 0 },
 ];

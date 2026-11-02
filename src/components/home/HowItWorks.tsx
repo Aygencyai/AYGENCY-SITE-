@@ -25,7 +25,7 @@ const steps = [
     number: "04",
     title: "Deploy",
     description:
-      "It goes live in your environment, on real data, doing real work. You start seeing results inside the first few weeks.",
+      "It goes live in your business, on real data, doing real work. You start seeing results inside the first few weeks.",
   },
   {
     number: "05",

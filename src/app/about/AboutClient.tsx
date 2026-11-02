@@ -196,7 +196,7 @@ export default function AboutClient() {
             {[
               {
                 title: "Privacy first",
-                body: "Your data stays in your environment and never trains external models. It is handled to UK GDPR standards.",
+                body: "Your data never trains external models. Data handling is GDPR-aligned, with a data processing agreement (DPA) available.",
               },
               {
                 title: "A human signs off",

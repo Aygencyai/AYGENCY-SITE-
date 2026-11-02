@@ -43,8 +43,8 @@ export default function DataSecurity() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base leading-relaxed text-ghost-muted mt-6"
         >
-          Every system runs inside your environment. Your data never trains external
-          models and never leaves unless you say so. High-impact actions route to a
+          Every system is built privacy-first. Your data never trains external
+          models, and data handling is GDPR-aligned with a DPA available. High-impact actions route to a
           human, and the whole system can roll back to a known-good state.
         </motion.p>
 

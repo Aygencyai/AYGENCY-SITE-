@@ -36,7 +36,7 @@ const pillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Download,
     title: "It’s yours, and it travels",
-    body: "This is your asset, not ours. It lives in your environment, it is built around your business, and you keep it. Even if you ever moved on from us, you would walk away years ahead, holding a brain no competitor can buy and no new hire has to rebuild.",
+    body: "This is your asset, not ours. It is built around your business, and you keep it. Even if you ever moved on from us, you would walk away years ahead, holding a brain no competitor can buy and no new hire has to rebuild.",
   },
 ];
 

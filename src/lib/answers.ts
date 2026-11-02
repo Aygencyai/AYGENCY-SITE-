@@ -409,15 +409,15 @@ export const answerPosts: InsightPost[] = [
     slug: "are-ai-agents-safe-with-business-data",
     title: "Is it safe to give AI agents access to my business data?",
     excerpt:
-      "Yes, when the system is built privacy-first. Every Aygency system runs in an environment dedicated to your business, your data never trains external models, and it is handled to UK GDPR standards. Agents only get the access their job needs, and high-impact actions wait for a person.",
+      "Yes, when the system is built privacy-first. Your data never trains external models, data handling is GDPR-aligned, and a data processing agreement (DPA) is available. Agents only get the access their job needs, and high-impact actions wait for a person.",
     date,
     readTime: "4 min read",
     content: [
       {
         heading: "How Aygency protects your data",
         paragraphs: [
-          "Your system runs in its own environment, separate from every other client. Your data stays in that environment unless you say otherwise, and it is never used to train external AI models.",
-          "Agents connect to your tools through official, permissioned connections. Each agent gets only the access its role needs, and access can be revoked at any time. Data is handled to UK GDPR standards.",
+          "Your system is kept separate from every other client. Your data is used only to run your system and is never used to train external AI models.",
+          "Agents connect to your tools through official, permissioned connections. Each agent gets only the access its role needs, and access can be revoked at any time. Data handling is GDPR-aligned, with a data processing agreement (DPA) available.",
           "We never ask for your passwords. Credentials are kept in an encrypted vault, and any connection can be switched off from your side whenever you choose.",
         ],
       },
@@ -457,8 +457,8 @@ export const answerPosts: InsightPost[] = [
         a: "You do. Your data stays yours, and the Brain, the knowledge layer of how your business runs, is yours to keep.",
       },
       {
-        q: "Are AI agents compliant with UK GDPR?",
-        a: "Aygency handles data to UK GDPR standards and designs each system with the right access and approvals. We work with you on your own responsibilities as data controller.",
+        q: "How do AI agents handle GDPR?",
+        a: "Aygency follows GDPR-aligned data handling, offers a data processing agreement (DPA), and designs each system with the right access and approvals. We work with you on your own responsibilities as data controller.",
       },
     ],
   },
