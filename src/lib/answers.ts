@@ -522,32 +522,40 @@ export const answerPosts: InsightPost[] = [
     slug: "whats-included-in-an-ai-agent-system",
     title: "What's included in an AI agent system from Aygency?",
     excerpt:
-      "Everything you need for agents to run part of your business, and keep getting better. That means discovery, a system designed around your workflows, the agents themselves, the CEO Agent, your Brain, a command centre with approvals, connections to your existing tools, training for your team, and ongoing running and improvement.",
+      "Everything your business needs for agents to take real work off your team and keep getting better at it. That means discovery of your workflows, a system design you approve, specialist agents, the CEO Agent, your private Brain, a command centre with human approval, connections to the tools you already use, team training, and ongoing running and improvement. You get extra capacity built around how you already work, not another piece of software to manage.",
     date,
+    updated: "3 November 2026",
     readTime: "4 min read",
     content: [
       {
         heading: "Before anything is built",
         paragraphs: [
-          "Discovery: we learn your real workflows and pain points and find the bottlenecks worth removing first. Design: you see a clear plan of which agents we will build, what each one does, and where approvals sit, before work starts.",
+          "Discovery: we learn how your business really runs, including the handoffs and workarounds nobody writes down, and find the bottlenecks worth removing first. For most businesses that is the back office. Design: you see a clear plan of which agents we will build, what each one does, and where approvals sit, before any work starts.",
         ],
       },
       {
         heading: "The system itself",
         paragraphs: [
-          "Specialist agents built around your workflows, each with one clear role. The CEO Agent, included in every system, reading across the operation and telling you what to do next. Your Brain, a private knowledge layer of how your business runs, which is yours to keep. A command centre where you see what agents have done and approve high-impact actions. Connections to the tools you already use, so nobody has to change how they work.",
+          "Specialist agents, each built around one role in your workflow, the way you would brief a new employee. The CEO Agent, included in every system, reading across the operation and telling you what is working, what needs attention and what to do next. Your Brain, a private knowledge layer of how your business runs, which is yours to keep.",
+          "A command centre where you see everything the agents have done and approve high-impact actions before they happen. Connections to the tools you already use, so agents slot into existing workflows and nobody has to change how they work.",
         ],
       },
       {
         heading: "Once it is live",
         paragraphs: [
-          "Hosting and running the system for you. Monitoring, fixing anything that breaks, and handling new edge cases. Changes to live workflows as your business changes. Regular tuning so the system keeps improving. Training for your team and a direct line to us for support. Agents can be added as the business grows.",
+          "We run the system for you. That covers monitoring, fixing anything that breaks, handling new edge cases, updating workflows as your business changes, and regular tuning so the agents keep getting better. Your team gets training and a direct line to us for support, and new agents can be added whenever the next bottleneck appears.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "A business starts with one back-office workflow, such as client onboarding. The onboarding agent goes live in the command centre, with anything unusual flagged for a person. Once it has proved itself, the next agent follows, perhaps invoicing or reporting, and the CEO Agent begins reading across both. The system grows one bottleneck at a time, always under your approval.",
         ],
       },
       {
         heading: "What shapes the scope",
         paragraphs: [
-          "Every system is built for one business, so scope depends on how many workflows you want handled, how complex they are, and how many systems need connecting. Your own software subscriptions stay with you. We set all of this out clearly on a call, with nothing hidden.",
+          "Every system is built for one business, so scope depends on how many workflows you want handled, how complex they are, and how many tools need connecting. Your own software subscriptions stay with you. We agree all of it with you on a call, clearly and up front.",
         ],
       },
       {
@@ -566,15 +574,15 @@ export const answerPosts: InsightPost[] = [
     faqs: [
       {
         q: "Is the CEO Agent an extra?",
-        a: "No. The CEO Agent is included in every system Aygency builds.",
+        a: "No. The CEO Agent is included in every system Aygency builds, reading across all of your agents and telling you what to do next.",
       },
       {
-        q: "Do you hand the system over at the end?",
-        a: "We do not build and walk away. We keep running and improving the system, which is what keeps it getting better over time.",
+        q: "Will my team need to learn new software?",
+        a: "No. Agents connect to the tools you already use. The only addition is the command centre, where you see what agents have done and approve high-impact actions.",
       },
       {
-        q: "What affects the scope of a system?",
-        a: "The number and complexity of workflows, the systems that need connecting, and how many agents the business needs. We agree all of it with you up front.",
+        q: "Can we add more agents as we grow?",
+        a: "Yes. We start with the biggest bottleneck, usually in the back office, then add agents as the business grows and new work comes into view.",
       },
     ],
   },

@@ -50,6 +50,7 @@ export default async function InsightPostPage({
     headline: post.title,
     description: post.excerpt,
     datePublished: new Date(`${post.date} UTC`).toISOString(),
+    dateModified: new Date(`${post.updated ?? post.date} UTC`).toISOString(),
     url: `${SITE_URL}/insights/${slug}`,
     author: { "@type": "Organization", name: "Aygency", url: SITE_URL },
     publisher: { "@type": "Organization", name: "Aygency", url: SITE_URL },

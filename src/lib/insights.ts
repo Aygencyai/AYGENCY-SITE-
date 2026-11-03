@@ -12,6 +12,7 @@ export interface InsightPost {
   title: string;
   excerpt: string;
   date: string;
+  updated?: string;
   readTime: string;
   content: InsightSection[];
   faqs?: Faq[];

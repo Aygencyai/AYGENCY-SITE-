@@ -30,7 +30,7 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
             </Reveal>
             <Reveal delay={0.05}>
               <p className="font-mono text-xs text-cyan tracking-wider uppercase">
-                {post.date} · {post.readTime}
+                {post.updated ? `Updated ${post.updated}` : post.date} · {post.readTime}
               </p>
             </Reveal>
             <Reveal delay={0.1}>
