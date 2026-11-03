@@ -137,6 +137,10 @@ export default function Footer() {
             </Link>
           </div>
         </div>
+        <p className="mt-6 text-xs text-ghost-muted text-center sm:text-left">
+          AYGENCY LTD · Registered in England and Wales · Company no. 17139454 · 1st Floor, Spitalfields House,
+          Stirling Way, Borehamwood, Herts, United Kingdom, WD6 2FX
+        </p>
       </div>
     </footer>
   );

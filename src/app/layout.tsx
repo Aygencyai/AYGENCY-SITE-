@@ -67,7 +67,10 @@ const jsonLd = {
         "Aygency designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
       address: {
         "@type": "PostalAddress",
+        streetAddress: "1st Floor, Spitalfields House, Stirling Way",
         addressLocality: "Borehamwood",
+        addressRegion: "Herts",
+        postalCode: "WD6 2FX",
         addressCountry: "GB",
       },
       founder: { "@type": "Person", name: "Louis Rosenberg" },
