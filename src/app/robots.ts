@@ -8,7 +8,10 @@ const aiBots = [
   "OAI-SearchBot",
   "ChatGPT-User",
   "PerplexityBot",
+  "Perplexity-User",
   "ClaudeBot",
+  "Claude-SearchBot",
+  "Claude-User",
   "Google-Extended",
   "Applebot-Extended",
 ];
