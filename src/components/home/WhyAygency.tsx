@@ -6,16 +6,16 @@ import GlassCard from "@/components/ui/GlassCard";
 
 const comparisons = [
   {
-    title: "We learn your business first.",
-    body: "Every system starts with your real workflows and pain points. The agents are designed around how you already work, so they fit in from day one and your team carries on as normal.",
+    title: "Built around you.",
+    body: "Every system starts with your real workflows. We design the agents around how your business already works, so they fit in from day one and your team carries on as normal.",
   },
   {
-    title: "We operate it. Forever.",
-    body: "We run the system for as long as you do, keeping it safe and tuning it as the business changes. It learns from how your business runs, so it is worth more next quarter than it is today.",
+    title: "Your AI transformation partner.",
+    body: "We go deep into your business to find the most valuable things to build first. Then we keep deploying AI and solving new problems as your growth operators, for as long as you grow.",
   },
   {
-    title: "It grows with you.",
-    body: "Each agent is a specialist built for one job, with the CEO Agent reading across all of them. As the business grows we add agents, so the system keeps pace with you.",
+    title: "Built once, compounding forever.",
+    body: "We operate every system we build. It learns from how your business runs, so it is worth more next quarter than it is today, and each new agent adds to what is already there.",
   },
 ];
 
@@ -33,7 +33,9 @@ export default function WhyAygency() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            Why Aygency
+            Most AI agencies make you work for the system.
+            <br />
+            <span className="text-cyan">We make the system work for you.</span>
           </h2>
         </motion.div>
 

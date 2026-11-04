@@ -38,7 +38,7 @@ export default function SelfProof() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
           >
-            Already running in real businesses
+            Proven in live businesses
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

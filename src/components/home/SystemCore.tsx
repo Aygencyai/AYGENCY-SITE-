@@ -175,7 +175,7 @@ export default function SystemCore() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            One Command Centre. You Stay in Control.
+            A Home for Your Agents. A Home for Your People.
           </h2>
         </motion.div>
 
@@ -186,9 +186,10 @@ export default function SystemCore() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          One home for your people and your agents. Your data lives in one place, your
-          in-house agents run complex workflows, and anything high-impact comes to you
-          to approve first.
+          Our command centre brings both together. Your data is centralised, in-house
+          autonomous agents run complex workflows, and your team keeps its oversight and
+          expertise. People and agents working side by side is the best of both worlds,
+          and the fastest way to grow your operational capacity.
         </motion.p>
 
         <div className="mt-14">

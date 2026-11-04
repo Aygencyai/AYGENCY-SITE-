@@ -14,10 +14,12 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import { services } from "@/lib/data";
 
 const systemFit: Record<string, string> = {
-  "cost-reduction": "Operations · Analyst · CEO Agent",
-  "revenue-operations": "Lead Gen · Outreach · Strategist · CEO Agent",
-  "intelligence": "Analyst · CEO Agent",
-  "full-department": "the full operation core + Front-Desk",
+  "command-centre": "CEO Agent · the Brain · your in-house agents",
+  "back-office-agents": "Operations · Analyst · CEO Agent",
+  "content": "Content Production · Strategist",
+  "lead-generation": "Lead Gen · Outreach · Strategist · CEO Agent",
+  "membership-management": "Operations · Front-Desk",
+  "customer-support": "Front-Desk · Operations",
 };
 
 export default function ServicesClient() {
@@ -34,14 +36,14 @@ export default function ServicesClient() {
             </Reveal>
             <h2 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6 whitespace-pre-line">
               <TypewriterText
-                text={"Clear the Back Office.\nThen Fill the Pipeline."}
+                text={"Your Command Centre.\nYour Back Office. Built In."}
                 delay={300}
                 speed={35}
               />
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                Every system draws on the same eight specialist agents, designed around how your business already works. Most start in the back office, then move on to new business, a view across the whole operation, or an entire function.
+                Every engagement starts with the command centre and the back-office agents that can save a business hundreds of hours a week. From there we build out content, lead generation, membership, your website and customer support, all designed around how your business already works.
               </p>
             </Reveal>
           </div>
@@ -124,7 +126,7 @@ export default function ServicesClient() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                Most clients start with a conversation. Tell us where things slow down and we&rsquo;ll map the system that would clear the way. You keep the plan whether you build it with us or not.
+                Most clients start with a conversation. Tell us where things slow down and we&rsquo;ll map the system that would make the biggest difference. You keep the plan whether you build it with us or not.
               </p>
             </Reveal>
             <Reveal delay={0.2}>

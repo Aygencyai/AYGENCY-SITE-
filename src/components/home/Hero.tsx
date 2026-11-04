@@ -8,8 +8,8 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import LetterSceneLoader from "./LetterSceneLoader";
 
 const headingLines = [
-  ["CLEAR", "THE", "WAY."],
-  ["SCALE", "FURTHER."],
+  ["BUILT", "ONCE,"],
+  ["COMPOUND", "FOREVER"],
 ];
 
 const wordVariants = {
@@ -83,10 +83,9 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 2.8, ease: "easeOut" }}
                   className="font-sans text-base font-normal leading-[1.7] text-ghost-muted mt-4"
                 >
-                  We build AI agents that take on the back-office work holding your
-                  business back. They slot into the way you already work, do the job
-                  like your best people only faster, and bring anything high-impact to
-                  you to approve.
+                  AI agents that replace the manual work running your operation. They
+                  slot into the way your business already works and do the job like
+                  your best people: faster, more accurate, and never a day off.
                 </motion.p>
               </div>
 

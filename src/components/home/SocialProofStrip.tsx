@@ -1,9 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { agents } from "@/lib/data";
-
-const names = agents.map((a) => a.name);
+const names = [
+  "Command Centre",
+  "Back-Office Agents",
+  "Operations",
+  "Admin",
+  "Reporting",
+  "Customer Support",
+  "Content",
+  "Membership",
+  "Lead Generation",
+];
 
 function MarqueeTrack() {
   return (
@@ -42,7 +50,7 @@ export default function SocialProofStrip() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="font-mono text-xs text-ghost-dim mt-7 text-center tracking-[0.18em] uppercase"
       >
-        The Aygency System. Specialist agents that slot into how your business already runs.
+        One home for your people and your agents. Built around how your business already runs.
       </motion.p>
     </section>
   );

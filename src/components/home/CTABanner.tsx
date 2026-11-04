@@ -85,9 +85,9 @@ export default function CTABanner() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase font-semibold"
         >
-          Find what&rsquo;s holding
+          See how far
           <br />
-          you back.
+          you could scale.
         </motion.h2>
 
         <motion.p
@@ -96,8 +96,8 @@ export default function CTABanner() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
-          We&rsquo;ll map your business, find the bottlenecks and show you the agents
-          that would clear them. You keep the plan whether you build with us or not.
+          We&rsquo;ll map your business, find where AI creates the most value and show
+          you the agents that would deliver it. You keep the plan whether you build with us or not.
           30 minutes.
         </motion.p>
 
@@ -123,7 +123,7 @@ export default function CTABanner() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="font-sans text-sm text-ghost-dim mt-8"
         >
-          AI agents that clear the way for businesses to scale.
+          Built once, compound forever.
         </motion.p>
       </div>
     </section>

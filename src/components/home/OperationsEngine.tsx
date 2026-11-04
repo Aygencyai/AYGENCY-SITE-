@@ -100,7 +100,7 @@ export default function OperationsEngine() {
             transition={{ duration: 0.6 }}
             className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6"
           >
-            {`// back office first`}
+            {`// back-office agents`}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -109,7 +109,7 @@ export default function OperationsEngine() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
           >
-            Clear the back office. Make room to grow.
+            Hundreds of hours back, every week.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -118,10 +118,10 @@ export default function OperationsEngine() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            The back office is where growth usually gets stuck. Three agents take it on,
-            working inside the tools and processes you already use. One runs the admin, one
-            keeps the numbers straight and one fields the questions, so your people can put
-            their time into the work that grows the business.
+            Operations, admin, reporting and support are where a business spends most of
+            its hours. Our back-office agents take that work on inside the tools you already
+            use, saving businesses hundreds of hours a week. Each agent we deploy can save a
+            business up to 100 hours a month.
           </motion.p>
         </div>
 
@@ -144,14 +144,14 @@ export default function OperationsEngine() {
           className="mt-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
         >
           <p className="font-sans text-lg leading-[1.7] text-ghost max-w-2xl">
-            It runs around the clock and takes on more every month. As the business grows,
-            the work keeps getting handled, and you add agents rather than headcount.
+            They run around the clock and take on more every month. As you grow, you add
+            agents, not overheads.
           </p>
           <Link
-            href="/services/cost-reduction"
+            href="/services/back-office-agents"
             className="inline-flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:text-cyan-muted whitespace-nowrap"
           >
-            See the back-office system
+            See back-office agents
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

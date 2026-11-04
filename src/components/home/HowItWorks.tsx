@@ -7,7 +7,7 @@ const steps = [
     number: "01",
     title: "Learn",
     description:
-      "We go into your business and learn how it really runs: the workflows, the handoffs and the exact points where things slow down.",
+      "We dive deep into your business to understand how it really runs and where AI would create the most value.",
   },
   {
     number: "02",
@@ -49,7 +49,7 @@ export default function HowItWorks() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            How It Works
+            How We Work
           </h2>
         </motion.div>
 
@@ -60,8 +60,9 @@ export default function HowItWorks() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl"
         >
-          From the first call to agents working inside your business, here is the path.
-          Five steps, and we carry the work the whole way.
+          We build around you. We go deep into your business to find where AI creates the
+          most value, then stay on as your growth operators for AI, deploying more as you
+          scale.
         </motion.p>
 
         {/* Desktop: horizontal layout */}

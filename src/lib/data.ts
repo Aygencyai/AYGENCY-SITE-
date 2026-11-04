@@ -2,13 +2,60 @@ import type { Service, UseCase, ProcessStep, Metric, Agent, Tier } from "@/types
 
 export const services: Service[] = [
   {
-    slug: "cost-reduction",
-    title: "Cost Reduction Systems",
-    shortTitle: "Cost Reduction",
+    slug: "command-centre",
+    title: "Command Centre",
+    shortTitle: "Command Centre",
     description:
-      "Agents that take on the back-office work holding your business back, so it can scale without adding headcount for every new task.",
+      "One home for your people and your agents. Your data is centralised, in-house autonomous agents run complex workflows, and your team keeps its oversight and expertise.",
     longDescription:
-      "AI agents that take on your back office: admin, data entry, invoices and reporting. Built around how you already work, so your business can scale further.",
+      "A command centre that brings your people and your AI agents into one home. Data centralised, complex workflows run by in-house autonomous agents, and the CEO Agent reading across the whole operation.",
+    icon: "command-centre",
+    useCases: [
+      "Your data from every tool centralised in one place",
+      "In-house autonomous agents running complex, multi-step workflows",
+      "The CEO Agent reading across every agent and telling you what to do next",
+      "A shared workspace where your team and your agents hand work to each other",
+      "Live visibility of what every agent is doing and what it has finished",
+      "Human approval on high-impact actions, from one place",
+    ],
+    problem:
+      "Most businesses run on a dozen tools that never talk to each other, with the knowledge of how things work sitting in people's heads. Adding AI on top of that usually means another tool to manage. The command centre does the opposite. It gives your people and your agents one home, so the agents work from the same data and context as your team, and your team directs the agents the way they would direct a colleague. The result is more operational capacity without more complexity.",
+    approach: [
+      { title: "Immerse", desc: "We learn how the whole operation runs: the tools, the data, the handoffs and the decisions that depend on them." },
+      { title: "Centralise", desc: "We bring your data into one place and design the agents that will work from it." },
+      { title: "Build & Ship", desc: "We build the command centre and the agents, connect your live systems and put it to work." },
+      { title: "Compound", desc: "We keep running and improving it, and add agents as your business grows." },
+    ],
+    ctaHeading: "What could your team do with a home built for people and agents?",
+    ctaBody:
+      "30 minutes. We will look at how your operation runs today and show you what a command centre would look like for you.",
+    faqs: [
+      {
+        q: "What is a command centre?",
+        a: "One home for your people and your agents. Your data is centralised, in-house autonomous agents run complex workflows, and your team keeps its oversight and expertise.",
+      },
+      {
+        q: "What is the CEO Agent?",
+        a: "A dedicated agent that sits above every other agent, reads across the whole operation and tells you what is working, what is breaking and what to do next. It comes with every command centre.",
+      },
+      {
+        q: "Does it replace our existing tools?",
+        a: "No. It connects to the tools you already use and brings their data together, so your team keeps working the way it does today.",
+      },
+      {
+        q: "Who stays in control?",
+        a: "Your team. Agents do the work and high-impact actions come to a person for approval first.",
+      },
+    ],
+  },
+  {
+    slug: "back-office-agents",
+    title: "Back-Office Agents",
+    shortTitle: "Back-Office Agents",
+    description:
+      "Agents that run your operations and admin like your number one employees. Each agent we deploy can save a business up to 100 hours a month.",
+    longDescription:
+      "AI agents for operations and admin: data entry, invoices, reporting, scheduling and the multi-step work between your tools. Built around how you already work, with each agent able to save up to 100 hours a month.",
     icon: "cost-reduction",
     useCases: [
       "Document processing, data extraction, and routing at any volume",
@@ -38,7 +85,7 @@ export const services: Service[] = [
         desc: "We keep operating it. It learns your patterns, handles the exceptions faster, and takes on more of the back office as the business grows.",
       },
     ],
-    ctaHeading: "Find out what your back office could run on its own",
+    ctaHeading: "See how many hours your operation could get back",
     ctaBody:
       "30 minutes. We’ll find the work that slows your business down and show you the agents that would take it on.",
     faqs: [
@@ -65,11 +112,43 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "revenue-operations",
-    title: "Revenue Operations Systems",
-    shortTitle: "Revenue Ops",
+    slug: "content",
+    title: "Content",
+    shortTitle: "Content",
     description:
-      "Once the back office runs itself, agents fill the pipeline. Prospecting, outreach, qualification and follow-up, running every day.",
+      "Agents that research, write and publish content in your voice, so your business shows up consistently without anyone sitting down to write.",
+    longDescription:
+      "AI content agents that research, write and publish organic content in your voice on a steady rhythm, from posts and articles to reports and briefings.",
+    icon: "content",
+    useCases: [
+      "Organic social posts and articles on a steady schedule",
+      "Thought leadership and sector content in your voice",
+      "Newsletters, briefings and client updates",
+      "Repurposing one piece of content across every channel",
+    ],
+    problem:
+      "Content works when it is consistent, and consistency is the first thing to slip when the team is busy. Content agents keep a steady flow going out in your voice, so your business stays visible while your people focus on clients.",
+    approach: [
+      { title: "Learn your voice", desc: "We study how you write, what you stand for and who you are speaking to." },
+      { title: "Build & Ship", desc: "We build agents that research, draft and publish on a rhythm that suits you." },
+      { title: "Compound", desc: "They learn what lands and sharpen the content every month." },
+    ],
+    ctaHeading: "Want to show up every week without writing every week?",
+    ctaBody:
+      "30 minutes. We will look at where you want to be seen and show you the content system that would get you there.",
+    faqs: [
+      {
+        q: "Will it sound like us?",
+        a: "Yes. The agents are trained on your voice and your expertise, and you can review anything before it goes out.",
+      },
+    ],
+  },
+  {
+    slug: "lead-generation",
+    title: "Lead Generation",
+    shortTitle: "Lead Generation",
+    description:
+      "Agents that find the right prospects, open the conversation in your voice and keep every lead moving, every single day.",
     longDescription:
       "AI agents for lead generation: prospecting, personalised outreach, qualification and pipeline follow-up, built into the tools your team already uses.",
     icon: "revenue-operations",
@@ -107,7 +186,7 @@ export const services: Service[] = [
       "30 minutes. We’ll look at how you win business today and show you where agents would add the most.",
     faqs: [
       {
-        q: "What does a revenue operations system do?",
+        q: "What does a lead generation system do?",
         a: "It runs the work that brings revenue in: prospecting and enrichment, outreach across email, LinkedIn, and calls, lead qualification, pipeline management and follow-up, and campaign management.",
       },
       {
@@ -125,124 +204,98 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "intelligence",
-    title: "Intelligence & Oversight Systems",
-    shortTitle: "Intelligence",
+    slug: "membership-management",
+    title: "Membership Management",
+    shortTitle: "Membership Management",
     description:
-      "A system that reads across the whole business, sees every number, and brings you the openings worth acting on. This is where the CEO Agent lives.",
+      "Agents that run membership operations end to end: records, renewals, questions and follow-ups, handled every day.",
     longDescription:
-      "AI agents that read across your sales, operations and finance data, join the dots and tell you what to do next, led by the CEO Agent in every system.",
-    icon: "intelligence",
+      "AI agents for membership businesses that keep records clean, handle renewals, answer member questions and follow up, across thousands of members.",
+    icon: "membership-management",
     useCases: [
-      "Cross-department data aggregation and pattern detection",
-      "Revenue opportunity identification from operational data",
-      "Anomaly detection across financial, operational, and customer data",
-      "Competitive intelligence monitoring and market signal tracking",
-      "Automated strategic reporting with actionable recommendations",
-      "The CEO Agent, a dedicated agent that thinks at the business level and tells you what’s working, what’s breaking, and what to do next",
+      "Member records kept accurate and up to date",
+      "Renewals, reminders and follow-ups handled on time",
+      "Member questions answered instantly",
+      "Onboarding new members smoothly from day one",
     ],
     problem:
-      "As a business grows, its data spreads out. Sales knows its numbers, marketing knows its metrics, operations knows its costs, and the full picture lives across all of them. The spike in complaints, the supplier you switched last month and the margin drop this quarter are often one story. There is simply too much moving too fast to track by hand. A system built for oversight watches all of it, in real time, and tells you what matters.",
+      "A membership business grows one member at a time, and every new member adds admin. Membership agents take on the records, renewals and questions, so the team can spend its time on the member experience and on growth.",
     approach: [
-      {
-        title: "Immerse",
-        desc: "We get to know the whole operation, not one department but all of them. How the data flows, where it gets stuck, and which decisions hang on it.",
-      },
-      {
-        title: "Architect",
-        desc: "We design the intelligence layer. Which sources feed in, what patterns to watch, what trips an alert, and how the insight reaches the right person.",
-      },
-      {
-        title: "Build & Ship",
-        desc: "We build the system, connect every data source, and deploy with real-time dashboards and alerting.",
-      },
-      {
-        title: "Compound",
-        desc: "The system learns what matters to you. It stops flagging noise and starts surfacing the signals that move the needle. By month six it’s seeing things month one couldn’t.",
-      },
+      { title: "Learn", desc: "We map how your membership runs, from sign-up to renewal." },
+      { title: "Build & Ship", desc: "We build the agents and connect them to your membership tools." },
+      { title: "Compound", desc: "They take on more of the work as your membership grows." },
     ],
-    ctaHeading:
-      "What would you do if you could see your entire operation in real time?",
+    ctaHeading: "Ready to grow your membership without growing the admin?",
     ctaBody:
-      "30 minutes. We’ll look at your data and show you what an intelligence system would surface.",
+      "30 minutes. We will look at how your membership runs and show you where agents would take the load.",
     faqs: [
       {
-        q: "What is the CEO Agent?",
-        a: "A dedicated agent that sits above every other agent, reads across the whole operation, and tells you what is working, what is breaking, and what to do next. It is included in every system we build.",
-      },
-      {
-        q: "What data does an intelligence system use?",
-        a: "The data you already have across sales, marketing, operations, and finance. We connect those sources so the system can spot patterns and anomalies no single team can see.",
-      },
-      {
-        q: "Is this just another dashboard?",
-        a: "No. It includes real-time dashboards and alerts, but the point is recommendations. Over time it learns what matters to you, flags less noise, and surfaces the signals that move the needle.",
-      },
-      {
-        q: "Where does our data go?",
-        a: "It is used only to run your system and never trains external models. Data handling is GDPR-aligned, with a data processing agreement (DPA) available.",
+        q: "Can it work with our existing membership software?",
+        a: "Yes. The agents connect to the tools you already use, so nothing about how your members join or pay has to change.",
       },
     ],
   },
   {
-    slug: "full-department",
-    title: "Full Department Systems",
-    shortTitle: "Full Departments",
+    slug: "website-revamps",
+    title: "Website Revamps",
+    shortTitle: "Website Revamps",
     description:
-      "A whole function, marketing, operations, or support, run by a coordinated team of agents, with people in the loop only where it counts.",
+      "A modern, fast website rebuilt around what your business does today, with agents built in so it works as hard as your team.",
     longDescription:
-      "A whole department run by a coordinated team of AI agents, from marketing to operations to support. It scales with your business and improves as it runs.",
-    icon: "full-department",
+      "Website revamps that rebuild your site around your business today, fast and clear, with AI agents built in to answer, capture and route every enquiry.",
+    icon: "website-revamps",
     useCases: [
-      "Full marketing departments, from creative to targeting to buying to reporting",
-      "Operations departments: procurement, scheduling, monitoring, compliance",
-      "Customer support: triage, response, escalation, knowledge management",
-      "Back-office functions: finance processing, HR admin, regulatory compliance",
-      "Any function that currently depends on a team doing repeatable, structured work",
+      "A rebuilt site that says clearly what you do",
+      "Fast, modern pages built to convert",
+      "Agents built in to answer questions and capture enquiries",
+      "Content structured so search engines and AI assistants understand you",
     ],
     problem:
-      "When a business grows, whole functions need to grow with it. Building a department the traditional way means recruiting, onboarding and managing a team before it can take on more work. A full department system runs the same work with a coordinated team of agents. Each one owns a role. They talk to each other, hand off work, bring the edge cases to a person and improve as they go. Your people lead, and the agents carry the volume.",
+      "Your website is often the first conversation a customer has with you. A revamp makes that conversation clear and modern, and building agents in means every visitor gets an answer straight away.",
     approach: [
-      {
-        title: "Diagnose",
-        desc: "We audit the whole function. Every role, process, handoff, and tool. Then we work out what agents can own and what genuinely needs a person.",
-      },
-      {
-        title: "Architect",
-        desc: "We design the full team. Who does what, how they coordinate, where work escalates, and where a person plugs in.",
-      },
-      {
-        title: "Build & Ship",
-        desc: "We build and deploy in phases. Core agents first, then more as the system proves itself on live work.",
-      },
-      {
-        title: "Compound",
-        desc: "The department gets better every month. The agents learn from every cycle, take on adjacent work, and the CEO Agent watches the whole thing from above.",
-      },
+      { title: "Understand", desc: "We learn what you do, who you serve and what you want visitors to do." },
+      { title: "Design & Build", desc: "We design and build the new site, with agents built in where they add value." },
+      { title: "Launch & Improve", desc: "We launch it and keep improving it as your business grows." },
     ],
-    ctaHeading: "Ready to build the department your growth needs?",
+    ctaHeading: "Is your website telling the story of the business you are today?",
     ctaBody:
-      "30 minutes. We’ll look at the function you’re trying to scale and show you what a system to run it would look like.",
+      "30 minutes. We will look at your current site and show you what a revamp would change.",
     faqs: [
       {
-        q: "Which departments can be run by agents?",
-        a: "Marketing, operations, customer support, and back-office work such as finance processing, HR admin, and compliance. Any function that depends on a team doing repeatable, structured work is a candidate.",
+        q: "Can you connect the new site to our agents?",
+        a: "Yes. The site can feed straight into your command centre, so enquiries are answered and routed the moment they arrive.",
       },
+    ],
+  },
+  {
+    slug: "customer-support",
+    title: "Customer Support",
+    shortTitle: "Customer Support",
+    description:
+      "Agents that answer customers on any channel, resolve what they can and hand the rest to the right person with full context.",
+    longDescription:
+      "AI customer support agents that answer on chat, email or voice, resolve routine requests, book and update, and route anything else to your team with the full context attached.",
+    icon: "customer-support",
+    useCases: [
+      "Instant answers on chat, email and voice",
+      "Bookings, updates and status checks completed end to end",
+      "Smart routing to the right person with the full context",
+      "Support available around the clock",
+    ],
+    problem:
+      "Customers expect a fast answer, whatever time they get in touch. Support agents handle the routine questions instantly and pass anything that needs a person to the right one, so your team spends its time where it matters most.",
+    approach: [
+      { title: "Learn", desc: "We learn your customers, your common questions and how you like them handled." },
+      { title: "Build & Ship", desc: "We build the agents and connect them to your channels and systems." },
+      { title: "Compound", desc: "They learn from every conversation and resolve more over time." },
+    ],
+    ctaHeading: "What would your customers say about an instant answer, every time?",
+    ctaBody:
+      "30 minutes. We will look at how customers reach you today and show you where agents would help most.",
+    faqs: [
       {
-        q: "Who stays in control?",
-        a: "You do. Agents do the work, edge cases escalate, and high-impact actions come to a person for approval before they happen, so you stay in control from one place.",
-      },
-      {
-        q: "Can we add more agents later?",
-        a: "Yes. We start with the agents that remove your biggest bottlenecks, then add more as your business grows and new work comes into view.",
-      },
-      {
-        q: "Do you build the whole department at once?",
-        a: "No. We build and deploy in phases: core agents first, then more as the system proves itself on live work.",
-      },
-      {
-        q: "What happens after it goes live?",
-        a: "We keep operating it. We monitor, tune, and catch edge cases every month, and the system takes on more of the work as it learns.",
+        q: "What happens when a customer needs a person?",
+        a: "The agent routes the conversation to the right person on your team with the full context attached, so the customer never has to repeat themselves.",
       },
     ],
   },
@@ -253,7 +306,7 @@ export const useCases: UseCase[] = [
     slug: "professional-services-backoffice",
     title: "A Back Office That Runs Itself",
     sector: "Professional Services",
-    systemType: "Cost Reduction",
+    systemType: "Back-Office Agents",
     subtext:
       "An accountancy and advisory firm whose back office grows with every new client, and wants that time back for client work.",
     problem:
@@ -304,7 +357,7 @@ export const useCases: UseCase[] = [
     slug: "membership-operations",
     title: "Membership & Community Operations",
     sector: "Membership & Community",
-    systemType: "Full Department",
+    systemType: "Membership Management",
     subtext:
       "A growing membership community where every new member adds admin, from renewals and events to the questions members ask every day.",
     problem:
@@ -360,7 +413,7 @@ export const useCases: UseCase[] = [
     slug: "recruitment-outbound",
     title: "Recruitment Outbound Lead Engine",
     sector: "Recruitment",
-    systemType: "Revenue Operations",
+    systemType: "Lead Generation",
     subtext:
       "A founder-led recruitment agency whose pipeline only fills when the partners find time to do outbound themselves.",
     problem:
@@ -416,7 +469,7 @@ export const useCases: UseCase[] = [
     slug: "estate-agency-growth",
     title: "Estate Agency Growth Engine",
     sector: "Estate Agency",
-    systemType: "Revenue Operations",
+    systemType: "Lead Generation",
     subtext:
       "A high-street sales agency that grows by winning more instructions and answering every buyer enquiry fast.",
     problem:

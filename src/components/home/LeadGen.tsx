@@ -140,10 +140,10 @@ export default function LeadGen() {
             proposal going out, come to you to approve first.
           </p>
           <Link
-            href="/services/revenue-operations"
+            href="/services/lead-generation"
             className="inline-flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:text-cyan-muted whitespace-nowrap"
           >
-            See the revenue system
+            See lead generation
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

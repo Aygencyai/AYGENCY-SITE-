@@ -108,9 +108,9 @@ export const answerPosts: InsightPost[] = [
       },
       nextStep(
         "Next step",
-        "Aygency's cost reduction systems are built to clear the back office first. Find out what that would take off your team's plate.",
-        "/services/cost-reduction",
-        "Cost reduction systems",
+        "Aygency's back-office agents take on the operations and admin first. Find out what they would take off your team's plate.",
+        "/services/back-office-agents",
+        "Back-office agents",
       ),
     ],
     faqs: [
@@ -219,9 +219,9 @@ export const answerPosts: InsightPost[] = [
       },
       nextStep(
         "Next step",
-        "A full department system gives you the capacity of a team without building one. Talk to us about where your business is capped today.",
-        "/services/full-department",
-        "Full department systems",
+        "Back-office agents give you the capacity of a team without building one. Talk to us about where your business is capped today.",
+        "/services/back-office-agents",
+        "Back-office agents",
       ),
     ],
     faqs: [
@@ -329,9 +329,9 @@ export const answerPosts: InsightPost[] = [
       },
       nextStep(
         "Next step",
-        "See how Aygency's cost reduction systems take on the admin, then talk to us before you post the job advert.",
-        "/services/cost-reduction",
-        "Cost reduction systems",
+        "See how Aygency's back-office agents take on the admin, then talk to us before you post the job advert.",
+        "/services/back-office-agents",
+        "Back-office agents",
       ),
     ],
     faqs: [

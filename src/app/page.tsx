@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import SystemTeaser from "@/components/home/SystemTeaser";
-import LeadGen from "@/components/home/LeadGen";
+import ServicesGrid from "@/components/home/ServicesGrid";
 import OperationsEngine from "@/components/home/OperationsEngine";
 import SystemCore from "@/components/home/SystemCore";
 import SelfProof from "@/components/home/SelfProof";
@@ -23,13 +23,13 @@ export default function HomePage() {
     <PageTransition>
       <Hero />
       <SocialProofStrip />
-      <OperationsEngine />
       <SystemTeaser />
+      <OperationsEngine />
       <SystemCore />
-      <LeadGen />
-      <SelfProof />
-      <HowItWorks />
+      <ServicesGrid />
       <WhyAygency />
+      <HowItWorks />
+      <SelfProof />
       <Compounding />
       <DataSecurity />
       <CTABanner />

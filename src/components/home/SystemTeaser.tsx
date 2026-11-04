@@ -16,7 +16,7 @@ export default function SystemTeaser() {
           transition={{ duration: 0.6 }}
           className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6"
         >
-          {`// the aygency system`}
+          {`// how they work`}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -25,7 +25,7 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
         >
-          Agents that work like your best people.
+          Agents that work like your number one employees.
         </motion.h2>
 
         <motion.p
@@ -35,9 +35,9 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          We start inside your business. We learn your workflows, your handoffs and the
-          exact points where things slow down, then design agents around them. Each one
-          works like a dedicated employee, only faster and to a higher standard.
+          Every agent is built around a real role in your business. It learns your workflows,
+          your standards and your judgement calls, then does the job the way your best person
+          would, only faster and more accurate.
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -46,10 +46,9 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-5 max-w-2xl mx-auto"
         >
-          They slot into the way you already work, using the tools you already have, so
-          your team&rsquo;s day carries on as normal with the bottlenecks gone. We draw on
-          eight specialist agents, start with the few that make the biggest difference and
-          add more as the business grows.
+          They work inside the tools you already have, so nothing about your day has to
+          change. We start with the agents that create the most value and add more as the
+          business grows.
         </motion.p>
 
         <motion.div
