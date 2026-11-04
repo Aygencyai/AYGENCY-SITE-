@@ -604,7 +604,7 @@ export const inclusions: string[] = [
   "Agents designed around your real workflows and connected to your existing tools",
   "The CEO Agent, reading across every agent and telling you what to do next",
   "Your Brain, a private knowledge layer that is yours to keep",
-  "A command centre where you see what agents did and approve high-impact actions",
+  "A command centre, one home for your people and agents, where your data is centralised and you approve high-impact actions",
   "Ongoing running, monitoring and improvement, for as long as you run the system",
   "Training for your team and a direct line to us",
   "GDPR-aligned data handling with a DPA available",

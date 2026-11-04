@@ -7,7 +7,7 @@ import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Faq from "@/components/ui/Faq";
-import type { InsightPost } from "@/lib/insights";
+import { AUTHOR, type InsightPost } from "@/lib/insights";
 
 export default function InsightPostClient({ post }: { post: InsightPost }) {
   return (
@@ -30,7 +30,7 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
             </Reveal>
             <Reveal delay={0.05}>
               <p className="font-mono text-xs text-cyan tracking-wider uppercase">
-                {post.updated ? `Updated ${post.updated}` : post.date} · {post.readTime}
+                By {AUTHOR.name}, {AUTHOR.jobTitle} · {post.updated ? `Updated ${post.updated}` : post.date} · {post.readTime}
               </p>
             </Reveal>
             <Reveal delay={0.1}>

@@ -86,7 +86,11 @@ const jsonLd = {
         "Business intelligence",
       ],
       // Companies House listing for AYGENCY LTD (17139454, Borehamwood).
-      sameAs: ["https://find-and-update.company-information.service.gov.uk/company/17139454"],
+      sameAs: [
+        "https://find-and-update.company-information.service.gov.uk/company/17139454",
+        "https://x.com/Aygencyai",
+        "https://www.instagram.com/aygencyai/",
+      ],
     },
     {
       "@type": "WebSite",

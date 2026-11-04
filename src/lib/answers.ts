@@ -360,7 +360,7 @@ export const answerPosts: InsightPost[] = [
       {
         heading: "How the command centre works",
         paragraphs: [
-          "Every Aygency system reports into one command centre. You can see what each agent did, why, and what it is waiting on. Routine work runs on its own. Anything you mark as high-impact, such as a payment, a refund, or a message to an important client, is prepared by the agent and waits for your approval.",
+          "Every Aygency system runs from one command centre: a single home for your people and your agents. It is the easiest way to centralise your data and have in-house autonomous agents complete complex workflows, while your team keeps oversight and brings its expertise. You can see what each agent did, why, and what it is waiting on. Routine work runs on its own. Anything you mark as high-impact, such as a payment, a refund, or a message to an important client, is prepared by the agent and waits for your approval.",
           "The CEO Agent sits above the specialists and gives you a plain read on the whole operation: what is working, what needs attention, and what to do next.",
         ],
       },

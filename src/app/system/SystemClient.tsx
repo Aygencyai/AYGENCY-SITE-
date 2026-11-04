@@ -83,7 +83,8 @@ export default function SystemClient() {
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
               A coordinated team of AI agents that clears the bottlenecks holding your
               business back. We design it around how you already work, run it from one
-              command centre with you approving what matters, and keep improving it.
+              command centre that brings your data, your people and your agents together,
+              with you approving what matters, and keep improving it.
             </p>
           </Reveal>
         </SectionContainer>

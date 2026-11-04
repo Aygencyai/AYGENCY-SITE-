@@ -120,6 +120,14 @@ export default function Footer() {
             <p className="text-sm text-ghost-muted mt-4">
               Based in the UK. Working with businesses everywhere.
             </p>
+            <div className="flex gap-4 mt-4">
+              <a href="https://x.com/Aygencyai" target="_blank" rel="noopener noreferrer" className="text-sm text-ghost-muted hover:text-cyan transition-colors">
+                X
+              </a>
+              <a href="https://www.instagram.com/aygencyai/" target="_blank" rel="noopener noreferrer" className="text-sm text-ghost-muted hover:text-cyan transition-colors">
+                Instagram
+              </a>
+            </div>
           </div>
         </div>
 

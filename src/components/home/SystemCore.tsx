@@ -186,8 +186,9 @@ export default function SystemCore() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          Your agents act. Anything high-impact comes to you to approve first, all from
-          one place.
+          One home for your people and your agents. Your data lives in one place, your
+          in-house agents run complex workflows, and anything high-impact comes to you
+          to approve first.
         </motion.p>
 
         <div className="mt-14">
