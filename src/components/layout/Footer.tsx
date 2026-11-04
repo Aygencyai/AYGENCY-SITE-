@@ -21,7 +21,7 @@ export default function Footer() {
               AYGENCY
             </Link>
             <p className="text-sm text-ghost-muted mt-4">
-              Custom AI agent systems. Built once, compounding forever.
+              AI agents that clear the way for businesses to scale.
             </p>
             <a
               href="mailto:build@aygency.ai"
@@ -118,8 +118,16 @@ export default function Footer() {
               build@aygency.ai
             </a>
             <p className="text-sm text-ghost-muted mt-4">
-              Based in London. Operating globally.
+              Based in the UK. Working with businesses everywhere.
             </p>
+            <div className="flex gap-4 mt-4">
+              <a href="https://x.com/Aygencyai" target="_blank" rel="noopener noreferrer" className="text-sm text-ghost-muted hover:text-cyan transition-colors">
+                X
+              </a>
+              <a href="https://www.instagram.com/aygencyai/" target="_blank" rel="noopener noreferrer" className="text-sm text-ghost-muted hover:text-cyan transition-colors">
+                Instagram
+              </a>
+            </div>
           </div>
         </div>
 
@@ -129,14 +137,18 @@ export default function Footer() {
             &copy; 2026 Aygency. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-ghost-muted hover:text-cyan transition-colors">
+            <Link href="/privacy" className="text-xs text-ghost-muted hover:text-cyan transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="text-xs text-ghost-muted hover:text-cyan transition-colors">
+            </Link>
+            <Link href="/terms" className="text-xs text-ghost-muted hover:text-cyan transition-colors">
               Terms
-            </a>
+            </Link>
           </div>
         </div>
+        <p className="mt-6 text-xs text-ghost-muted text-center sm:text-left">
+          AYGENCY LTD · Registered in England and Wales · Company no. 17139454 · 1st Floor, Spitalfields House,
+          Stirling Way, Borehamwood, Herts, United Kingdom, WD6 2FX
+        </p>
       </div>
     </footer>
   );

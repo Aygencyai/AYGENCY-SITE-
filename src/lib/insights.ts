@@ -1,6 +1,13 @@
+import type { Faq } from "@/types";
+import { answerPosts } from "@/lib/answers";
+
+// Author credited on every insight and answer page.
+export const AUTHOR = { name: "Louis Rosenberg", jobTitle: "Founder", url: "https://www.aygency.ai/about" };
+
 export interface InsightSection {
   heading?: string;
   paragraphs: string[];
+  links?: { href: string; label: string }[];
 }
 
 export interface InsightPost {
@@ -8,11 +15,13 @@ export interface InsightPost {
   title: string;
   excerpt: string;
   date: string;
+  updated?: string;
   readTime: string;
   content: InsightSection[];
+  faqs?: Faq[];
 }
 
-export const insightPosts: InsightPost[] = [
+const articlePosts: InsightPost[] = [
   {
     slug: "automation-vs-agent-systems",
     title: "Automation runs a task. Agent systems run an operation.",
@@ -92,3 +101,6 @@ export const insightPosts: InsightPost[] = [
     ],
   },
 ];
+
+// Newest first: answer pages, then the original articles.
+export const insightPosts: InsightPost[] = [...answerPosts, ...articlePosts];

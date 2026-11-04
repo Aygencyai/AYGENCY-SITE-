@@ -1,5 +1,4 @@
-"use client";
-
+// Server component: the post list is plain HTML so crawlers and AI assistants see it.
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import PageTransition from "@/components/ui/PageTransition";
@@ -35,9 +34,9 @@ export default function InsightsClient() {
       <section className="bg-void pt-12 pb-24 md:pt-16 md:pb-32">
         <SectionContainer>
           <div className="flex flex-col gap-6">
-            {insightPosts.map((post, i) => (
-              <Reveal key={post.slug} delay={i * 0.1}>
+            {insightPosts.map((post) => (
                 <Link
+                  key={post.slug}
                   href={`/insights/${post.slug}`}
                   className="group block rounded-xl bg-void-light/60 backdrop-blur-xl border border-ghost/[0.06] p-8 hover:shadow-card-hover hover:border-ghost/[0.12] transition-all duration-300"
                 >
@@ -58,7 +57,6 @@ export default function InsightsClient() {
                     />
                   </div>
                 </Link>
-              </Reveal>
             ))}
           </div>
         </SectionContainer>

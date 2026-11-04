@@ -59,7 +59,7 @@ export default function UseCaseDetailClient({
             <Reveal>
               <SectionHeading
                 eyebrow="The Problem"
-                heading="What they&rsquo;re dealing with"
+                heading="What&rsquo;s holding it back"
               />
             </Reveal>
             <Reveal delay={0.1}>

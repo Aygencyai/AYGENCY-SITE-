@@ -19,15 +19,15 @@ const stages: Stage[] = [
     step: "01",
     icon: Radar,
     label: "Lead Gen",
-    title: "It finds the business you’re missing",
-    body: "Your next customer is already out there, leaving signals. A company that just raised, a business hiring fast, an account showing real buying intent. The Lead Gen agent watches for those signals across your market and the open web, finds the right people behind them, and enriches every lead with the context that actually matters. Then it scores them, so what lands in your pipeline is prospects worth talking to, not a list to grind through.",
+    title: "It finds your next customers",
+    body: "Your next customer is already out there, leaving signals. A company that just raised, a business hiring fast, an account showing real buying intent. The Lead Gen agent watches for those signals across your market and the open web, finds the right people behind them, and enriches every lead with the context that actually matters. Then it scores them, so what lands in your pipeline is prospects worth talking to.",
   },
   {
     step: "02",
     icon: Send,
     label: "Outreach",
     title: "It turns them into conversations that close",
-    body: "Then the Outreach agent goes to work, and not with a blast. Every message is built for the person reading it: who they are, what they care about, why this matters to them now. We pour real work into the psychology of how it opens, how it follows up, how it reads and handles a reply, all so more of those conversations become meetings, and more of those meetings become revenue.",
+    body: "Then the Outreach agent goes to work, one person at a time. Every message is built for the person reading it: who they are, what they care about, why this matters to them now. We pour real work into the psychology of how it opens, how it follows up, how it reads and handles a reply, all so more of those conversations become meetings, and more of those meetings become revenue.",
   },
 ];
 
@@ -78,7 +78,7 @@ export default function LeadGen() {
             transition={{ duration: 0.6 }}
             className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6"
           >
-            {`// new business`}
+            {`// then, new business`}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -87,7 +87,7 @@ export default function LeadGen() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
           >
-            Find new prospects. Turn them into high-value opportunities.
+            Then fill the pipeline.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -96,8 +96,9 @@ export default function LeadGen() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            Two agents run your new business as one engine. One finds the opportunities, the
-            other turns them into revenue, and each one makes the other sharper as they go.
+            With the back office running itself, the next ceiling is new business. Two agents
+            work it as one engine. One finds the opportunities, the other turns them into
+            conversations, and each makes the other sharper as they go.
           </motion.p>
         </div>
 
@@ -135,9 +136,8 @@ export default function LeadGen() {
           className="mt-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
         >
           <p className="font-sans text-lg leading-[1.7] text-ghost max-w-2xl">
-            It runs every day and finds more than a desk of people could. The better it gets
-            at finding and closing, the more revenue it puts on the table. That is where the
-            real value lives.
+            It runs every day and gets sharper with every reply. High-impact steps, like a
+            proposal going out, come to you to approve first.
           </p>
           <Link
             href="/services/revenue-operations"

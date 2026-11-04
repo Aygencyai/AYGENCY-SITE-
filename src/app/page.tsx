@@ -23,10 +23,10 @@ export default function HomePage() {
     <PageTransition>
       <Hero />
       <SocialProofStrip />
-      <SystemTeaser />
-      <LeadGen />
       <OperationsEngine />
+      <SystemTeaser />
       <SystemCore />
+      <LeadGen />
       <SelfProof />
       <HowItWorks />
       <WhyAygency />

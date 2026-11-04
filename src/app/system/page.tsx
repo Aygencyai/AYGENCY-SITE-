@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import SystemClient from "./SystemClient";
 
 const description =
-  "The Aygency System: a CEO Agent and a core of specialist agents that run your operation. We prescribe the system, tailor it to your business, and operate it for you.";
+  "The Aygency System: a CEO Agent and specialist AI agents designed around how your business works, run from one command centre where you approve what matters.";
 
 export const metadata: Metadata = {
   title: "The Aygency System | Aygency",

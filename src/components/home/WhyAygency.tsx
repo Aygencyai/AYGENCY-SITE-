@@ -6,16 +6,16 @@ import GlassCard from "@/components/ui/GlassCard";
 
 const comparisons = [
   {
-    title: "It gets better on its own.",
-    body: "This isn\u2019t static automation that does the same thing forever. An agent system learns from how your business actually runs and compounds in value by itself. What you buy is worth more next quarter than it is today.",
+    title: "We learn your business first.",
+    body: "Every system starts with your real workflows and pain points. The agents are designed around how you already work, so they fit in from day one and your team carries on as normal.",
   },
   {
     title: "We operate it. Forever.",
-    body: "We don\u2019t build it and hand you the keys. We run the system for as long as you do, keeping it safe and tuning it as the business changes, so you\u2019re never left holding something that\u2019s quietly gone stale.",
+    body: "We run the system for as long as you do, keeping it safe and tuning it as the business changes. It learns from how your business runs, so it is worth more next quarter than it is today.",
   },
   {
-    title: "A specialist for every job.",
-    body: "One agent stretched across everything does nothing well. Each of ours is built for a single job, with the CEO Agent reading across all of them. You get the depth of a real department, not a single assistant trying to be everywhere at once.",
+    title: "It grows with you.",
+    body: "Each agent is a specialist built for one job, with the CEO Agent reading across all of them. As the business grows we add agents, so the system keeps pace with you.",
   },
 ];
 

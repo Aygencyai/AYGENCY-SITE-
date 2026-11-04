@@ -1,6 +1,7 @@
+import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { insightPosts } from "@/lib/insights";
+import { AUTHOR, insightPosts } from "@/lib/insights";
 import InsightPostClient from "./InsightPostClient";
 import PageTransition from "@/components/ui/PageTransition";
 import { SITE_URL } from "@/lib/site";
@@ -49,9 +50,14 @@ export default async function InsightPostPage({
     headline: post.title,
     description: post.excerpt,
     datePublished: new Date(`${post.date} UTC`).toISOString(),
+    dateModified: new Date(`${post.updated ?? post.date} UTC`).toISOString(),
     url: `${SITE_URL}/insights/${slug}`,
-    author: { "@type": "Organization", name: "Aygency", url: SITE_URL },
-    publisher: { "@type": "Organization", name: "Aygency", url: SITE_URL },
+    author: {
+      "@type": "Person",
+      ...AUTHOR,
+      worksFor: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "AYGENCY LTD" },
+    },
+    publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency", url: SITE_URL },
   };
 
   return (
@@ -60,6 +66,7 @@ export default async function InsightPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
+      <BreadcrumbJsonLd trail={[["Insights", "/insights"], [post.title, `/insights/${slug}`]]} />
       <InsightPostClient post={post} />
     </PageTransition>
   );

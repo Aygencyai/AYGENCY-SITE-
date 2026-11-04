@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import BrainClient from "./BrainClient";
 
 const description =
-  "Every system we build comes with a Brain: a private, always-current knowledge layer that holds how your business runs, searchable in plain language, and yours to keep forever.";
+  "Every Aygency system comes with a Brain: a private, always-current knowledge layer that holds how your business runs, searchable in plain language and yours to keep.";
 
 export const metadata: Metadata = {
   title: "The Brain | Aygency",

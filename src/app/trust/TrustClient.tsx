@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock, ShieldCheck, Activity, type LucideIcon } from "lucide-react";
+import { Lock, Layers, ShieldCheck, Activity, type LucideIcon } from "lucide-react";
 import PageTransition from "@/components/ui/PageTransition";
 import SectionContainer from "@/components/ui/SectionContainer";
 import Reveal from "@/components/ui/Reveal";
@@ -14,18 +14,23 @@ import MagneticButton from "@/components/ui/MagneticButton";
 const pillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Lock,
-    title: "Your data, your environment",
-    body: "Every system runs inside your own infrastructure. Your data never trains external models, and never leaves your environment unless you say so. Handled to UK GDPR standards.",
+    title: "Your data, handled with care",
+    body: "Every system is built privacy-first. Your data is used only to run your system and never trains external models. GDPR-aligned data handling with a DPA available.",
+  },
+  {
+    icon: Layers,
+    title: "Kept separate for every client",
+    body: "Each client's system and data are kept separate from every other client's. What your agents learn about your business is used to run your business, and nobody else's.",
   },
   {
     icon: ShieldCheck,
     title: "Human oversight where it matters",
-    body: "High-impact actions route to a human before they happen. Every system has a kill-switch and can roll back to a known-good state. The agents act; you keep control.",
+    body: "Everything runs through one command centre. Agents act, and high-impact actions come to you for approval before they happen. Every system can be paused and rolled back to a known-good state.",
   },
   {
     icon: Activity,
-    title: "Operated, not abandoned",
-    body: "We monitor every system, tune it, and catch edge cases as they appear. Reliability isn’t a promise we make once. It’s the work we do every month.",
+    title: "Operated for as long as you run it",
+    body: "We monitor every system, tune it and handle edge cases as they appear. Reliability is work we do every month, and the system keeps improving as a result.",
   },
 ];
 
@@ -49,8 +54,8 @@ export default function TrustClient() {
           </h1>
           <Reveal delay={0.1}>
             <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-              We operate agent systems inside real businesses, on real data. That
-              only works if it&rsquo;s safe. Here&rsquo;s how we hold that line.
+              Our agents work inside real businesses, on real data, so safety and
+              control are built into every system from the start. Here&rsquo;s how.
             </p>
           </Reveal>
         </SectionContainer>
@@ -59,7 +64,7 @@ export default function TrustClient() {
       {/* Pillars */}
       <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-32">
         <SectionContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {pillars.map((pillar, i) => {
               const Icon = pillar.icon;
               return (
@@ -100,7 +105,7 @@ export default function TrustClient() {
             <Reveal delay={0.1}>
               <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
                 Tell us your requirements and we&rsquo;ll walk you through exactly how
-                a system would run inside your environment.
+                a system would handle your data.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
