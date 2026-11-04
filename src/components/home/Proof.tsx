@@ -9,8 +9,8 @@ const results = [
     body: "A single agent we deployed has saved one business over 100 hours of work.",
   },
   {
-    stat: "4 hours → 12 min",
-    label: "one weekly workflow",
+    stat: "4h → 12m",
+    label: "4 hours of weekly work, now 12 minutes",
     body: "A complex workflow that took about 4 hours every week, rebuilt with autonomous agents. It now gets done in about 12 minutes.",
   },
 ];
