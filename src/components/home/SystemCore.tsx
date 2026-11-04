@@ -174,8 +174,9 @@ export default function SystemCore() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6">{`// the command centre`}</p>
           <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            A Home for Your Agents. A Home for Your People.
+            One Home for Your People and Your Agents.
           </h2>
         </motion.div>
 
@@ -186,10 +187,21 @@ export default function SystemCore() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          Our command centre brings both together. Your data is centralised, in-house
-          autonomous agents run complex workflows, and your team keeps its oversight and
-          expertise. People and agents working side by side is the best of both worlds,
-          and the fastest way to grow your operational capacity.
+          We built it by sitting down with businesses and finding their real bottlenecks.
+          It was rarely the work itself. It was the separate systems the work is spread
+          across. Give AI agents yet another home away from your team and you add to the
+          problem.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="font-sans text-lg leading-[1.7] text-ghost mt-5 max-w-2xl mx-auto"
+        >
+          So the command centre brings everyone together. Your data in one place, agents
+          working alongside your team, and oversight and expertise staying with your people.
+          The result is more operational capacity without more headcount.
         </motion.p>
 
         <div className="mt-14">
@@ -203,10 +215,11 @@ export default function SystemCore() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-base leading-relaxed text-ghost-muted"
           >
-            The CEO Agent reads across every other agent, catches what no single agent can
-            see and brings it straight to you. The Brain underneath holds how your business
-            runs, kept current by the agents as they work. You talk to one, and everything
-            runs on the other.
+            The CEO Agent reads across every specialist and brings what matters straight to
+            you. The Brain underneath holds how your business runs, kept current by the
+            agents as they work. This is what Aygency does best, and it isn&rsquo;t a tool
+            you&rsquo;re left to figure out. We design it, deliver it and run it with you,
+            as one complete package.
           </motion.p>
 
           <motion.p
@@ -215,7 +228,7 @@ export default function SystemCore() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-mono text-sm tracking-wide uppercase text-cyan mt-6"
           >
-            The CEO Agent, the Brain and the command centre come with every system we build.
+            Every system we build comes with the command centre, the CEO Agent and the Brain.
           </motion.p>
         </div>
       </div>

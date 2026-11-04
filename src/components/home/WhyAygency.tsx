@@ -7,15 +7,15 @@ import GlassCard from "@/components/ui/GlassCard";
 const comparisons = [
   {
     title: "Built around you.",
-    body: "Every system starts with your real workflows. We design the agents around how your business already works, so they fit in from day one and your team carries on as normal.",
+    body: "We start with how your business really runs, then design agents that slot into it. Your team carries on as normal, with the manual work taken off their plate.",
   },
   {
     title: "Your AI transformation partner.",
-    body: "We go deep into your business to find the most valuable things to build first. Then we keep deploying AI and solving new problems as your growth operators, for as long as you grow.",
+    body: "We find the most valuable things to build first, then stay on as your growth operators, deploying new agents and solving new bottlenecks as you scale.",
   },
   {
     title: "Built once, compounding forever.",
-    body: "We operate every system we build. It learns from how your business runs, so it is worth more next quarter than it is today, and each new agent adds to what is already there.",
+    body: "Every agent learns from each cycle and we keep tuning it, so the system is worth more next quarter than today. Each new agent adds to what is already there.",
   },
 ];
 

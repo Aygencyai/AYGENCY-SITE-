@@ -29,22 +29,22 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Aygency | AI Agents That Clear the Way for Your Business to Scale",
+  title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
   description:
-    "We build AI agents that take on the back office and fill the pipeline, slot into how you already work, and keep improving, so your business can scale further.",
+    "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   openGraph: {
-    title: "Aygency | AI Agents That Clear the Way for Your Business to Scale",
+    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
     description:
-      "We build AI agents that take on the back office and fill the pipeline, slot into how you already work, and keep improving, so your business can scale further.",
+      "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
     type: "website",
     url: "/",
     siteName: "Aygency",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency | AI Agents That Clear the Way for Your Business to Scale",
+    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
     description:
-      "We build AI agents that take on the back office and fill the pipeline, slot into how you already work, and keep improving, so your business can scale further.",
+      "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   },
   icons: {
     icon: "/icon.png",
