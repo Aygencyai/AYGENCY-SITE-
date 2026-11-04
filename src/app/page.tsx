@@ -3,6 +3,7 @@ import Hero from "@/components/home/Hero";
 import SystemTeaser from "@/components/home/SystemTeaser";
 import ServicesGrid from "@/components/home/ServicesGrid";
 import Proof from "@/components/home/Proof";
+import Quality from "@/components/home/Quality";
 import SystemCore from "@/components/home/SystemCore";
 import WhyAygency from "@/components/home/WhyAygency";
 import DataSecurity from "@/components/home/DataSecurity";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Hero />
       <SystemTeaser />
       <Proof />
+      <Quality />
       <SystemCore />
       <WhyAygency />
       <ServicesGrid />
