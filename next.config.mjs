@@ -12,6 +12,7 @@ const nextConfig = {
       { source: "/services/revenue-operations", destination: "/services/lead-generation", permanent: true },
       { source: "/services/intelligence", destination: "/services/command-centre", permanent: true },
       { source: "/services/full-department", destination: "/services", permanent: true },
+      { source: "/services/website-revamps", destination: "/services/website-overhaul", permanent: true },
     ];
   },
 };

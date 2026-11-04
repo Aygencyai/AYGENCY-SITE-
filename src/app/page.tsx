@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
 import SystemTeaser from "@/components/home/SystemTeaser";
 import ServicesGrid from "@/components/home/ServicesGrid";
-import Proof from "@/components/home/Proof";
 import Quality from "@/components/home/Quality";
 import SystemCore from "@/components/home/SystemCore";
 import WhyAygency from "@/components/home/WhyAygency";
@@ -19,11 +18,10 @@ export default function HomePage() {
   return (
     <PageTransition>
       <Hero />
+      <WhyAygency />
       <SystemTeaser />
-      <Proof />
       <Quality />
       <SystemCore />
-      <WhyAygency />
       <ServicesGrid />
       <DataSecurity />
       <CTABanner />

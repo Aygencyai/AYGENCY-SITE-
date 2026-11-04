@@ -38,7 +38,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-8"
               >
-                {`// AI agents for growing businesses`}
+                {`// AI agent systems for growing businesses`}
               </motion.p>
 
               <h1 className="font-heading text-[28px] min-[400px]:text-[36px] sm:text-[48px] lg:text-[68px] font-bold uppercase leading-[0.95] text-white">
@@ -83,9 +83,9 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 2.8, ease: "easeOut" }}
                   className="font-sans text-base font-normal leading-[1.7] text-ghost-muted mt-4"
                 >
-                  AI agents that replace the manual work running your operation. They
+                  AI agents that take over the manual work running your operation. They
                   slot into the way your business already works and do the job like
-                  your best people: faster, more accurate, and never a day off.
+                  your best people, only faster, more accurate and never a day off.
                 </motion.p>
               </div>
 
@@ -101,15 +101,7 @@ export default function Hero() {
                     href="/contact"
                     className="inline-block rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
                   >
-                    Book a Call
-                  </Link>
-                </MagneticButton>
-                <MagneticButton>
-                  <Link
-                    href="/services"
-                    className="inline-block rounded-lg border border-cyan/30 bg-transparent px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-all duration-200 hover:bg-cyan/[0.05] hover:border-cyan/50"
-                  >
-                    What We Build
+                    Book a call
                   </Link>
                 </MagneticButton>
               </motion.div>

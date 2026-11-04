@@ -6,11 +6,13 @@ import { ArrowRight } from "lucide-react";
 const roles = [
   "Back office & admin",
   "Operations",
+  "Finance admin",
   "Reporting",
+  "Knowledge & answers",
   "Customer support",
+  "Membership",
   "Content",
   "Lead generation",
-  "Membership",
 ];
 
 export default function SystemTeaser() {
@@ -43,9 +45,9 @@ export default function SystemTeaser() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
         >
-          We don&rsquo;t build one assistant that tries to do it all. We build a team of
-          specialist agents, each with one job, each working like your number one employee.
-          A CEO Agent coordinates them, so they work as one.
+          Every agent is built around one real job and does it like your number one employee.
+          Together they work as a team of specialists, coordinated by a CEO Agent and backed
+          by one shared Brain that knows how your business runs.
         </motion.p>
 
         <motion.div

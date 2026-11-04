@@ -7,15 +7,15 @@ import GlassCard from "@/components/ui/GlassCard";
 const comparisons = [
   {
     title: "Built around you.",
-    body: "We start with how your business really runs, then design agents that slot into it. Your team carries on as normal, with the manual work taken off their plate.",
+    body: "Your workflows, your data, your standards. Nothing generic.",
   },
   {
     title: "Your AI transformation partner.",
-    body: "We find the most valuable things to build first, then stay on as your growth operators, deploying new agents and solving new bottlenecks as you scale.",
+    body: "We don't build and leave. We stay on as your growth operators for AI, finding the next bottleneck and clearing it.",
   },
   {
-    title: "Built once, compounding forever.",
-    body: "Every agent learns from each cycle and we keep tuning it, so the system is worth more next quarter than today. Each new agent adds to what is already there.",
+    title: "Compounding, not depreciating.",
+    body: "Every agent learns from the work it does, so the system is worth more every month it runs.",
   },
 ];
 
@@ -37,6 +37,11 @@ export default function WhyAygency() {
             <br />
             <span className="text-cyan">We make the system work for you.</span>
           </h2>
+          <p className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-3xl">
+            Off-the-shelf AI asks your team to change how they work. We do it the other way
+            round. We go deep into your business first, learn how it really runs, and build
+            every agent around your people, your tools and your way of doing things.
+          </p>
         </motion.div>
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">

@@ -16,6 +16,7 @@ import { services } from "@/lib/data";
 const systemFit: Record<string, string> = {
   "command-centre": "CEO Agent · the Brain · your in-house agents",
   "back-office-agents": "Operations · Analyst · CEO Agent",
+  "business-brain": "the Brain · CEO Agent",
   "content": "Content Production · Strategist",
   "lead-generation": "Lead Gen · Outreach · Strategist · CEO Agent",
   "membership-management": "Operations · Front-Desk",
@@ -43,7 +44,7 @@ export default function ServicesClient() {
             </h2>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                Every engagement starts with the command centre and the back-office agents that can save a business hundreds of hours a week. From there we build out content, lead generation, membership, your website and customer support, all designed around how your business already works.
+                Every engagement starts with the command centre and the back-office agents that can save a business hundreds of hours a week. From there we build out Business Brain, customer support, membership, lead generation, content and your website, all designed around how your business already works.
               </p>
             </Reveal>
           </div>

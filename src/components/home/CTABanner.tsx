@@ -96,9 +96,8 @@ export default function CTABanner() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
-          We&rsquo;ll map your business, find where AI creates the most value and show
-          you the agents that would deliver it. You keep the plan whether you build with us or not.
-          30 minutes.
+          Tell us where the hours go. We&rsquo;ll show you which agents would win them back
+          first.
         </motion.p>
 
         <motion.div
@@ -112,7 +111,7 @@ export default function CTABanner() {
               href="/contact"
               className="inline-block rounded-lg bg-cyan px-10 py-4 font-heading text-sm font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
             >
-              Book a Call
+              Book a call
             </Link>
           </MagneticButton>
         </motion.div>

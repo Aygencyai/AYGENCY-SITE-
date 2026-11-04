@@ -47,9 +47,7 @@ export default function SelfProof() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            These are systems we run today, in live businesses and in our own. Aygency runs
-            on the same agents we build for clients, so we know first-hand what it takes to
-            get them right.
+            These are systems we run today, in live businesses.
           </motion.p>
         </div>
 

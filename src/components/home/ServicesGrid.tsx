@@ -39,8 +39,8 @@ export default function ServicesGrid() {
             Start at the core. Build out from there.
           </h2>
           <p className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6">
-            Every engagement starts with the command centre and back-office agents, where
-            the most hours are won. From there, we extend into the rest of the business.
+            Every system starts with the command centre and the back office, where the most
+            hours are won. From there, we extend into the rest of the business.
           </p>
         </motion.div>
 
@@ -49,10 +49,10 @@ export default function ServicesGrid() {
             <Card key={s.slug} slug={s.slug} title={s.title} description={s.description} big />
           ))}
         </div>
-        {/* 3 + 2 on desktop, the second row centred */}
+        {/* 3 + 3 on desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mt-6">
           {rest.map((s) => (
-            <div key={s.slug} className="lg:col-span-2 lg:[&:nth-child(4)]:col-start-2">
+            <div key={s.slug} className="lg:col-span-2">
               <Card slug={s.slug} title={s.shortTitle} description={s.description} />
             </div>
           ))}

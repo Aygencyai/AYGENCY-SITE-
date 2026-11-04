@@ -6,7 +6,7 @@ export const services: Service[] = [
     title: "Command Centre",
     shortTitle: "Command Centre",
     description:
-      "One home for your people and your agents. Your data is centralised, in-house autonomous agents run complex workflows, and your team keeps its oversight and expertise.",
+      "One home for your people, your agents and your data, with you in control of what matters.",
     longDescription:
       "A command centre that brings your people and your AI agents into one home. Data centralised, complex workflows run by in-house autonomous agents, and the CEO Agent reading across the whole operation.",
     icon: "command-centre",
@@ -53,7 +53,7 @@ export const services: Service[] = [
     title: "Back-Office Agents",
     shortTitle: "Back-Office Agents",
     description:
-      "Agents that run your operations and admin like your number one employees. Each agent we deploy can save a business up to 100 hours a month.",
+      "Admin, operations, finance admin and reporting, handled every day without the manual effort.",
     longDescription:
       "AI agents for operations and admin: data entry, invoices, reporting, scheduling and the multi-step work between your tools. Built around how you already work, with each agent able to save up to 100 hours a month.",
     icon: "cost-reduction",
@@ -112,34 +112,98 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "content",
-    title: "Content",
-    shortTitle: "Content",
+    slug: "business-brain",
+    title: "Business Brain",
+    shortTitle: "Business Brain",
     description:
-      "Agents that research, write and publish content in your voice, so your business shows up consistently without anyone sitting down to write.",
+      "Your in-house knowledge layer. Your team asks a question and gets the answer from your own documents, data and history in seconds.",
     longDescription:
-      "AI content agents that research, write and publish organic content in your voice on a steady rhythm, from posts and articles to reports and briefings.",
-    icon: "content",
+      "Business Brain is an in-house knowledge layer built on the same Brain that powers every Aygency system. Your team asks a question and gets the answer from your own documents, data and history in seconds.",
+    icon: "business-brain",
     useCases: [
-      "Organic social posts and articles on a steady schedule",
-      "Thought leadership and sector content in your voice",
-      "Newsletters, briefings and client updates",
-      "Repurposing one piece of content across every channel",
+      "Answers drawn from your own documents, data and history",
+      "Policies, processes and past work found in seconds, not hours",
+      "New starters getting up to speed without chasing colleagues",
+      "Knowledge kept current as your business and your agents work",
     ],
     problem:
-      "Content works when it is consistent, and consistency is the first thing to slip when the team is busy. Content agents keep a steady flow going out in your voice, so your business stays visible while your people focus on clients.",
+      "Most of what your business knows sits in documents, inboxes and people's heads. Finding the right answer means searching, asking around and waiting. Business Brain puts that knowledge in one place your team can ask, so the answer comes back in seconds and your best people stop being the help desk.",
     approach: [
-      { title: "Learn your voice", desc: "We study how you write, what you stand for and who you are speaking to." },
-      { title: "Build & Ship", desc: "We build agents that research, draft and publish on a rhythm that suits you." },
-      { title: "Compound", desc: "They learn what lands and sharpen the content every month." },
+      { title: "Learn", desc: "We map where your knowledge lives, from documents and data to the history of how work gets done." },
+      { title: "Build & Ship", desc: "We connect it to the Brain and give your team one place to ask questions and get answers." },
+      { title: "Compound", desc: "It keeps itself current as your business and your agents work, so the answers get better over time." },
     ],
-    ctaHeading: "Want to show up every week without writing every week?",
+    ctaHeading: "What could your team do with every answer a question away?",
     ctaBody:
-      "30 minutes. We will look at where you want to be seen and show you the content system that would get you there.",
+      "30 minutes. We will look at where your knowledge lives today and show you what Business Brain would give your team.",
     faqs: [
       {
-        q: "Will it sound like us?",
-        a: "Yes. The agents are trained on your voice and your expertise, and you can review anything before it goes out.",
+        q: "Does it use our own information?",
+        a: "Yes. Answers come from your own documents, data and history, and access follows the same privacy-first standards as every system we build.",
+      },
+    ],
+  },
+  {
+    slug: "customer-support",
+    title: "Customer Support",
+    shortTitle: "Customer Support",
+    description:
+      "Fast, accurate answers for your customers on every channel, with anything tricky handed to your team.",
+    longDescription:
+      "AI customer support agents that answer on chat, email or voice, resolve routine requests, book and update, and route anything else to your team with the full context attached.",
+    icon: "customer-support",
+    useCases: [
+      "Instant answers on chat, email and voice",
+      "Bookings, updates and status checks completed end to end",
+      "Smart routing to the right person with the full context",
+      "Support available around the clock",
+    ],
+    problem:
+      "Customers expect a fast answer, whatever time they get in touch. Support agents handle the routine questions instantly and pass anything that needs a person to the right one, so your team spends its time where it matters most.",
+    approach: [
+      { title: "Learn", desc: "We learn your customers, your common questions and how you like them handled." },
+      { title: "Build & Ship", desc: "We build the agents and connect them to your channels and systems." },
+      { title: "Compound", desc: "They learn from every conversation and resolve more over time." },
+    ],
+    ctaHeading: "What would your customers say about an instant answer, every time?",
+    ctaBody:
+      "30 minutes. We will look at how customers reach you today and show you where agents would help most.",
+    faqs: [
+      {
+        q: "What happens when a customer needs a person?",
+        a: "The agent routes the conversation to the right person on your team with the full context attached, so the customer never has to repeat themselves.",
+      },
+    ],
+  },
+  {
+    slug: "membership-management",
+    title: "Membership Management",
+    shortTitle: "Membership Management",
+    description:
+      "Sign-ups, renewals, bookings and member questions, run end to end.",
+    longDescription:
+      "AI agents for membership businesses that keep records clean, handle renewals, answer member questions and follow up, across thousands of members.",
+    icon: "membership-management",
+    useCases: [
+      "Member records kept accurate and up to date",
+      "Renewals, reminders and follow-ups handled on time",
+      "Member questions answered instantly",
+      "Onboarding new members smoothly from day one",
+    ],
+    problem:
+      "A membership business grows one member at a time, and every new member adds admin. Membership agents take on the records, renewals and questions, so the team can spend its time on the member experience and on growth.",
+    approach: [
+      { title: "Learn", desc: "We map how your membership runs, from sign-up to renewal." },
+      { title: "Build & Ship", desc: "We build the agents and connect them to your membership tools." },
+      { title: "Compound", desc: "They take on more of the work as your membership grows." },
+    ],
+    ctaHeading: "Ready to grow your membership without growing the admin?",
+    ctaBody:
+      "30 minutes. We will look at how your membership runs and show you where agents would take the load.",
+    faqs: [
+      {
+        q: "Can it work with our existing membership software?",
+        a: "Yes. The agents connect to the tools you already use, so nothing about how your members join or pay has to change.",
       },
     ],
   },
@@ -148,7 +212,7 @@ export const services: Service[] = [
     title: "Lead Generation",
     shortTitle: "Lead Generation",
     description:
-      "Agents that find the right prospects, open the conversation in your voice and keep every lead moving, every single day.",
+      "Agents that find, research and reach the right prospects, and book the meetings.",
     longDescription:
       "AI agents for lead generation: prospecting, personalised outreach, qualification and pipeline follow-up, built into the tools your team already uses.",
     icon: "revenue-operations",
@@ -204,46 +268,46 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "membership-management",
-    title: "Membership Management",
-    shortTitle: "Membership Management",
+    slug: "content",
+    title: "Content",
+    shortTitle: "Content",
     description:
-      "Agents that run membership operations end to end: records, renewals, questions and follow-ups, handled every day.",
+      "Content in your voice, researched, drafted and published on a rhythm that suits you.",
     longDescription:
-      "AI agents for membership businesses that keep records clean, handle renewals, answer member questions and follow up, across thousands of members.",
-    icon: "membership-management",
+      "AI content agents that research, write and publish organic content in your voice on a steady rhythm, from posts and articles to reports and briefings.",
+    icon: "content",
     useCases: [
-      "Member records kept accurate and up to date",
-      "Renewals, reminders and follow-ups handled on time",
-      "Member questions answered instantly",
-      "Onboarding new members smoothly from day one",
+      "Organic social posts and articles on a steady schedule",
+      "Thought leadership and sector content in your voice",
+      "Newsletters, briefings and client updates",
+      "Repurposing one piece of content across every channel",
     ],
     problem:
-      "A membership business grows one member at a time, and every new member adds admin. Membership agents take on the records, renewals and questions, so the team can spend its time on the member experience and on growth.",
+      "Content works when it is consistent, and consistency is the first thing to slip when the team is busy. Content agents keep a steady flow going out in your voice, so your business stays visible while your people focus on clients.",
     approach: [
-      { title: "Learn", desc: "We map how your membership runs, from sign-up to renewal." },
-      { title: "Build & Ship", desc: "We build the agents and connect them to your membership tools." },
-      { title: "Compound", desc: "They take on more of the work as your membership grows." },
+      { title: "Learn your voice", desc: "We study how you write, what you stand for and who you are speaking to." },
+      { title: "Build & Ship", desc: "We build agents that research, draft and publish on a rhythm that suits you." },
+      { title: "Compound", desc: "They learn what lands and sharpen the content every month." },
     ],
-    ctaHeading: "Ready to grow your membership without growing the admin?",
+    ctaHeading: "Want to show up every week without writing every week?",
     ctaBody:
-      "30 minutes. We will look at how your membership runs and show you where agents would take the load.",
+      "30 minutes. We will look at where you want to be seen and show you the content system that would get you there.",
     faqs: [
       {
-        q: "Can it work with our existing membership software?",
-        a: "Yes. The agents connect to the tools you already use, so nothing about how your members join or pay has to change.",
+        q: "Will it sound like us?",
+        a: "Yes. The agents are trained on your voice and your expertise, and you can review anything before it goes out.",
       },
     ],
   },
   {
-    slug: "website-revamps",
-    title: "Website Revamps",
-    shortTitle: "Website Revamps",
+    slug: "website-overhaul",
+    title: "Website Overhaul",
+    shortTitle: "Website Overhaul",
     description:
-      "A modern, fast website rebuilt around what your business does today, with agents built in so it works as hard as your team.",
+      "A site rebuilt around how you sell, with agents built in where they add value.",
     longDescription:
-      "Website revamps that rebuild your site around your business today, fast and clear, with AI agents built in to answer, capture and route every enquiry.",
-    icon: "website-revamps",
+      "Website overhauls that rebuild your site around your business today, fast and clear, with AI agents built in to answer, capture and route every enquiry.",
+    icon: "website-overhaul",
     useCases: [
       "A rebuilt site that says clearly what you do",
       "Fast, modern pages built to convert",
@@ -251,7 +315,7 @@ export const services: Service[] = [
       "Content structured so search engines and AI assistants understand you",
     ],
     problem:
-      "Your website is often the first conversation a customer has with you. A revamp makes that conversation clear and modern, and building agents in means every visitor gets an answer straight away.",
+      "Your website is often the first conversation a customer has with you. An overhaul makes that conversation clear and modern, and building agents in means every visitor gets an answer straight away.",
     approach: [
       { title: "Understand", desc: "We learn what you do, who you serve and what you want visitors to do." },
       { title: "Design & Build", desc: "We design and build the new site, with agents built in where they add value." },
@@ -259,43 +323,11 @@ export const services: Service[] = [
     ],
     ctaHeading: "Is your website telling the story of the business you are today?",
     ctaBody:
-      "30 minutes. We will look at your current site and show you what a revamp would change.",
+      "30 minutes. We will look at your current site and show you what an overhaul would change.",
     faqs: [
       {
         q: "Can you connect the new site to our agents?",
         a: "Yes. The site can feed straight into your command centre, so enquiries are answered and routed the moment they arrive.",
-      },
-    ],
-  },
-  {
-    slug: "customer-support",
-    title: "Customer Support",
-    shortTitle: "Customer Support",
-    description:
-      "Agents that answer customers on any channel, resolve what they can and hand the rest to the right person with full context.",
-    longDescription:
-      "AI customer support agents that answer on chat, email or voice, resolve routine requests, book and update, and route anything else to your team with the full context attached.",
-    icon: "customer-support",
-    useCases: [
-      "Instant answers on chat, email and voice",
-      "Bookings, updates and status checks completed end to end",
-      "Smart routing to the right person with the full context",
-      "Support available around the clock",
-    ],
-    problem:
-      "Customers expect a fast answer, whatever time they get in touch. Support agents handle the routine questions instantly and pass anything that needs a person to the right one, so your team spends its time where it matters most.",
-    approach: [
-      { title: "Learn", desc: "We learn your customers, your common questions and how you like them handled." },
-      { title: "Build & Ship", desc: "We build the agents and connect them to your channels and systems." },
-      { title: "Compound", desc: "They learn from every conversation and resolve more over time." },
-    ],
-    ctaHeading: "What would your customers say about an instant answer, every time?",
-    ctaBody:
-      "30 minutes. We will look at how customers reach you today and show you where agents would help most.",
-    faqs: [
-      {
-        q: "What happens when a customer needs a person?",
-        a: "The agent routes the conversation to the right person on your team with the full context attached, so the customer never has to repeat themselves.",
       },
     ],
   },

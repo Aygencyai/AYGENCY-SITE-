@@ -33,7 +33,7 @@ export default function DataSecurity() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
         >
-          Your Data Stays Yours
+          Your data stays yours.
         </motion.h2>
 
         <motion.p
@@ -43,9 +43,9 @@ export default function DataSecurity() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base leading-relaxed text-ghost-muted mt-6"
         >
-          Built privacy-first, with GDPR-aligned data handling and a DPA available. Your
-          data is used only to run your system, high-impact actions wait for your approval,
-          and everything can roll back to a known-good state.
+          Privacy comes first in everything we build. Your data is handled to GDPR-aligned
+          standards, with a DPA available, and agents only ever access what their job needs.
+          You stay in control of every high-impact action.
         </motion.p>
 
         <motion.div
