@@ -7,19 +7,19 @@ import GlassCard from "@/components/ui/GlassCard";
 
 const facets: { icon: LucideIcon; title: string; body: string }[] = [
   {
-    icon: Target,
-    title: "Our pipeline",
-    body: "The leads we chase and the outreach that wins them run on Lead Gen and Outreach. It is the same engine we would build into your new business.",
-  },
-  {
     icon: Workflow,
-    title: "Our operations",
-    body: "The reporting, the follow-ups, and the day-to-day admin that keep Aygency moving run on the operation core, around the clock.",
+    title: "Membership operations",
+    body: "Agents that organise thousands of members for a membership business. Records, renewals, questions and follow-ups, handled every day so the team can focus on growing it.",
   },
   {
     icon: TrendingUp,
-    title: "How we scale",
-    body: "Running on our own system is how a small team does the work of a much bigger one. That is the whole point, proven on us first.",
+    title: "Organic content",
+    body: "Autonomous content systems that research, write and publish organic content on a steady rhythm, so a business shows up consistently without someone sitting down to write.",
+  },
+  {
+    icon: Target,
+    title: "Lead generation",
+    body: "Lead gen systems that find the right prospects, enrich them and open the conversation. It is the same engine that wins Aygency its own new business.",
   },
 ];
 
@@ -38,7 +38,7 @@ export default function SelfProof() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
           >
-            The exact same pipelines run Aygency
+            Proven in live businesses
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -47,9 +47,7 @@ export default function SelfProof() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6"
           >
-            The lead generation, the outreach, and the operations that keep Aygency
-            running are the same pipelines we build for clients. We built them to run our
-            own company first, and we spent a long time getting them right.
+            These are systems we run today, in live businesses.
           </motion.p>
         </div>
 
@@ -88,9 +86,8 @@ export default function SelfProof() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-lg leading-[1.7] text-ghost mt-14"
           >
-            Every lesson we learned getting it right for ourselves, every edge case and
-            every improvement, is expertise we carry straight into your build. We perfected
-            it on our own business so we can get yours right faster.
+            Every lesson from those builds, every edge case and every improvement, goes
+            straight into yours. That is how we get your system right faster.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -99,7 +96,7 @@ export default function SelfProof() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-mono text-sm tracking-wide uppercase text-cyan mt-8"
           >
-            We don&rsquo;t sell AI. We deploy it, starting with our own company.
+            We put AI to work in real businesses, starting with our own.
           </motion.p>
         </div>
       </div>

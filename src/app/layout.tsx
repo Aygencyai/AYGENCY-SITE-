@@ -3,6 +3,7 @@ import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/ui/MotionProvider";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -27,28 +28,78 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aygency.ai"),
-  title: "Aygency | AI Agent Systems That Run Your Business Operations",
+  metadataBase: new URL(SITE_URL),
+  title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
   description:
-    "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
+    "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   openGraph: {
-    title: "Aygency | AI Agent Systems That Run Your Business Operations",
+    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
     description:
-      "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
+      "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
     type: "website",
-    url: "https://aygency.ai",
+    url: "/",
     siteName: "Aygency",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency | AI Agent Systems That Run Your Business Operations",
+    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
     description:
-      "We design, build, deploy, and operate AI agent systems that run your operation, and that compound in value the longer they run.",
+      "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   },
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Aygency",
+      legalName: "AYGENCY LTD",
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.png`,
+      email: "build@aygency.ai",
+      description:
+        "Aygency designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "1st Floor, Spitalfields House, Stirling Way",
+        addressLocality: "Borehamwood",
+        addressRegion: "Herts",
+        postalCode: "WD6 2FX",
+        addressCountry: "GB",
+      },
+      founder: { "@type": "Person", name: "Louis Rosenberg" },
+      areaServed: { "@type": "Country", name: "GB" },
+      knowsAbout: [
+        "AI agents",
+        "AI agent systems",
+        "AI automation",
+        "Business process automation",
+        "Revenue operations",
+        "Lead generation",
+        "Customer support automation",
+        "Business intelligence",
+      ],
+      // Companies House listing for AYGENCY LTD (17139454, Borehamwood).
+      sameAs: [
+        "https://find-and-update.company-information.service.gov.uk/company/17139454",
+        "https://x.com/Aygencyai",
+        "https://www.instagram.com/aygencyai/",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "Aygency",
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -64,21 +115,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-void text-ghost-muted">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "Aygency",
-              url: "https://aygency.ai",
-              description:
-                "Aygency designs, builds, deploys, and operates AI agent systems that run business operations and compound in value over time.",
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "London",
-                addressCountry: "GB",
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
           href="#main-content"

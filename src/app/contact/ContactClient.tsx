@@ -81,17 +81,17 @@ export default function ContactClient() {
               </Reveal>
               <h1 className="font-heading text-ghost text-4xl md:text-5xl leading-tight uppercase font-semibold mb-4">
                 <TypewriterText
-                  text="Let's Find What You Should Build First"
+                  text="Let's Find What's Holding You Back"
                   delay={300}
                   speed={35}
                 />
               </h1>
               <Reveal delay={0.1}>
                 <p className="text-ghost-muted font-sans text-lg md:text-xl leading-relaxed max-w-2xl">
-                  Tell us what&rsquo;s slowing your operation down. We&rsquo;ll
+                  Tell us what&rsquo;s slowing your business down. We&rsquo;ll
                   get back to you within one working day with a straight answer
-                  on where an agent system would hit hardest, and how quickly we
-                  could have it live.
+                  on where agents would make the biggest difference, and how
+                  quickly we could have them live.
                 </p>
               </Reveal>
 
@@ -118,7 +118,7 @@ export default function ContactClient() {
                           className="text-cyan flex-shrink-0"
                         />
                         <span className="font-sans text-sm">
-                          London, United Kingdom
+                          United Kingdom
                         </span>
                       </div>
                       <div className="flex items-center gap-3 text-ghost-muted">
@@ -153,7 +153,7 @@ export default function ContactClient() {
                         Message sent!
                       </h3>
                       <p className="font-sans text-ghost-muted text-sm mt-2">
-                        We&rsquo;ll get back within 24 hours.
+                        We&rsquo;ll get back to you within one working day.
                       </p>
                       <button
                         onClick={handleReset}

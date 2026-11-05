@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "The System", href: "/system" },
-  { label: "The Brain", href: "/brain" },
   { label: "Services", href: "/services" },
   { label: "Use Cases", href: "/use-cases" },
   { label: "AI Personal Assistant", href: "/design-your-eden" },
@@ -76,7 +75,7 @@ export default function Nav() {
             {/* Logo */}
             <Link
               href="/"
-              aria-label="Aygency — home"
+              aria-label="Aygency home"
               className="block transition-opacity duration-200 hover:opacity-80"
             >
               <Image
@@ -217,7 +216,7 @@ export default function Nav() {
               <div className="flex items-center justify-between py-4">
                 <Link
                   href="/"
-                  aria-label="Aygency — home"
+                  aria-label="Aygency home"
                   className="block"
                   onClick={() => setMobileOpen(false)}
                 >

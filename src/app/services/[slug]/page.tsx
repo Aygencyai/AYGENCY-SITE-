@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { services } from "@/lib/data";
 import ServiceDetailClient from "./ServiceDetailClient";
 import PageTransition from "@/components/ui/PageTransition";
+import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
+import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -19,10 +21,11 @@ export async function generateMetadata({
   return {
     title: `${service.title} | Aygency`,
     description: service.longDescription,
+    alternates: { canonical: `/services/${slug}` },
     openGraph: {
       title: `${service.title} | Aygency`,
       description: service.longDescription,
-      url: `https://aygency.ai/services/${slug}`,
+      url: `/services/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,
@@ -41,8 +44,24 @@ export default async function ServiceDetailPage({
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.longDescription,
+    url: `${SITE_URL}/services/${service.slug}`,
+    serviceType: "AI agent system",
+    areaServed: { "@type": "Country", name: "GB" },
+    provider: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency", url: SITE_URL },
+  };
+
   return (
     <PageTransition>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <BreadcrumbJsonLd trail={[["Services", "/services"], [service.title, `/services/${service.slug}`]]} />
       <ServiceDetailClient service={service} />
     </PageTransition>
   );

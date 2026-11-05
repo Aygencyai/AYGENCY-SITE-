@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import TrustClient from "./TrustClient";
 
 const description =
-  "How Aygency operates agent systems safely: your data stays in your environment, high-impact actions route to a human, and every system is monitored, tuned, and reversible.";
+  "How Aygency keeps AI agents safe: GDPR-aligned data handling with a DPA available, your approval on high-impact actions, and every system monitored and reversible.";
 
 export const metadata: Metadata = {
   title: "Trust & Security | Aygency",
   description,
+  alternates: { canonical: "/trust" },
   openGraph: {
     title: "Trust & Security | Aygency",
     description,
-    url: "https://aygency.ai/trust",
+    url: "/trust",
   },
   twitter: {
     card: "summary_large_image",

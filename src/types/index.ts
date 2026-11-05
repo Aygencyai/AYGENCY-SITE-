@@ -1,3 +1,8 @@
+export interface Faq {
+  q: string;
+  a: string;
+}
+
 export interface Service {
   slug: string;
   title: string;
@@ -10,6 +15,7 @@ export interface Service {
   approach: { title: string; desc: string }[];
   ctaHeading: string;
   ctaBody: string;
+  faqs?: Faq[];
 }
 
 export interface UseCase {
@@ -23,6 +29,7 @@ export interface UseCase {
   estimatedImpact: string;
   ctaHeading: string;
   ctaBody: string;
+  faqs?: Faq[];
 }
 
 export interface ProcessStep {

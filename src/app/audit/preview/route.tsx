@@ -10,6 +10,9 @@ export async function GET(request: Request) {
   return new ImageResponse(<AuditCard company={invite?.company ?? null} />, {
     ...OG_SIZE,
     fonts: await brandFonts(),
-    headers: { "cache-control": "public, max-age=3600, s-maxage=86400" },
+    headers: {
+      "cache-control": "public, max-age=3600, s-maxage=86400",
+      "x-robots-tag": "noindex, nofollow",
+    },
   });
 }

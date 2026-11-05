@@ -5,7 +5,7 @@ import Link from "next/link";
 import HeroBackground from "./HeroBackground";
 import TypewriterText from "@/components/effects/TypewriterText";
 import MagneticButton from "@/components/ui/MagneticButton";
-import LetterSceneLoader from "./LetterSceneLoader";
+import HeroFilm from "./HeroFilm";
 
 const headingLines = [
   ["BUILT", "ONCE,"],
@@ -25,9 +25,11 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen bg-void overflow-hidden">
       <HeroBackground />
+      {/* Lands the glow and grid on plain void, so the next section starts with no visible edge. */}
+      <div aria-hidden className="absolute inset-x-0 bottom-0 z-0 h-48 bg-gradient-to-b from-transparent to-void" />
 
-      {/* Main content — split layout: text left, 3D right */}
-      <div className="relative z-10 flex min-h-screen items-center pt-20 lg:pt-0">
+      {/* Main content: text left, film right */}
+      <div className="relative z-10 flex min-h-screen items-center pt-28 pb-4 lg:py-0">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
           <div className="flex flex-col lg:flex-row lg:items-center lg:gap-8">
             {/* Left: text content */}
@@ -38,10 +40,10 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-8"
               >
-                {`// AI agent systems`}
+                {`// AI agent systems for growing businesses`}
               </motion.p>
 
-              <h1 className="font-heading text-[28px] min-[400px]:text-[36px] sm:text-[48px] lg:text-[68px] font-bold uppercase leading-[0.95] text-white">
+              <h1 className="font-heading text-[28px] min-[400px]:text-[36px] sm:text-[48px] lg:text-[52px] xl:text-[64px] font-bold uppercase leading-[0.95] text-white">
                 {headingLines.map((line, lineIdx) => {
                   const wordOffset = headingLines.slice(0, lineIdx).reduce((sum, l) => sum + l.length, 0);
                   return (
@@ -69,9 +71,9 @@ export default function Hero() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 1.2 }}
                 >
-                  <p className="font-mono text-lg leading-[1.3] text-cyan whitespace-pre-line">
+                  <p className="font-mono text-lg leading-[1.3] min-h-[2.6em] text-cyan whitespace-pre-line">
                     <TypewriterText
-                      text={"How much could you grow\nif the work ran itself?"}
+                      text={"How far could you scale\nif nothing held you back?"}
                       delay={1800}
                       speed={30}
                     />
@@ -83,47 +85,39 @@ export default function Hero() {
                   transition={{ duration: 0.8, delay: 2.8, ease: "easeOut" }}
                   className="font-sans text-base font-normal leading-[1.7] text-ghost-muted mt-4"
                 >
-                  We replace the manual work running your operation with agent systems
-                  that work around the clock, never drop a task, and improve the longer
-                  they run.
+                  AI agents that take over the manual work running your operation. They
+                  slot into the way your business already works and do the job like
+                  your best people, only faster, more accurate and never a day off.
                 </motion.p>
               </div>
 
-              {/* CTA Buttons */}
+            </div>
+
+            {/* Right: the film, and under it the button its last frame shows. */}
+            <div className="lg:w-[45%] mt-8 lg:mt-0">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.2, delay: 0.6 }}
+              >
+                <HeroFilm />
+              </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 3.2, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-10 flex flex-row items-start gap-3 sm:gap-4"
+                className="mt-5 lg:mt-6 flex justify-center"
               >
                 <MagneticButton>
                   <Link
-                    href="/contact"
-                    className="inline-block rounded-lg bg-cyan px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
+                    href="/audit"
+                    className="inline-block rounded-lg bg-cyan px-6 sm:px-8 py-3 text-center font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
                   >
-                    Book a Call
-                  </Link>
-                </MagneticButton>
-                <MagneticButton>
-                  <Link
-                    href="/services"
-                    className="inline-block rounded-lg border border-cyan/30 bg-transparent px-8 py-3 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-all duration-200 hover:bg-cyan/[0.05] hover:border-cyan/50"
-                  >
-                    What We Build
+                    Book your free AI growth audit
                   </Link>
                 </MagneticButton>
               </motion.div>
             </div>
-
-            {/* Right: 3D Letter Animation */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, delay: 0.6 }}
-              className="lg:w-[45%] h-[280px] sm:h-[350px] lg:h-[600px] mt-8 lg:mt-0"
-            >
-              <LetterSceneLoader />
-            </motion.div>
           </div>
         </div>
       </div>

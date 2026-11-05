@@ -5,18 +5,19 @@ import PageTransition from "@/components/ui/PageTransition";
 export const metadata: Metadata = {
   title: "Contact | Aygency",
   description:
-    "Get in touch with Aygency. Tell us what's slowing your operation down and we'll show you where agent systems would make the biggest impact.",
+    "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
+  alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact | Aygency",
     description:
-      "Get in touch with Aygency. Tell us what's slowing your operation down and we'll show you where agent systems would make the biggest impact.",
-    url: "https://aygency.ai/contact",
+      "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
+    url: "/contact",
   },
   twitter: {
     card: "summary_large_image",
     title: "Contact | Aygency",
     description:
-      "Get in touch with Aygency. Tell us what's slowing your operation down and we'll show you where agent systems would make the biggest impact.",
+      "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
   },
 };
 

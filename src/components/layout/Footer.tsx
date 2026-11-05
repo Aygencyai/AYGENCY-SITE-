@@ -20,8 +20,8 @@ export default function Footer() {
               <Image src="/aygency-logo.png" alt="" width={48} height={48} className="w-6 h-6 invert" />
               AYGENCY
             </Link>
-            <p className="text-sm text-ghost-dim mt-4">
-              Custom AI agent systems. Built once, compounding forever.
+            <p className="text-sm text-ghost-muted mt-4">
+              AI agents that clear the way for businesses to scale.
             </p>
             <a
               href="mailto:build@aygency.ai"
@@ -39,21 +39,15 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <Link
                 href="/system"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 The System
-              </Link>
-              <Link
-                href="/brain"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
-              >
-                The Brain
               </Link>
               {services.map((service) => (
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                  className="text-sm text-ghost-muted hover:text-cyan transition-colors"
                 >
                   {service.shortTitle}
                 </Link>
@@ -69,37 +63,37 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <Link
                 href="/design-your-eden"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 AI Personal Assistant
               </Link>
               <Link
                 href="/use-cases"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 Use Cases
               </Link>
               <Link
                 href="/insights"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 Insights
               </Link>
               <Link
                 href="/about"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 About
               </Link>
               <Link
                 href="/trust"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 Trust
               </Link>
               <Link
                 href="/contact"
-                className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+                className="text-sm text-ghost-muted hover:text-cyan transition-colors"
               >
                 Contact
               </Link>
@@ -113,30 +107,42 @@ export default function Footer() {
             </h3>
             <a
               href="mailto:build@aygency.ai"
-              className="text-sm text-ghost-dim hover:text-cyan transition-colors"
+              className="text-sm text-ghost-muted hover:text-cyan transition-colors"
             >
               build@aygency.ai
             </a>
-            <p className="text-sm text-ghost-dim mt-4">
-              Based in London. Operating globally.
+            <p className="text-sm text-ghost-muted mt-4">
+              Based in the UK. Working with businesses everywhere.
             </p>
+            <div className="flex gap-4 mt-4">
+              <a href="https://x.com/Aygencyai" target="_blank" rel="noopener noreferrer" className="text-sm text-ghost-muted hover:text-cyan transition-colors">
+                X
+              </a>
+              <a href="https://www.instagram.com/aygencyai/" target="_blank" rel="noopener noreferrer" className="text-sm text-ghost-muted hover:text-cyan transition-colors">
+                Instagram
+              </a>
+            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-ghost/[0.06] flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-ghost-dim">
+          <p className="text-xs text-ghost-muted">
             &copy; 2026 Aygency. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-ghost-dim hover:text-cyan transition-colors">
+            <Link href="/privacy" className="text-xs text-ghost-muted hover:text-cyan transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="text-xs text-ghost-dim hover:text-cyan transition-colors">
+            </Link>
+            <Link href="/terms" className="text-xs text-ghost-muted hover:text-cyan transition-colors">
               Terms
-            </a>
+            </Link>
           </div>
         </div>
+        <p className="mt-6 text-xs text-ghost-muted text-center sm:text-left">
+          AYGENCY LTD · Registered in England and Wales · Company no. 17139454 · 1st Floor, Spitalfields House,
+          Stirling Way, Borehamwood, Herts, United Kingdom, WD6 2FX
+        </p>
       </div>
     </footer>
   );

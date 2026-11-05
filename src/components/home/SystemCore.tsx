@@ -1,220 +1,191 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { User, Network, Brain } from "lucide-react";
-import GlowOrb from "@/components/effects/GlowOrb";
-import { agents } from "@/lib/data";
+import { ArrowRight, Bot, CheckCircle2, Database, Users, type LucideIcon } from "lucide-react";
 
-const core = agents.filter((a) => a.group === "core");
-const slug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
-const fanX = [50, 150, 250, 350, 450, 550];
+// Where the work is spread today. x and y are % of the drawing, used only from lg up.
+const tools: { name: string; x: number; y: number }[] = [
+  { name: "Excel", x: 10, y: 7 },
+  { name: "Outlook", x: 30, y: 19 },
+  { name: "HubSpot", x: 46, y: 31 },
+  { name: "Xero", x: 8, y: 43 },
+  { name: "SharePoint", x: 28, y: 55 },
+  { name: "Slack", x: 47, y: 67 },
+  { name: "People\u2019s heads", x: 13, y: 79 },
+  { name: "Google Sheets", x: 34, y: 91 },
+];
 
-function Connector({ active, delay }: { active: boolean; delay: number }) {
+const rows: { icon: LucideIcon; title: string; body: string }[] = [
+  { icon: Users, title: "Your people", body: "oversight and expertise" },
+  { icon: Bot, title: "Your agents", body: "working alongside your team" },
+  { icon: Database, title: "Your data", body: "in one place" },
+  { icon: CheckCircle2, title: "Approvals", body: "anything high-impact comes to you" },
+];
+
+// The point on the panel's left edge each line lands on, spread evenly down it.
+const landing = (i: number) => 26 + (i / (tools.length - 1)) * 48;
+const panelEdge = 58;
+
+const reveal = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
+});
+
+function Panel() {
   return (
-    <motion.div
-      initial={{ scaleY: 0 }}
-      animate={active ? { scaleY: 1 } : {}}
-      transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
-      className="w-px h-8 origin-top mx-auto"
-      style={{
-        background:
-          "linear-gradient(180deg, rgba(0,229,255,0.5), rgba(0,229,255,0.12))",
-      }}
-    />
-  );
-}
-
-function AgentChip({ name }: { name: string }) {
-  return (
-    <Link
-      href={`/system#${slug(name)}`}
-      className="flex items-center justify-center text-center font-mono text-[10px] md:text-[11px] uppercase tracking-wider rounded px-2 py-2 min-h-[2.6rem] leading-tight border border-ghost/15 text-ghost-muted bg-void-light/40 hover:border-cyan/40 hover:text-cyan transition-colors"
-    >
-      {name}
-    </Link>
-  );
-}
-
-function Diagram() {
-  const ref = useRef<HTMLDivElement>(null);
-  const active = useInView(ref, { once: true, margin: "-80px 0px" });
-
-  return (
-    <div ref={ref} className="flex flex-col items-center">
-      {/* You */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={active ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="inline-flex items-center gap-2.5 rounded-full border border-ghost/20 bg-void-light/60 px-5 py-2.5"
-      >
-        <User className="w-4 h-4 text-ghost-muted" strokeWidth={1.5} />
-        <span className="font-mono text-xs uppercase tracking-[0.18em] text-ghost">You</span>
-      </motion.div>
-
-      <Connector active={active} delay={0.1} />
-
-      {/* CEO Agent */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.92 }}
-        animate={active ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="relative"
-      >
-        <div className="relative inline-flex flex-col items-center gap-2 rounded-2xl border border-cyan/40 bg-cyan/[0.06] px-8 py-5 shadow-glow-sm">
-          <div className="w-11 h-11 rounded-xl bg-cyan/10 border border-cyan/30 flex items-center justify-center">
-            <Network className="w-6 h-6 text-cyan" strokeWidth={1.5} />
+    <div className="rounded-xl border border-cyan/50 bg-void p-6 lg:p-7 shadow-glow-sm">
+      <div className="flex items-center gap-2.5 mb-4">
+        <svg viewBox="190 220 663 600" fill="currentColor" aria-hidden className="w-5 text-cyan">
+          <path d="M487 242H638L367 797H213Z" />
+          <path d="M583 592H715L830 797H693Z" />
+        </svg>
+        <span className="font-heading text-xl font-semibold text-white">Command centre</span>
+      </div>
+      {rows.map(({ icon: Icon, title, body }) => (
+        <div key={title} className="grid grid-cols-[32px_1fr] items-start gap-y-0.5 py-3.5 border-t border-ghost/10">
+          <Icon className="w-5 h-5 text-cyan mt-0.5" strokeWidth={1.5} />
+          <div>
+            <p className="font-sans font-medium text-ghost leading-snug">{title}</p>
+            <p className="font-sans text-sm text-ghost-muted leading-snug mt-0.5">{body}</p>
           </div>
-          <span className="font-heading text-lg font-semibold text-white">CEO Agent</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan">
-            reads across every agent
-          </span>
-          <motion.span
-            className="pointer-events-none absolute inset-0 rounded-2xl border border-cyan/40"
-            animate={{ opacity: [0.4, 0, 0.4], scale: [1, 1.05, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
         </div>
-      </motion.div>
+      ))}
+    </div>
+  );
+}
 
-      {/* Desktop: fan-out lines from the CEO to every agent */}
-      <motion.svg
-        initial={{ opacity: 0 }}
-        animate={active ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 0.35 }}
-        viewBox="0 0 600 56"
+// Desktop: every tool is joined by a line to the one panel, so it reads as a single picture.
+function DesktopDrawing() {
+  return (
+    <div className="hidden lg:block relative h-[440px]">
+      <svg
+        viewBox="0 0 100 100"
         preserveAspectRatio="none"
-        className="hidden md:block w-full max-w-2xl h-12"
+        className="absolute inset-0 w-full h-full"
+        fill="none"
         aria-hidden
       >
-        {fanX.map((x) => (
-          <line
-            key={x}
-            x1="300"
-            y1="0"
-            x2={x}
-            y2="56"
-            stroke="rgba(0,229,255,0.3)"
+        <defs>
+          <linearGradient id="core-line" gradientUnits="userSpaceOnUse" x1="5" y1="0" x2={panelEdge} y2="0">
+            <stop offset="0" stopColor="#EAEAF0" stopOpacity="0.14" />
+            <stop offset="1" stopColor="#00E5FF" stopOpacity="0.85" />
+          </linearGradient>
+        </defs>
+        {tools.map((t, i) => (
+          <path
+            key={t.name}
+            d={`M${t.x} ${t.y}C${panelEdge - 7} ${t.y} ${panelEdge - 7} ${landing(i)} ${panelEdge} ${landing(i)}`}
+            stroke="url(#core-line)"
             strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
           />
         ))}
-      </motion.svg>
+      </svg>
 
-      {/* Desktop agents */}
-      <div className="hidden md:grid grid-cols-6 gap-2 w-full max-w-2xl">
-        {core.map((agent, i) => (
-          <motion.div
-            key={agent.name}
-            initial={{ opacity: 0, y: 10 }}
-            animate={active ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.4 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <AgentChip name={agent.name} />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Mobile agents */}
-      <div className="md:hidden flex flex-col items-center w-full">
-        <Connector active={active} delay={0.3} />
-        <div className="grid grid-cols-2 gap-2.5 w-full max-w-xs">
-          {core.map((agent) => (
-            <AgentChip key={agent.name} name={agent.name} />
-          ))}
-        </div>
-      </div>
-
-      <Connector active={active} delay={0.5} />
-
-      {/* The Brain — the foundation every agent runs on */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={active ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-md"
-      >
-        <Link
-          href="/brain"
-          className="block rounded-xl border border-cyan/30 bg-cyan/[0.05] px-6 py-4 hover:border-cyan/50 transition-colors"
+      {tools.map((t, i) => (
+        <motion.span
+          key={t.name}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: i * 0.05 }}
+          style={{ left: `${t.x}%`, top: `${t.y}%` }}
+          className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-ghost/20 bg-surface px-4 py-2 font-sans text-[15px] text-ghost-muted whitespace-nowrap"
         >
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
-            <span className="inline-flex items-center gap-2">
-              <Brain className="w-5 h-5 text-cyan" strokeWidth={1.5} />
-              <span className="font-heading text-base font-semibold text-white">The Brain</span>
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan">
-              every agent reads and writes it
-            </span>
-          </div>
-        </Link>
-      </motion.div>
+          {t.name}
+        </motion.span>
+      ))}
+
+      <div className="absolute right-0 inset-y-0 flex items-center" style={{ left: `${panelEdge}%` }}>
+        <motion.div {...reveal(0.35)} className="w-full">
+          <Panel />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+// Phone: its own composition. Tools sit in a tight cluster, lines funnel down into the panel.
+function PhoneDrawing() {
+  return (
+    <div className="lg:hidden">
+      <ul className="flex flex-wrap justify-center gap-2">
+        {tools.map((t) => (
+          <li
+            key={t.name}
+            className="rounded-full border border-ghost/20 bg-surface px-3.5 py-1.5 font-sans text-sm text-ghost-muted whitespace-nowrap"
+          >
+            {t.name}
+          </li>
+        ))}
+      </ul>
+      <svg viewBox="0 0 320 64" className="w-full h-16 my-1" fill="none" aria-hidden preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="core-funnel" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#EAEAF0" stopOpacity="0.14" />
+            <stop offset="1" stopColor="#00E5FF" stopOpacity="0.85" />
+          </linearGradient>
+        </defs>
+        {[20, 62, 104, 146, 174, 216, 258, 300].map((x) => (
+          <path
+            key={x}
+            d={`M${x} 0C${x} 34 160 26 160 64`}
+            stroke="url(#core-funnel)"
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+      </svg>
+      <Panel />
     </div>
   );
 }
 
 export default function SystemCore() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section className="blend-surface section-padding relative overflow-hidden">
-      <GlowOrb
-        size={500}
-        opacity={0.06}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        parallaxStrength={20}
-      />
+    <section className="bg-surface section-padding">
+      <div className="max-w-6xl mx-auto px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-5 lg:gap-16 items-end">
+          <motion.div {...reveal()}>
+            <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-5 lg:mb-6">{`// the command centre`}</p>
+            <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+              One home for your people and your agents.
+            </h2>
+          </motion.div>
+          <motion.div {...reveal(0.1)} className="font-sans text-base lg:text-lg leading-[1.7]">
+            <p className="text-ghost">
+              The bottleneck is rarely the work itself. It&rsquo;s the separate systems the work is spread across.
+            </p>
+            <p className="text-ghost-muted mt-3 lg:mt-4">
+              Your information already lives somewhere: in Excel, Outlook, Xero, HubSpot. We go to it. We connect to the
+              tools you already use, learn how the work really gets done, and build every agent
+              around your people and your way of doing things.
+            </p>
+          </motion.div>
+        </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
-            Every System Ships With a CEO and a Brain
-          </h2>
+        <motion.div {...reveal(0.1)} className="mt-9 lg:mt-12">
+          <DesktopDrawing />
+          <PhoneDrawing />
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6 max-w-2xl mx-auto"
+        <motion.div
+          {...reveal(0.2)}
+          className="mt-9 lg:mt-12 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5"
         >
-          A CEO agent on top, reading across every other agent. A private brain underneath,
-          holding everything your business knows.
-        </motion.p>
-
-        <div className="mt-14">
-          <Diagram />
-        </div>
-
-        <div ref={ref} className="mt-16 space-y-5">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-base leading-relaxed text-ghost-muted"
+          <p className="font-heading text-xl lg:text-2xl font-medium leading-snug text-ghost max-w-2xl">
+            More operational capacity without more headcount.
+          </p>
+          <Link
+            href="/services/command-centre"
+            className="inline-flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:text-cyan-muted"
           >
-            The CEO Agent catches what no single agent can see and brings it straight to
-            you. The Brain remembers how your business runs, kept current by the agents as
-            they work. You talk to one; everything runs on the other.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-mono text-sm tracking-wide uppercase text-cyan mt-6"
-          >
-            Included with every system we build, always.
-          </motion.p>
-        </div>
+            Explore Command Centre
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

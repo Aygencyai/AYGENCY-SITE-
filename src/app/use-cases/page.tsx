@@ -2,20 +2,21 @@ import type { Metadata } from "next";
 import UseCasesClient from "./UseCasesClient";
 
 export const metadata: Metadata = {
-  title: "Use Cases | Aygency",
+  title: "AI Agent Use Cases | Aygency",
   description:
-    "System blueprints by sector. How we'd architect an agent system for an operation like yours.",
+    "AI agent blueprints by sector: the bottlenecks holding each business back and the agents we would build to clear them.",
+  alternates: { canonical: "/use-cases" },
   openGraph: {
-    title: "Use Cases | Aygency",
+    title: "AI Agent Use Cases | Aygency",
     description:
-      "System blueprints by sector. How we'd architect an agent system for an operation like yours.",
-    url: "https://aygency.ai/use-cases",
+      "AI agent blueprints by sector: the bottlenecks holding each business back and the agents we would build to clear them.",
+    url: "/use-cases",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Use Cases | Aygency",
+    title: "AI Agent Use Cases | Aygency",
     description:
-      "System blueprints by sector. How we'd architect an agent system for an operation like yours.",
+      "AI agent blueprints by sector: the bottlenecks holding each business back and the agents we would build to clear them.",
   },
 };
 

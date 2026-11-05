@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import InsightsClient from "./InsightsClient";
 
 const description =
-  "Notes on building, operating, and getting value out of AI agent systems, from the team that runs them.";
+  "Plain answers on AI agents for business: what they take on, how they fit how you work, staying in control, and how they help a business scale.";
 
 export const metadata: Metadata = {
   title: "Insights | Aygency",
   description,
+  alternates: { canonical: "/insights" },
   openGraph: {
     title: "Insights | Aygency",
     description,
-    url: "https://aygency.ai/insights",
+    url: "/insights",
   },
   twitter: {
     card: "summary_large_image",

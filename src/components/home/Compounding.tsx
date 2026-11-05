@@ -32,7 +32,7 @@ export default function Compounding() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold"
         >
-          Depreciating cost. Appreciating value.
+          Better every month you run it.
         </motion.h2>
 
         <div ref={ref} className="mt-12 space-y-4 text-left max-w-md mx-auto">

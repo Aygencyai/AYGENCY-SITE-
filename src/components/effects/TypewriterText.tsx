@@ -64,9 +64,13 @@ export default function TypewriterText({
 
   return (
     <span ref={ref} className={className}>
-      {displayText}
-      <span className={`${cursorColor} ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}>
-        |
+      {/* Full text for search engines, AI crawlers and screen readers. */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {displayText}
+        <span className={`${cursorColor} ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}>
+          |
+        </span>
       </span>
     </span>
   );

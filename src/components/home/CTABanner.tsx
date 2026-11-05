@@ -85,9 +85,9 @@ export default function CTABanner() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-white uppercase font-semibold"
         >
-          See exactly what
+          See how far
           <br />
-          we&rsquo;d build for you.
+          you could scale.
         </motion.h2>
 
         <motion.p
@@ -96,8 +96,8 @@ export default function CTABanner() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="font-sans text-base text-ghost-muted mt-6 max-w-lg mx-auto"
         >
-          We&rsquo;ll map your operation and show you where agents would save you the
-          most. You keep the plan whether you build it with us or not. 30 minutes.
+          Tell us where the hours go. We&rsquo;ll show you which agents would win them back
+          first.
         </motion.p>
 
         <motion.div
@@ -111,7 +111,7 @@ export default function CTABanner() {
               href="/contact"
               className="inline-block rounded-lg bg-cyan px-10 py-4 font-heading text-sm font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
             >
-              Book a Call
+              Book a call
             </Link>
           </MagneticButton>
         </motion.div>
@@ -122,7 +122,7 @@ export default function CTABanner() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="font-sans text-sm text-ghost-dim mt-8"
         >
-          Custom agent systems for businesses that have outgrown doing it by hand.
+          Built once, compound forever.
         </motion.p>
       </div>
     </section>

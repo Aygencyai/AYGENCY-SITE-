@@ -1,98 +1,74 @@
 "use client";
 
 import Link from "next/link";
-import { DollarSign, TrendingUp, Eye, Building2, ArrowRight } from "lucide-react";
-import SectionContainer from "@/components/ui/SectionContainer";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Reveal from "@/components/ui/Reveal";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import GlassCard from "@/components/ui/GlassCard";
+import { services } from "@/lib/data";
 
-const iconMap = {
-  "cost-reduction": DollarSign,
-  "revenue-operations": TrendingUp,
-  intelligence: Eye,
-  "full-department": Building2,
-} as const;
+// The first two services (command centre, back-office agents) lead, so they get the big cards.
+const [lead, rest] = [services.slice(0, 2), services.slice(2)];
 
-const serviceCards = [
-  {
-    slug: "cost-reduction",
-    number: "01",
-    title: "Cost Reduction Systems",
-    description:
-      "Agent systems that replace the expensive manual processes bleeding your operation.",
-  },
-  {
-    slug: "revenue-operations",
-    number: "02",
-    title: "Revenue Operations Systems",
-    description:
-      "Agent systems that actively find and generate revenue. Pipeline, outreach, qualification, conversion.",
-  },
-  {
-    slug: "intelligence",
-    number: "03",
-    title: "Intelligence & Oversight",
-    description:
-      "A system that sits above your entire operation, sees every data point, and finds the opportunities nobody\u2019s looking for.",
-  },
-  {
-    slug: "full-department",
-    number: "04",
-    title: "Full Department Systems",
-    description:
-      "A complete function run by a coordinated team of AI agents with human oversight only where it matters.",
-  },
-];
+function Card({ slug, title, description, big }: { slug: string; title: string; description: string; big?: boolean }) {
+  return (
+    <Link href={`/services/${slug}`} className="group block h-full">
+      <GlassCard tilt={false} className="h-full">
+        <h3 className={`font-heading font-semibold text-white ${big ? "text-2xl" : "text-lg"}`}>{title}</h3>
+        <p className={`font-sans leading-relaxed text-ghost-muted mt-3 ${big ? "text-base" : "text-sm"}`}>{description}</p>
+        <span className="inline-flex items-center gap-2 mt-5 font-heading text-[12px] font-semibold uppercase tracking-[0.15em] text-cyan">
+          Explore <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </GlassCard>
+    </Link>
+  );
+}
+
+// Every service as a card that clicks through. Used on the home page and the services page.
+export function ServiceCards() {
+  return (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {lead.map((s) => (
+          <Card key={s.slug} slug={s.slug} title={s.title} description={s.description} big />
+        ))}
+      </div>
+      {/* 3 + 3 on desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mt-6">
+        {rest.map((s) => (
+          <div key={s.slug} className="lg:col-span-2">
+            <Card slug={s.slug} title={s.shortTitle} description={s.description} />
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
 
 export default function ServicesGrid() {
   return (
-    <section className="bg-primary section-padding">
-      <SectionContainer>
-        <SectionHeading
-          eyebrow="What We Do"
-          heading="Four ways we work with businesses"
-          description="Every engagement starts with understanding your operation and ends with a system that runs it."
-          align="center"
-        />
+    <section className="blend-surface section-padding">
+      <div className="max-w-6xl mx-auto px-6 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl"
+        >
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-6">{`// what we build`}</p>
+          <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+            Start at the core. Build out from there.
+          </h2>
+          <p className="font-sans text-lg leading-[1.7] text-ghost-muted mt-6">
+            Most systems start with the command centre and the back office, where the most
+            hours are won. From there, we extend into the rest of the business.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          {serviceCards.map((service, i) => {
-            const Icon = iconMap[service.slug as keyof typeof iconMap];
-            return (
-              <Reveal key={service.slug} delay={i * 0.1}>
-                <Link
-                  href={`/services/${service.slug}`}
-                  className="group block bg-primary border border-border rounded-2xl p-8 md:p-10 hover:shadow-card-hover hover:border-accent/30 hover:-translate-y-[2px] transition-all duration-300 cursor-pointer"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="icon-animate w-14 h-14 bg-accent-light rounded-xl flex items-center justify-center">
-                      <Icon size={32} className="text-accent" />
-                    </div>
-                    <span className="font-heading text-xs text-text-tertiary tracking-widest">
-                      {service.number}
-                    </span>
-                  </div>
-
-                  <h3 className="font-heading font-semibold text-xl text-text-primary mt-6">
-                    {service.title}
-                  </h3>
-                  <p className="font-body text-text-secondary mt-3">
-                    {service.description}
-                  </p>
-
-                  <div className="flex items-center gap-2 mt-6 text-accent font-heading font-medium text-sm">
-                    <span>Learn more</span>
-                    <ArrowRight
-                      size={16}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </div>
-                </Link>
-              </Reveal>
-            );
-          })}
+        <div className="mt-14">
+          <ServiceCards />
         </div>
-      </SectionContainer>
+      </div>
     </section>
   );
 }
