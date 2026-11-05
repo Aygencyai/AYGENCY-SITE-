@@ -36,20 +36,20 @@ const reveal = (delay = 0) => ({
 
 function Panel() {
   return (
-    <div className="rounded-xl border border-cyan/50 bg-void p-6 lg:p-7 shadow-glow-sm">
-      <div className="flex items-center gap-2.5 mb-4">
+    <div className="rounded-xl border border-cyan/50 bg-void p-4 lg:p-7 shadow-glow-sm">
+      <div className="flex items-center gap-2.5 mb-2.5 lg:mb-4">
         <svg viewBox="190 220 663 600" fill="currentColor" aria-hidden className="w-5 text-cyan">
           <path d="M487 242H638L367 797H213Z" />
           <path d="M583 592H715L830 797H693Z" />
         </svg>
-        <span className="font-heading text-xl font-semibold text-white">Command centre</span>
+        <span className="font-heading text-lg lg:text-xl font-semibold text-white">Command centre</span>
       </div>
       {rows.map(({ icon: Icon, title, body }) => (
-        <div key={title} className="grid grid-cols-[32px_1fr] items-start gap-y-0.5 py-3.5 border-t border-ghost/10">
+        <div key={title} className="grid grid-cols-[28px_1fr] lg:grid-cols-[32px_1fr] items-start gap-y-0.5 py-2 lg:py-3.5 border-t border-ghost/10">
           <Icon className="w-5 h-5 text-cyan mt-0.5" strokeWidth={1.5} />
           <div>
-            <p className="font-sans font-medium text-ghost leading-snug">{title}</p>
-            <p className="font-sans text-sm text-ghost-muted leading-snug mt-0.5">{body}</p>
+            <p className="font-sans text-[15px] lg:text-base font-medium text-ghost leading-snug">{title}</p>
+            <p className="font-sans text-[13px] lg:text-sm text-ghost-muted leading-snug lg:mt-0.5">{body}</p>
           </div>
         </div>
       ))}
@@ -116,13 +116,13 @@ function PhoneDrawing() {
         {tools.map((t) => (
           <li
             key={t.name}
-            className="rounded-full border border-ghost/20 bg-surface px-3.5 py-1.5 font-sans text-sm text-ghost-muted whitespace-nowrap"
+            className="rounded-full border border-ghost/20 bg-surface px-3 py-1 font-sans text-[13px] text-ghost-muted whitespace-nowrap"
           >
             {t.name}
           </li>
         ))}
       </ul>
-      <svg viewBox="0 0 320 64" className="w-full h-16 my-1" fill="none" aria-hidden preserveAspectRatio="none">
+      <svg viewBox="0 0 320 64" className="w-full h-10" fill="none" aria-hidden preserveAspectRatio="none">
         <defs>
           <linearGradient id="core-funnel" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#EAEAF0" stopOpacity="0.14" />
@@ -145,37 +145,43 @@ function PhoneDrawing() {
 
 export default function SystemCore() {
   return (
-    <section className="bg-surface section-padding">
+    <section className="bg-surface py-12 md:py-32 lg:py-40">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-5 lg:gap-16 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-3 lg:gap-16 items-end">
           <motion.div {...reveal()}>
-            <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-5 lg:mb-6">{`// the command centre`}</p>
-            <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+            <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-3 lg:mb-6">{`// the command centre`}</p>
+            <h2 className="font-heading text-[1.75rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
               One home for your people and your agents.
             </h2>
           </motion.div>
-          <motion.div {...reveal(0.1)} className="font-sans text-base lg:text-lg leading-[1.7]">
-            <p className="text-ghost">
-              The bottleneck is rarely the work itself. It&rsquo;s the separate systems the work is spread across.
+                    <motion.div {...reveal(0.1)} className="font-sans text-base lg:text-lg leading-[1.7]">
+            {/* Phone: the drawing below already names the tools, so the words stay short. */}
+            <p className="lg:hidden text-ghost-muted">
+              Your information already lives somewhere. We go to it, connect it and learn how you work.
             </p>
-            <p className="text-ghost-muted mt-3 lg:mt-4">
-              Your information already lives somewhere: in Excel, Outlook, Xero, HubSpot. We go to it. We connect to the
-              tools you already use, learn how the work really gets done, and build every agent
-              around your people and your way of doing things.
-            </p>
+            <div className="hidden lg:block">
+              <p className="text-ghost">
+                The bottleneck is rarely the work itself. It&rsquo;s the separate systems the work is spread across.
+              </p>
+              <p className="text-ghost-muted mt-4">
+                Your information already lives somewhere: in Excel, Outlook, Xero, HubSpot. We go to it. We connect to the
+                tools you already use, learn how the work really gets done, and build every agent around your people and
+                your way of doing things.
+              </p>
+            </div>
           </motion.div>
         </div>
 
-        <motion.div {...reveal(0.1)} className="mt-9 lg:mt-12">
+        <motion.div {...reveal(0.1)} className="mt-5 lg:mt-12">
           <DesktopDrawing />
           <PhoneDrawing />
         </motion.div>
 
         <motion.div
           {...reveal(0.2)}
-          className="mt-9 lg:mt-12 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5"
+          className="mt-5 lg:mt-12 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3 lg:gap-5"
         >
-          <p className="font-heading text-xl lg:text-2xl font-medium leading-snug text-ghost max-w-2xl">
+          <p className="font-heading text-lg lg:text-2xl font-medium leading-snug text-ghost max-w-2xl">
             More operational capacity without more headcount.
           </p>
           <Link

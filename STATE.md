@@ -1,19 +1,20 @@
 ---
-as-of: 2026-11-05T20:00:00Z
-session: Home and service pages redesign committed to PR #16; go-live checks run
+as-of: 2026-11-05T21:00:00Z
+session: Site v2 redesign went live from PR #16
 ---
 
 # STATE: aygency-site
 
 ## Live right now
-- Production builds automatically from `main` on GitHub (checked 2026-11-05). Keep `design/migration-v2` level with `main`. Louis asked to go live on 2026-11-05 with PR #16, knowing the contact form and audit emails are still to fix.
-- `next dev -p 3116` runs on Louis's Mac from this worktree.
+- **Site v2 is live on aygency.ai:** PR #16 merged to `main` as 41eea43, deployment dpl_J8TZAzHHGSoHvrFBRFVjvUuunQrv, 5 Nov 2026. Rollback target: dpl_GvJaymbuo4UGwfBHTuNrJ34fFasM.
+- Production builds automatically from `main` on GitHub. Merge there, then level `design/migration-v2` (`git push origin origin/main:refs/heads/design/migration-v2`).
+- Local dev server is stopped. Worktree: `.aygency-site-worktrees/about-and-answers`.
 
 ## In flight, Louis's latest verdicts (2026-11-05)
 - **First screen of the home page:** the 3D letter box is replaced by the walkthrough film at Louis's request (`HeroFilm.tsx`, `public/videos/`, 28 MB of film files). The button under it reads "Book your free AI growth audit", matching the film's last frame, and links to `/audit`. Check before go-live: `/audit` was unlisted until now, and submissions on the live site are untested.
 - **"Most AI agencies..." (`WhyAygency.tsx`):** Louis approved the round 4 design and wording, on the local home page: "Built around you" (we come to where your information lives), "Built to your standards", "Compounding, not depreciating" (we operate every agent, growth partners). Louis confirmed "Each correction your team makes is remembered" stays.
-- **Agents (`SystemTeaser.tsx`):** jobs at different times are right. Phone still looks squashed: design a separate phone version.
-- **Command centre (`SystemCore.tsx`):** liked on desktop and phone. Louis is testing on his phone. Its intro's first half is reworded and awaits his check.
+- **Agents (`SystemTeaser.tsx`):** Louis chose a phone-only list: every agent visible with a big title, tap to open its day, shorter intro. Desktop unchanged.
+- **Command centre (`SystemCore.tsx`):** liked on desktop and phone. Phone text cut to Louis's wording and spacing tightened, so the section is 842px tall. Desktop keeps its full text.
 - **Quality (`Quality.tsx`):** Louis prefers the morning calendar if it fits, so it replaced the big sentence, made shorter to match. His wording: "A manual job that took 4 hours now takes 12 minutes", "We're able to save more than 100 hours of work per month".
 - **Site hours figures:** Louis settled these on 2026-11-05: they all stay, including "hundreds of hours a week" and "up to 100 hours a month". Do not raise them again unless he does.
 - **Home page order, set by Louis 2026-11-05:** Hero, Agents, Command centre, Most AI agencies, Quality, Services, Data, Final call. "Your information already lives somewhere" moved from Most AI agencies to the command centre. Open: command centre panel wording "in one place" vs "connected, where it lives".
@@ -23,8 +24,8 @@ session: Home and service pages redesign committed to PR #16; go-live checks run
 - **Service pages:** all eight are rebuilt locally in the tour shape (Louis chose layout A) with the before and after drawing he chose, awaiting his review (`src/components/services/`). "Every engagement starts with" on the services overview now says "Most engagements". Every section must show what the AI is doing. Sample screens are labelled illustrative.
 - Section gradient joins are fixed across 11 pages (`SystemCore`, `Faq`).
 
-## Go-live checks (2026-11-05)
-Production build, lint, types, 34 sitemap pages, internal links, `/brain` redirect and the film all pass (Chrome and Playwright WebKit). Home page downloads about 650 KB before play. One test went through the live `/audit`, labelled "TEST please ignore" from build@aygency.ai: stored, status completed. Louis did not receive its notification email: audit answers save, but no email goes out until Resend is set up. Still to check: a real iPhone and real Safari.
+## Go-live checks, run on the live site (2026-11-05)
+Production build, lint, types, 34 sitemap pages, internal links, `/brain` redirect and the film all pass (Chrome and Playwright WebKit). Home page downloads about 650 KB before play. One test went through the live `/audit`, labelled "TEST please ignore" from build@aygency.ai: stored, status completed. Louis did not receive its notification email: audit answers save, but no email goes out until Resend is set up. One phone-emulation test saw the film stop itself on play; 12 repeats across phone profiles all played, not reproduced. Still to check: a real iPhone and real Safari. Delete the test audit entry and two drafts from the audit records.
 
 ## Blocked, and on whom
 - **Contact form still returns 500 on the live site (re-checked 2026-11-05).** An empty POST to `/api/contact` should return 400. `new Resend()` sits outside the `try` in the route, so a missing `RESEND_API_KEY` in production would cause exactly this (inferred, the Vercel value was not read). On Louis (Resend + Cloudflare). Re-check: does an empty POST return 400, not 500?
