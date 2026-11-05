@@ -17,7 +17,7 @@ export default function Faq({ items }: { items?: FaqItem[] }) {
   };
 
   return (
-    <section className="blend-surface section-padding">
+    <section className="bg-void section-padding">
       <SectionContainer>
         <div className="max-w-3xl">
           <SectionHeading eyebrow="FAQ" heading="Common questions" />

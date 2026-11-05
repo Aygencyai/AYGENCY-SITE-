@@ -18,7 +18,6 @@ export function GET() {
     "## Key pages",
     link("Home", "/"),
     link("The System", "/system"),
-    link("The Brain", "/brain"),
     link("About", "/about"),
     link("Trust", "/trust"),
     link("Contact", "/contact"),

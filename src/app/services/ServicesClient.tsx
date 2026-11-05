@@ -1,146 +1,60 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import SectionContainer from "@/components/ui/SectionContainer";
-import Reveal from "@/components/ui/Reveal";
-import TypewriterText from "@/components/effects/TypewriterText";
-import Button from "@/components/ui/Button";
-import PageTransition from "@/components/ui/PageTransition";
-import GlassCard from "@/components/ui/GlassCard";
-import GlowOrb from "@/components/effects/GlowOrb";
-import AnimatedGrid from "@/components/effects/AnimatedGrid";
+import { ServiceCards } from "@/components/home/ServicesGrid";
 import MagneticButton from "@/components/ui/MagneticButton";
-import { services } from "@/lib/data";
+import PageTransition from "@/components/ui/PageTransition";
 
-const systemFit: Record<string, string> = {
-  "command-centre": "CEO Agent · the Brain · your in-house agents",
-  "back-office-agents": "Operations · Analyst · CEO Agent",
-  "business-brain": "the Brain · CEO Agent",
-  "content": "Content Production · Strategist",
-  "lead-generation": "Lead Gen · Outreach · Strategist · CEO Agent",
-  "membership-management": "Operations · Front-Desk",
-  "customer-support": "Front-Desk · Operations",
-};
+const reveal = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
+});
 
+// A simple way in: every service one click away. The selling happens on each service's own page.
 export default function ServicesClient() {
   return (
     <PageTransition>
-      {/* Hero */}
-      <section className="bg-void pt-32 pb-10">
-        <SectionContainer>
-          <div>
-            <Reveal>
-              <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
-                Our Services
-              </p>
-            </Reveal>
-            <h2 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6 whitespace-pre-line">
-              <TypewriterText
-                text={"Your Command Centre.\nYour Back Office. Built In."}
-                delay={300}
-                speed={35}
-              />
-            </h2>
-            <Reveal delay={0.1}>
-              <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-                Every engagement starts with the command centre and the back-office agents that can save a business hundreds of hours a week. From there we build out Business Brain, customer support, membership, lead generation, content and your website, all designed around how your business already works.
-              </p>
-            </Reveal>
-          </div>
-        </SectionContainer>
+      <section className="blend-void pt-28 lg:pt-36 pb-16 lg:pb-24">
+        <div className="max-w-6xl mx-auto px-6 md:px-8">
+          <motion.div {...reveal()} className="max-w-3xl">
+            <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-5 lg:mb-6">{`// our services`}</p>
+            <h1 className="font-heading text-[2.25rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.02] uppercase font-bold text-white">
+              Start at the core. <span className="text-cyan">Build out from there.</span>
+            </h1>
+            <p className="font-sans text-base lg:text-lg leading-[1.65] text-ghost-muted mt-5 lg:mt-6">
+              Most engagements start with the command centre and the back-office agents that can save a business hundreds
+              of hours a week. From there we build out the rest, all designed around how your business already works.
+            </p>
+          </motion.div>
+          <motion.div {...reveal(0.1)} className="mt-10 lg:mt-14">
+            <ServiceCards />
+          </motion.div>
+        </div>
       </section>
 
-      {/* Service Cards */}
-      <section className="blend-void pt-12 pb-24 md:pt-16 md:pb-32">
-        <SectionContainer>
-          <div className="flex flex-col gap-8 md:gap-12">
-            {services.map((service, i) => (
-                <Reveal key={service.slug} delay={i * 0.1}>
-                  <GlassCard tilt={false}>
-                    <div className="md:grid md:grid-cols-[1fr_1.5fr] md:gap-12 md:items-center">
-                      {/* Left */}
-                      <div>
-                        <h3 className="font-heading text-2xl font-semibold text-white">
-                          {service.title}
-                        </h3>
-                        <p className="font-sans text-ghost-muted mt-3 leading-relaxed">
-                          {service.description}
-                        </p>
-                      </div>
-
-                      {/* Right — Use cases */}
-                      <div className="mt-8 md:mt-0">
-                        <p className="font-mono text-xs text-ghost-dim tracking-widest uppercase mb-4">
-                          What this looks like
-                        </p>
-                        <ul className="space-y-3 list-disc list-outside ml-4 marker:text-cyan">
-                          {service.useCases.map((useCase) => (
-                            <li
-                              key={useCase}
-                              className="font-sans text-ghost-muted"
-                            >
-                              {useCase}
-                            </li>
-                          ))}
-                        </ul>
-
-                        {systemFit[service.slug] && (
-                          <p className="font-mono text-[11px] text-cyan/80 tracking-wider uppercase mt-6">
-                            Built from {systemFit[service.slug]}
-                          </p>
-                        )}
-
-                        <Link
-                          href={`/services/${service.slug}`}
-                          className="group inline-flex items-center gap-2 mt-6 text-cyan font-sans font-medium text-sm"
-                        >
-                          <span>Explore {service.shortTitle}</span>
-                          <ArrowRight
-                            size={16}
-                            className="transition-transform duration-300 group-hover:translate-x-1"
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                  </GlassCard>
-                </Reveal>
-            ))}
+      <section className="blend-surface section-padding">
+        <motion.div {...reveal()} className="max-w-3xl mx-auto px-6 md:px-8 text-center">
+          <h2 className="font-heading text-[1.75rem] sm:text-4xl lg:text-5xl leading-[1.08] uppercase font-semibold text-ghost">
+            Not sure which system you need?
+          </h2>
+          <p className="font-sans text-base lg:text-lg leading-[1.65] text-ghost-muted mt-4">
+            Most clients start with a conversation. Tell us where things slow down and we&rsquo;ll map the system that
+            would make the biggest difference. You keep the plan whether you build it with us or not.
+          </p>
+          <div className="mt-7">
+            <MagneticButton className="inline-block">
+              <Link
+                href="/audit"
+                className="inline-block rounded-lg bg-cyan px-6 sm:px-8 py-3 text-center font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-void transition-all duration-200 hover:brightness-110 hover:shadow-glow-sm"
+              >
+                Book your free AI growth audit
+              </Link>
+            </MagneticButton>
           </div>
-        </SectionContainer>
-      </section>
-
-      {/* CTA Band */}
-      <section className="blend-surface section-padding relative overflow-hidden">
-        <AnimatedGrid />
-        <GlowOrb
-          size={400}
-          opacity={0.1}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        />
-        <SectionContainer>
-          <div className="relative z-10 text-center">
-            <Reveal>
-              <h2 className="font-heading text-2xl md:text-3xl text-white uppercase font-semibold">
-                Not Sure Which System You Need?
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="font-sans text-ghost-muted text-lg mt-4 max-w-2xl mx-auto">
-                Most clients start with a conversation. Tell us where things slow down and we&rsquo;ll map the system that would make the biggest difference. You keep the plan whether you build it with us or not.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="mt-8">
-                <MagneticButton className="inline-block">
-                  <Button variant="primary" size="lg" href="/contact">
-                    Book a Call
-                  </Button>
-                </MagneticButton>
-              </div>
-            </Reveal>
-          </div>
-        </SectionContainer>
+        </motion.div>
       </section>
     </PageTransition>
   );

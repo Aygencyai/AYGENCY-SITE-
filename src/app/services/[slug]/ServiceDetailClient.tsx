@@ -9,13 +9,17 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import Faq from "@/components/ui/Faq";
 import type { Service } from "@/types";
 import { services } from "@/lib/data";
-
+import { serviceTourPages } from "@/components/services/content";
+import ServiceTourPage from "@/components/services/ServiceTourPage";
 
 export default function ServiceDetailClient({
   service,
 }: {
   service: Service;
 }) {
+  const tour = serviceTourPages[service.slug];
+  if (tour) return <ServiceTourPage content={tour} />;
+
   return (
     <>
       {/* A. Hero */}

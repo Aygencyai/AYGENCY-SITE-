@@ -129,11 +129,12 @@ src/
 - The contact page uses Resend for email and Cal.com for booking. The API route and form logic must be preserved exactly.
 - The site uses `next/font/google` for font loading — do NOT use `<link>` tags or `@import` for Google Fonts.
 - The heading font is Space Grotesk (not DM Serif Display). The design was migrated from an ivory/green editorial theme to a dark void/cyan tech aesthetic.
-- Three.js is used ONLY for the homepage 3D A↔Y letter animation (`LetterScene.tsx` + `LetterBlocks.tsx`). Do not add Three.js to any other page. The old `OrbScene.tsx` was removed for performance.
+- The home hero plays the walkthrough film (`HeroFilm.tsx`, files in `public/videos/`) with `preload="none"`. The button under it must match the words on the film's last frame. The 3D letter (`LetterScene.tsx` + `LetterBlocks.tsx`) now appears only at `/test-letter`. Do not add Three.js to any other page.
 - `LetterScene.tsx` defaults `isMobile` to `true` (not `false`) to prevent bloom post-processing from flashing on mobile before the window size check runs.
 - `TypewriterText.tsx` uses IntersectionObserver with `margin: "-80px 0px"` — the vertical-only margin is intentional. Using just `"-80px"` shrinks the observation zone horizontally and breaks detection on narrow elements.
 - `GlowOrb.tsx` is a static CSS blur effect with no scroll parallax. The `parallaxStrength` prop exists in the interface for backward compatibility but is unused.
 - GSAP has been fully removed from the codebase. Do not re-introduce it.
+- Sections fade into each other: a section's end colour must match the next section's start colour. `blend-void` ends on surface and `blend-surface` ends on void, so adding, removing or reordering a section can leave a hard line. Check every join on the rendered page after any such change.
 - `/design-your-eden` is the approved `EdenApplicationSubmitted.v1` sender. The
   browser calls only the same-origin route; `src/lib/eden/crm.ts` holds the
   server-only exact-byte HMAC adapter. Email is matching evidence, not identity,

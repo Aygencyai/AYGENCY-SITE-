@@ -13,6 +13,7 @@ const nextConfig = {
       { source: "/services/intelligence", destination: "/services/command-centre", permanent: true },
       { source: "/services/full-department", destination: "/services", permanent: true },
       { source: "/services/website-revamps", destination: "/services/website-overhaul", permanent: true },
+      { source: "/brain", destination: "/services/business-brain", permanent: true },
     ];
   },
 };

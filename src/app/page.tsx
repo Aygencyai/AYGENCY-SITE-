@@ -18,10 +18,10 @@ export default function HomePage() {
   return (
     <PageTransition>
       <Hero />
-      <WhyAygency />
       <SystemTeaser />
-      <Quality />
       <SystemCore />
+      <WhyAygency />
+      <Quality />
       <ServicesGrid />
       <DataSecurity />
       <CTABanner />

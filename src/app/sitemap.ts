@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "/system",
-    "/brain",
     "/services",
     ...services.map((s) => `/services/${s.slug}`),
     "/use-cases",
