@@ -586,4 +586,66 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "which-department-to-automate-first",
+    title: "Which part of my business should I hand to AI agents first?",
+    excerpt:
+      "Start with the back office. The repetitive admin, finance and operations work is where most businesses lose the most time, and it is the work that caps how fast you can grow. Clear that bottleneck first and the next one, usually lead generation, gets far easier to take on.",
+    date: "5 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "Why the back office comes first",
+        paragraphs: [
+          "In most growing businesses the back office sets the pace. Every new customer brings more data to key in, more invoices to process, more documents to chase and more reports to pull together. That work grows in step with the business, so growth quietly turns into hiring just to keep up.",
+          "It is also the work agents handle best. It is repeatable, it follows rules, and it lives in the tools you already use. That makes it the fastest place to see a return, and the safest place to build trust in the system before agents take on anything customer-facing.",
+        ],
+      },
+      {
+        heading: "How to find your biggest bottleneck",
+        paragraphs: [
+          "The right first step is rarely a whole department. It is the one workflow that costs the most time or holds everything else up. A few questions usually find it:",
+          "Where do people do the same task the same way every week? Where does work wait for someone to have a spare hour? Which job would you need to hire for next if the business doubled? Where do small mistakes cost the most to fix? The workflow that appears in more than one answer is usually the place to start.",
+        ],
+      },
+      {
+        heading: "Then lead generation",
+        paragraphs: [
+          "Once the back office runs itself, lead generation is the natural next step. Agents find the right prospects, write to them in your voice and hand warm conversations to your team. Doing it in this order matters: new demand lands on an operation that can absorb it, instead of piling more work onto the people who were already stretched.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "A professional services firm maps how its week really runs and finds that client onboarding is the bottleneck. Forms, document chasing and setting clients up in three systems take up hours that should go on client work. An onboarding agent goes live first, with anything unusual flagged in the command centre for a person to approve. Once it has proved itself, invoicing follows, then reporting, and the CEO Agent starts reading across all three. The system grows one bottleneck at a time.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "Starting small is a strength, not a compromise. One well-built agent around a real workflow does more for a business than a broad rollout that nobody trusts yet. Your team keeps working the way it does today, and each new agent builds on what the system has already learned.",
+        ],
+      },
+      nextStep(
+        "Next step",
+        "Aygency maps how your business actually runs, starts with the agents that remove the biggest bottleneck, then adds more as you grow. See what back-office agents take on, or talk to us about where your time goes.",
+        "/services/back-office-agents",
+        "See back-office agents",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Should I start with sales or the back office?",
+        a: "Usually the back office. It is where repetitive work piles up fastest and it is what limits growth. Once it runs itself, adding lead generation means new customers land on an operation that can handle them.",
+      },
+      {
+        q: "Do I need to hand over a whole department at once?",
+        a: "No. Aygency starts with the single workflow that removes the biggest bottleneck, proves it, then adds agents one step at a time as the business grows.",
+      },
+      {
+        q: "How do I know which workflow to start with?",
+        a: "Look for work your team repeats every week, work that waits for someone to be free, and the role you would hire for next. Aygency maps your real workflows on the first call to find it with you.",
+      },
+    ],
+  },
 ];
