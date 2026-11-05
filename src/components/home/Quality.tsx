@@ -22,6 +22,8 @@ const points = [
   },
 ];
 
+const morning = ["9am", "10am", "11am", "12pm", "1pm"];
+
 const reveal = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
@@ -71,28 +73,63 @@ export default function Quality() {
             ))}
           </ol>
 
-          <motion.div {...reveal(0.1)} className="order-2 lg:order-none lg:col-span-2 mt-12 lg:mt-24">
-            <p className="font-heading text-[1.875rem] sm:text-[2.5rem] lg:text-[3.5rem] leading-[1.14] tracking-[-0.01em] font-medium text-ghost">
-              A manual job that took <span className="text-white font-semibold whitespace-nowrap">4 hours</span> now takes{" "}
-              <span className="text-cyan font-semibold whitespace-nowrap">12 minutes</span>, and someone on the team checks it
-              before it goes anywhere.
-            </p>
-            {/* The two lengths, drawn to scale: 12 minutes is 5% of 4 hours. */}
-            <div className="mt-8 lg:mt-12 space-y-3" aria-hidden>
-              <div className="flex items-center gap-3">
-                <span className="h-[3px] flex-1 bg-ghost/35" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-ghost-muted w-16 text-right">4 hrs</span>
+          <motion.div
+            {...reveal(0.1)}
+            className="order-2 lg:order-none lg:col-span-2 mt-12 lg:mt-20 grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-x-20 gap-y-8 items-center"
+          >
+            <div>
+              <p className="font-heading text-[1.75rem] lg:text-[2.75rem] leading-[1.08] font-semibold text-white">
+                A whole morning of work, done in minutes.
+              </p>
+              <p className="font-sans text-base lg:text-lg leading-[1.65] text-ghost-muted mt-3 lg:mt-5">
+                A manual job that took <span className="text-ghost whitespace-nowrap">4 hours</span> now takes{" "}
+                <span className="text-cyan whitespace-nowrap">12 minutes</span>, and someone on the team checks it before it
+                goes anywhere.
+              </p>
+              <p className="font-sans text-base lg:text-lg leading-[1.65] text-ghost mt-3">
+                We’re able to save more than 100 hours of work per month.
+              </p>
+            </div>
+
+            {/* One morning, drawn to scale: 12 minutes is 5% of 4 hours, and the height says so. */}
+            <div className="grid grid-cols-[38px_1fr_1fr] lg:grid-cols-[48px_1fr_1fr] gap-x-2 lg:gap-x-3">
+              <span />
+              <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-ghost-muted pb-2.5">By hand</p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-cyan pb-2.5">With the agent</p>
+              <div className="relative h-[260px] lg:h-[300px]">
+                {morning.map((hour, i) => (
+                  <span
+                    key={hour}
+                    className="absolute left-0 -translate-y-1/2 font-mono text-[11px] text-ghost-dim"
+                    style={{ top: `${i * 25}%` }}
+                  >
+                    {hour}
+                  </span>
+                ))}
               </div>
-              <div className="flex items-center gap-3">
-                <span className="flex-1">
-                  <span className="block h-[3px] w-[5%] bg-cyan" />
-                </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-cyan w-16 text-right">12 min</span>
+              <div className="relative col-span-2 grid grid-cols-2 gap-x-2 lg:gap-x-3 h-[260px] lg:h-[300px]">
+                {[0, 25, 50, 75, 100].map((top) => (
+                  <span key={top} aria-hidden className="absolute left-0 right-0 h-px bg-ghost/10" style={{ top: `${top}%` }} />
+                ))}
+                <div className="relative h-full rounded-[3px] border-l-2 border-ghost-muted bg-ghost/[0.09] p-3 lg:p-4">
+                  <p className="font-heading text-xl lg:text-2xl font-semibold text-ghost leading-none">4 hours</p>
+                  <p className="font-sans text-[13px] lg:text-sm text-ghost-muted mt-2">The whole morning</p>
+                </div>
+                <div className="relative h-full">
+                  <div className="flex items-center h-[5%] rounded-[3px] bg-cyan px-2 lg:px-3">
+                    <p className="font-sans font-medium text-[10px] lg:text-[12px] text-void leading-none whitespace-nowrap">Agent, 12 min</p>
+                  </div>
+                  <div className="flex items-center h-[6.25%] rounded-[3px] border-l-2 border-cyan bg-cyan/10 px-2 lg:px-3">
+                    <p className="font-sans text-[10px] lg:text-[12px] text-ghost leading-none whitespace-nowrap">Team checks</p>
+                  </div>
+                  <div className="absolute inset-x-0 top-[11.25%] bottom-0 flex items-center justify-center px-2">
+                    <p className="font-heading text-lg lg:text-2xl font-medium text-ghost text-center leading-tight">
+                      The rest of the morning
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="font-sans text-base lg:text-lg leading-[1.7] text-ghost-muted mt-6 lg:mt-8">
-              We’re able to save more than 100 hours of work per month.
-            </p>
           </motion.div>
         </div>
       </div>
