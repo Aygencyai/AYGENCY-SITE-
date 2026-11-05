@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   LineChart,
   MessageSquare,
   Network,
@@ -121,62 +122,94 @@ function Status({ status }: { status: Job["status"] }) {
 
 export default function SystemTeaser() {
   const [activeName, setActiveName] = useState("Operations");
-  const railRef = useRef<HTMLUListElement>(null);
+  const [openName, setOpenName] = useState<string | null>("Operations");
   const active = agents.find((a) => a.name === activeName) ?? agents[0];
   const rows = jobs[active.name] ?? [];
-
-  const choose = (name: string, target: HTMLElement) => {
-    setActiveName(name);
-    // On a phone the agents are a sideways rail: bring the chosen one to the middle.
-    const rail = railRef.current;
-    if (rail && rail.scrollWidth > rail.clientWidth) {
-      rail.scrollTo({ left: target.offsetLeft - rail.clientWidth / 2 + target.offsetWidth / 2, behavior: "smooth" });
-    }
-  };
 
   return (
     <section className="blend-void section-padding">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <motion.div {...reveal()} className="max-w-3xl">
-          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-5 lg:mb-6">{`// the agents we build`}</p>
-          <h2 className="font-heading text-[2rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-cyan mb-3 lg:mb-6">{`// the agents we build`}</p>
+          <h2 className="font-heading text-[1.75rem] sm:text-[2.5rem] md:text-[3rem] leading-[1.1] text-ghost uppercase font-semibold">
             If it&rsquo;s a role in your business, we can build the agent for it.
           </h2>
-          <p className="font-sans text-base lg:text-lg leading-[1.7] text-ghost-muted mt-5 lg:mt-6">
+          <p className="lg:hidden font-sans text-[15px] sm:text-base leading-[1.55] text-ghost-muted mt-3">
+            Each one does a real job like your number one employee, coordinated by a CEO Agent.
+          </p>
+          <p className="hidden lg:block font-sans text-lg leading-[1.7] text-ghost-muted mt-6">
             Every agent is built around one real job and does it like your number one employee.
             Together they work as a team of specialists, coordinated by a CEO Agent and backed
             by one shared Brain that knows how your business runs.
           </p>
         </motion.div>
 
-        <motion.div
-          {...reveal(0.1)}
-          className="mt-9 lg:mt-14 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 lg:gap-12 items-start"
-        >
-          {/* Phone: a sideways rail of pills you swipe. Desktop: a list down the side. */}
-          <ul
-            ref={railRef}
-            className="relative flex lg:block gap-2 -mx-6 md:-mx-8 lg:mx-0 px-6 md:px-8 lg:px-0 overflow-x-auto lg:overflow-visible scrollbar-hide snap-x"
-          >
+        {/* Phone: every agent in one list. Tap one to open its day. */}
+        <motion.ul {...reveal(0.1)} className="lg:hidden mt-6 border-b border-ghost/10">
+          {agents.map((agent) => {
+            const Icon = icons[agent.icon] ?? Network;
+            const isOpen = agent.name === openName;
+            return (
+              <li key={agent.name} className="border-t border-ghost/10">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenName(isOpen ? null : agent.name)}
+                  className="flex w-full items-center gap-3 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan"
+                >
+                  <Icon className={`w-5 h-5 flex-shrink-0 ${isOpen ? "text-cyan" : "text-ghost-muted"}`} strokeWidth={1.5} />
+                  <span className={`font-heading text-xl font-semibold ${isOpen ? "text-white" : "text-ghost"}`}>{agent.name}</span>
+                  <ChevronDown
+                    className={`ml-auto w-5 h-5 transition-transform duration-200 ${isOpen ? "rotate-180 text-cyan" : "text-ghost-muted"}`}
+                    strokeWidth={1.5}
+                  />
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.ul
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden pl-8"
+                    >
+                      {(jobs[agent.name] ?? []).slice(0, 3).map((row) => (
+                        <li key={row.job} className="py-2 last:pb-4">
+                          <p className="font-sans text-[15px] leading-snug text-ghost">{row.job}</p>
+                          <div className="flex items-center gap-2.5 mt-1">
+                            <span className="font-mono text-xs text-ghost-muted">{row.time}</span>
+                            <Status status={row.status} />
+                          </div>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </li>
+            );
+          })}
+        </motion.ul>
+        <p className="lg:hidden font-sans text-xs text-ghost-muted mt-3">Illustrative. Sample data.</p>
+
+        {/* Desktop: a list down the side, with the chosen agent's day beside it. */}
+        <motion.div {...reveal(0.1)} className="hidden lg:grid mt-14 grid-cols-[300px_1fr] gap-12 items-start">
+          <ul>
             {agents.map((agent) => {
               const Icon = icons[agent.icon] ?? Network;
               const isActive = agent.name === active.name;
               return (
-                <li key={agent.name} className="snap-center flex-shrink-0">
+                <li key={agent.name}>
                   <button
                     type="button"
                     aria-pressed={isActive}
-                    onClick={(e) => choose(agent.name, e.currentTarget.parentElement as HTMLElement)}
-                    className={`flex items-center gap-2.5 lg:gap-3 w-full whitespace-nowrap text-left font-heading text-[15px] lg:text-base font-medium px-4 py-2.5 lg:py-3 rounded-full lg:rounded-none border lg:border-0 lg:border-l-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan ${
+                    onClick={() => setActiveName(agent.name)}
+                    className={`flex items-center gap-3 w-full whitespace-nowrap text-left font-heading text-base font-medium px-4 py-3 border-l-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan ${
                       isActive
                         ? "border-cyan text-white bg-cyan/[0.08]"
-                        : "border-ghost/15 lg:border-ghost/10 text-ghost-muted hover:text-ghost hover:border-ghost/30"
+                        : "border-ghost/10 text-ghost-muted hover:text-ghost hover:border-ghost/30"
                     }`}
                   >
-                    <Icon
-                      className={`w-[18px] h-[18px] flex-shrink-0 ${isActive ? "text-cyan" : ""}`}
-                      strokeWidth={1.5}
-                    />
+                    <Icon className={`w-[18px] h-[18px] flex-shrink-0 ${isActive ? "text-cyan" : ""}`} strokeWidth={1.5} />
                     {agent.name}
                   </button>
                 </li>
@@ -184,8 +217,7 @@ export default function SystemTeaser() {
             })}
           </ul>
 
-          {/* Phone: runs edge to edge like an app screen. Desktop: a framed panel. */}
-          <div className="-mx-6 md:mx-0 border-y md:border border-ghost/10 md:rounded-xl bg-void-light px-6 py-7 md:p-9 sm:min-h-[515px]">
+          <div className="border border-ghost/10 rounded-xl bg-void-light p-9 min-h-[515px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.name}
@@ -194,26 +226,26 @@ export default function SystemTeaser() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
-                <h3 className="font-heading text-2xl md:text-3xl font-semibold text-white">{active.name}</h3>
-                <p className="font-mono text-[11px] md:text-xs uppercase tracking-[0.15em] text-cyan mt-1.5 md:mt-2">
+                <h3 className="font-heading text-3xl font-semibold text-white">{active.name}</h3>
+                <p className="font-mono text-xs uppercase tracking-[0.15em] text-cyan mt-2">
                   {active.role}
                 </p>
-                <p className="font-sans text-[15px] md:text-base leading-relaxed text-ghost-muted mt-3 md:mt-4 max-w-2xl">
+                <p className="font-sans text-base leading-relaxed text-ghost-muted mt-4 max-w-2xl">
                   {active.description}
                 </p>
 
-                <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-ghost-muted mt-6 md:mt-7 mb-1">
+                <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-ghost-muted mt-7 mb-1">
                   Today
                 </p>
                 <ul>
                   {rows.map((row) => (
                     <li
                       key={row.job}
-                      className="grid grid-cols-[48px_1fr] md:grid-cols-[56px_1fr_auto] gap-x-3 gap-y-1.5 items-start md:items-center py-3.5 border-t border-ghost/10"
+                      className="grid grid-cols-[56px_1fr_auto] gap-x-3 items-center py-3.5 border-t border-ghost/10"
                     >
-                      <span className="font-mono text-xs text-ghost-muted pt-0.5 md:pt-0">{row.time}</span>
+                      <span className="font-mono text-xs text-ghost-muted">{row.time}</span>
                       <span className="font-sans text-[15px] leading-snug text-ghost">{row.job}</span>
-                      <span className="col-start-2 md:col-start-auto">
+                      <span>
                         <Status status={row.status} />
                       </span>
                     </li>
@@ -225,7 +257,7 @@ export default function SystemTeaser() {
           </div>
         </motion.div>
 
-        <motion.div {...reveal(0.2)} className="mt-8 lg:mt-10">
+        <motion.div {...reveal(0.2)} className="mt-6 lg:mt-10">
           <Link
             href="/system"
             className="inline-flex items-center gap-2 font-heading text-[13px] font-semibold uppercase tracking-[0.15em] text-cyan transition-colors hover:text-cyan-muted"

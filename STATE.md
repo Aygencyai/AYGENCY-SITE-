@@ -1,5 +1,5 @@
 ---
-as-of: 2026-11-05T20:30:00Z
+as-of: 2026-11-05T21:00:00Z
 session: Site v2 redesign went live from PR #16
 ---
 
@@ -13,8 +13,8 @@ session: Site v2 redesign went live from PR #16
 ## In flight, Louis's latest verdicts (2026-11-05)
 - **First screen of the home page:** the 3D letter box is replaced by the walkthrough film at Louis's request (`HeroFilm.tsx`, `public/videos/`, 28 MB of film files). The button under it reads "Book your free AI growth audit", matching the film's last frame, and links to `/audit`. Check before go-live: `/audit` was unlisted until now, and submissions on the live site are untested.
 - **"Most AI agencies..." (`WhyAygency.tsx`):** Louis approved the round 4 design and wording, on the local home page: "Built around you" (we come to where your information lives), "Built to your standards", "Compounding, not depreciating" (we operate every agent, growth partners). Louis confirmed "Each correction your team makes is remembered" stays.
-- **Agents (`SystemTeaser.tsx`):** jobs at different times are right. Phone still looks squashed: design a separate phone version.
-- **Command centre (`SystemCore.tsx`):** liked on desktop and phone. Louis is testing on his phone. Its intro's first half is reworded and awaits his check.
+- **Agents (`SystemTeaser.tsx`):** Louis chose a phone-only list: every agent visible with a big title, tap to open its day, shorter intro. Desktop unchanged.
+- **Command centre (`SystemCore.tsx`):** liked on desktop and phone. Phone text cut to Louis's wording and spacing tightened, so the section is 842px tall. Desktop keeps its full text.
 - **Quality (`Quality.tsx`):** Louis prefers the morning calendar if it fits, so it replaced the big sentence, made shorter to match. His wording: "A manual job that took 4 hours now takes 12 minutes", "We're able to save more than 100 hours of work per month".
 - **Site hours figures:** Louis settled these on 2026-11-05: they all stay, including "hundreds of hours a week" and "up to 100 hours a month". Do not raise them again unless he does.
 - **Home page order, set by Louis 2026-11-05:** Hero, Agents, Command centre, Most AI agencies, Quality, Services, Data, Final call. "Your information already lives somewhere" moved from Most AI agencies to the command centre. Open: command centre panel wording "in one place" vs "connected, where it lives".
