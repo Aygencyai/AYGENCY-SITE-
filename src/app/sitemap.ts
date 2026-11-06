@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/trust",
     "/contact",
+    "/privacy",
+    "/terms",
   ];
 
   return paths.map((path) => ({ url: `${SITE_URL}${path}`, lastModified: new Date() }));
