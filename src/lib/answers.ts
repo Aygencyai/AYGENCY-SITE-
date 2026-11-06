@@ -21,6 +21,8 @@ export const answerPosts: InsightPost[] = [
     title: "What is an AI agent system, and how is it different from a chatbot?",
     excerpt:
       "An AI agent system is a team of AI agents that does real work inside your business, not just answers questions. A chatbot replies to whoever is typing. An agent system notices what needs doing across your tools, does it, hands off to the next agent, and asks you before anything high-impact goes ahead.",
+    metaDescription:
+      "An AI agent system is a team of AI agents doing real work in your business. Unlike a chatbot, it acts across your tools and asks before high-impact steps.",
     date,
     readTime: "4 min read",
     content: [
@@ -77,6 +79,8 @@ export const answerPosts: InsightPost[] = [
     title: "Which back-office tasks can AI agents take over in a small business?",
     excerpt:
       "AI agents can take over most of the repetitive back-office work that slows a small business down: data entry, invoices, reconciliation, chasing documents, onboarding, reporting and scheduling. If someone does the same task the same way every week, an agent can usually do it faster and more consistently. That is where Aygency starts, because clearing the back office is what frees a business to scale.",
+    metaDescription:
+      "AI agents can take over repetitive back-office work in a small business: data entry, invoices, reconciliation, document chasing, reporting and scheduling.",
     date,
     readTime: "4 min read",
     content: [
@@ -133,6 +137,8 @@ export const answerPosts: InsightPost[] = [
     title: "Do AI agents mean changing how my team works?",
     excerpt:
       "No. Aygency designs agents around the way your business already runs, so your team keeps the tools and routines they know. The difference is that the repetitive work stops landing on their desks. Day to day, it feels like gaining a very fast colleague, not learning a new system.",
+    metaDescription:
+      "No. Aygency designs AI agents around how your business already runs, so your team keeps its tools and routines while the repetitive work leaves their desks.",
     date,
     readTime: "4 min read",
     content: [
@@ -189,6 +195,8 @@ export const answerPosts: InsightPost[] = [
     title: "How do AI agents help a business scale without hiring?",
     excerpt:
       "AI agents remove the bottlenecks that normally force a business to hire before it can grow. They take on the admin that grows with every new client, then the work of bringing new clients in. With Aygency, growth stops being limited by headcount and starts being limited only by ambition.",
+    metaDescription:
+      "AI agents remove the bottlenecks that force a business to hire before it can grow. They take on the admin first, then the work of bringing new clients in.",
     date,
     readTime: "4 min read",
     content: [
@@ -244,6 +252,8 @@ export const answerPosts: InsightPost[] = [
     title: "AI agents vs Zapier, Make or n8n: which does my business need?",
     excerpt:
       "If you need one fixed task moved from A to B, Zapier, Make or n8n will do it. If you want the work itself handled, including the judgement, the exceptions and the follow-up, you need AI agents. For a business trying to scale, an agent system built and run by Aygency goes much further than a set of automations.",
+    metaDescription:
+      "Zapier, Make or n8n suit one fixed task. If you want the judgement, exceptions and follow-up handled too, your business needs AI agents. Here is how to choose.",
     date,
     readTime: "4 min read",
     content: [
@@ -299,6 +309,8 @@ export const answerPosts: InsightPost[] = [
     title: "Should I hire an admin assistant or use AI agents?",
     excerpt:
       "For repetitive admin, AI agents are the stronger choice: they work around the clock, never fall behind on a busy week, and scale as the business grows without another hire. Keep people for the work that needs a human touch. Aygency builds agents that take the admin off your team so the people you do hire spend their time where it matters.",
+    metaDescription:
+      "For repetitive admin, AI agents work around the clock and scale as you grow, without another hire. Keep your people for the work that needs a human touch.",
     date,
     readTime: "4 min read",
     content: [
@@ -354,6 +366,8 @@ export const answerPosts: InsightPost[] = [
     title: "How do I stay in control of what AI agents do?",
     excerpt:
       "You stay in control through a command centre: one place where you see what every agent has done and approve anything high-impact before it happens. Aygency decides with you which actions need sign-off, and every system can be paused or rolled back. The agents do the work; you keep the final say.",
+    metaDescription:
+      "Stay in control of AI agents through a command centre: see what every agent has done, approve anything high-impact first, and pause or roll back any time.",
     date,
     readTime: "4 min read",
     content: [
@@ -410,6 +424,8 @@ export const answerPosts: InsightPost[] = [
     title: "Is it safe to give AI agents access to my business data?",
     excerpt:
       "Yes, when the system is built privacy-first. Your data never trains external models, data handling is GDPR-aligned, and a data processing agreement (DPA) is available. Agents only get the access their job needs, and high-impact actions wait for a person.",
+    metaDescription:
+      "Yes, when built privacy-first. Your data never trains external models, data handling is GDPR-aligned, and a DPA is available. Agents get only the access needed.",
     date,
     readTime: "4 min read",
     content: [
@@ -467,6 +483,8 @@ export const answerPosts: InsightPost[] = [
     title: "How long does it take to get AI agents live in a business?",
     excerpt:
       "With Aygency, the first agents are live within weeks, not months. We start with the bottleneck that matters most, get it working on real data, then add more agents in phases. From then on the system keeps improving every month.",
+    metaDescription:
+      "With Aygency, the first AI agents are live within weeks, not months. We start with the biggest bottleneck, get it working on real data, then add more in phases.",
     date,
     readTime: "4 min read",
     content: [
@@ -523,6 +541,8 @@ export const answerPosts: InsightPost[] = [
     title: "What's included in an AI agent system from Aygency?",
     excerpt:
       "Everything your business needs for agents to take real work off your team and keep getting better at it. That means discovery of your workflows, a system design you approve, specialist agents, the CEO Agent, your private Brain, a command centre with human approval, connections to the tools you already use, team training, and ongoing running and improvement. You get extra capacity built around how you already work, not another piece of software to manage.",
+    metaDescription:
+      "An Aygency AI agent system includes discovery, design, specialist agents, the CEO Agent, your Brain, a command centre with approvals, and ongoing improvement.",
     date,
     updated: "3 November 2026",
     readTime: "4 min read",
@@ -591,6 +611,8 @@ export const answerPosts: InsightPost[] = [
     title: "Which part of my business should I hand to AI agents first?",
     excerpt:
       "Start with the back office. The repetitive admin, finance and operations work is where most businesses lose the most time, and it is the work that caps how fast you can grow. Clear that bottleneck first and the next one, usually lead generation, gets far easier to take on.",
+    metaDescription:
+      "Start with the back office. Repetitive admin, finance and operations work is where most businesses lose the most time, so clear it before lead generation.",
     date: "5 November 2026",
     readTime: "4 min read",
     content: [
