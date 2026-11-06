@@ -74,6 +74,13 @@ const jsonLd = {
         addressCountry: "GB",
       },
       founder: { "@type": "Person", name: "Louis Rosenberg" },
+      foundingDate: "2026-04-07",
+      identifier: {
+        "@type": "PropertyValue",
+        name: "Companies House number",
+        value: "17139454",
+        url: "https://find-and-update.company-information.service.gov.uk/company/17139454",
+      },
       areaServed: { "@type": "Country", name: "GB" },
       knowsAbout: [
         "AI agents",
