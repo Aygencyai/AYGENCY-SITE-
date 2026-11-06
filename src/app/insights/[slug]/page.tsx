@@ -18,19 +18,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = insightPosts.find((p) => p.slug === slug);
   if (!post) return {};
+  const description = post.metaDescription ?? post.excerpt;
   return {
     title: `${post.title} | Aygency`,
-    description: post.excerpt,
+    description,
     alternates: { canonical: `/insights/${slug}` },
     openGraph: {
       title: `${post.title} | Aygency`,
-      description: post.excerpt,
+      description,
       url: `/insights/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,
       title: `${post.title} | Aygency`,
-      description: post.excerpt,
+      description,
     },
   };
 }
