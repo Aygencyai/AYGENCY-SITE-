@@ -648,4 +648,68 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "ai-agent-permissions-for-small-business",
+    title: "What should an AI agent be allowed to do without asking in a small business?",
+    excerpt:
+      "An AI agent should handle routine, reversible work on its own, prepare anything high-impact for a person to approve, and only have access to the tools its job needs. In practice that means agents read, sort, draft and update freely, while anything that reaches a customer, moves money or deletes data waits for sign-off. Aygency agrees those rules with you before anything goes live, and you can widen them as trust builds.",
+    date: "9 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "Three levels of permission",
+        paragraphs: [
+          "The simplest way to set permissions is to sort every action an agent takes into one of three groups.",
+          "Does on its own: reading and sorting incoming email, logging data into your CRM or spreadsheets, matching invoices to orders, drafting replies, preparing reports and chasing internal tasks. This is repeatable work that is easy to check and easy to undo.",
+          "Asks first: sending a message to a customer or an important contact, approving a payment or refund, changing a price or a contract, and anything outside the usual pattern. The agent prepares the work in full, with its reasoning attached, so approving takes seconds.",
+          "Stays with your team: decisions that rest on judgement, relationships or policy, such as hiring, pricing strategy or a sensitive complaint. Agents bring you the context and you make the call.",
+        ],
+      },
+      {
+        heading: "Give each agent only the access its job needs",
+        paragraphs: [
+          "Agents are built like employees with a clear role, and access follows the role. An Operations agent that processes invoices needs your accounts inbox and accounting tool, not your sales pipeline. A Front-Desk agent that answers enquiries needs your FAQs and booking calendar, not your bank. Separating read, draft and act access keeps every agent focused and every action easy to trace.",
+        ],
+      },
+      {
+        heading: "How it works in the command centre",
+        paragraphs: [
+          "Every Aygency system runs from one command centre, a single home for your people and your agents. Routine work flows through on its own. Anything in the asks-first group lands there for the right person to approve, edit or decline, and every action is recorded, so you can see what each agent did and why.",
+          "When an agent meets something new or unclear, it escalates rather than guesses, and that decision becomes part of how it handles the next one.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An agent reads a supplier invoice, matches it to the purchase order and records it in your accounts. That runs on its own. The same invoice has a line that does not match, so the agent drafts a query to the supplier and holds the payment. Both wait in the command centre. Your finance lead checks them, approves the query, and the payment goes once the corrected invoice arrives.",
+        ],
+      },
+      {
+        heading: "Start careful, then hand over more",
+        paragraphs: [
+          "The best systems start with tighter approvals and loosen them where the agent has proved itself on low-risk, reversible work. You decide the pace. High-impact actions can stay with a person for good, and every system can be paused or rolled back whenever you choose.",
+        ],
+      },
+      nextStep(
+        "Next step",
+        "See how Aygency keeps every system safe and in your hands, then talk to us about the rules that fit how your business runs.",
+        "/trust",
+        "How we keep you in control",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Will an AI agent send emails to my customers without approval?",
+        a: "Only if you have agreed it can. Messages to customers sit in the asks-first group by default, so the agent drafts them and a person approves them in the command centre.",
+      },
+      {
+        q: "Should an AI agent have access to all my business systems?",
+        a: "No. Each agent gets only the access its role needs, the same way you would set up a new employee. That keeps every action focused, traceable and easy to review.",
+      },
+      {
+        q: "Can I give agents more freedom later?",
+        a: "Yes. Most businesses start with tighter approvals and widen them for low-risk, reversible work once the agent has proved itself. High-impact actions can stay with a person for as long as you like.",
+      },
+    ],
+  },
 ];
