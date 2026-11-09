@@ -360,6 +360,7 @@ export const services: Service[] = [
 export const useCases: UseCase[] = [
   {
     slug: "professional-services-backoffice",
+    seoTitle: "AI Agents for Accountancy and Advisory Firms | Aygency",
     title: "A Back Office That Runs Itself",
     sector: "Professional Services",
     systemType: "Back-Office Agents",
@@ -411,6 +412,7 @@ export const useCases: UseCase[] = [
   },
   {
     slug: "membership-operations",
+    seoTitle: "AI Agents for Membership Communities | Aygency",
     title: "Membership & Community Operations",
     sector: "Membership & Community",
     systemType: "Membership Management",
@@ -467,6 +469,7 @@ export const useCases: UseCase[] = [
   },
   {
     slug: "recruitment-outbound",
+    seoTitle: "AI Agents for Recruitment Agencies | Aygency",
     title: "Recruitment Outbound Lead Engine",
     sector: "Recruitment",
     systemType: "Lead Generation",
@@ -523,6 +526,7 @@ export const useCases: UseCase[] = [
   },
   {
     slug: "estate-agency-growth",
+    seoTitle: "AI Agents for Estate Agencies | Aygency",
     title: "Estate Agency Growth Engine",
     sector: "Estate Agency",
     systemType: "Lead Generation",

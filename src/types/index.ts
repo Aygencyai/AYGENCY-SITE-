@@ -28,6 +28,8 @@ export interface UseCase {
   sector: string;
   systemType: string;
   subtext: string;
+  /** Search title; page H1 stays `title`. */
+  seoTitle?: string;
   problem: string;
   agents: { name: string; description: string }[];
   estimatedImpact: string;
