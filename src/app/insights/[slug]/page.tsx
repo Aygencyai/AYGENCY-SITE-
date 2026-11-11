@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { AUTHOR, insightPosts } from "@/lib/insights";
 import InsightPostClient from "./InsightPostClient";
 import PageTransition from "@/components/ui/PageTransition";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, OG_IMAGE } from "@/lib/site";
 
 export function generateStaticParams() {
   return insightPosts.map((p) => ({ slug: p.slug }));
@@ -23,11 +23,13 @@ export async function generateMetadata({
     description: post.excerpt,
     alternates: { canonical: `/insights/${slug}` },
     openGraph: {
+      images: [OG_IMAGE],
       title: `${post.title} | Aygency`,
       description: post.excerpt,
       url: `/insights/${slug}`,
     },
     twitter: {
+      images: [OG_IMAGE.url],
       card: "summary_large_image" as const,
       title: `${post.title} | Aygency`,
       description: post.excerpt,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ContactClient from "./ContactClient";
 import PageTransition from "@/components/ui/PageTransition";
+import { OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact | Aygency",
@@ -8,12 +9,14 @@ export const metadata: Metadata = {
     "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
   alternates: { canonical: "/contact" },
   openGraph: {
+    images: [OG_IMAGE],
     title: "Contact | Aygency",
     description:
       "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
     url: "/contact",
   },
   twitter: {
+    images: [OG_IMAGE.url],
     card: "summary_large_image",
     title: "Contact | Aygency",
     description:
