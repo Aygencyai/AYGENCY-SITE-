@@ -727,4 +727,68 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "what-happens-after-ai-agents-go-live",
+    title: "What happens after an AI agent goes live?",
+    excerpt:
+      "Going live is where the real value starts. Aygency operates every agent for you, monitors and tunes it, remembers each correction your team makes, and finds the next bottleneck to clear, so the system gets better the longer it runs. Your team keeps working as normal and approves anything high-impact from the command centre.",
+    date: "12 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "Built once, then it compounds",
+        paragraphs: [
+          "Most software is at its best on launch day and slowly drifts out of step with the business. An Aygency system works the other way round. It is built once around your real workflows, then it compounds: every week it handles more of the work, sees more of the edge cases and learns more about how your business runs.",
+          "That only happens because someone keeps running it. We stay on as your AI growth partner and operate the system for as long as you use it.",
+        ],
+      },
+      {
+        heading: "What we do every month",
+        paragraphs: [
+          "Monitor: we watch every agent, check the quality of its work and catch anything unusual before it becomes a problem.",
+          "Tune: as your processes, tools and customers change, we adjust the agents to match, so they never fall behind the way the business actually works.",
+          "Remember: when your team corrects or edits something in the command centre, that decision is kept in the Brain and shapes how the agent handles the next one.",
+          "Expand: the CEO Agent reads across the whole operation and shows where time is still being lost. We use that to find the next bottleneck and add the agent that clears it.",
+        ],
+      },
+      {
+        heading: "What your team does",
+        paragraphs: [
+          "Very little changes day to day. Agents slot into the tools you already use, routine work flows through on its own, and anything high-impact waits in the command centre for the right person to approve, edit or decline. Your people spend less time on repetitive admin and more on the work that needs their judgement.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An invoicing agent goes live in a growing services business. In the first weeks the finance lead approves most of its work and corrects a handful of unusual supplier formats. Each correction is remembered, so approvals get quicker and exceptions get rarer. Meanwhile the CEO Agent shows that client onboarding is now the slowest part of the week, so an onboarding agent is designed next, building on everything the system already knows.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "The early weeks after launch are the most hands-on, because that is when the agent meets the full variety of your real work. That is a good thing. Every question it asks and every edit your team makes turns into a sharper system, and you can widen what an agent does on its own as it proves itself.",
+        ],
+      },
+      nextStep(
+        "Next step",
+        "See how the full Aygency system fits together, from specialist agents to the CEO Agent, the Brain and the command centre, or talk to us about where your time goes today.",
+        "/system",
+        "See how the system works",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Do I have to manage my AI agents myself once they are live?",
+        a: "No. Aygency operates every agent for you: monitoring, tuning, handling edge cases and adding agents as the business grows. Your team approves high-impact actions from the command centre and carries on working as normal.",
+      },
+      {
+        q: "Do AI agents get better after launch?",
+        a: "Yes. Every correction your team makes is remembered in the Brain, and we tune the agents as your business changes, so the system handles more of the work, more accurately, the longer it runs.",
+      },
+      {
+        q: "What happens when the business changes or grows?",
+        a: "The system grows with it. We adjust agents when your processes or tools change, and the CEO Agent highlights the next bottleneck so we can add the agent that clears it.",
+      },
+    ],
+  },
 ];
