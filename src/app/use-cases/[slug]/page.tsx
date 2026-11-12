@@ -17,18 +17,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const useCase = useCases.find((uc) => uc.slug === slug);
   if (!useCase) return {};
+  const title = useCase.seoTitle ?? `${useCase.title} | Aygency`;
   return {
-    title: `${useCase.title} | Aygency`,
+    title,
     description: useCase.subtext,
     alternates: { canonical: `/use-cases/${slug}` },
     openGraph: {
-      title: `${useCase.title} | Aygency`,
+      title,
       description: useCase.subtext,
       url: `/use-cases/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,
-      title: `${useCase.title} | Aygency`,
+      title,
       description: useCase.subtext,
     },
   };

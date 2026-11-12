@@ -9,6 +9,9 @@ export const services: Service[] = [
       "One home for your people, your agents and your data, with you in control of what matters.",
     longDescription:
       "A command centre that brings your people and your AI agents into one home. Data centralised, complex workflows run by in-house autonomous agents, and the CEO Agent reading across the whole operation.",
+    seoTitle: "AI Command Centre for Your Team and Agents | Aygency",
+    seoDescription:
+      "A command centre for your business AI agents. One home for your people, agents and data, with human approval on high-impact actions.",
     icon: "command-centre",
     useCases: [
       "Your data from every tool centralised in one place",
@@ -56,6 +59,9 @@ export const services: Service[] = [
       "Admin, operations, finance admin and reporting, handled every day without the manual effort.",
     longDescription:
       "AI agents for operations and admin: data entry, invoices, reporting, scheduling and the multi-step work between your tools. Built around how you already work, with each agent able to save up to 100 hours a month.",
+    seoTitle: "AI Agents for Back-Office Operations | Aygency",
+    seoDescription:
+      "AI agents for back-office operations: data entry, invoices, reporting, scheduling and the multi-step work between your tools.",
     icon: "cost-reduction",
     useCases: [
       "Document processing, data extraction, and routing at any volume",
@@ -119,6 +125,9 @@ export const services: Service[] = [
       "Your in-house knowledge layer. Your team asks a question and gets the answer from your own documents, data and history in seconds.",
     longDescription:
       "Business Brain is an in-house knowledge layer built on the same Brain that powers every Aygency system. Your team asks a question and gets the answer from your own documents, data and history in seconds.",
+    seoTitle: "AI Business Brain for Company Knowledge | Aygency",
+    seoDescription:
+      "An AI knowledge base for your business. Your team asks a question and gets answers from your own documents, data and history.",
     icon: "business-brain",
     useCases: [
       "Answers drawn from your own documents, data and history",
@@ -151,6 +160,9 @@ export const services: Service[] = [
       "Fast, accurate answers for your customers on every channel, with anything tricky handed to your team.",
     longDescription:
       "AI customer support agents that answer on chat, email or voice, resolve routine requests, book and update, and route anything else to your team with the full context attached.",
+    seoTitle: "AI Agents for Customer Support | Aygency",
+    seoDescription:
+      "AI agents for customer support on chat, email and voice. Routine requests resolved; tricky ones handed to your team with full context.",
     icon: "customer-support",
     useCases: [
       "Instant answers on chat, email and voice",
@@ -183,6 +195,9 @@ export const services: Service[] = [
       "Sign-ups, renewals, bookings and member questions, run end to end.",
     longDescription:
       "AI agents for membership businesses that keep records clean, handle renewals, answer member questions and follow up, across thousands of members.",
+    seoTitle: "AI Agents for Membership Management | Aygency",
+    seoDescription:
+      "AI agents for membership management: clean records, renewals, member questions and follow-up across thousands of members.",
     icon: "membership-management",
     useCases: [
       "Member records kept accurate and up to date",
@@ -215,6 +230,9 @@ export const services: Service[] = [
       "Agents that find, research and reach the right prospects, and book the meetings.",
     longDescription:
       "AI agents for lead generation: prospecting, personalised outreach, qualification and pipeline follow-up, built into the tools your team already uses.",
+    seoTitle: "AI Agents for Lead Generation | Aygency",
+    seoDescription:
+      "AI agents for lead generation: prospecting, personalised outreach, qualification and pipeline follow-up in the tools you already use.",
     icon: "revenue-operations",
     useCases: [
       "Lead prospecting and enrichment from market signals, social data, and intent data",
@@ -275,6 +293,9 @@ export const services: Service[] = [
       "Content in your voice, researched, drafted and published on a rhythm that suits you.",
     longDescription:
       "AI content agents that research, write and publish organic content in your voice on a steady rhythm, from posts and articles to reports and briefings.",
+    seoTitle: "AI Agents for Content Marketing | Aygency",
+    seoDescription:
+      "AI agents for content that research, write and publish organic posts, articles and briefings in your voice on a steady rhythm.",
     icon: "content",
     useCases: [
       "Organic social posts and articles on a steady schedule",
@@ -307,6 +328,9 @@ export const services: Service[] = [
       "A site rebuilt around how you sell, with agents built in where they add value.",
     longDescription:
       "Website overhauls that rebuild your site around your business today, fast and clear, with AI agents built in to answer, capture and route every enquiry.",
+    seoTitle: "Website Overhaul with AI Agents Built In | Aygency",
+    seoDescription:
+      "Website overhaul for growing businesses: rebuild around how you sell, with AI agents built in to answer, capture and route enquiries.",
     icon: "website-overhaul",
     useCases: [
       "A rebuilt site that says clearly what you do",
@@ -336,6 +360,7 @@ export const services: Service[] = [
 export const useCases: UseCase[] = [
   {
     slug: "professional-services-backoffice",
+    seoTitle: "AI Agents for Accountancy and Advisory Firms | Aygency",
     title: "A Back Office That Runs Itself",
     sector: "Professional Services",
     systemType: "Back-Office Agents",
@@ -387,6 +412,7 @@ export const useCases: UseCase[] = [
   },
   {
     slug: "membership-operations",
+    seoTitle: "AI Agents for Membership Communities | Aygency",
     title: "Membership & Community Operations",
     sector: "Membership & Community",
     systemType: "Membership Management",
@@ -443,6 +469,7 @@ export const useCases: UseCase[] = [
   },
   {
     slug: "recruitment-outbound",
+    seoTitle: "AI Agents for Recruitment Agencies | Aygency",
     title: "Recruitment Outbound Lead Engine",
     sector: "Recruitment",
     systemType: "Lead Generation",
@@ -499,6 +526,7 @@ export const useCases: UseCase[] = [
   },
   {
     slug: "estate-agency-growth",
+    seoTitle: "AI Agents for Estate Agencies | Aygency",
     title: "Estate Agency Growth Engine",
     sector: "Estate Agency",
     systemType: "Lead Generation",

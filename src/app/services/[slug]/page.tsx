@@ -18,19 +18,21 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
+  const title = service.seoTitle ?? `${service.title} | Aygency`;
+  const description = service.seoDescription ?? service.longDescription;
   return {
-    title: `${service.title} | Aygency`,
-    description: service.longDescription,
+    title,
+    description,
     alternates: { canonical: `/services/${slug}` },
     openGraph: {
-      title: `${service.title} | Aygency`,
-      description: service.longDescription,
+      title,
+      description,
       url: `/services/${slug}`,
     },
     twitter: {
       card: "summary_large_image" as const,
-      title: `${service.title} | Aygency`,
-      description: service.longDescription,
+      title,
+      description,
     },
   };
 }
