@@ -4,7 +4,7 @@ import { services } from "@/lib/data";
 import ServiceDetailClient from "./ServiceDetailClient";
 import PageTransition from "@/components/ui/PageTransition";
 import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, OG_IMAGE } from "@/lib/site";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -25,11 +25,13 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/services/${slug}` },
     openGraph: {
+      images: [OG_IMAGE],
       title,
       description,
       url: `/services/${slug}`,
     },
     twitter: {
+      images: [OG_IMAGE.url],
       card: "summary_large_image" as const,
       title,
       description,

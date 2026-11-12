@@ -4,6 +4,7 @@ import { useCases } from "@/lib/data";
 import UseCaseDetailClient from "./UseCaseDetailClient";
 import PageTransition from "@/components/ui/PageTransition";
 import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
+import { OG_IMAGE } from "@/lib/site";
 
 export function generateStaticParams() {
   return useCases.map((uc) => ({ slug: uc.slug }));
@@ -23,11 +24,13 @@ export async function generateMetadata({
     description: useCase.subtext,
     alternates: { canonical: `/use-cases/${slug}` },
     openGraph: {
+      images: [OG_IMAGE],
       title,
       description: useCase.subtext,
       url: `/use-cases/${slug}`,
     },
     twitter: {
+      images: [OG_IMAGE.url],
       card: "summary_large_image" as const,
       title,
       description: useCase.subtext,

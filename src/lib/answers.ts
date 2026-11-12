@@ -251,56 +251,71 @@ export const answerPosts: InsightPost[] = [
     slug: "ai-agents-vs-zapier-make-n8n",
     title: "AI agents vs Zapier, Make or n8n: which does my business need?",
     excerpt:
-      "If you need one fixed task moved from A to B, Zapier, Make or n8n will do it. If you want the work itself handled, including the judgement, the exceptions and the follow-up, you need AI agents. For a business trying to scale, an agent system built and run by Aygency goes much further than a set of automations.",
+      "Use Zapier, Make or n8n when a task follows the same fixed steps every time. Use AI agents when the work needs reading, judgement and follow-up, such as messy invoices, client replies or exceptions. Most growing businesses get the best result from both, and an Aygency agent system puts each tool where it fits, then runs and improves the whole thing for you.",
     metaDescription:
       "Zapier, Make or n8n suit one fixed task. If you want the judgement, exceptions and follow-up handled too, your business needs AI agents. Here is how to choose.",
     date,
-    readTime: "4 min read",
+    updated: "10 November 2026",
+    readTime: "5 min read",
     content: [
       {
-        heading: "What automation tools do well",
+        heading: "The short answer",
         paragraphs: [
-          "Zapier, Make and n8n connect apps with fixed rules. When a form is submitted, add a row. When a deal closes, send a message. They are reliable for simple, predictable steps, and they are worth using for exactly that.",
+          "Zapier, Make and n8n move data between apps when something happens. AI agents do the work in between: they read what arrived, decide what it needs, act, and check the result. The question is not which one wins. It is which steps of your process need a rule and which need a capable pair of hands.",
         ],
       },
       {
-        heading: "Where automation runs out",
+        heading: "What Zapier, Make and n8n do well",
         paragraphs: [
-          "Real work is rarely that tidy. An invoice arrives in an odd format. A client replies with a question instead of the document. A supplier changes a price. A fixed rule either breaks or quietly does the wrong thing, and someone on your team picks up the pieces. Every exception becomes another rule to build and maintain, usually by whoever on the team knows the tool.",
+          "They connect apps with fixed rules. When a form is submitted, add a row. When a deal closes, post a message. For simple, predictable hand-offs they are fast to set up and dependable, and we use n8n ourselves for exactly that kind of step.",
+        ],
+      },
+      {
+        heading: "Where fixed rules run out",
+        paragraphs: [
+          "Real work is rarely that tidy. An invoice arrives in an odd format. A client replies with a question instead of the document you asked for. A supplier changes a price. A rule either stops or quietly does the wrong thing, and someone on your team picks it up. Each exception becomes another rule to build and maintain.",
         ],
       },
       {
         heading: "What AI agents add",
         paragraphs: [
-          "Agents read the situation, decide what to do, do it, and check the result. They handle the messy inputs and the exceptions, follow your policies, and escalate to a person only when something genuinely needs one. A team of agents can run a whole process end to end, with a CEO Agent watching across all of it.",
-          "With Aygency, you also get people who design it around your workflows, run it, and keep improving it. You are not left maintaining a web of automations yourself.",
+          "Agents handle the messy inputs and the exceptions, follow your policies, and keep a process moving end to end. Each one owns a role, like an employee, and a CEO Agent watches across all of them. Anything high-impact, such as a payment or a message to a customer, waits in your command centre for a person to approve.",
         ],
       },
       {
-        heading: "A fair comparison",
+        heading: "How to decide, step by step",
         paragraphs: [
-          "Choose an automation tool for a single, fixed hand-off. Choose an agent system when the work involves reading, deciding and following up, or when you want a function to run without adding headcount. Agents can still use simple automations where that is the best tool for a step, so you get the best of both.",
+          "Use an automation tool when: the input always looks the same, the steps never change, and nobody needs to read or judge anything. Examples are copying form entries into a CRM, posting a sale to a team channel, or saving attachments to a folder.",
+          "Use an AI agent when: the input varies, the right action depends on what it says, or the task needs a follow-up. Examples are processing supplier invoices, chasing missing documents, triaging an inbox, onboarding a new client, or preparing a weekly report from several tools.",
+          "Use both when: a process has simple hand-offs and judgement steps mixed together, which is most of them. The automation moves the data and the agent does the thinking.",
+        ],
+      },
+      {
+        heading: "Why most businesses end up with both",
+        paragraphs: [
+          "Keep the automations that already work. Put agents on the steps your team still does by hand because a rule could not cope. That is how the bottlenecks clear without ripping anything out, and it is how Aygency designs every system: around your real workflows and the tools you already use.",
+          "The other difference is who looks after it. With Aygency you are not maintaining a web of flows yourself. We operate the system, watch how it performs, and keep improving it as your business changes.",
         ],
       },
       nextStep(
         "Next step",
-        "Read more on the difference between automation and agent systems, then talk to us about which parts of your business need which.",
+        "Read how automation and agent systems differ in more depth, then talk to us about which parts of your business need which.",
         "/insights/automation-vs-agent-systems",
         "Automation vs agent systems",
       ),
     ],
     faqs: [
       {
-        q: "Can AI agents work alongside our existing Zapier or Make automations?",
-        a: "Yes. We can keep the automations that work and put agents on the steps that need judgement, so nothing you have built goes to waste.",
+        q: "Can AI agents work alongside our existing Zapier, Make or n8n automations?",
+        a: "Yes. We keep the automations that work and put agents on the steps that need judgement, so nothing you have built goes to waste.",
       },
       {
-        q: "Is n8n with an AI step the same as an agent system?",
-        a: "Not quite. Adding an AI step to a fixed flow helps with one task. An agent system coordinates specialist agents across a whole process, remembers context, escalates edge cases, and is run and improved by Aygency.",
+        q: "Is n8n or Zapier with an AI step the same as an AI agent?",
+        a: "Not quite. An AI step inside a fixed flow helps with one task. An agent system coordinates specialist agents across a whole process, remembers context, asks for approval on high-impact actions, and is run and improved by Aygency.",
       },
       {
-        q: "Who maintains it when something changes?",
-        a: "We do. Aygency operates the system, monitors it, and updates it as your business changes.",
+        q: "When is Zapier, Make or n8n enough on its own?",
+        a: "When every input looks the same and the steps never change. If your team still fixes exceptions by hand or follows up manually, that is the point where an agent adds real capacity.",
       },
     ],
   },
@@ -667,6 +682,134 @@ export const answerPosts: InsightPost[] = [
       {
         q: "How do I know which workflow to start with?",
         a: "Look for work your team repeats every week, work that waits for someone to be free, and the role you would hire for next. Aygency maps your real workflows on the first call to find it with you.",
+      },
+    ],
+  },
+  {
+    slug: "ai-agent-permissions-for-small-business",
+    title: "What should an AI agent be allowed to do without asking in a small business?",
+    excerpt:
+      "An AI agent should handle routine, reversible work on its own, prepare anything high-impact for a person to approve, and only have access to the tools its job needs. In practice that means agents read, sort, draft and update freely, while anything that reaches a customer, moves money or deletes data waits for sign-off. Aygency agrees those rules with you before anything goes live, and you can widen them as trust builds.",
+    date: "9 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "Three levels of permission",
+        paragraphs: [
+          "The simplest way to set permissions is to sort every action an agent takes into one of three groups.",
+          "Does on its own: reading and sorting incoming email, logging data into your CRM or spreadsheets, matching invoices to orders, drafting replies, preparing reports and chasing internal tasks. This is repeatable work that is easy to check and easy to undo.",
+          "Asks first: sending a message to a customer or an important contact, approving a payment or refund, changing a price or a contract, and anything outside the usual pattern. The agent prepares the work in full, with its reasoning attached, so approving takes seconds.",
+          "Stays with your team: decisions that rest on judgement, relationships or policy, such as hiring, pricing strategy or a sensitive complaint. Agents bring you the context and you make the call.",
+        ],
+      },
+      {
+        heading: "Give each agent only the access its job needs",
+        paragraphs: [
+          "Agents are built like employees with a clear role, and access follows the role. An Operations agent that processes invoices needs your accounts inbox and accounting tool, not your sales pipeline. A Front-Desk agent that answers enquiries needs your FAQs and booking calendar, not your bank. Separating read, draft and act access keeps every agent focused and every action easy to trace.",
+        ],
+      },
+      {
+        heading: "How it works in the command centre",
+        paragraphs: [
+          "Every Aygency system runs from one command centre, a single home for your people and your agents. Routine work flows through on its own. Anything in the asks-first group lands there for the right person to approve, edit or decline, and every action is recorded, so you can see what each agent did and why.",
+          "When an agent meets something new or unclear, it escalates rather than guesses, and that decision becomes part of how it handles the next one.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An agent reads a supplier invoice, matches it to the purchase order and records it in your accounts. That runs on its own. The same invoice has a line that does not match, so the agent drafts a query to the supplier and holds the payment. Both wait in the command centre. Your finance lead checks them, approves the query, and the payment goes once the corrected invoice arrives.",
+        ],
+      },
+      {
+        heading: "Start careful, then hand over more",
+        paragraphs: [
+          "The best systems start with tighter approvals and loosen them where the agent has proved itself on low-risk, reversible work. You decide the pace. High-impact actions can stay with a person for good, and every system can be paused or rolled back whenever you choose.",
+        ],
+      },
+      nextStep(
+        "Next step",
+        "See how Aygency keeps every system safe and in your hands, then talk to us about the rules that fit how your business runs.",
+        "/trust",
+        "How we keep you in control",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Will an AI agent send emails to my customers without approval?",
+        a: "Only if you have agreed it can. Messages to customers sit in the asks-first group by default, so the agent drafts them and a person approves them in the command centre.",
+      },
+      {
+        q: "Should an AI agent have access to all my business systems?",
+        a: "No. Each agent gets only the access its role needs, the same way you would set up a new employee. That keeps every action focused, traceable and easy to review.",
+      },
+      {
+        q: "Can I give agents more freedom later?",
+        a: "Yes. Most businesses start with tighter approvals and widen them for low-risk, reversible work once the agent has proved itself. High-impact actions can stay with a person for as long as you like.",
+      },
+    ],
+  },
+  {
+    slug: "what-happens-after-ai-agents-go-live",
+    title: "What happens after an AI agent goes live?",
+    excerpt:
+      "Going live is where the real value starts. Aygency operates every agent for you, monitors and tunes it, remembers each correction your team makes, and finds the next bottleneck to clear, so the system gets better the longer it runs. Your team keeps working as normal and approves anything high-impact from the command centre.",
+    date: "12 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "Built once, then it compounds",
+        paragraphs: [
+          "Most software is at its best on launch day and slowly drifts out of step with the business. An Aygency system works the other way round. It is built once around your real workflows, then it compounds: every week it handles more of the work, sees more of the edge cases and learns more about how your business runs.",
+          "That only happens because someone keeps running it. We stay on as your AI growth partner and operate the system for as long as you use it.",
+        ],
+      },
+      {
+        heading: "What we do every month",
+        paragraphs: [
+          "Monitor: we watch every agent, check the quality of its work and catch anything unusual before it becomes a problem.",
+          "Tune: as your processes, tools and customers change, we adjust the agents to match, so they never fall behind the way the business actually works.",
+          "Remember: when your team corrects or edits something in the command centre, that decision is kept in the Brain and shapes how the agent handles the next one.",
+          "Expand: the CEO Agent reads across the whole operation and shows where time is still being lost. We use that to find the next bottleneck and add the agent that clears it.",
+        ],
+      },
+      {
+        heading: "What your team does",
+        paragraphs: [
+          "Very little changes day to day. Agents slot into the tools you already use, routine work flows through on its own, and anything high-impact waits in the command centre for the right person to approve, edit or decline. Your people spend less time on repetitive admin and more on the work that needs their judgement.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An invoicing agent goes live in a growing services business. In the first weeks the finance lead approves most of its work and corrects a handful of unusual supplier formats. Each correction is remembered, so approvals get quicker and exceptions get rarer. Meanwhile the CEO Agent shows that client onboarding is now the slowest part of the week, so an onboarding agent is designed next, building on everything the system already knows.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "The early weeks after launch are the most hands-on, because that is when the agent meets the full variety of your real work. That is a good thing. Every question it asks and every edit your team makes turns into a sharper system, and you can widen what an agent does on its own as it proves itself.",
+        ],
+      },
+      nextStep(
+        "Next step",
+        "See how the full Aygency system fits together, from specialist agents to the CEO Agent, the Brain and the command centre, or talk to us about where your time goes today.",
+        "/system",
+        "See how the system works",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Do I have to manage my AI agents myself once they are live?",
+        a: "No. Aygency operates every agent for you: monitoring, tuning, handling edge cases and adding agents as the business grows. Your team approves high-impact actions from the command centre and carries on working as normal.",
+      },
+      {
+        q: "Do AI agents get better after launch?",
+        a: "Yes. Every correction your team makes is remembered in the Brain, and we tune the agents as your business changes, so the system handles more of the work, more accurately, the longer it runs.",
+      },
+      {
+        q: "What happens when the business changes or grows?",
+        a: "The system grows with it. We adjust agents when your processes or tools change, and the CEO Agent highlights the next bottleneck so we can add the agent that clears it.",
       },
     ],
   },
