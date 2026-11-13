@@ -690,6 +690,8 @@ export const answerPosts: InsightPost[] = [
     title: "What should an AI agent be allowed to do without asking in a small business?",
     excerpt:
       "An AI agent should handle routine, reversible work on its own, prepare anything high-impact for a person to approve, and only have access to the tools its job needs. In practice that means agents read, sort, draft and update freely, while anything that reaches a customer, moves money or deletes data waits for sign-off. Aygency agrees those rules with you before anything goes live, and you can widen them as trust builds.",
+    metaDescription:
+      "Let AI agents read, sort, draft and update on their own. Anything that reaches a customer, moves money or deletes data should wait for a person to approve.",
     date: "9 November 2026",
     readTime: "4 min read",
     content: [
@@ -754,6 +756,8 @@ export const answerPosts: InsightPost[] = [
     title: "What happens after an AI agent goes live?",
     excerpt:
       "Going live is where the real value starts. Aygency operates every agent for you, monitors and tunes it, remembers each correction your team makes, and finds the next bottleneck to clear, so the system gets better the longer it runs. Your team keeps working as normal and approves anything high-impact from the command centre.",
+    metaDescription:
+      "After go-live, Aygency operates and tunes every agent, remembers each correction and finds the next bottleneck, so the system improves the longer it runs.",
     date: "12 November 2026",
     readTime: "4 min read",
     content: [
