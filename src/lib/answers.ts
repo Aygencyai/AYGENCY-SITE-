@@ -693,6 +693,7 @@ export const answerPosts: InsightPost[] = [
     metaDescription:
       "Let AI agents read, sort, draft and update on their own. Anything that reaches a customer, moves money or deletes data should wait for a person to approve.",
     date: "9 November 2026",
+    updated: "16 November 2026",
     readTime: "4 min read",
     content: [
       {
@@ -727,6 +728,10 @@ export const answerPosts: InsightPost[] = [
         heading: "Start careful, then hand over more",
         paragraphs: [
           "The best systems start with tighter approvals and loosen them where the agent has proved itself on low-risk, reversible work. You decide the pace. High-impact actions can stay with a person for good, and every system can be paused or rolled back whenever you choose.",
+          "These controls also line up with the UK NCSC's guidance on agentic AI.",
+        ],
+        links: [
+          { href: "/trust#ncsc-guidance", label: "How we line up with NCSC guidance" },
         ],
       },
       nextStep(
