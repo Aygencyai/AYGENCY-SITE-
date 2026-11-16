@@ -854,7 +854,7 @@ export const answerPosts: InsightPost[] = [
       {
         heading: "How it works in the command centre",
         paragraphs: [
-          "Every Aygency system runs both modes from one command centre, a single home for your people and your agents. In-the-loop work lands there with the agent's reasoning attached, so the right person can approve, edit or decline it in seconds. On-the-loop work is recorded as it happens, so you can see what each agent did and why. When an agent meets something new or unclear, it escalates rather than guesses.",
+          "Every Aygency system runs both modes from one command centre, a single home for your people and your agents. In-the-loop work lands there with the agent's reasoning attached, so the right person can approve, edit or decline it in seconds. On-the-loop work is recorded as it happens, so you can see what each agent did and why.",
           "Before anything goes live, we agree with you which actions sit in which group and who approves them, built around how your business already works.",
         ],
       },
