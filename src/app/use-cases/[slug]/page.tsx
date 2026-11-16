@@ -19,21 +19,22 @@ export async function generateMetadata({
   const useCase = useCases.find((uc) => uc.slug === slug);
   if (!useCase) return {};
   const title = useCase.seoTitle ?? `${useCase.title} | Aygency`;
+  const description = useCase.seoDescription ?? useCase.subtext;
   return {
     title,
-    description: useCase.subtext,
+    description,
     alternates: { canonical: `/use-cases/${slug}` },
     openGraph: {
       images: [OG_IMAGE],
       title,
-      description: useCase.subtext,
+      description,
       url: `/use-cases/${slug}`,
     },
     twitter: {
       images: [OG_IMAGE.url],
       card: "summary_large_image" as const,
       title,
-      description: useCase.subtext,
+      description,
     },
   };
 }
