@@ -817,4 +817,79 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "human-in-the-loop-vs-on-the-loop-ai-agents",
+    title: "Human in the loop or human on the loop: which do my AI agents need?",
+    excerpt:
+      "Most businesses need both, matched to the task. Keep a human in the loop, approving before the agent acts, for anything that reaches a customer, moves money or is hard to undo, and put a human on the loop, watching and stepping in when needed, for routine back-office work. Aygency builds that split into every system from day one, so agents clear the bottleneck while your team keeps the final say on what matters.",
+    metaDescription:
+      "In the loop means approving before an AI agent acts. On the loop means watching and stepping in. Most businesses need both, matched to the risk of each task.",
+    date: "16 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "What the two terms mean",
+        paragraphs: [
+          "The UK's National Cyber Security Centre (NCSC) sets out three levels of oversight in its guidance on agentic AI. Human in the loop: a person approves actions before they happen. Human on the loop: a person monitors actions and can step in if needed. Human out of the loop: the AI acts with no human review.",
+          "For a growing business the useful question is not which level to pick for the whole system. It is which level fits each task.",
+        ],
+        links: [
+          { href: "https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai", label: "Read the NCSC guidance" },
+        ],
+      },
+      {
+        heading: "Which tasks need which",
+        paragraphs: [
+          "In the loop: sending a message to a customer or an important contact, approving a payment or refund, changing a price or a contract, deleting data, and anything outside the usual pattern. The agent prepares the work in full and a person signs it off.",
+          "On the loop: reading and sorting email, logging data into your CRM or spreadsheets, matching invoices to orders, drafting replies, preparing reports and chasing internal tasks. The agent gets on with it and a person reviews what was done.",
+          "A simple test works for almost every task. If the action reaches someone outside the business, moves money or is hard to undo, keep a person in the loop. If it is routine, easy to check and easy to reverse, on the loop is enough.",
+        ],
+      },
+      {
+        heading: "Why on the loop is where the time comes back",
+        paragraphs: [
+          "If every action waited for sign-off, the owner would simply become the new bottleneck. The value of agents comes from routine work flowing through on its own, with approvals saved for the decisions that deserve them. That is how agents clear the back office and let the business grow without hiring just to keep up.",
+        ],
+      },
+      {
+        heading: "How it works in the command centre",
+        paragraphs: [
+          "Every Aygency system runs both modes from one command centre, a single home for your people and your agents. In-the-loop work lands there with the agent's reasoning attached, so the right person can approve, edit or decline it in seconds. On-the-loop work is recorded as it happens, so you can see what each agent did and why. When an agent meets something new or unclear, it escalates rather than guesses.",
+          "Before anything goes live, we agree with you which actions sit in which group and who approves them, built around how your business already works.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An accounts agent goes live in a growing services business. For the first few weeks, the finance lead approves every invoice it matches and records. Once the work has proved reliable, routine matching moves on the loop: the agent handles it, and the finance lead reviews the record and steps in on anything unusual. Supplier payments and messages to clients stay in the loop for good.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "Starting in the loop and widening over time is the strongest way to build trust in a system. You set the pace, autonomy grows only where an agent has proved itself on low-risk, reversible work, and high-impact actions can stay with a person for as long as you like. Every system can also be paused whenever you choose.",
+        ],
+      },
+      nextStep(
+        "Next step",
+        "See how the Aygency command centre puts approvals and oversight in one place, or talk to us about which of your workflows suit each level.",
+        "/services/command-centre",
+        "See the command centre",
+      ),
+    ],
+    faqs: [
+      {
+        q: "What is the difference between human in the loop and human on the loop?",
+        a: "In the loop means a person approves an action before the AI agent carries it out. On the loop means the agent acts on its own while a person monitors the work and can step in. The NCSC uses the same definitions in its agentic AI guidance.",
+      },
+      {
+        q: "Which tasks should always keep a human in the loop?",
+        a: "Anything that reaches a customer or important contact, moves money, changes a price or contract, or deletes data. Aygency agents prepare that work in full and it waits in the command centre for a person to approve.",
+      },
+      {
+        q: "Can an agent move from in the loop to on the loop later?",
+        a: "Yes. Most businesses start with tighter approvals and move routine, reversible work on the loop once the agent has proved itself. You decide the pace, and high-impact actions can stay in the loop for good.",
+      },
+    ],
+  },
 ];
