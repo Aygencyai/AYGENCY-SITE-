@@ -30,6 +30,8 @@ export interface UseCase {
   subtext: string;
   /** Search title; page H1 stays `title`. */
   seoTitle?: string;
+  /** Search description; body copy stays `subtext`. */
+  seoDescription?: string;
   problem: string;
   agents: { name: string; description: string }[];
   estimatedImpact: string;
