@@ -70,8 +70,9 @@ const jsonLd = {
       url: SITE_URL,
       logo: `${SITE_URL}/icon.png`,
       email: "build@aygency.ai",
+      alternateName: "Aygency AI",
       description:
-        "Aygency designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
+        "Aygency AI, a UK AI agent agency in Borehamwood, designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
       address: {
         "@type": "PostalAddress",
         streetAddress: "1st Floor, Spitalfields House, Stirling Way",
@@ -81,6 +82,13 @@ const jsonLd = {
         addressCountry: "GB",
       },
       founder: { "@type": "Person", name: "Louis Rosenberg" },
+      foundingDate: "2026-04-07",
+      identifier: {
+        "@type": "PropertyValue",
+        name: "Companies House number",
+        value: "17139454",
+        url: "https://find-and-update.company-information.service.gov.uk/company/17139454",
+      },
       areaServed: { "@type": "Country", name: "GB" },
       knowsAbout: [
         "AI agents",
@@ -92,7 +100,8 @@ const jsonLd = {
         "Customer support automation",
         "Business intelligence",
       ],
-      // Companies House listing for AYGENCY LTD (17139454, Borehamwood).
+      // Public profiles verified as Aygency: Companies House and X. Instagram is the handle already published on this site.
+      // LinkedIn company URL /company/aygencyai returned a page-not-found on 16 Nov 2026, so it is not included.
       sameAs: [
         "https://find-and-update.company-information.service.gov.uk/company/17139454",
         "https://x.com/Aygencyai",
