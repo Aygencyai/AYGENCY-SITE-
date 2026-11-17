@@ -438,58 +438,83 @@ export const answerPosts: InsightPost[] = [
     slug: "are-ai-agents-safe-with-business-data",
     title: "Is it safe to give AI agents access to my business data?",
     excerpt:
-      "Yes, when the system is built privacy-first. Your data never trains external models, data handling is GDPR-aligned, and a data processing agreement (DPA) is available. Agents only get the access their job needs, and high-impact actions wait for a person.",
+      "Yes, when the system is built privacy-first and every agent is set up like a new employee with a clear role. With Aygency, each agent gets only the access its job needs, your data never trains external models, and data handling is GDPR-aligned with a DPA available. Anything high-impact waits for a person to approve, so you keep the final say.",
     metaDescription:
-      "Yes, when built privacy-first. Your data never trains external models, data handling is GDPR-aligned, and a DPA is available. Agents get only the access needed.",
+      "Yes, when built privacy-first. Aygency agents get only the access their role needs, your data never trains external models, and a DPA is available.",
     date,
+    updated: "17 November 2026",
     readTime: "4 min read",
     content: [
       {
-        heading: "How Aygency protects your data",
+        heading: "What makes it safe",
         paragraphs: [
-          "Your system is kept separate from every other client. Your data is used only to run your system and is never used to train external AI models.",
-          "Agents connect to your tools through official, permissioned connections. Each agent gets only the access its role needs, and access can be revoked at any time. Data handling is GDPR-aligned, with a data processing agreement (DPA) available.",
-          "We never ask for your passwords. Credentials are kept in an encrypted vault, and any connection can be switched off from your side whenever you choose.",
+          "Safety comes from design, not from keeping agents away from your data. An agent that cannot see the work cannot take it off your team, so each agent gets exactly what its role needs, with clear rules around what it can do.",
+          "Aygency builds every system privacy-first. Your system and data are kept separate from every other client's. Your data is used only to run your system and never trains external AI models. Data handling is GDPR-aligned, with a data processing agreement (DPA) available.",
         ],
       },
       {
-        heading: "Control as a safety layer",
+        heading: "Five safeguards in every system",
         paragraphs: [
-          "Security is also about what agents are allowed to do. High-impact actions route to a person before they happen, every system has a kill-switch, and any change can be rolled back to a known-good state. You see everything in one command centre.",
+          "Limited access per agent: each agent reaches only the tools and data its role requires, the way you would set up a new starter.",
+          "Human approval before high-impact actions: payments, refunds, client messages and anything hard to undo wait in the command centre for a person to sign off.",
+          "Full logs: every action is recorded, so you can see what each agent did.",
+          "Written red lines: we agree with you, in writing, what agents must never do, and the system stays inside them.",
+          "Pause or stop instantly: any agent can be paused or stopped the moment you choose.",
+        ],
+      },
+      {
+        heading: "How this lines up with NCSC guidance",
+        paragraphs: [
+          "The UK's National Cyber Security Centre (NCSC) advises businesses adopting agentic AI to match autonomy to risk, limit each agent's access, log what agents do, write down red lines and keep the ability to halt an agent at once. Those are the controls Aygency builds in from day one, so following the guidance is the default rather than an extra project.",
+        ],
+        links: [
+          { href: "https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai", label: "Read the NCSC guidance" },
+          { href: "/trust#ncsc-guidance", label: "How we line up with it" },
         ],
       },
       {
         heading: "What it looks like in practice",
         paragraphs: [
-          "Say an accountancy firm wants agents to chase client documents. The agent can read the shared inbox and the document folder, and send requests from an approved template. It cannot see payroll or send money. When a client replies with something unusual, it goes to a person.",
+          "Say an accountancy firm wants an agent to chase client documents. The agent can read the shared inbox and the documents folder, and send requests from an approved template. It has no access to payroll and cannot move money, and both are written down as red lines. Replies that need a judgement call wait in the command centre for a person, and every request the agent sends is logged.",
         ],
       },
       {
         heading: "Your part in it",
         paragraphs: [
-          "Good security is shared. We work with you on who should approve what and which systems agents should touch, and we document it. If your sector has specific rules, we design around them from the start rather than bolting them on later.",
-          "Privacy-first is not a feature we add at the end. It shapes how every Aygency system is designed, which is why businesses can hand real work to agents with confidence.",
+          "The strongest setups are built together. We work with you on which systems each agent should touch and who approves what, and we document it. If your sector has its own rules, we design around them from the start.",
+          "Privacy-first shapes every Aygency system from the first conversation, which is why businesses can hand real work to agents with confidence.",
+        ],
+      },
+      {
+        heading: "Related questions",
+        paragraphs: [
+          "Go deeper on permissions, oversight and human review.",
+        ],
+        links: [
+          { href: "/insights/ai-agent-permissions-for-small-business", label: "What should an AI agent be allowed to do without asking?" },
+          { href: "/insights/how-to-stay-in-control-of-ai-agents", label: "How do I stay in control of AI agents?" },
+          { href: "/insights/human-in-the-loop-vs-on-the-loop-ai-agents", label: "Human in the loop or on the loop?" },
         ],
       },
       nextStep(
         "Next step",
-        "Read how Aygency keeps systems safe, then talk to us about your data and your requirements.",
+        "Read how Aygency keeps every system safe and in your hands, then talk to us about your data and the workflows you want to hand over first.",
         "/trust",
         "Trust and security",
       ),
     ],
     faqs: [
       {
-        q: "Will my data be used to train AI models?",
-        a: "No. Your data is never used to train external models.",
-      },
-      {
-        q: "Who owns the data and the Brain?",
-        a: "You do. Your data stays yours, and the Brain, the knowledge layer of how your business runs, is yours to keep.",
+        q: "Will my business data be used to train AI models?",
+        a: "No. With Aygency, your data is used only to run your system and is never used to train external AI models. Each client's system and data are kept separate from every other client's.",
       },
       {
         q: "How do AI agents handle GDPR?",
-        a: "Aygency follows GDPR-aligned data handling, offers a data processing agreement (DPA), and designs each system with the right access and approvals. We work with you on your own responsibilities as data controller.",
+        a: "Aygency follows GDPR-aligned data handling, offers a data processing agreement (DPA), and gives each agent only the access its role needs. We work with you on your own responsibilities as data controller.",
+      },
+      {
+        q: "What stops an AI agent doing something it shouldn't?",
+        a: "Written red lines agreed with you before go-live, limited access per agent, and human approval before any high-impact action. Every action is logged, and you can pause or stop any agent instantly.",
       },
     ],
   },
@@ -710,6 +735,9 @@ export const answerPosts: InsightPost[] = [
         paragraphs: [
           "Agents are built like employees with a clear role, and access follows the role. An Operations agent that processes invoices needs your accounts inbox and accounting tool, not your sales pipeline. A Front-Desk agent that answers enquiries needs your FAQs and booking calendar, not your bank. Separating read, draft and act access keeps every agent focused and every action easy to trace.",
         ],
+        links: [
+          { href: "/insights/are-ai-agents-safe-with-business-data", label: "Is it safe to give AI agents your business data?" },
+        ],
       },
       {
         heading: "How it works in the command centre",
@@ -873,6 +901,9 @@ export const answerPosts: InsightPost[] = [
         heading: "Worth knowing",
         paragraphs: [
           "Starting in the loop and widening over time is the strongest way to build trust in a system. You set the pace, autonomy grows only where an agent has proved itself on low-risk, reversible work, and high-impact actions can stay with a person for as long as you like. Every system can also be paused whenever you choose.",
+        ],
+        links: [
+          { href: "/insights/are-ai-agents-safe-with-business-data", label: "Is it safe to give AI agents your business data?" },
         ],
       },
       nextStep(
