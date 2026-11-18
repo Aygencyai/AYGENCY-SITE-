@@ -24,13 +24,13 @@ export default function UseCasesClient() {
                 Use Cases
               </p>
             </Reveal>
-            <h2 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6">
+            <h1 className="font-heading text-ghost text-4xl md:text-5xl lg:text-6xl uppercase font-semibold leading-tight mb-6">
               <TypewriterText
                 text="System Blueprints by Sector"
                 delay={300}
                 speed={35}
               />
-            </h2>
+            </h1>
             <Reveal delay={0.1}>
               <p className="text-ghost-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
                 How we&rsquo;d design an agent system for a business like yours, sector by sector. Each blueprint shows the bottlenecks holding growth back and the agents we&rsquo;d build to clear them.
@@ -65,9 +65,9 @@ export default function UseCasesClient() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-heading text-xl sm:text-2xl font-semibold text-white mt-4">
+                    <h2 className="font-heading text-xl sm:text-2xl font-semibold text-white mt-4">
                       {useCase.title}
-                    </h3>
+                    </h2>
 
                     {/* Subtext */}
                     <p className="font-sans text-ghost-muted mt-3 leading-relaxed text-sm">
