@@ -98,9 +98,9 @@ export default function ContactClient() {
               <div className="mt-10">
                 <Reveal delay={0.2}>
                   <GlassCard tilt={false}>
-                    <h2 className="font-heading text-lg font-semibold text-white">
+                    <h3 className="font-heading text-lg font-semibold text-white">
                       Get in touch
-                    </h2>
+                    </h3>
 
                     <div className="space-y-4 mt-5">
                       <a
@@ -149,9 +149,9 @@ export default function ContactClient() {
                         size={48}
                         className="text-cyan mx-auto"
                       />
-                      <h2 className="font-heading text-xl font-semibold text-white mt-4">
+                      <h3 className="font-heading text-xl font-semibold text-white mt-4">
                         Message sent!
-                      </h2>
+                      </h3>
                       <p className="font-sans text-ghost-muted text-sm mt-2">
                         We&rsquo;ll get back to you within one working day.
                       </p>
@@ -164,9 +164,9 @@ export default function ContactClient() {
                     </div>
                   ) : (
                     <>
-                      <h2 className="font-heading text-lg font-semibold text-white mb-6">
+                      <h3 className="font-heading text-lg font-semibold text-white mb-6">
                         Send us a message
-                      </h2>
+                      </h3>
                       <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="space-y-4"

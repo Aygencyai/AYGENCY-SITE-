@@ -3,7 +3,6 @@ import { randomUUID } from "node:crypto";
 import PageTransition from "@/components/ui/PageTransition";
 import DesignYourEdenClient from "./DesignYourEdenClient";
 import { EdenConversation } from "@/components/eden/EdenConversation";
-import { OG_IMAGE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -13,14 +12,12 @@ export const metadata: Metadata = {
     "Meet Eden, your dedicated AI personal assistant. She handles recurring work, prepares decisions, and keeps your working life connected.",
   alternates: { canonical: "/design-your-eden" },
   openGraph: {
-    images: [OG_IMAGE],
     title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:
       "Meet the dedicated AI personal assistant that handles recurring work and adapts to how you operate.",
     url: "/design-your-eden",
   },
   twitter: {
-    images: [OG_IMAGE.url],
     card: "summary_large_image",
     title: "Meet Eden: Your AI Personal Assistant | Aygency",
     description:

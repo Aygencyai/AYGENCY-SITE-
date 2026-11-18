@@ -9,10 +9,6 @@ export interface Service {
   shortTitle: string;
   description: string;
   longDescription: string;
-  /** Search title; page H1 stays `title`. */
-  seoTitle?: string;
-  /** Search description; body copy stays `longDescription`. */
-  seoDescription?: string;
   icon: string;
   useCases: string[];
   problem: string;
@@ -28,10 +24,6 @@ export interface UseCase {
   sector: string;
   systemType: string;
   subtext: string;
-  /** Search title; page H1 stays `title`. */
-  seoTitle?: string;
-  /** Search description; body copy stays `subtext`. */
-  seoDescription?: string;
   problem: string;
   agents: { name: string; description: string }[];
   estimatedImpact: string;

@@ -9,11 +9,11 @@ import { services } from "@/lib/data";
 // The first two services (command centre, back-office agents) lead, so they get the big cards.
 const [lead, rest] = [services.slice(0, 2), services.slice(2)];
 
-function Card({ slug, title, description, big, Heading = "h3" }: { slug: string; title: string; description: string; big?: boolean; Heading?: "h2" | "h3" }) {
+function Card({ slug, title, description, big }: { slug: string; title: string; description: string; big?: boolean }) {
   return (
     <Link href={`/services/${slug}`} className="group block h-full">
       <GlassCard tilt={false} className="h-full">
-        <Heading className={`font-heading font-semibold text-white ${big ? "text-2xl" : "text-lg"}`}>{title}</Heading>
+        <h3 className={`font-heading font-semibold text-white ${big ? "text-2xl" : "text-lg"}`}>{title}</h3>
         <p className={`font-sans leading-relaxed text-ghost-muted mt-3 ${big ? "text-base" : "text-sm"}`}>{description}</p>
         <span className="inline-flex items-center gap-2 mt-5 font-heading text-[12px] font-semibold uppercase tracking-[0.15em] text-cyan">
           Explore <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -24,19 +24,19 @@ function Card({ slug, title, description, big, Heading = "h3" }: { slug: string;
 }
 
 // Every service as a card that clicks through. Used on the home page and the services page.
-export function ServiceCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" } = {}) {
+export function ServiceCards() {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {lead.map((s) => (
-          <Card key={s.slug} slug={s.slug} title={s.title} description={s.description} big Heading={headingLevel} />
+          <Card key={s.slug} slug={s.slug} title={s.title} description={s.description} big />
         ))}
       </div>
       {/* 3 + 3 on desktop */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mt-6">
         {rest.map((s) => (
           <div key={s.slug} className="lg:col-span-2">
-            <Card slug={s.slug} title={s.shortTitle} description={s.description} Heading={headingLevel} />
+            <Card slug={s.slug} title={s.shortTitle} description={s.description} />
           </div>
         ))}
       </div>

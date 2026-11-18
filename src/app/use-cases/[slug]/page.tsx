@@ -4,7 +4,6 @@ import { useCases } from "@/lib/data";
 import UseCaseDetailClient from "./UseCaseDetailClient";
 import PageTransition from "@/components/ui/PageTransition";
 import BreadcrumbJsonLd from "@/components/ui/BreadcrumbJsonLd";
-import { OG_IMAGE } from "@/lib/site";
 
 export function generateStaticParams() {
   return useCases.map((uc) => ({ slug: uc.slug }));
@@ -18,23 +17,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const useCase = useCases.find((uc) => uc.slug === slug);
   if (!useCase) return {};
-  const title = useCase.seoTitle ?? `${useCase.title} | Aygency`;
-  const description = useCase.seoDescription ?? useCase.subtext;
   return {
-    title,
-    description,
+    title: `${useCase.title} | Aygency`,
+    description: useCase.subtext,
     alternates: { canonical: `/use-cases/${slug}` },
     openGraph: {
-      images: [OG_IMAGE],
-      title,
-      description,
+      title: `${useCase.title} | Aygency`,
+      description: useCase.subtext,
       url: `/use-cases/${slug}`,
     },
     twitter: {
-      images: [OG_IMAGE.url],
       card: "summary_large_image" as const,
-      title,
-      description,
+      title: `${useCase.title} | Aygency`,
+      description: useCase.subtext,
     },
   };
 }

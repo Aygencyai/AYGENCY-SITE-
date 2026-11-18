@@ -30,7 +30,7 @@ export default function ServicesClient() {
             </p>
           </motion.div>
           <motion.div {...reveal(0.1)} className="mt-10 lg:mt-14">
-            <ServiceCards headingLevel="h2" />
+            <ServiceCards />
           </motion.div>
         </div>
       </section>

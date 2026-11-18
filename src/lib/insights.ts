@@ -14,8 +14,6 @@ export interface InsightPost {
   slug: string;
   title: string;
   excerpt: string;
-  /** Search description only; page body keeps the full `excerpt`. */
-  metaDescription?: string;
   date: string;
   updated?: string;
   readTime: string;
@@ -29,8 +27,6 @@ const articlePosts: InsightPost[] = [
     title: "Automation runs a task. Agent systems run an operation.",
     excerpt:
       "Everyone calls it “AI automation” now. Most of it is still a script. Here’s the line between automation and an agent system, and why it changes what you should buy.",
-    metaDescription:
-      "Everyone calls it “AI automation” now. Most of it is still a script. Here’s the line between automation and an agent system, and why it matters to you.",
     date: "12 June 2026",
     readTime: "4 min read",
     content: [

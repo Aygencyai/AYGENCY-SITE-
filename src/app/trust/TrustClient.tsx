@@ -1,7 +1,6 @@
 "use client";
 
 import { Lock, Layers, ShieldCheck, Activity, type LucideIcon } from "lucide-react";
-import Link from "next/link";
 import PageTransition from "@/components/ui/PageTransition";
 import SectionContainer from "@/components/ui/SectionContainer";
 import Reveal from "@/components/ui/Reveal";
@@ -11,32 +10,6 @@ import TypewriterText from "@/components/effects/TypewriterText";
 import GlowOrb from "@/components/effects/GlowOrb";
 import AnimatedGrid from "@/components/effects/AnimatedGrid";
 import MagneticButton from "@/components/ui/MagneticButton";
-
-const ncscUrl =
-  "https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai";
-
-const ncscControls: { title: string; body: string }[] = [
-  {
-    title: "Human approval before high-impact actions",
-    body: "The NCSC calls this human in the loop: a person approves actions before they happen. High-impact work waits in the command centre for you to sign off.",
-  },
-  {
-    title: "Limited access per agent",
-    body: "The NCSC advises restricting an agent to the resources its task needs. Each Aygency agent gets only the tools and data its role requires.",
-  },
-  {
-    title: "Full logs of what agents do",
-    body: "The NCSC asks for agent activity to be logged and available to review. Every action is recorded, so you can see what each agent did.",
-  },
-  {
-    title: "Written red lines agents can't cross",
-    body: "The NCSC asks you to set red lines the system must stay within. We agree those rules with you before anything goes live.",
-  },
-  {
-    title: "Pause or stop an agent instantly",
-    body: "The NCSC says you should always be able to halt an agent at once. Every Aygency system can be paused or stopped whenever you choose.",
-  },
-];
 
 const pillars: { icon: LucideIcon; title: string; body: string }[] = [
   {
@@ -110,46 +83,6 @@ export default function TrustClient() {
                 </Reveal>
               );
             })}
-          </div>
-        </SectionContainer>
-      </section>
-
-      {/* How we line up with NCSC guidance */}
-      <section id="ncsc-guidance" className="blend-void pb-24 md:pb-32 scroll-mt-28">
-        <SectionContainer>
-          <Reveal>
-            <p className="text-cyan font-mono text-xs tracking-[0.2em] uppercase mb-4">
-              {`// ncsc guidance`}
-            </p>
-            <h2 className="font-heading text-2xl md:text-3xl text-white uppercase font-semibold">
-              How we line up with NCSC guidance on agentic AI
-            </h2>
-            <p className="font-sans text-ghost-muted text-lg mt-4 max-w-3xl leading-relaxed">
-              The UK&rsquo;s National Cyber Security Centre published{" "}
-              <Link
-                href={ncscUrl}
-                className="text-cyan font-medium underline-offset-4 hover:underline"
-              >
-                Managing the cyber risk of agentic AI
-              </Link>{" "}
-              on 20 August 2026, setting out how to run agents safely. These are
-              the controls from that guidance that we already build into every
-              system.
-            </p>
-          </Reveal>
-          <div className="mt-10 space-y-8 max-w-3xl">
-            {ncscControls.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.05}>
-                <div>
-                  <h3 className="font-heading text-xl font-semibold text-white">
-                    {item.title}
-                  </h3>
-                  <p className="font-sans text-ghost-muted mt-2 leading-relaxed">
-                    {item.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
           </div>
         </SectionContainer>
       </section>
