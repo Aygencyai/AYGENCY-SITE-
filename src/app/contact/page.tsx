@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
 import ContactClient from "./ContactClient";
 import PageTransition from "@/components/ui/PageTransition";
+import { OG_IMAGE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact | Aygency",
+  title: "Contact Aygency, the UK AI Agent Agency",
   description:
     "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact | Aygency",
+    images: [OG_IMAGE],
+    title: "Contact Aygency, the UK AI Agent Agency",
     description:
       "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
     url: "/contact",
   },
   twitter: {
+    images: [OG_IMAGE.url],
     card: "summary_large_image",
-    title: "Contact | Aygency",
+    title: "Contact Aygency, the UK AI Agent Agency",
     description:
       "Talk to Aygency. Tell us what is slowing your business down and we will show you the AI agents that would clear the way to scale.",
   },

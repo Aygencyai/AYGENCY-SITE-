@@ -29,11 +29,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
+  title: "Aygency | UK AI Agency. Built once, compound forever",
   description:
     "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   openGraph: {
-    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
+    title: "Aygency | UK AI Agency. Built once, compound forever",
     description:
       "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
     type: "website",
@@ -42,13 +42,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
+    title: "Aygency | UK AI Agency. Built once, compound forever",
     description:
       "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   },
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
+  },
+  // Search Console and Bing Webmaster tokens. Unset means no tag is emitted.
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+      : undefined,
   },
 };
 
@@ -63,8 +70,9 @@ const jsonLd = {
       url: SITE_URL,
       logo: `${SITE_URL}/icon.png`,
       email: "build@aygency.ai",
+      alternateName: "Aygency AI",
       description:
-        "Aygency designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
+        "Aygency AI, a UK AI agent agency in Borehamwood, designs, builds and operates AI agents that remove the bottlenecks stopping businesses from scaling, starting with the back office and then lead generation.",
       address: {
         "@type": "PostalAddress",
         streetAddress: "1st Floor, Spitalfields House, Stirling Way",
@@ -74,6 +82,13 @@ const jsonLd = {
         addressCountry: "GB",
       },
       founder: { "@type": "Person", name: "Louis Rosenberg" },
+      foundingDate: "2026-04-07",
+      identifier: {
+        "@type": "PropertyValue",
+        name: "Companies House number",
+        value: "17139454",
+        url: "https://find-and-update.company-information.service.gov.uk/company/17139454",
+      },
       areaServed: { "@type": "Country", name: "GB" },
       knowsAbout: [
         "AI agents",
@@ -85,7 +100,8 @@ const jsonLd = {
         "Customer support automation",
         "Business intelligence",
       ],
-      // Companies House listing for AYGENCY LTD (17139454, Borehamwood).
+      // Public profiles verified as Aygency: Companies House and X. Instagram is the handle already published on this site.
+      // LinkedIn company URL /company/aygencyai returned a page-not-found on 16 Nov 2026, so it is not included.
       sameAs: [
         "https://find-and-update.company-information.service.gov.uk/company/17139454",
         "https://x.com/Aygencyai",

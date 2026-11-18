@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { AUTHOR, insightPosts } from "@/lib/insights";
 import InsightPostClient from "./InsightPostClient";
 import PageTransition from "@/components/ui/PageTransition";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, OG_IMAGE, insightSearchTitle } from "@/lib/site";
 
 export function generateStaticParams() {
   return insightPosts.map((p) => ({ slug: p.slug }));
@@ -18,19 +18,23 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = insightPosts.find((p) => p.slug === slug);
   if (!post) return {};
+  const description = post.metaDescription ?? post.excerpt;
+  const title = insightSearchTitle(post.title);
   return {
-    title: `${post.title} | Aygency`,
-    description: post.excerpt,
+    title,
+    description,
     alternates: { canonical: `/insights/${slug}` },
     openGraph: {
-      title: `${post.title} | Aygency`,
-      description: post.excerpt,
+      images: [OG_IMAGE],
+      title,
+      description,
       url: `/insights/${slug}`,
     },
     twitter: {
+      images: [OG_IMAGE.url],
       card: "summary_large_image" as const,
-      title: `${post.title} | Aygency`,
-      description: post.excerpt,
+      title,
+      description,
     },
   };
 }
@@ -55,7 +59,7 @@ export default async function InsightPostPage({
     author: {
       "@type": "Person",
       ...AUTHOR,
-      worksFor: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "AYGENCY LTD" },
+      worksFor: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency" },
     },
     publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency", url: SITE_URL },
   };
