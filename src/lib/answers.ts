@@ -928,4 +928,94 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "how-to-choose-an-ai-agent-agency-uk",
+    title: "How do I choose an AI agent agency in the UK?",
+    excerpt:
+      "Choose the agency that starts with your workflows, not its technology. Before you sign, it should tell you in writing what each agent may do without asking, how you will see and stop what agents do, where your data goes, and who keeps the system running and improving after launch. If an agency cannot answer those clearly, keep looking.",
+    metaDescription:
+      "A UK buyer's checklist for choosing an AI agent agency: the questions to ask on workflows, approvals, control, data and who runs the agents after launch.",
+    date: "18 November 2026",
+    readTime: "5 min read",
+    content: [
+      {
+        heading: "Start with the work, not the technology",
+        paragraphs: [
+          "A good AI agent agency asks about your business before it talks about models or tools. In the first conversations it should want to know which work eats your team's week, how that work is really done today, which software it runs through and who signs it off.",
+          "Be wary of an agency that leads with a product demo or a list of AI tools. Agents only pay off when they are built around how your business already works.",
+        ],
+      },
+      {
+        heading: "The questions to ask before you sign",
+        paragraphs: [
+          "1. Which workflow would you start with, and why that one? A clear answer shows the agency has understood your business, not just your budget.",
+          "2. What can each agent do without asking, and what needs a person's approval? You should get this in writing. Anything that reaches a customer, moves money or is hard to undo should wait for a person.",
+          "3. What can each agent access? Every agent should reach only the systems and data its job needs.",
+          "4. How will I see what the agents have done? Ask to see the record a person reviews, and how far back it goes.",
+          "5. How do I pause or stop an agent? The answer should be simple and immediate, not a support ticket.",
+          "6. Where does our data go? Ask which AI providers and other companies will process it, and for a written data processing agreement if personal data is involved.",
+          "7. Who runs the system after launch? Ask who watches it, fixes it when your software or processes change, and improves it over time.",
+          "8. Can I check you are a real company? A UK limited company can be looked up on Companies House in a minute.",
+        ],
+        links: [
+          {
+            href: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/contracts-and-liabilities-between-controllers-and-processors-multi/",
+            label: "ICO guidance on contracts with processors",
+          },
+        ],
+      },
+      {
+        heading: "Red flags",
+        paragraphs: [
+          "\"Fully autonomous\" sold as the main benefit, with no clear line on what needs a person's approval.",
+          "Promised savings with no look at how long the work takes today.",
+          "No answer on where your data is processed or which providers see it.",
+          "A handover at launch and nothing after, so the system slowly drifts as your business changes.",
+          "A single off-the-shelf tool presented as a custom system.",
+        ],
+      },
+      {
+        heading: "Use public guidance as your yardstick",
+        paragraphs: [
+          "The UK's National Cyber Security Centre (NCSC) has published guidance on managing the risk of agentic AI. It covers matching autonomy to risk, writing down red lines, limiting access, logging what agents do and keeping the ability to stop them. Ask any agency how its systems line up with it.",
+        ],
+        links: [
+          { href: "https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai", label: "Read the NCSC guidance" },
+          { href: "/trust#ncsc-guidance", label: "How Aygency lines up with the NCSC guidance" },
+        ],
+      },
+      {
+        heading: "How Aygency answers these questions",
+        paragraphs: [
+          "Aygency is a UK AI agent agency (AYGENCY LTD, Companies House number 17139454). We build custom AI agent systems: specialist agents that work like your number one employees, coordinated by a CEO Agent and a Brain that holds how your business works, with a command centre that brings your data together and keeps your people in charge.",
+          "We usually start in the back office, where manual work is easiest to see. Every system has human approval before high-impact actions, limited access for each agent, full logs of agent activity, written red lines agents cannot cross, and the ability to pause or stop any agent instantly.",
+          "We do not hand over and walk away. We operate and improve every system for as long as you use it. Built once, compound forever.",
+        ],
+        links: [
+          { href: "/insights/ai-agent-permissions-for-small-business", label: "What should an AI agent be allowed to do without asking?" },
+          { href: "/insights/what-happens-after-ai-agents-go-live", label: "What happens after an AI agent goes live?" },
+        ],
+      },
+      nextStep(
+        "Next step",
+        "See what an Aygency system includes, or bring your shortlist of questions to a call and we will answer each one.",
+        "/insights/whats-included-in-an-ai-agent-system",
+        "What's included in an Aygency system",
+      ),
+    ],
+    faqs: [
+      {
+        q: "What should I ask an AI agent agency before hiring them?",
+        a: "Ask which workflow they would start with, what each agent may do without approval, what each agent can access, how you see and stop what agents do, where your data goes, and who runs and improves the system after launch.",
+      },
+      {
+        q: "What is the biggest red flag when choosing an AI agent agency?",
+        a: "Selling full autonomy as the benefit without a written line on what needs a person's approval. Anything that reaches a customer, moves money or is hard to undo should wait for a person to sign it off.",
+      },
+      {
+        q: "Should an AI agent agency keep running the agents after launch?",
+        a: "For most businesses, yes. Software, data and processes change, and agents need watching, fixing and improving. Aygency operates and improves every system for as long as the client uses it.",
+      },
+    ],
+  },
 ];
