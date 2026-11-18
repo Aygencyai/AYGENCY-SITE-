@@ -29,11 +29,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
+  title: "Aygency | UK AI Agency. Built once, compound forever",
   description:
     "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   openGraph: {
-    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
+    title: "Aygency | UK AI Agency. Built once, compound forever",
     description:
       "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
     type: "website",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aygency | Built Once, Compound Forever | AI Agent Systems for UK Businesses",
+    title: "Aygency | UK AI Agency. Built once, compound forever",
     description:
       "AI agent systems for UK businesses. Autonomous agents that work like your best employee, slot into how you already work and get better every month. Built once, compound forever.",
   },

@@ -6,19 +6,19 @@ const description =
   "How Aygency keeps AI agents safe: GDPR-aligned data handling with a DPA available, your approval on high-impact actions, and every system monitored and reversible.";
 
 export const metadata: Metadata = {
-  title: "Trust & Security | Aygency",
+  title: "Trust and Security for AI Agents | Aygency",
   description,
   alternates: { canonical: "/trust" },
   openGraph: {
     images: [OG_IMAGE],
-    title: "Trust & Security | Aygency",
+    title: "Trust and Security for AI Agents | Aygency",
     description,
     url: "/trust",
   },
   twitter: {
     images: [OG_IMAGE.url],
     card: "summary_large_image",
-    title: "Trust & Security | Aygency",
+    title: "Trust and Security for AI Agents | Aygency",
     description,
   },
 };
