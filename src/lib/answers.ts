@@ -97,6 +97,9 @@ export const answerPosts: InsightPost[] = [
           "We map how the work actually runs, including the handoffs and workarounds nobody writes down. That shows where time really goes and which bottleneck is holding the business back most. We build agents for that first, then add more as the business grows.",
           "Each agent is designed around your existing workflow and connects to the software you already use, so your team keeps working the way it does today. The admin simply stops landing on their desks.",
         ],
+        links: [
+          { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+        ],
       },
       {
         heading: "What it looks like in practice",
@@ -541,6 +544,9 @@ export const answerPosts: InsightPost[] = [
           "The number of workflows, how many systems need connecting, and how quickly the right people can share how things work today. Clear access to tools and a decision-maker who can approve the plan are what keep things moving fastest.",
           "What does not slow it down is your software. Agents work with the tools you already have, so there is no migration project to finish before they can start.",
         ],
+        links: [
+          { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+        ],
       },
       {
         heading: "What it looks like in practice",
@@ -668,6 +674,9 @@ export const answerPosts: InsightPost[] = [
         paragraphs: [
           "The right first step is rarely a whole department. It is the one workflow that costs the most time or holds everything else up. A few questions usually find it:",
           "Where do people do the same task the same way every week? Where does work wait for someone to have a spare hour? Which job would you need to hire for next if the business doubled? Where do small mistakes cost the most to fix? The workflow that appears in more than one answer is usually the place to start.",
+        ],
+        links: [
+          { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
         ],
       },
       {
@@ -928,4 +937,89 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "ai-agents-without-documented-processes",
+    title: "Can AI agents work if our processes are not written down?",
+    excerpt:
+      "Yes. AI agents can work even if your processes are not written down, and many growing businesses start exactly there. Aygency learns how the work really runs from the people who do it and from your own past work, builds each agent around that, and the system keeps the process written down for you from then on.",
+    metaDescription:
+      "Yes. Aygency learns how the work really runs from your team and past work, builds agents around it, and the system keeps the process written down for you.",
+    date: "19 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "You do not need a manual first",
+        paragraphs: [
+          "A lot of advice says to document every process before you go near AI. That puts a project most small firms never finish in front of the one that would give them their time back. In a growing business the real process lives in people's heads, inboxes and spreadsheets.",
+          "Not knowing what to hand over is normal. The UK government's 2025 AI adoption survey of 3,500 businesses found the most common barriers to adopting AI were a lack of identified need (71%) and limited AI skills, expertise and knowledge (60%). Finding the right workflow and capturing how it runs is the first thing we do, so neither has to be solved before you start.",
+        ],
+        links: [
+          { href: "https://www.gov.uk/government/publications/ai-adoption-research/ai-adoption-research", label: "Read the GOV.UK AI adoption survey" },
+        ],
+      },
+      {
+        heading: "How Aygency captures the way work really runs",
+        paragraphs: [
+          "We map each workflow with the people who do it, including the handoffs, workarounds and exceptions nobody writes down, and look at real examples from your own documents, data and history.",
+          "That becomes the agent's brief, held in your Brain, a private knowledge layer of how your business runs, which is yours to keep. Every agent is then built and tested against your own historical data, so it learns the job as it is really done, not as a manual says it should be.",
+        ],
+      },
+      {
+        heading: "Writing a manual first vs starting with discovery",
+        paragraphs: [
+          "Writing a manual first: time spent documenting before any time comes back, a record of the process as intended rather than as it runs, and a file that drifts out of date.",
+          "Starting with Aygency discovery: the process is captured from real work, the agent is built around it, and the record stays current because every correction your team makes in the command centre is kept in the Brain.",
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An office manager has handled supplier invoices the same way for years. Some suppliers always need an order number and anything over a set amount goes to the director, but none of it is written down. We walk through recent invoices with her, the invoicing agent is built around exactly that, and anything outside the pattern waits in the command centre for her approval. The process is written down for the first time, and followed every time.",
+          "Copying how the best people already work is where the time comes back. In one deployment, a workflow that took about 4 hours a week now runs in about 12 minutes.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "What helps most is time with the people who know the work and access to the tools where it happens. If two people do a task differently, discovery brings it to light, a chance to pick the best version.",
+          "When past work includes personal data, the ICO's data minimisation principle applies: personal data should be adequate, relevant and limited to what is necessary for the purpose. Aygency is privacy-first and GDPR-aligned, with a DPA available.",
+        ],
+        links: [
+          { href: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/data-minimisation/", label: "Read the ICO guidance" },
+        ],
+      },
+      {
+        heading: "Related questions",
+        paragraphs: [
+          "Go deeper on where to start and how quickly agents go live.",
+        ],
+        links: [
+          { href: "/insights/which-department-to-automate-first", label: "Which part of my business should I hand to AI agents first?" },
+          { href: "/insights/back-office-tasks-ai-agents-can-take-over", label: "Which back-office tasks can AI agents take over?" },
+          { href: "/insights/how-long-to-deploy-ai-agents", label: "How long does it take to get AI agents live?" },
+        ],
+      },
+      nextStep(
+        "Next step",
+        "Aygency's back-office agents start with the workflow that holds the business back most, built around how your team already works. See what they take on, or talk to us about yours.",
+        "/services/back-office-agents",
+        "See back-office agents",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Do we need to document our processes before using AI agents?",
+        a: "No. Aygency captures how the work really runs during discovery, with the people who do it and real examples of the work, then builds each agent around that. You do not need a manual first.",
+      },
+      {
+        q: "What if different people do the same task in different ways?",
+        a: "Discovery shows where the approaches differ, you choose the best version, and the agent follows it every time, with anything unusual sent to a person.",
+      },
+      {
+        q: "Will our processes be written down afterwards?",
+        a: "Yes. The workflow each agent follows is held in your Brain, which is yours to keep, and it stays current as your team approves and corrects work in the command centre.",
+      },
+    ],
+  },
 ];
+
