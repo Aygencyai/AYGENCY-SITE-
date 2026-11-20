@@ -258,7 +258,7 @@ export const answerPosts: InsightPost[] = [
     metaDescription:
       "Zapier, Make or n8n suit one fixed task. If you want the judgement, exceptions and follow-up handled too, your business needs AI agents. Here is how to choose.",
     date,
-    updated: "10 November 2026",
+    updated: "20 November 2026",
     readTime: "5 min read",
     content: [
       {
@@ -292,6 +292,17 @@ export const answerPosts: InsightPost[] = [
           "Use an AI agent when: the input varies, the right action depends on what it says, or the task needs a follow-up. Examples are processing supplier invoices, chasing missing documents, triaging an inbox, onboarding a new client, or preparing a weekly report from several tools.",
           "Use both when: a process has simple hand-offs and judgement steps mixed together, which is most of them. The automation moves the data and the agent does the thinking.",
         ],
+        table: {
+          caption: "Zapier, Make or n8n compared with AI agents",
+          columns: ["", "Zapier, Make or n8n", "AI agents"],
+          rows: [
+            ["What it does", "Moves data between apps with fixed rules", "Reads what arrived, decides what it needs, acts and checks the result"],
+            ["Best when", "The input always looks the same and the steps never change", "The input varies or the right action depends on what it says"],
+            ["When something unusual arrives", "The rule stops or does the wrong thing, and a person picks it up", "Handles the exception, follows your policies and keeps the process moving"],
+            ["High-impact actions", "Run as the rule says", "Wait in your command centre for a person to approve"],
+            ["Typical examples", "Copying form entries into a CRM, posting a sale to a team channel, saving attachments to a folder", "Processing supplier invoices, chasing missing documents, triaging an inbox, onboarding a new client"],
+          ],
+        },
       },
       {
         heading: "Why most businesses end up with both",
@@ -867,6 +878,7 @@ export const answerPosts: InsightPost[] = [
     metaDescription:
       "In the loop means approving before an AI agent acts. On the loop means watching and stepping in. Most businesses need both, matched to the risk of each task.",
     date: "16 November 2026",
+    updated: "20 November 2026",
     readTime: "4 min read",
     content: [
       {
@@ -886,6 +898,16 @@ export const answerPosts: InsightPost[] = [
           "On the loop: reading and sorting email, logging data into your CRM or spreadsheets, matching invoices to orders, drafting replies, preparing reports and chasing internal tasks. The agent gets on with it and a person reviews what was done.",
           "A simple test works for almost every task. If the action reaches someone outside the business, moves money or is hard to undo, keep a person in the loop. If it is routine, easy to check and easy to reverse, on the loop is enough.",
         ],
+        table: {
+          caption: "Human in the loop compared with human on the loop",
+          columns: ["", "Human in the loop", "Human on the loop"],
+          rows: [
+            ["What the person does", "Approves the action before it happens", "Monitors the work and steps in if needed"],
+            ["Use it for", "Anything that reaches someone outside the business, moves money or is hard to undo", "Routine work that is easy to check and easy to reverse"],
+            ["Example tasks", "Messages to customers, payments and refunds, price or contract changes, deleting data", "Sorting email, logging data into your CRM, matching invoices to orders, drafting replies, preparing reports"],
+            ["In the command centre", "Lands with the agent's reasoning attached, ready to approve, edit or decline", "Recorded as it happens, so you can see what each agent did and why"],
+          ],
+        },
       },
       {
         heading: "Why on the loop is where the time comes back",

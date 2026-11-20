@@ -7,6 +7,8 @@ export const AUTHOR = { name: "Louis Rosenberg", jobTitle: "Founder", url: "http
 export interface InsightSection {
   heading?: string;
   paragraphs: string[];
+  /** Optional comparison table, rendered as a real HTML table after the paragraphs. */
+  table?: { caption: string; columns: string[]; rows: string[][] };
   links?: { href: string; label: string }[];
 }
 
