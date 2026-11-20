@@ -67,6 +67,52 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
                       {paragraph}
                     </p>
                   ))}
+                  {section.table && (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left font-sans text-base border-collapse">
+                        <caption className="caption-top text-left text-ghost-dim text-sm pb-3">
+                          {section.table.caption}
+                        </caption>
+                        <thead>
+                          <tr>
+                            {section.table.columns.map((col, c) => (
+                              <th
+                                key={c}
+                                scope="col"
+                                className="border-b border-white/15 py-3 pr-4 text-white font-semibold align-bottom"
+                              >
+                                {col}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {section.table.rows.map((row, r) => (
+                            <tr key={r}>
+                              {row.map((cell, c) =>
+                                c === 0 ? (
+                                  <th
+                                    key={c}
+                                    scope="row"
+                                    className="border-b border-white/10 py-3 pr-4 text-white font-medium align-top"
+                                  >
+                                    {cell}
+                                  </th>
+                                ) : (
+                                  <td
+                                    key={c}
+                                    className="border-b border-white/10 py-3 pr-4 text-ghost-muted align-top"
+                                  >
+                                    {cell}
+                                  </td>
+                                ),
+                              )}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                   {section.links && (
                     <div className="flex flex-wrap gap-x-8 gap-y-3">
                       {section.links.map((link) => (
