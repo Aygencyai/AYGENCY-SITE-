@@ -1051,10 +1051,10 @@ export const answerPosts: InsightPost[] = [
         ],
       },
       {
-        heading: "Built to HMRC's record-keeping rules",
+        heading: "Working with HMRC's VAT invoice rules",
         paragraphs: [
-          "HMRC's VAT guide (Notice 700, section 16.3) lists what a VAT invoice must show, including a sequential number, the time of supply, the supplier's name, address and VAT registration number, and the total VAT chargeable. The agent checks each invoice for those details and flags anything missing before it is recorded.",
-          "HMRC's record-keeping notice (VAT Notice 700/21) says that if your software scans invoices into your ledger and the image is retained with all the detail VAT needs, you do not need to keep the original. It also says VAT records should generally be kept for at least 6 years. So the agent keeps the invoice image with every bill it records, and your accountant still decides the VAT treatment.",
+          "HMRC's VAT guide (Notice 700, section 16.3) lists what a VAT invoice must show, including a sequential number, the time of supply, the supplier's name, address and VAT registration number, and the total VAT chargeable. An invoice agent can check each invoice for those details and flag anything missing before it is recorded.",
+          "HMRC's record-keeping notice (VAT Notice 700/21) says that if your software scans invoices into your ledger and the image is retained with all the detail VAT needs, you do not need to keep the original. It also says VAT records should generally be kept for at least 6 years. So we set the agent up to keep the invoice image with each bill it records, and your accountant still decides the VAT treatment.",
         ],
         links: [
           { href: "https://www.gov.uk/guidance/vat-guide-notice-700", label: "Read HMRC VAT Notice 700" },
@@ -1072,7 +1072,7 @@ export const answerPosts: InsightPost[] = [
         heading: "Worth knowing",
         paragraphs: [
           "Results are strongest when invoices come into one accounts inbox, so we usually start there and with the suppliers you hear from most. Anything outside the pattern waits in the command centre for a person, so nothing is guessed.",
-          "Your team stays in control throughout: human approval before high-impact actions such as paying a supplier, limited access so the invoicing agent only touches the inbox and accounts it needs, full logs of everything it did, the ability to pause or stop it instantly, and written red lines it cannot cross, such as changing a supplier's bank details.",
+          "Your team stays in control throughout: human approval before high-impact actions such as paying a supplier, limited access so the invoicing agent only touches the inbox and accounts it needs, full logs of everything it did, the ability to pause or stop it instantly, and written red lines it cannot cross, for example changing a supplier's bank details.",
         ],
       },
       {
