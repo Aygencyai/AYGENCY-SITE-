@@ -99,6 +99,7 @@ export const answerPosts: InsightPost[] = [
         ],
         links: [
           { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+          { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
         ],
       },
       {
@@ -760,6 +761,9 @@ export const answerPosts: InsightPost[] = [
         paragraphs: [
           "An agent reads a supplier invoice, matches it to the purchase order and records it in your accounts. That runs on its own. The same invoice has a line that does not match, so the agent drafts a query to the supplier and holds the payment. Both wait in the command centre. Your finance lead checks them, approves the query, and the payment goes once the corrected invoice arrives.",
         ],
+        links: [
+          { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
+        ],
       },
       {
         heading: "Start careful, then hand over more",
@@ -997,6 +1001,7 @@ export const answerPosts: InsightPost[] = [
           { href: "/insights/which-department-to-automate-first", label: "Which part of my business should I hand to AI agents first?" },
           { href: "/insights/back-office-tasks-ai-agents-can-take-over", label: "Which back-office tasks can AI agents take over?" },
           { href: "/insights/how-long-to-deploy-ai-agents", label: "How long does it take to get AI agents live?" },
+          { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
         ],
       },
       nextStep(
@@ -1021,5 +1026,86 @@ export const answerPosts: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: "ai-agent-invoice-processing",
+    title: "Can an AI agent process supplier invoices end to end?",
+    excerpt:
+      "Yes. An AI agent can process supplier invoices end to end, from the moment an invoice lands in your accounts inbox to a checked, matched bill ready in your accounting tool. Aygency builds the agent around how your team already handles invoices, and payment always waits for a person to approve it in the command centre.",
+    metaDescription:
+      "Yes. An Aygency agent reads, checks and matches supplier invoices and prepares the bill in your accounts, while payment waits for your approval.",
+    date: "23 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "What end to end looks like",
+        paragraphs: [
+          "Collect: the agent watches your accounts inbox and picks out invoices and credit notes, setting statements and marketing emails aside. Read: it captures the supplier, invoice number, date, line items, VAT and totals. Check: it matches each invoice to the order and delivery, and spots duplicates and price changes. Query: when a line does not agree, it drafts a message to the supplier. Record: it creates the bill in your accounting tool with the invoice attached. Approve: payment waits for a person.",
+          "Nobody retypes anything, and every invoice is handled the same careful way, however busy the month gets.",
+        ],
+      },
+      {
+        heading: "By hand vs with an Aygency agent",
+        paragraphs: [
+          "By hand: someone opens each email, keys the details into the accounts, hunts for the matching order, chases mismatches when they find time, and the pile grows with every new customer.",
+          "With an Aygency agent: invoices are read, checked and matched as they arrive, mismatches are queried straight away, and your team opens one screen to approve what is ready. The work scales with the business without another admin hire.",
+        ],
+      },
+      {
+        heading: "Built to HMRC's record-keeping rules",
+        paragraphs: [
+          "HMRC's VAT guide (Notice 700, section 16.3) lists what a VAT invoice must show, including a sequential number, the time of supply, the supplier's name, address and VAT registration number, and the total VAT chargeable. The agent checks each invoice for those details and flags anything missing before it is recorded.",
+          "HMRC's record-keeping notice (VAT Notice 700/21) says that if your software scans invoices into your ledger and the image is retained with all the detail VAT needs, you do not need to keep the original. It also says VAT records should generally be kept for at least 6 years. So the agent keeps the invoice image with every bill it records, and your accountant still decides the VAT treatment.",
+        ],
+        links: [
+          { href: "https://www.gov.uk/guidance/vat-guide-notice-700", label: "Read HMRC VAT Notice 700" },
+          { href: "https://www.gov.uk/guidance/record-keeping-for-vat-notice-70021", label: "Read HMRC VAT Notice 700/21" },
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "A supplier invoice arrives by email. The agent reads it, matches it to the purchase order, and sees that one line is priced above the order. It drafts a query to the supplier and holds the bill. Your finance lead checks both in the command centre, approves the query, and the bill moves to payment once the corrected invoice arrives.",
+          "This is the kind of repetitive back-office work where the time comes back fastest. A single deployed agent saved a business over 100 hours of work.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "Results are strongest when invoices come into one accounts inbox, so we usually start there and with the suppliers you hear from most. Anything outside the pattern waits in the command centre for a person, so nothing is guessed.",
+          "Your team stays in control throughout: human approval before high-impact actions such as paying a supplier, limited access so the invoicing agent only touches the inbox and accounts it needs, full logs of everything it did, the ability to pause or stop it instantly, and written red lines it cannot cross, such as changing a supplier's bank details.",
+        ],
+      },
+      {
+        heading: "Related questions",
+        paragraphs: [
+          "Go deeper on back-office work and how much an agent should do on its own.",
+        ],
+        links: [
+          { href: "/insights/back-office-tasks-ai-agents-can-take-over", label: "Which back-office tasks can AI agents take over?" },
+          { href: "/insights/ai-agent-permissions-for-small-business", label: "What should an AI agent be allowed to do without asking?" },
+          { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+        ],
+      },
+      nextStep(
+        "Next step",
+        "Invoice processing is often the first job Aygency's back-office agents take on, because it clears a bottleneck that grows with every customer. See what they take on, or talk to us about your invoices.",
+        "/services/back-office-agents",
+        "See back-office agents",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Can an AI agent pay supplier invoices on its own?",
+        a: "No. The agent prepares and checks the bill, and payment waits for a person to approve it in the command centre. Moving money is a high-impact action, so it always needs your sign-off.",
+      },
+      {
+        q: "What happens when an invoice does not match the order?",
+        a: "The agent flags the line that does not agree, drafts a query to the supplier and holds the bill. Both wait in the command centre for a person to check and approve.",
+      },
+      {
+        q: "Do we need new accounting software for an invoice agent?",
+        a: "No. The agent works inside the accounts inbox and accounting tool you already use, with access limited to what the invoicing job needs.",
+      },
+    ],
+  },
 ];
-
