@@ -63,12 +63,18 @@ export default function TypewriterText({
   }, [isDone]);
 
   return (
-    <span ref={ref} className={className}>
-      {/* Full text for search engines, AI crawlers and screen readers. */}
-      <span className="sr-only">{text}</span>
-      <span aria-hidden="true">
+    <span ref={ref} className={`grid ${className ?? ""}`}>
+      {/* Full text for search engines, AI crawlers and screen readers. It is
+          laid out (but transparent) so the heading keeps its final height while
+          typing, which stops the content below from shifting (CLS). */}
+      <span className="col-start-1 row-start-1 text-transparent">
+        {text}
+        <span aria-hidden="true">|</span>
+      </span>
+      <span aria-hidden="true" className="col-start-1 row-start-1">
         {displayText}
-        <span className={`${cursorColor} ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}>
+        {/* Re-keyed per character: a newly inserted cursor is not counted as a layout shift. */}
+        <span key={displayText.length} className={`${cursorColor} ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}>
           |
         </span>
       </span>
