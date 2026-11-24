@@ -524,62 +524,90 @@ export const answerPosts: InsightPost[] = [
   },
   {
     slug: "how-long-to-deploy-ai-agents",
-    title: "How long does it take to get AI agents live in a business?",
+    title: "How long does it take to deploy AI agents in a business?",
     excerpt:
-      "With Aygency, the first agents are live within weeks, not months. We start with the bottleneck that matters most, get it working on real data, then add more agents in phases. From then on the system keeps improving every month.",
+      "With Aygency, the first AI agents are deployed and doing real work within weeks, not months. We start with the one workflow holding the business back most, test it on your real work, and switch it on with human approval in place. More agents follow in phases, and the system keeps improving every month after that.",
     metaDescription:
-      "With Aygency, the first AI agents are live within weeks, not months. We start with the biggest bottleneck, get it working on real data, then add more in phases.",
+      "With Aygency, the first AI agents are live within weeks, not months: one workflow first, tested on your real work, then more agents added in phases.",
     date,
+    updated: "24 November 2026",
     readTime: "4 min read",
     content: [
       {
-        heading: "How the timeline works",
+        heading: "Weeks, not months, because you start narrow",
         paragraphs: [
-          "First we learn the business: the real workflows, the tools, and where time is lost. Then we design the system and show you the plan before anything is built. We build and connect the first agents to the tools you already use, test them on real work, and switch them on with approvals in place.",
-          "Because we build in phases, you do not wait for everything to be finished before seeing results. The first workflow goes live, proves itself, and the next one follows.",
+          "Deploying AI agents is fast when you do not build everything at once. The first agent takes on one high-value workflow, proves itself on real work, and the next one follows.",
+          "Agents also slot into the inbox, CRM, spreadsheets and accounting tools your team already uses, so there is no software migration to finish first.",
         ],
       },
       {
-        heading: "What affects the timeline",
+        heading: "The four stages from first call to live agent",
         paragraphs: [
-          "The number of workflows, how many systems need connecting, and how quickly the right people can share how things work today. Clear access to tools and a decision-maker who can approve the plan are what keep things moving fastest.",
-          "What does not slow it down is your software. Agents work with the tools you already have, so there is no migration project to finish before they can start.",
+          "Discover: we learn how the work really runs, including the handoffs and workarounds nobody has written down, and find the bottleneck worth removing first.",
+          "Design: you see a clear plan of what each agent will do, what it can reach and where approvals sit, and you sign it off before anything is built.",
+          "Build and test: we connect the agent to your tools and run it on real work, checking its output before it goes live.",
+          "Go live: the agent switches on in the command centre, with high-impact steps waiting for a person to approve. From there we monitor it, tune it and plan the next agent.",
         ],
         links: [
+          { href: "/insights/which-department-to-automate-first", label: "Which part of my business should I hand to AI agents first?" },
           { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+        ],
+      },
+      {
+        heading: "What decides how fast you go live",
+        paragraphs: [
+          "The number of workflows, how many systems need connecting, and how quickly the right people can share how things work today. Clear access to tools and a decision-maker who can approve the plan keep things moving fastest.",
+        ],
+      },
+      {
+        heading: "Why testing before go-live matters, and what UK guidance says",
+        paragraphs: [
+          "The Competition and Markets Authority's guidance on using AI agents (GOV.UK, updated 30 October 2026) says a business is responsible for what its AI agent does in the same way as for an employee, even when someone else built it. It asks businesses to test agents before deploying them, keep a human in the loop checking their work, and refine workflows quickly when something is not right. Every Aygency deployment already runs that way: tested on real work first, human approval before high-impact actions, full logs, and the ability to pause or stop any agent instantly.",
+          "That is also why a partner who builds and runs the agents shortens the path. In the UK government's AI adoption research (DSIT, 2025), around a third of businesses (32%) reported significant barriers implementing agentic AI, more than for any other type of AI the survey asked about. With Aygency that work sits with us: we design, build, test and operate the agents, and your team approves the plan.",
+        ],
+        links: [
+          { href: "https://www.gov.uk/government/publications/complying-with-consumer-law-when-using-ai-agents/complying-with-consumer-law-when-using-ai-agents", label: "Read the CMA guidance on AI agents" },
+          { href: "https://www.gov.uk/government/publications/ai-adoption-research/ai-adoption-research", label: "Read the GOV.UK AI adoption research" },
         ],
       },
       {
         heading: "What it looks like in practice",
         paragraphs: [
-          "In the first stage, one high-value workflow such as invoice processing or client onboarding goes live in the command centre, with high-impact steps waiting for approval. Over the following months, more agents join and the CEO Agent starts reading across all of them.",
+          "In the first stage, one high-value workflow such as invoice processing or client onboarding goes live in the command centre, with high-impact steps waiting for approval. In one deployment, a workflow that took about 4 hours a week now runs in about 12 minutes. Over the following months more agents join, and the CEO Agent starts reading across all of them.",
+        ],
+        links: [
+          { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
         ],
       },
       {
         heading: "Live is the starting line",
         paragraphs: [
-          "Going live is where the value starts, not where our work ends. We monitor every system, tune it, and handle new edge cases as they appear, so it gets better the longer it runs.",
+          "Going live is where the value starts, not where our work ends. We keep tuning every system, so it gets better the longer it runs.",
+        ],
+        links: [
+          { href: "/insights/what-happens-after-ai-agents-go-live", label: "What happens after an AI agent goes live?" },
+          { href: "/insights/whats-included-in-an-ai-agent-system", label: "What's included in an AI agent system?" },
         ],
       },
       nextStep(
         "Next step",
-        "See how an Aygency system is designed and rolled out, then talk to us about your first workflow.",
-        "/system",
-        "See the system",
+        "Back-office agents are usually the first to go live, because clearing the back office is what frees a business to scale. See what they take on, or talk to us about your first workflow.",
+        "/services/back-office-agents",
+        "See back-office agents",
       ),
     ],
     faqs: [
       {
-        q: "Do we have to build everything at once?",
-        a: "No. We build in phases, starting with the biggest bottleneck, and add agents as each one proves itself.",
+        q: "How long does it take to deploy an AI agent?",
+        a: "With Aygency, the first agent is live within weeks, not months. We start with one high-value workflow, test it on your real work, and switch it on with human approval before any high-impact action.",
+      },
+      {
+        q: "Do we have to deploy everything at once?",
+        a: "No. We deploy in phases, starting with the biggest bottleneck, and add agents as each one proves itself.",
       },
       {
         q: "What do you need from us to get started?",
-        a: "Time with the people who know the workflows, access to the tools involved, and someone who can approve the plan and high-impact actions.",
-      },
-      {
-        q: "What happens after go-live?",
-        a: "We keep operating the system: monitoring, tuning, and improving it every month as it learns more about your business.",
+        a: "Time with the people who know the workflows, access to the tools involved, and someone who can approve the plan and high-impact actions. You do not need written process documents, because we map the workflow with your team.",
       },
     ],
   },
@@ -678,6 +706,7 @@ export const answerPosts: InsightPost[] = [
         ],
         links: [
           { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+          { href: "/insights/how-long-to-deploy-ai-agents", label: "How long does it take to deploy AI agents?" },
         ],
       },
       {
@@ -840,6 +869,9 @@ export const answerPosts: InsightPost[] = [
         paragraphs: [
           "The early weeks after launch are the most hands-on, because that is when the agent meets the full variety of your real work. That is a good thing. Every question it asks and every edit your team makes turns into a sharper system, and you can widen what an agent does on its own as it proves itself.",
         ],
+        links: [
+          { href: "/insights/how-long-to-deploy-ai-agents", label: "How long does it take to deploy AI agents?" },
+        ],
       },
       nextStep(
         "Next step",
@@ -1000,7 +1032,7 @@ export const answerPosts: InsightPost[] = [
         links: [
           { href: "/insights/which-department-to-automate-first", label: "Which part of my business should I hand to AI agents first?" },
           { href: "/insights/back-office-tasks-ai-agents-can-take-over", label: "Which back-office tasks can AI agents take over?" },
-          { href: "/insights/how-long-to-deploy-ai-agents", label: "How long does it take to get AI agents live?" },
+          { href: "/insights/how-long-to-deploy-ai-agents", label: "How long does it take to deploy AI agents?" },
           { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
         ],
       },
