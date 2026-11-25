@@ -16,3 +16,12 @@ export function insightSearchTitle(pageTitle: string): string {
   const withSuffix = `${pageTitle} | Aygency`;
   return withSuffix.length <= 60 ? withSuffix : pageTitle;
 }
+
+// Author credited on every insight and answer page. One stable Person entity
+// (@id) shared by the Article bylines, the Organization founder and the /about bio.
+export const AUTHOR = {
+  id: `${SITE_URL}/about#louis-rosenberg`,
+  name: "Louis Rosenberg",
+  jobTitle: "Co-founder and CEO",
+  url: `${SITE_URL}/about#louis-rosenberg`,
+};

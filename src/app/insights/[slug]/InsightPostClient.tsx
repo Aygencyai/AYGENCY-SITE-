@@ -30,7 +30,11 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
             </Reveal>
             <Reveal delay={0.05}>
               <p className="font-mono text-xs text-cyan tracking-wider uppercase">
-                By {AUTHOR.name}, {AUTHOR.jobTitle} · {post.updated ? `Updated ${post.updated}` : post.date} · {post.readTime}
+                By{" "}
+                <Link href="/about#louis-rosenberg" rel="author" className="underline-offset-4 hover:underline">
+                  {AUTHOR.name}
+                </Link>
+                , {AUTHOR.jobTitle} · {post.updated ? `Updated ${post.updated}` : post.date} · {post.readTime}
               </p>
             </Reveal>
             <Reveal delay={0.1}>

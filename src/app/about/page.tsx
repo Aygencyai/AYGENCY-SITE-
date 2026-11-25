@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import AboutClient from "./AboutClient";
-import { OG_IMAGE } from "@/lib/site";
+import { OG_IMAGE, SITE_URL, AUTHOR } from "@/lib/site";
 
 const description =
   "Aygency builds AI agents that remove the bottlenecks holding businesses back. Founded by Louis Rosenberg and Erik in Borehamwood. We learn how you work, build around it, and keep improving it.";
@@ -23,6 +23,27 @@ export const metadata: Metadata = {
   },
 };
 
+// Author profile for the byline on every insight and answer page. Text matches the visible bio below.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": AUTHOR.id,
+  name: AUTHOR.name,
+  jobTitle: AUTHOR.jobTitle,
+  url: AUTHOR.url,
+  description:
+    "Co-founder and CEO of Aygency. He leads strategy, client work and how each system is designed.",
+  worksFor: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency" },
+};
+
 export default function AboutPage() {
-  return <AboutClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <AboutClient />
+    </>
+  );
 }

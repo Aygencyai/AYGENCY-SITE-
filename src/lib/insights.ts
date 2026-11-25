@@ -1,8 +1,7 @@
 import type { Faq } from "@/types";
 import { answerPosts } from "@/lib/answers";
 
-// Author credited on every insight and answer page.
-export const AUTHOR = { name: "Louis Rosenberg", jobTitle: "Founder", url: "https://www.aygency.ai/about" };
+export { AUTHOR } from "@/lib/site";
 
 export interface InsightSection {
   heading?: string;

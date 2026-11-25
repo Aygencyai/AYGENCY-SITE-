@@ -3,7 +3,7 @@ import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/ui/MotionProvider";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, AUTHOR } from "@/lib/site";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -81,7 +81,7 @@ const jsonLd = {
         postalCode: "WD6 2FX",
         addressCountry: "GB",
       },
-      founder: { "@type": "Person", name: "Louis Rosenberg" },
+      founder: { "@type": "Person", "@id": AUTHOR.id, name: AUTHOR.name, url: AUTHOR.url },
       foundingDate: "2026-04-07",
       identifier: {
         "@type": "PropertyValue",

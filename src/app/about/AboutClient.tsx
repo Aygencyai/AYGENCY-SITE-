@@ -136,7 +136,7 @@ export default function AboutClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-12">
             <Reveal delay={0.1}>
-              <div>
+              <div id="louis-rosenberg" className="scroll-mt-28">
                 <h3 className="font-heading text-xl font-semibold text-white">Louis Rosenberg</h3>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cyan mt-1">
                   Co-founder and CEO
