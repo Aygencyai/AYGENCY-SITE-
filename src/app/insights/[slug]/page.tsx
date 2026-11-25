@@ -58,7 +58,10 @@ export default async function InsightPostPage({
     url: `${SITE_URL}/insights/${slug}`,
     author: {
       "@type": "Person",
-      ...AUTHOR,
+      "@id": AUTHOR.id,
+      name: AUTHOR.name,
+      jobTitle: AUTHOR.jobTitle,
+      url: AUTHOR.url,
       worksFor: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency" },
     },
     publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Aygency", url: SITE_URL },
