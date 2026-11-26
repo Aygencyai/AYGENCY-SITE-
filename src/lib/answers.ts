@@ -100,6 +100,7 @@ export const answerPosts: InsightPost[] = [
         links: [
           { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
           { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
+          { href: "/insights/ai-agent-credit-control-chasing", label: "Can an AI agent chase unpaid invoices without upsetting my customers?" },
         ],
       },
       {
@@ -792,6 +793,7 @@ export const answerPosts: InsightPost[] = [
         ],
         links: [
           { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
+          { href: "/insights/ai-agent-credit-control-chasing", label: "Can an AI agent chase unpaid invoices without upsetting my customers?" },
         ],
       },
       {
@@ -1116,6 +1118,7 @@ export const answerPosts: InsightPost[] = [
           { href: "/insights/back-office-tasks-ai-agents-can-take-over", label: "Which back-office tasks can AI agents take over?" },
           { href: "/insights/ai-agent-permissions-for-small-business", label: "What should an AI agent be allowed to do without asking?" },
           { href: "/insights/ai-agents-without-documented-processes", label: "Can AI agents work if our processes are not written down?" },
+          { href: "/insights/ai-agent-credit-control-chasing", label: "Can an AI agent chase unpaid invoices without upsetting my customers?" },
         ],
       },
       nextStep(
@@ -1137,6 +1140,88 @@ export const answerPosts: InsightPost[] = [
       {
         q: "Do we need new accounting software for an invoice agent?",
         a: "No. The agent works inside the accounts inbox and accounting tool you already use, with access limited to what the invoicing job needs.",
+      },
+    ],
+  },
+  {
+    slug: "ai-agent-credit-control-chasing",
+    title: "Can an AI agent chase unpaid invoices without upsetting my customers?",
+    excerpt:
+      "Yes. An AI agent can chase unpaid invoices without upsetting your customers, because every reminder is written in your tone, timed to your payment terms and stopped the moment a customer pays or replies. Aygency builds the agent around how your team already chases payment, and every message waits for a person to approve it in the command centre before it is sent.",
+    metaDescription:
+      "Yes. An Aygency agent drafts payment reminders in your tone, stops when a customer pays or replies, and sends nothing until a person approves it.",
+    date: "26 November 2026",
+    readTime: "4 min read",
+    content: [
+      {
+        heading: "How the agent chases politely",
+        paragraphs: [
+          "Spot: the agent watches your accounting tool and picks out invoices that have passed their due date. Check: before writing anything, it looks for a payment on the way, a credit note, an open query or an extension someone already agreed, so nobody gets chased for something that is already sorted. Draft: it writes the reminder in your voice, with the invoice number, amount, due date and an easy way to pay. Approve: the draft waits in the command centre for a person. Send and log: once approved, it goes out from your own inbox and is recorded against the customer. Stop: chasing ends the moment the customer pays or replies.",
+          "Customers get the same friendly, consistent reminder every time, however busy the month gets, which is exactly what keeps relationships good.",
+        ],
+      },
+      {
+        heading: "Chasing by hand vs with an Aygency agent",
+        paragraphs: [
+          "By hand: someone exports the aged debt list when they find time, writes each email from scratch, forgets who was chased last week, and the tone shifts with how stretched they are.",
+          "With an Aygency agent: overdue invoices are spotted the day they fall due, every draft follows the wording and steps you set, replies are matched to the right invoice, and your team approves a short queue in one place. Credit control keeps pace as the customer list grows, without another admin hire.",
+        ],
+      },
+      {
+        heading: "Timed to UK payment rules and your own terms",
+        paragraphs: [
+          "GOV.UK explains that if no payment date is agreed, a payment between businesses is late 30 days after the customer gets the invoice, or after you deliver the goods or service if that is later. Agreed payment dates must usually be within 60 days for business transactions. We set the agent's timing from the terms on your invoices, so reminders only start when a payment is genuinely due.",
+          "GOV.UK also sets out statutory interest on late business payments, at 8% plus the Bank of England base rate unless your contract sets a different rate, added by sending a new invoice. Whether and when to use it stays your decision: the agent can prepare the figures, and nothing is added without your approval.",
+        ],
+        links: [
+          { href: "https://www.gov.uk/late-commercial-payments-interest-debt-recovery", label: "Read GOV.UK: when a payment becomes late" },
+          { href: "https://www.gov.uk/late-commercial-payments-interest-debt-recovery/charging-interest-commercial-debt", label: "Read GOV.UK: interest on late commercial payments" },
+        ],
+      },
+      {
+        heading: "What it looks like in practice",
+        paragraphs: [
+          "An invoice passes its due date on a Monday. The agent checks the inbox, finds no query from the customer, and drafts a short, warm reminder. Your finance lead approves it in the command centre over coffee. On Wednesday the customer replies that payment is going out on Friday, so the agent pauses chasing, notes the promise and checks the account on Friday.",
+          "This is the kind of repetitive back-office work where time comes back fastest. In one deployment, a workflow that took about 4 hours a week now runs in about 12 minutes.",
+        ],
+      },
+      {
+        heading: "Worth knowing",
+        paragraphs: [
+          "The best results come when you agree the wording and the steps up front, for example a friendly nudge, then a firmer follow-up, then a call from the account owner. Anything outside that pattern, such as a dispute or a request to talk, goes straight to a named person with the full history attached.",
+          "Your team stays in control throughout: human approval before high-impact actions such as messaging a customer, limited access so the agent only touches the inbox and accounts it needs, full logs of every message, the ability to pause or stop it instantly, and written red lines it cannot cross, for example never threatening action or adding charges on its own.",
+        ],
+      },
+      {
+        heading: "Related questions",
+        paragraphs: [
+          "Go deeper on finance work and how much an agent should do on its own.",
+        ],
+        links: [
+          { href: "/insights/ai-agent-invoice-processing", label: "Can an AI agent process supplier invoices end to end?" },
+          { href: "/insights/back-office-tasks-ai-agents-can-take-over", label: "Which back-office tasks can AI agents take over?" },
+          { href: "/insights/ai-agent-permissions-for-small-business", label: "What should an AI agent be allowed to do without asking?" },
+        ],
+      },
+      nextStep(
+        "Next step",
+        "Credit control is one of the back-office jobs Aygency's agents take on first, because faster, steadier chasing frees up time and cash for growth. See what back-office agents do, or talk to us about how you chase payment today.",
+        "/services/back-office-agents",
+        "See back-office agents",
+      ),
+    ],
+    faqs: [
+      {
+        q: "Will the AI agent send reminders without my approval?",
+        a: "No. Every reminder waits in the command centre for a person to approve it. Messaging a customer is a high-impact action, so you always see it before it goes.",
+      },
+      {
+        q: "What happens when a customer disputes an invoice?",
+        a: "The agent stops chasing that invoice, attaches the customer's message and the full history, and passes it to the person you name in the command centre.",
+      },
+      {
+        q: "Do we need new software for an AI credit control agent?",
+        a: "No. The agent works inside the accounting tool and inbox you already use, with access limited to what the chasing job needs.",
       },
     ],
   },
