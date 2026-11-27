@@ -9,7 +9,28 @@ import MagneticButton from "@/components/ui/MagneticButton";
 import Faq from "@/components/ui/Faq";
 import { AUTHOR, type InsightPost } from "@/lib/insights";
 
+// Stable anchor ids for section headings, so the contents list can link to them.
+function sectionIds(post: InsightPost): (string | undefined)[] {
+  const seen = new Map<string, number>();
+  return post.content.map((section) => {
+    if (!section.heading) return undefined;
+    const base =
+      section.heading
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") || "section";
+    const count = seen.get(base) ?? 0;
+    seen.set(base, count + 1);
+    return count === 0 ? base : `${base}-${count + 1}`;
+  });
+}
+
 export default function InsightPostClient({ post }: { post: InsightPost }) {
+  const ids = sectionIds(post);
+  const contents = post.content
+    .map((section, i) => ({ heading: section.heading, id: ids[i] }))
+    .filter((item): item is { heading: string; id: string } => Boolean(item.heading && item.id));
+
   return (
     <>
       {/* Hero */}
@@ -51,11 +72,33 @@ export default function InsightPostClient({ post }: { post: InsightPost }) {
       <section className="blend-void pb-24 md:pb-32">
         <SectionContainer>
           <article className="max-w-3xl space-y-10">
+            {contents.length >= 3 && (
+              <nav
+                aria-label="On this page"
+                className="border border-white/10 rounded-lg p-5 md:p-6"
+              >
+                <p className="font-mono text-xs text-cyan tracking-wider uppercase">
+                  On this page
+                </p>
+                <ol className="mt-4 space-y-2 list-decimal list-inside font-sans text-ghost-muted">
+                  {contents.map((item) => (
+                    <li key={item.id}>
+                      <a href={`#${item.id}`} className="hover:text-cyan transition-colors">
+                        {item.heading}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
             {post.content.map((section, i) => (
               <Reveal key={i} delay={0.05}>
                 <div className="space-y-5">
                   {section.heading && (
-                    <h2 className="font-heading text-xl md:text-2xl text-white font-semibold">
+                    <h2
+                      id={ids[i]}
+                      className="font-heading text-xl md:text-2xl text-white font-semibold scroll-mt-28"
+                    >
                       {section.heading}
                     </h2>
                   )}
